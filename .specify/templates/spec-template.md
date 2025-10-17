@@ -95,10 +95,22 @@
 - **FR-006**: System MUST authenticate users via [NEEDS CLARIFICATION: auth method not specified - email/password, SSO, OAuth?]
 - **FR-007**: System MUST retain user data for [NEEDS CLARIFICATION: retention period not specified]
 
+### Constitutional Requirements *(auto-checked against constitution v1.0.0)*
+
+All features MUST comply with:
+- **UX**: Simple, intuitive interfaces using NextUI components (Principle II)
+- **Responsive**: Mobile-first design tested across all viewports (Principle III)
+- **Validation**: Zod schemas for all user inputs, frontend and backend (Principle VII)
+- **Styling**: Use fonts and colors exclusively from fontAndColour.css (Principle III, VII)
+- **Testing**: Jest for backend, Cucumber for frontend (Principle VI)
+- **Database**: Drizzle ORM with migrations for schema changes (Principle VII)
+
 ### Key Entities *(include if feature involves data)*
 
 - **[Entity 1]**: [What it represents, key attributes without implementation]
 - **[Entity 2]**: [What it represents, relationships to other entities]
+
+*Note: If feature adds database tables, migrations MUST be created using Drizzle ORM (Constitution VII)*
 
 ## Success Criteria *(mandatory)*
 

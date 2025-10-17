@@ -31,7 +31,24 @@
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-[Gates determined based on constitution file]
+Verify compliance with LGKT Forma Constitution v1.0.0:
+
+- [ ] **I. Clean Code Excellence**: Design promotes readable, maintainable code structure
+- [ ] **II. Simple & Intuitive UX**: User interface patterns are simple and use NextUI components
+- [ ] **III. Responsive Design First**: Design considers mobile, tablet, and desktop viewports
+- [ ] **IV. DRY**: Architecture avoids duplication; shared logic identified for extraction
+- [ ] **V. Minimal Dependencies**: New dependencies justified; preference for existing stack
+- [ ] **VI. Comprehensive Testing**: Testing strategy defined (Jest for backend, Cucumber for frontend)
+- [ ] **VII. Technology Stack Compliance**: 
+  - [ ] Uses Nx monorepo structure
+  - [ ] TypeScript for all code
+  - [ ] Express for backend
+  - [ ] Drizzle ORM + MySQL with migrations for database
+  - [ ] Zod for validation (frontend + backend)
+  - [ ] NextUI for UI components
+  - [ ] fontAndColour.css for styling
+
+*If any gate fails, document justification in Complexity Tracking section below.*
 
 ## Project Structure
 

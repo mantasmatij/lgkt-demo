@@ -57,14 +57,30 @@ description: "Task list template for feature implementation"
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
+**Constitutional Requirements** (LGKT Forma v1.0.0):
+- Nx monorepo structure (Principle VII)
+- TypeScript configuration (Principle VII)
+- Express server setup (Principle VII)
+- Drizzle ORM + MySQL connection with WordPress compatibility (Principle VII)
+- Migration framework setup (Principle VII)
+- Zod validation schemas foundation (Principle VII)
+- fontAndColour.css integration (Principle III, VII)
+- NextUI component library setup (Principle II, VII)
+- Jest configuration for backend (Principle VI)
+- Cucumber configuration for frontend (Principle VI)
+
 Examples of foundational tasks (adjust based on your project):
 
-- [ ] T004 Setup database schema and migrations framework
-- [ ] T005 [P] Implement authentication/authorization framework
-- [ ] T006 [P] Setup API routing and middleware structure
-- [ ] T007 Create base models/entities that all stories depend on
-- [ ] T008 Configure error handling and logging infrastructure
-- [ ] T009 Setup environment configuration management
+- [ ] T004 Setup Drizzle ORM with MySQL (WordPress-compatible schema)
+- [ ] T005 Setup database migrations framework using Drizzle
+- [ ] T006 [P] Implement Express API routing and middleware structure
+- [ ] T007 [P] Configure Zod validation schemas (shared across frontend/backend)
+- [ ] T008 [P] Setup NextUI component library and fontAndColour.css integration
+- [ ] T009 [P] Configure Jest for backend testing
+- [ ] T010 [P] Configure Cucumber for frontend testing
+- [ ] T011 Create base models/entities that all stories depend on
+- [ ] T012 Configure error handling and logging infrastructure
+- [ ] T013 Setup environment configuration management
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
@@ -76,21 +92,42 @@ Examples of foundational tasks (adjust based on your project):
 
 **Independent Test**: [How to verify this story works on its own]
 
-### Tests for User Story 1 (OPTIONAL - only if tests requested) ⚠️
+### Tests for User Story 1 (Constitutional Requirement - Principle VI) ⚠️
 
-**NOTE: Write these tests FIRST, ensure they FAIL before implementation**
+**NOTE: Per Constitution Principle VI - Comprehensive Testing**
+- Tests MUST be simple and concise (no duplication)
+- Backend tests MUST use Jest
+- Frontend tests MUST use Cucumber
+- Tests written FIRST, ensure they FAIL before implementation
 
-- [ ] T010 [P] [US1] Contract test for [endpoint] in tests/contract/test_[name].py
-- [ ] T011 [P] [US1] Integration test for [user journey] in tests/integration/test_[name].py
+**Backend Tests (Jest)**:
+- [ ] T014 [P] [US1] Unit tests for [service/model] in tests/unit/test_[name].spec.ts
+- [ ] T015 [P] [US1] Integration test for [API endpoint] in tests/integration/test_[name].spec.ts
+
+**Frontend Tests (Cucumber)**:
+- [ ] T016 [P] [US1] Behavior test for [user journey] in tests/features/[name].feature
+- [ ] T017 [P] [US1] Step definitions in tests/step_definitions/[name].steps.ts
 
 ### Implementation for User Story 1
 
-- [ ] T012 [P] [US1] Create [Entity1] model in src/models/[entity1].py
-- [ ] T013 [P] [US1] Create [Entity2] model in src/models/[entity2].py
-- [ ] T014 [US1] Implement [Service] in src/services/[service].py (depends on T012, T013)
-- [ ] T015 [US1] Implement [endpoint/feature] in src/[location]/[file].py
-- [ ] T016 [US1] Add validation and error handling
-- [ ] T017 [US1] Add logging for user story 1 operations
+**Constitutional Compliance**:
+- Use TypeScript (Principle VII)
+- Follow DRY principles - extract reusable code (Principle IV)
+- Ensure clean, readable code (Principle I)
+- Use Drizzle ORM for database operations (Principle VII)
+- Use Zod for input validation (Principle VII)
+- Use NextUI components for UI (Principle II, VII)
+- Reference fontAndColour.css for styling (Principle III, VII)
+
+- [ ] T018 [P] [US1] Create Zod validation schemas in shared/schemas/[entity].schema.ts
+- [ ] T019 [P] [US1] Create [Entity1] model with Drizzle in backend/models/[entity1].ts
+- [ ] T020 [P] [US1] Create database migration for [Entity1] using Drizzle
+- [ ] T021 [US1] Implement [Service] in backend/services/[service].ts (depends on T019, T020)
+- [ ] T022 [US1] Implement Express API endpoint in backend/api/[endpoint].ts with Zod validation
+- [ ] T023 [US1] Create NextUI-based UI components in frontend/components/[component].tsx
+- [ ] T024 [US1] Implement responsive layout (mobile/tablet/desktop) using fontAndColour.css
+- [ ] T025 [US1] Add frontend Zod validation and error handling
+- [ ] T026 [US1] Add logging for user story 1 operations
 
 **Checkpoint**: At this point, User Story 1 should be fully functional and testable independently
 

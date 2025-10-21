@@ -1,0 +1,111 @@
+openapi: 3.0.3
+info:
+  title: LGKT Forma API
+  version: 0.1.0
+servers:
+  - url: https://{host}/api
+    variables:
+      host:
+        default: example.com
+paths:
+  /auth/login:
+    post:
+      summary: Admin login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+              required: [email, password]
+      responses:
+        '200':
+          description: Logged in
+        '401':
+          description: Invalid credentials
+  /submissions:
+    post:
+      summary: Public company form submission
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                code:
+                  type: string
+                country:
+                  type: string
+                contactName:
+                  type: string
+                contactEmail:
+                  type: string
+                  format: email
+                contactPhone:
+                  type: string
+                notes:
+                  type: string
+                consent:
+                  type: boolean
+                captchaToken:
+                  type: string
+              required: [name, code, country, contactName, contactEmail, contactPhone, consent, captchaToken]
+      responses:
+        '201':
+          description: Created
+        '400':
+          description: Validation error
+  /admin/submissions:
+    get:
+      summary: List submissions
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            minimum: 1
+          required: false
+        - in: query
+          name: pageSize
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+          required: false
+      responses:
+        '200':
+          description: OK
+  /admin/companies:
+    get:
+      summary: List companies (aggregated)
+      responses:
+        '200':
+          description: OK
+  /admin/reports/export.csv:
+    get:
+      summary: Export submissions to CSV by date range
+      parameters:
+        - in: query
+          name: from
+          schema:
+            type: string
+            format: date
+          required: true
+        - in: query
+          name: to
+          schema:
+            type: string
+            format: date
+          required: true
+      responses:
+        '200':
+          description: CSV stream

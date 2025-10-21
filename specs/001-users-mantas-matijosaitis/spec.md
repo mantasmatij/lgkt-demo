@@ -10,6 +10,7 @@
 ### Session 2025-10-21
 
 - Q: Preferred anti-spam protection for the public form? → A: Simple CAPTCHA (checkbox or simple task)
+- Q: Report format scope? → A: CSV now; PDF in next phase
 
 ## User Scenarios & Testing (mandatory)
 
@@ -138,7 +139,7 @@ All features MUST comply with the product's constitutional principles, including
 
 ## Out of Scope (for this scaffold)
 
-- Advanced report types (e.g., PDF generation, charts) beyond CSV export.
+- Advanced report types (e.g., PDF generation, charts) beyond CSV export (PDF summary explicitly deferred to next phase).
 - Complex company deduplication (e.g., fuzzy matching); only exact match on name + registration number is considered.
 - Email notifications and webhooks.
 - WordPress SSO or deep integration beyond linking.
@@ -146,6 +147,5 @@ All features MUST comply with the product's constitutional principles, including
 
 ## Open Questions (maximum 3)
 
-- [NEEDS CLARIFICATION: Report format expectations beyond CSV export in scaffold – is PDF summary required now or later?]
 - [NEEDS CLARIFICATION: Company aggregation key – should we use exact match on name + registration number only, or include additional rules?]
 

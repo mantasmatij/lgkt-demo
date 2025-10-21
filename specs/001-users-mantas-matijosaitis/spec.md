@@ -5,6 +5,12 @@
 **Status**: Draft  
 **Input**: User description: "Lets begin with the web app setup. I want to build an app where company users can fill-out a form without loging in. Company users will be redirected to the form from WordPress page under the same domain. We will also have administrators who will be able to login and view filled out forms, view companies who submited the forms and generate reports. Details about companies will be extracted from the forms. First part is just a scaffold."
 
+## Clarifications
+
+### Session 2025-10-21
+
+- Q: Preferred anti-spam protection for the public form? → A: Simple CAPTCHA (checkbox or simple task)
+
 ## User Scenarios & Testing (mandatory)
 
 ### User Story 1 - Submit a public company form (Priority: P1)
@@ -61,7 +67,8 @@ Acceptance Scenarios:
 - Multiple submissions from the same company are allowed; companies are aggregated for admin views using exact match on company name and registration number (see Assumptions).
 - Attempting to access admin pages without authentication redirects to sign-in.
 - Form submission attempted without required consent (if shown) is blocked with a clear message.
-- [NEEDS CLARIFICATION: Anti-spam protection for the public form – open access implies risk of automated submissions.]
+- Public form includes a simple CAPTCHA: incorrect or missing CAPTCHA blocks submission with a clear message; users can retry without data loss.
+- If the CAPTCHA service is temporarily unavailable, the form displays a non-blocking message and allows retry after reload; submission is blocked until CAPTCHA can be completed.
 
 ## Requirements (mandatory)
 
@@ -78,7 +85,7 @@ Acceptance Scenarios:
 - FR-009: Access to admin-only pages MUST be restricted to authenticated administrators; unauthenticated users are redirected to sign-in.
 - FR-010: The public form and admin pages MUST present clear notices about data usage and include a required consent checkbox before submission (see Assumptions for wording baseline).
 - FR-011: The form MUST be usable on mobile and desktop screens with readable text and tappable controls.
-- FR-012: The system SHOULD prevent automated or abusive submissions via an anti-spam mechanism. [NEEDS CLARIFICATION: Preferred anti-spam approach]
+- FR-012: The public form MUST include a simple CAPTCHA (e.g., checkbox or simple task) to deter automated or abusive submissions.
 
 ### Acceptance Criteria for Functional Requirements
 
@@ -91,7 +98,7 @@ Acceptance Scenarios:
 - AC-007 (covers FR-008): Selecting a date range and exporting produces a CSV file that includes at least submission date/time, company name, registration number, country, and contact email.
 - AC-008 (covers FR-010): The public form displays a consent checkbox; attempting to submit without checking it blocks submission with a clear message.
 - AC-009 (covers FR-011): On a common mobile viewport, the form fits without horizontal scrolling and tap targets meet standard accessibility sizes.
-- AC-010 (covers FR-012): When the anti-spam setting is enabled, automated submissions are measurably reduced in test (see Success Criteria) without degrading user completion.
+- AC-010 (covers FR-012): Submitting without completing the CAPTCHA is blocked with a clear message; completing the CAPTCHA allows form submission to proceed.
 
 ### Constitutional Requirements (auto-checked against constitution v1.0.0)
 
@@ -119,7 +126,7 @@ All features MUST comply with the product's constitutional principles, including
 - SC-002: 100% of unauthenticated attempts to access admin pages result in a sign-in prompt; 100% of authenticated admins reach the dashboard successfully.
 - SC-003: For a dataset of up to 1,000 submissions, a CSV export for a 30-day range is produced within 10 seconds and contains the expected columns.
 - SC-004: Aggregation accuracy: Companies list reflects submissions grouped by exact company name + registration number with at least 95% accuracy on a test dataset containing duplicates and variations as described in Edge Cases.
-- SC-005: With an anti-spam mechanism enabled, the rate of clearly automated submissions in test drops by at least 80% without increasing legitimate user abandonment by more than 5 percentage points. [Dependent on clarification]
+- SC-005: With the simple CAPTCHA enabled, the rate of clearly automated submissions in test drops by at least 80% without increasing legitimate user abandonment by more than 5 percentage points.
 
 ## Assumptions
 
@@ -139,7 +146,6 @@ All features MUST comply with the product's constitutional principles, including
 
 ## Open Questions (maximum 3)
 
-- [NEEDS CLARIFICATION: Preferred anti-spam protection for the public form (e.g., invisible challenge, simple challenge, or none)?]
 - [NEEDS CLARIFICATION: Report format expectations beyond CSV export in scaffold – is PDF summary required now or later?]
 - [NEEDS CLARIFICATION: Company aggregation key – should we use exact match on name + registration number only, or include additional rules?]
 

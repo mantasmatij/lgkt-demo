@@ -37,6 +37,5 @@ Validation Results (2025-10-21):
 
 - Failing item: No [NEEDS CLARIFICATION] markers remain
 	- Spec contains open questions:
-		- "[NEEDS CLARIFICATION: Preferred anti-spam protection for the public form (e.g., invisible challenge, simple challenge, or none)?]"
 		- "[NEEDS CLARIFICATION: Report format expectations beyond CSV export in scaffold – is PDF summary required now or later?]"
 		- "[NEEDS CLARIFICATION: Company aggregation key – should we use exact match on name + registration number only, or include additional rules?]"

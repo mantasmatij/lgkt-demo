@@ -36,3 +36,4 @@ Branch: 001-users-mantas-matijosaitis
 - Keep validation in `packages/validation` and import on both sides
 - Use company code as aggregation key; latest name per code in Companies view
 - CSV export enforces date range and streams results
+- Form fields include legal form, address, registry, eDelivery address, reporting period dates, multiple governance organs, gender balance rows, optional link/files, measures list, and reasons text; model repeating groups as arrays.

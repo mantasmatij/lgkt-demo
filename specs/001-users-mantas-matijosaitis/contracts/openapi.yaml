@@ -37,28 +37,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                code:
-                  type: string
-                country:
-                  type: string
-                contactName:
-                  type: string
-                contactEmail:
-                  type: string
-                  format: email
-                contactPhone:
-                  type: string
-                notes:
-                  type: string
-                consent:
-                  type: boolean
-                captchaToken:
-                  type: string
-              required: [name, code, country, contactName, contactEmail, contactPhone, consent, captchaToken]
+              $ref: '#/components/schemas/PublicSubmissionRequest'
       responses:
         '201':
           description: Created
@@ -81,6 +60,16 @@ paths:
             minimum: 1
             maximum: 100
           required: false
+        - in: query
+          name: from
+          schema:
+            type: string
+            format: date
+        - in: query
+          name: to
+          schema:
+            type: string
+            format: date
       responses:
         '200':
           description: OK
@@ -109,3 +98,153 @@ paths:
       responses:
         '200':
           description: CSV stream
+
+components:
+  schemas:
+    PublicSubmissionRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        code:
+          type: string
+        country:
+          type: string
+        legalForm:
+          type: string
+        address:
+          type: string
+        registry:
+          type: string
+        eDeliveryAddress:
+          type: string
+        reportingFrom:
+          type: string
+          format: date
+        reportingTo:
+          type: string
+          format: date
+        contactName:
+          type: string
+        contactEmail:
+          type: string
+          format: email
+        contactPhone:
+          type: string
+        requirementsApplied:
+          type: boolean
+        requirementsLink:
+          type: string
+        organs:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganRow'
+        genderBalance:
+          type: array
+          items:
+            $ref: '#/components/schemas/GenderBalanceRow'
+          minItems: 1
+        measures:
+          type: array
+          items:
+            $ref: '#/components/schemas/Measure'
+        attachments:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttachmentLink'
+        reasonsForUnderrepresentation:
+          type: string
+        consent:
+          type: boolean
+        consentText:
+          type: string
+        submitter:
+          $ref: '#/components/schemas/Submitter'
+        captchaToken:
+          type: string
+      required:
+        - name
+        - code
+        - country
+        - legalForm
+        - address
+        - registry
+        - eDeliveryAddress
+        - reportingFrom
+        - reportingTo
+        - contactName
+        - contactEmail
+        - contactPhone
+        - requirementsApplied
+        - genderBalance
+        - consent
+        - consentText
+        - submitter
+        - captchaToken
+    OrganRow:
+      type: object
+      properties:
+        organType:
+          type: string
+          enum: [VALDYBA, STEBETOJU_TARYBA]
+        lastElectionDate:
+          type: string
+          format: date
+        plannedElectionDate:
+          type: string
+          format: date
+      required: [organType, lastElectionDate, plannedElectionDate]
+    GenderBalanceRow:
+      type: object
+      properties:
+        role:
+          type: string
+          enum: [CEO, BOARD, SUPERVISORY_BOARD]
+        women:
+          type: integer
+          minimum: 0
+        men:
+          type: integer
+          minimum: 0
+        total:
+          type: integer
+          minimum: 0
+      required: [role, women, men, total]
+    Measure:
+      type: object
+      properties:
+        name:
+          type: string
+        plannedResult:
+          type: string
+        indicator:
+          type: string
+        indicatorValue:
+          type: string
+        indicatorUnit:
+          type: string
+        year:
+          type: string
+      required: [name, plannedResult]
+    AttachmentLink:
+      type: object
+      properties:
+        type:
+          type: string
+          enum: [LINK]
+        url:
+          type: string
+      required: [type, url]
+    Submitter:
+      type: object
+      properties:
+        name:
+          type: string
+        title:
+          type: string
+        phone:
+          type: string
+        email:
+          type: string
+          format: email
+      required: [name, phone, email]

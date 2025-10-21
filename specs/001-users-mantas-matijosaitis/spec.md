@@ -11,6 +11,7 @@
 
 - Q: Preferred anti-spam protection for the public form? → A: Simple CAPTCHA (checkbox or simple task)
 - Q: Report format scope? → A: CSV now; PDF in next phase
+- Q: Company aggregation key? → A: Company code (registration number/ID)
 
 ## User Scenarios & Testing (mandatory)
 
@@ -65,7 +66,7 @@ Acceptance Scenarios:
 ### Edge Cases
 
 - Direct navigation to the form without coming from WordPress still works (no login required).
-- Multiple submissions from the same company are allowed; companies are aggregated for admin views using exact match on company name and registration number (see Assumptions).
+- Multiple submissions from the same company are allowed; companies are aggregated for admin views by company code (registration number/ID). If company names differ across submissions with the same code, the most recent name is displayed.
 - Attempting to access admin pages without authentication redirects to sign-in.
 - Form submission attempted without required consent (if shown) is blocked with a clear message.
 - Public form includes a simple CAPTCHA: incorrect or missing CAPTCHA blocks submission with a clear message; users can retry without data loss.
@@ -76,12 +77,12 @@ Acceptance Scenarios:
 ### Functional Requirements
 
 - FR-001: The public company form MUST be accessible under the same primary domain as the WordPress site without requiring login.
-- FR-002: The form MUST collect core company details at minimum: company name, registration number/ID, country, contact person name, contact email, and contact phone (see Assumptions for defaults).
+- FR-002: The form MUST collect core company details at minimum: company name, company code (registration number/ID), country, contact person name, contact email, and contact phone (see Assumptions for defaults).
 - FR-003: The form MUST enforce required fields and validate basic formats (e.g., email), displaying inline, user-friendly error messages.
 - FR-004: On successful submission, the system MUST create a submission record and display an on-screen confirmation to the user.
 - FR-005: Administrators MUST be able to sign in to access an admin area that is not accessible to unauthenticated users.
 - FR-006: The admin dashboard MUST display a list of submissions (or an empty state) with at least submission date/time and company name.
-- FR-007: The admin area MUST provide a Companies view that groups submissions by company (exact match on company name + registration number) and shows aggregate counts.
+- FR-007: The admin area MUST provide a Companies view that groups submissions by company code (registration number/ID) and shows aggregate counts; company name is displayed from the most recent submission for that code.
 - FR-008: Administrators MUST be able to export a basic report of submissions within a selected date range as a downloadable CSV file.
 - FR-009: Access to admin-only pages MUST be restricted to authenticated administrators; unauthenticated users are redirected to sign-in.
 - FR-010: The public form and admin pages MUST present clear notices about data usage and include a required consent checkbox before submission (see Assumptions for wording baseline).
@@ -95,7 +96,7 @@ Acceptance Scenarios:
 - AC-003 (covers FR-004): After valid submission, a confirmation message is shown and a submission record with a timestamp and provided fields exists for admin review.
 - AC-004 (covers FR-005, FR-009): Visiting an admin URL while not signed in redirects to sign-in; signing in with valid admin credentials grants access to admin pages.
 - AC-005 (covers FR-006): With at least one submission, the admin dashboard shows a list containing submission date/time and company name; with none, an empty state is shown.
-- AC-006 (covers FR-007): Companies view shows one row per company (exact name + registration number), with a count of linked submissions.
+- AC-006 (covers FR-007): Companies view shows one row per company code (registration number/ID), with a count of linked submissions; company name is derived from the most recent submission with that code.
 - AC-007 (covers FR-008): Selecting a date range and exporting produces a CSV file that includes at least submission date/time, company name, registration number, country, and contact email.
 - AC-008 (covers FR-010): The public form displays a consent checkbox; attempting to submit without checking it blocks submission with a clear message.
 - AC-009 (covers FR-011): On a common mobile viewport, the form fits without horizontal scrolling and tap targets meet standard accessibility sizes.
@@ -114,7 +115,7 @@ All features MUST comply with the product's constitutional principles, including
 
 ### Key Entities
 
-- Company: Business derived from submissions; attributes include company name, registration number/ID, country, and primary contact details.
+- Company: Business derived from submissions; attributes include company name, company code (registration number/ID), country, and primary contact details. Company code is the canonical unique identifier for aggregation.
 - Submission: A single form submission capturing company details and timestamp; linked to a Company for aggregation.
 - Admin User: Person with permission to access admin area; attributes include email and role.
 - Report: An export artifact representing submissions within a date range (e.g., CSV), with metadata like generated date/time and filters used.
@@ -126,12 +127,12 @@ All features MUST comply with the product's constitutional principles, including
 - SC-001: 95% of company users can complete and submit the public form in under 5 minutes during usability testing.
 - SC-002: 100% of unauthenticated attempts to access admin pages result in a sign-in prompt; 100% of authenticated admins reach the dashboard successfully.
 - SC-003: For a dataset of up to 1,000 submissions, a CSV export for a 30-day range is produced within 10 seconds and contains the expected columns.
-- SC-004: Aggregation accuracy: Companies list reflects submissions grouped by exact company name + registration number with at least 95% accuracy on a test dataset containing duplicates and variations as described in Edge Cases.
+- SC-004: Aggregation accuracy: Companies list reflects submissions grouped by company code (registration number/ID) with at least 99% accuracy on a test dataset containing duplicates and naming variations.
 - SC-005: With the simple CAPTCHA enabled, the rate of clearly automated submissions in test drops by at least 80% without increasing legitimate user abandonment by more than 5 percentage points.
 
 ## Assumptions
 
-- Public form fields (minimum): company name, registration number/ID, country, contact person name, contact email, contact phone, and a free-text notes field.
+- Public form fields (minimum): company name, company code (registration number/ID), country, contact person name, contact email, contact phone, and a free-text notes field.
 - Admin authentication uses a standard username/email + password flow.
 - The form is accessible at a path under the same domain as the WordPress site (linked from a WordPress page); no SSO required for this scaffold phase.
 - Consent checkbox text: a standard privacy notice stating data will be used to review submissions and contact the company.
@@ -140,12 +141,12 @@ All features MUST comply with the product's constitutional principles, including
 ## Out of Scope (for this scaffold)
 
 - Advanced report types (e.g., PDF generation, charts) beyond CSV export (PDF summary explicitly deferred to next phase).
-- Complex company deduplication (e.g., fuzzy matching); only exact match on name + registration number is considered.
+- Complex company deduplication (e.g., fuzzy matching); only exact match by company code is considered.
 - Email notifications and webhooks.
 - WordPress SSO or deep integration beyond linking.
 - Multi-language support beyond the default language.
 
 ## Open Questions (maximum 3)
 
-- [NEEDS CLARIFICATION: Company aggregation key – should we use exact match on name + registration number only, or include additional rules?]
+<!-- All critical clarifications resolved in Session 2025-10-21. -->
 

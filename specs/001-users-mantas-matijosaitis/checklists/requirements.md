@@ -13,7 +13,7 @@
 
 ## Requirement Completeness
 
-- [ ] No [NEEDS CLARIFICATION] markers remain
+- [x] No [NEEDS CLARIFICATION] markers remain
 - [x] Requirements are testable and unambiguous
 - [x] Success criteria are measurable
 - [x] Success criteria are technology-agnostic (no implementation details)
@@ -35,6 +35,4 @@
 
 Validation Results (2025-10-21):
 
-- Failing item: No [NEEDS CLARIFICATION] markers remain
-	- Spec contains open questions:
-		- "[NEEDS CLARIFICATION: Company aggregation key – should we use exact match on name + registration number only, or include additional rules?]"
+- All checklist items now PASS. Clarifications recorded in spec under "Clarifications → Session 2025-10-21".

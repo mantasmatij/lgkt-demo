@@ -21,11 +21,11 @@ Plan: /Users/mantas.matijosaitis/repos/lgkt-forma/specs/001-users-mantas-matijos
 
 ## Phase 2 – Foundational (blocking prerequisites)
 
-- [ ] T013 Implement initial Drizzle schema files in packages/db/src/schema.ts
-- [ ] T014 Add database migration scripts and migration runner in packages/db
-- [ ] T015 [P] Implement shared Zod schemas in packages/validation/src/submission.ts
-- [ ] T016 [P] Implement shared Zod schemas in packages/validation/src/auth.ts
-- [ ] T017 Implement API contracts sync in packages/contracts (generate types from contracts/openapi.yaml)
+- [x] T013 Implement initial Drizzle schema files in packages/db/src/schema.ts
+- [x] T014 Add database migration scripts and migration runner in packages/db
+- [x] T015 [P] Implement shared Zod schemas in packages/validation/src/submission.ts
+- [x] T016 [P] Implement shared Zod schemas in packages/validation/src/auth.ts
+- [x] T017 Implement API contracts sync in packages/contracts (generate types from contracts/openapi.yaml)
 - [ ] T018 Add auth session strategy and middleware skeleton in apps/api/src/middleware/auth.ts
 - [ ] T019 Add CAPTCHA verification service interface in apps/api/src/services/captcha.ts
 - [ ] T020 Add CSV export utility in apps/api/src/utils/csv.ts

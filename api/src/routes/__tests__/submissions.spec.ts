@@ -1,5 +1,8 @@
 import request from 'supertest';
 import { app } from '../../app';
+jest.mock('db', () => ({
+  createSubmissionTree: jest.fn().mockResolvedValue({ id: 'test-id' }),
+}));
 
 describe('POST /api/submissions', () => {
   it('validates body and returns 400 for invalid payload', async () => {

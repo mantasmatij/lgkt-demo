@@ -49,7 +49,7 @@ Independent test criteria: Able to submit valid data and see confirmation; inval
 - [ ] T026 [US1] Implement CAPTCHA verification in apps/api/src/services/captcha.ts and integrate in submissions route
 - [ ] T026a [US1] Handle CAPTCHA service unavailability gracefully: block submission with retriable message; add unit/integration test
 - [ ] T027 [US1] Persist submission + child records (including repeating sections and attachments metadata) via packages/db repository functions
- - [ ] T027a [US1] On submission, resolve `uploadId` file references into Attachment rows; cleanup temp state if applicable
+ - [x] T027a [US1] On submission, resolve `uploadId` file references into Attachment rows; cleanup temp state if applicable
 - [ ] T028 [US1] Update Company record by company code on submission (upsert) in packages/db
 - [ ] T029 [US1] Show success confirmation page/state in apps/web/src/app/form/success/page.tsx
 - [ ] T030 [US1] Add basic E2E scenario (Cucumber) for happy path submit (apps/web/tests/e2e/us1-submit.feature)

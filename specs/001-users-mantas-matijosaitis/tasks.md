@@ -44,6 +44,7 @@ Independent test criteria: Able to submit valid data and see confirmation; inval
 - [ ] T024 [US1] Wire Zod schema validation in apps/web for client-side validation (packages/validation)
 - [ ] T025 [US1] Implement POST /submissions endpoint in apps/api/src/routes/submissions.ts
  - [ ] T025a Implement POST /uploads endpoint in apps/api/src/routes/uploads.ts (multipart form-data, limits, type validation)
+ - [x] T025a Implement POST /uploads endpoint in apps/api/src/routes/uploads.ts (multipart form-data, limits, type validation)
 - [ ] T026 [US1] Implement CAPTCHA verification in apps/api/src/services/captcha.ts and integrate in submissions route
 - [ ] T026a [US1] Handle CAPTCHA service unavailability gracefully: block submission with retriable message; add unit/integration test
 - [ ] T027 [US1] Persist submission + child records (including repeating sections and attachments metadata) via packages/db repository functions

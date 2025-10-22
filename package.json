@@ -70,7 +70,9 @@
     "tailwindcss": "^3.4.13",
     "postcss": "^8.4.47",
     "autoprefixer": "^10.4.20",
-    "@types/cookie-parser": "^1.4.7"
+    "@types/cookie-parser": "^1.4.7",
+    "@types/supertest": "^6.0.2",
+    "supertest": "^7.0.0"
   },
   "nx": {},
   "dependencies": {

@@ -1,5 +1,6 @@
 import { getDb } from './client';
-import { attachments, genderBalanceRows, submissionMeasures, submissionMeta, submissionOrgans, submissions } from './schema';
+import { attachments, companies, genderBalanceRows, submissionMeasures, submissionMeta, submissionOrgans, submissions } from './schema';
+import { eq } from 'drizzle-orm';
 
 export type SubmissionTree = {
   submission: {
@@ -141,4 +142,62 @@ export async function createSubmissionTree(tree: SubmissionTree) {
   }
 
   return { id: submissionId };
+}
+
+export async function upsertCompany(data: {
+  code: string;
+  name: string;
+  country: string;
+  legalForm?: string | null;
+  address?: string | null;
+  registry?: string | null;
+  eDeliveryAddress?: string | null;
+  primaryContactName?: string | null;
+  primaryContactEmail?: string | null;
+  primaryContactPhone?: string | null;
+}) {
+  const db = getDb();
+  
+  // Check if company exists
+  const existing = await db.select().from(companies).where(eq(companies.code, data.code)).limit(1);
+  
+  if (existing.length > 0) {
+    // Update existing company
+    await db
+      .update(companies)
+      .set({
+        name: data.name,
+        country: data.country,
+        legalForm: data.legalForm ?? null,
+        address: data.address ?? null,
+        registry: data.registry ?? null,
+        eDeliveryAddress: data.eDeliveryAddress ?? null,
+        primaryContactName: data.primaryContactName ?? null,
+        primaryContactEmail: data.primaryContactEmail ?? null,
+        primaryContactPhone: data.primaryContactPhone ?? null,
+        updatedAt: new Date(),
+      })
+      .where(eq(companies.code, data.code));
+    
+    return { id: existing[0].id, isNew: false };
+  } else {
+    // Insert new company
+    const [company] = await db
+      .insert(companies)
+      .values({
+        code: data.code,
+        name: data.name,
+        country: data.country,
+        legalForm: data.legalForm ?? null,
+        address: data.address ?? null,
+        registry: data.registry ?? null,
+        eDeliveryAddress: data.eDeliveryAddress ?? null,
+        primaryContactName: data.primaryContactName ?? null,
+        primaryContactEmail: data.primaryContactEmail ?? null,
+        primaryContactPhone: data.primaryContactPhone ?? null,
+      })
+      .returning({ id: companies.id });
+    
+    return { id: company.id, isNew: true };
+  }
 }

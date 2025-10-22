@@ -1,7 +1,8 @@
 import { Router } from 'express';
 import { submissionSchema } from 'validation';
-import { createSubmissionTree } from 'db';
+import { createSubmissionTree, upsertCompany } from 'db';
 import { getUpload, deleteUpload } from '../services/uploadIndex';
+import { getCaptchaVerifier } from '../services/captcha';
 
 export const submissionsRouter = Router();
 
@@ -12,6 +13,16 @@ submissionsRouter.post('/', async (req, res, next) => {
   }
   try {
     const input = parse.data;
+
+    // Verify CAPTCHA
+    const verifier = getCaptchaVerifier();
+    const captchaResult = await verifier.verify(input.captchaToken);
+    if (!captchaResult.success) {
+      return res.status(400).json({
+        code: 'CAPTCHA_FAILED',
+        message: captchaResult.reason || 'CAPTCHA verification failed',
+      });
+    }
 
     // Resolve attachments: convert FILE refs via uploadId to file metadata
     const attachments = (input.attachments || []).map((a) => {
@@ -66,7 +77,21 @@ submissionsRouter.post('/', async (req, res, next) => {
       },
     };
 
-  await createSubmissionTree(tree);
+    // Upsert company record (update with latest submission data)
+    await upsertCompany({
+      code: input.code,
+      name: input.name,
+      country: input.country,
+      legalForm: input.legalForm,
+      address: input.address,
+      registry: input.registry,
+      eDeliveryAddress: input.eDeliveryAddress,
+      primaryContactName: input.contactName,
+      primaryContactEmail: input.contactEmail,
+      primaryContactPhone: input.contactPhone,
+    });
+
+    await createSubmissionTree(tree);
 
     // Cleanup used uploadIds
     (input.attachments || []).forEach((a) => {

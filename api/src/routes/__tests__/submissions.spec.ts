@@ -2,6 +2,7 @@ import request from 'supertest';
 import { app } from '../../app';
 jest.mock('db', () => ({
   createSubmissionTree: jest.fn().mockResolvedValue({ id: 'test-id' }),
+  upsertCompany: jest.fn().mockResolvedValue({ id: 'company-id', isNew: false }),
 }));
 
 describe('POST /api/submissions', () => {

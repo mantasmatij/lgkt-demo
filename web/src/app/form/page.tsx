@@ -1,10 +1,12 @@
 "use client";
 import * as React from 'react';
+import { useRouter } from 'next/navigation';
 import { Button, Card, Checkbox, Input, Textarea } from '@nextui-org/react';
 import { OrgansSection, GenderBalanceSection, MeasuresSection, AttachmentsSection } from 'ui';
 import { submissionSchema, type SubmissionInput } from 'validation';
 
 export default function PublicFormPage() {
+  const router = useRouter();
   const [form, setForm] = React.useState<SubmissionInput>({
     name: '',
     code: '',
@@ -63,9 +65,8 @@ export default function PublicFormPage() {
         const err = await res.json().catch(() => ({}));
         setResult(err?.message || 'Submission failed');
       } else {
-        setResult('Submission successful. Thank you!');
-        // Optional: reset form
-        // setForm({ ...form, consent: false });
+        // Redirect to success page on successful submission
+        router.push('/form/success');
       }
     } finally {
       setSubmitting(false);

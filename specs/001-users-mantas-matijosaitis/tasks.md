@@ -43,7 +43,7 @@ Independent test criteria: Able to submit valid data and see confirmation; inval
 - [ ] T022 [US1] Create public form page in apps/web/src/app/form/page.tsx (fields per spec; include repeating sections Organs/GenderBalance/Measures/Attachments)
 - [ ] T023 [P] [US1] Build form field components for repeating sections in packages/ui (Organs, GenderBalance, Measures, Attachments)
 - [ ] T024 [US1] Wire Zod schema validation in apps/web for client-side validation (packages/validation)
-- [ ] T025 [US1] Implement POST /submissions endpoint in apps/api/src/routes/submissions.ts
+- [x] T025 [US1] Implement POST /submissions endpoint in apps/api/src/routes/submissions.ts
  - [ ] T025a Implement POST /uploads endpoint in apps/api/src/routes/uploads.ts (multipart form-data, limits, type validation)
  - [x] T025a Implement POST /uploads endpoint in apps/api/src/routes/uploads.ts (multipart form-data, limits, type validation)
 - [ ] T026 [US1] Implement CAPTCHA verification in apps/api/src/services/captcha.ts and integrate in submissions route

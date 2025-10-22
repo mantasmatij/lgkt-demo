@@ -10,6 +10,8 @@ import cors from 'cors';
 import morgan from 'morgan';
 import { uploadsRouter } from './routes/uploads';
 import { submissionsRouter } from './routes/submissions';
+import cookieParser from 'cookie-parser';
+import { issueCsrfToken } from './middleware/csrf';
 
 const app = express();
 
@@ -20,12 +22,16 @@ app.use(cors({ origin: true, credentials: true }));
 app.use(morgan(process.env.NODE_ENV === 'production' ? 'combined' : 'dev'));
 app.use(express.json({ limit: '2mb' }));
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
 
 app.get('/api/health', (_req, res) => {
   res.send({ status: 'ok' });
 });
+
+// Issue a CSRF token cookie and return it for clients to use on mutating requests (double-submit cookie strategy)
+app.get('/api/csrf', issueCsrfToken);
 
 // Routes
 app.use('/api/uploads', uploadsRouter);

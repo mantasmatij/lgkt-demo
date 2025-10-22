@@ -9,7 +9,8 @@
     "tslib": "^2.3.0"
   },
   "peerDependencies": {
-    "react": "^19.0.0"
+    "react": "^19.0.0",
+    "@nextui-org/react": "^2.4.0"
   },
   "devDependencies": {
     "@types/react": "19.0.0"

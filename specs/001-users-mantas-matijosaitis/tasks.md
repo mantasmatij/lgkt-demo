@@ -30,8 +30,9 @@ Plan: /Users/mantas.matijosaitis/repos/lgkt-forma/specs/001-users-mantas-matijos
 - [x] T019 Add CAPTCHA verification service interface in apps/api/src/services/captcha.ts
 - [x] T020 Add CSV export utility in apps/api/src/utils/csv.ts
 - [ ] T021 Configure NextUI provider, theme, and base layout components in packages/ui; Tailwind CSS allowed for utility classes only (no component lib)
+- [x] T021 Configure NextUI provider, theme, and base layout components in packages/ui; Tailwind CSS allowed for utility classes only (no component lib)
 - [x] T021a Add security hardening scaffolding in apps/api: helmet, CORS, error handler, request logging
-- [ ] T021b Define authentication security details: password hashing (Argon2/bcrypt), session cookie flags (Secure, HttpOnly, SameSite), CSRF strategy for admin UI
+ - [x] T021b Define authentication security details: password hashing (Argon2/bcrypt), session cookie flags (Secure, HttpOnly, SameSite), CSRF strategy for admin UI
  - [x] T021c Implement file storage adapter (local dev: ./uploads, prod: object storage) and validation config (allowed types, max size)
 
 ## Phase 3 – User Story 1 (P1): Submit public company form

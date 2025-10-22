@@ -6,7 +6,10 @@ import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
 import { uploadsRouter } from './routes/uploads';
 import { submissionsRouter } from './routes/submissions';
+import { authRouter } from './routes/auth';
+import { adminSubmissionsRouter } from './routes/admin/submissions';
 import { issueCsrfToken } from './middleware/csrf';
+import { parseSession } from './middleware/auth';
 
 export function createApp() {
   const app = express();
@@ -18,7 +21,13 @@ export function createApp() {
   app.use(morgan(process.env.NODE_ENV === 'production' ? 'combined' : 'dev'));
   app.use(express.json({ limit: '2mb' }));
   app.use(express.urlencoded({ extended: true }));
-  app.use(cookieParser());
+  
+  // Parse cookies (required for signed cookies)
+  const secret = process.env.SESSION_SECRET || 'dev-secret-change-in-production';
+  app.use(cookieParser(secret));
+  
+  // Parse session from cookie
+  app.use(parseSession);
 
   app.use('/assets', express.static(path.join(__dirname, 'assets')));
 
@@ -30,8 +39,10 @@ export function createApp() {
   app.get('/api/csrf', issueCsrfToken);
 
   // Routes
+  app.use('/api/auth', authRouter);
   app.use('/api/uploads', uploadsRouter);
   app.use('/api/submissions', submissionsRouter);
+  app.use('/api/admin/submissions', adminSubmissionsRouter);
 
   // Central error handler
   type HttpError = Error & { statusCode?: number; code?: string };

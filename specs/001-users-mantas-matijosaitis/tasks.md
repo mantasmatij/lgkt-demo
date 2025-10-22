@@ -59,12 +59,12 @@ Independent test criteria: Able to submit valid data and see confirmation; inval
 Story goal: Admin can sign in and view dashboard with submissions list or empty state.
 Independent test criteria: Unauthed redirects to sign-in; authed sees dashboard; empty state handled.
 
-- [ ] T031 [US2] Create admin sign-in page apps/web/src/app/admin/sign-in/page.tsx
-- [ ] T032 [US2] Implement POST /auth/login in apps/api/src/routes/auth.ts (username/password)
-- [ ] T033 [US2] Implement session storage and auth middleware in apps/api/src/middleware/auth.ts
-- [ ] T034 [US2] Protect admin routes and add /admin redirect behaviors in apps/web
-- [ ] T035 [US2] Implement GET /admin/submissions endpoint with pagination in apps/api/src/routes/admin/submissions.ts
-- [ ] T036 [US2] Build admin dashboard page apps/web/src/app/admin/dashboard/page.tsx (list or empty state)
+- [x] T031 [US2] Create admin sign-in page apps/web/src/app/admin/sign-in/page.tsx
+- [x] T032 [US2] Implement POST /auth/login in apps/api/src/routes/auth.ts (username/password)
+- [x] T033 [US2] Implement session storage and auth middleware in apps/api/src/middleware/auth.ts
+- [x] T034 [US2] Protect admin routes and add /admin redirect behaviors in apps/web
+- [x] T035 [US2] Implement GET /admin/submissions endpoint with pagination in apps/api/src/routes/admin/submissions.ts
+- [x] T036 [US2] Build admin dashboard page apps/web/src/app/admin/dashboard/page.tsx (list or empty state)
 - [ ] T037 [US2] Add E2E scenario: redirect unauthenticated to sign-in; sign-in to dashboard (apps/web/tests/e2e/us2-auth.feature)
  - [ ] T037a [US2] Add CSRF verification test for protected admin actions (form-based or token-based per strategy)
 

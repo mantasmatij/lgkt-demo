@@ -4,6 +4,7 @@ import bcrypt from 'bcryptjs';
 export type SessionUser = {
   id: string;
   email: string;
+  role: string;
 };
 
 export type AuthSession = {
@@ -11,10 +12,50 @@ export type AuthSession = {
   issuedAt: number;
 };
 
-// Placeholder session checker. Will be replaced with proper session storage.
+// Extend Express Request to include session
+declare module 'express-serve-static-core' {
+  interface Request {
+    session?: AuthSession;
+  }
+}
+
+// Session storage (in-memory for dev; use Redis/DB in production)
+const sessions = new Map<string, AuthSession>();
+
+export function createSession(user: SessionUser): string {
+  const sessionId = crypto.randomUUID();
+  sessions.set(sessionId, {
+    user,
+    issuedAt: Date.now(),
+  });
+  return sessionId;
+}
+
+export function getSession(sessionId: string): AuthSession | undefined {
+  return sessions.get(sessionId);
+}
+
+export function deleteSession(sessionId: string): void {
+  sessions.delete(sessionId);
+}
+
+// Middleware to parse session from cookie and attach to req.session
+export function parseSession(req: Request, res: Response, next: NextFunction) {
+  const sessionId = req.signedCookies?.sessionId;
+  if (sessionId) {
+    const session = getSession(sessionId);
+    if (session) {
+      req.session = session;
+    }
+  }
+  next();
+}
+
+// Middleware to require authentication
 export function requireAuth(req: Request, res: Response, next: NextFunction) {
-  // TODO: Read from signed cookie / header and validate session
-  // For now, pass-through; protected routes should replace this during US2.
+  if (!req.session) {
+    return res.status(401).json({ code: 'UNAUTHORIZED', message: 'Authentication required' });
+  }
   return next();
 }
 
@@ -32,5 +73,6 @@ export const cookieOptions = {
   secure: process.env.NODE_ENV === 'production',
   sameSite: 'lax' as const,
   path: '/',
-  // maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+  maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+  signed: true,
 };

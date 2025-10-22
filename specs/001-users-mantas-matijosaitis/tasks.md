@@ -26,13 +26,13 @@ Plan: /Users/mantas.matijosaitis/repos/lgkt-forma/specs/001-users-mantas-matijos
 - [x] T015 [P] Implement shared Zod schemas in packages/validation/src/submission.ts
 - [x] T016 [P] Implement shared Zod schemas in packages/validation/src/auth.ts
 - [x] T017 Implement API contracts sync in packages/contracts (generate types from contracts/openapi.yaml)
-- [ ] T018 Add auth session strategy and middleware skeleton in apps/api/src/middleware/auth.ts
-- [ ] T019 Add CAPTCHA verification service interface in apps/api/src/services/captcha.ts
-- [ ] T020 Add CSV export utility in apps/api/src/utils/csv.ts
+- [x] T018 Add auth session strategy and middleware skeleton in apps/api/src/middleware/auth.ts
+- [x] T019 Add CAPTCHA verification service interface in apps/api/src/services/captcha.ts
+- [x] T020 Add CSV export utility in apps/api/src/utils/csv.ts
 - [ ] T021 Configure NextUI provider, theme, and base layout components in packages/ui; Tailwind CSS allowed for utility classes only (no component lib)
-- [ ] T021a Add security hardening scaffolding in apps/api: helmet, CORS, error handler, request logging
+- [x] T021a Add security hardening scaffolding in apps/api: helmet, CORS, error handler, request logging
 - [ ] T021b Define authentication security details: password hashing (Argon2/bcrypt), session cookie flags (Secure, HttpOnly, SameSite), CSRF strategy for admin UI
- - [ ] T021c Implement file storage adapter (local dev: ./uploads, prod: object storage) and validation config (allowed types, max size)
+ - [x] T021c Implement file storage adapter (local dev: ./uploads, prod: object storage) and validation config (allowed types, max size)
 
 ## Phase 3 – User Story 1 (P1): Submit public company form
 

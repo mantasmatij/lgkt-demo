@@ -1,0 +1,23 @@
+# Ignore common build and cache outputs
+node_modules/
+dist/
+build/
+coverage/
+.nx/cache/
+.nx/workspace-data/
+
+# Next.js
+.next/
+out/
+.vercel/
+
+# Env and logs
+.env
+.env.*
+*.log
+
+# OS/Editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

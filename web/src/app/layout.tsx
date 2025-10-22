@@ -1,4 +1,5 @@
 import './global.css';
+import { UIProvider } from 'ui';
 
 export const metadata = {
   title: 'Welcome to web',
@@ -12,7 +13,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <UIProvider>{children}</UIProvider>
+      </body>
     </html>
   );
 }

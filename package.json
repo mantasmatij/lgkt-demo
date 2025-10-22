@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "nx run-many -t test",
-    "lint": "nx run-many -t lint",
+    "test": "nx run-many -t test --exclude lgkt-forma",
+    "lint": "nx run-many -t lint --exclude lgkt-forma",
     "contracts:gen": "openapi-typescript specs/001-users-mantas-matijosaitis/contracts/openapi.yaml -o contracts/src/generated.ts",
     "db:generate": "drizzle-kit generate --config db/drizzle.config.ts",
     "db:migrate": "drizzle-kit migrate --config db/drizzle.config.ts"

@@ -76,7 +76,7 @@ Acceptance Scenarios:
 
 ### Functional Requirements
 
-- FR-001: The public company form MUST be accessible under the same primary domain as the WordPress site without requiring login.
+ - FR-001: The public company form MUST be accessible under the same primary domain as the WordPress site without requiring login. Deployment MAY use reverse proxying or path-based routing to achieve a shared domain.
 - FR-002: The form MUST collect core company details at minimum: company name, company code (registration number/ID), country, contact person name, contact email, and contact phone (see Assumptions for defaults).
 - FR-003: The form MUST enforce required fields and validate basic formats (e.g., email), displaying inline, user-friendly error messages.
 - FR-004: On successful submission, the system MUST create a submission record and display an on-screen confirmation to the user.
@@ -116,7 +116,11 @@ All features MUST comply with the product's constitutional principles, including
 ### Key Entities
 
 - Company: Business derived from submissions; attributes include company name, company code (registration number/ID), country, and primary contact details. Company code is the canonical unique identifier for aggregation.
-- Submission: A single form submission capturing company details and timestamp; linked to a Company for aggregation.
+- Submission: A single form submission capturing company details and timestamp; linked to a Company for aggregation. Submission MAY include repeating sections:
+	- Organs: zero or more rows describing governing bodies
+	- GenderBalance: zero or more rows for gender balance reporting
+	- Measures: zero or more rows describing measures taken
+	- Attachments: zero or more uploaded files with metadata (filename, size, type)
 - Admin User: Person with permission to access admin area; attributes include email and role.
 - Report: An export artifact representing submissions within a date range (e.g., CSV), with metadata like generated date/time and filters used.
 
@@ -129,6 +133,16 @@ All features MUST comply with the product's constitutional principles, including
 - SC-003: For a dataset of up to 1,000 submissions, a CSV export for a 30-day range is produced within 10 seconds and contains the expected columns.
 - SC-004: Aggregation accuracy: Companies list reflects submissions grouped by company code (registration number/ID) with at least 99% accuracy on a test dataset containing duplicates and naming variations.
 - SC-005: With the simple CAPTCHA enabled, the rate of clearly automated submissions in test drops by at least 80% without increasing legitimate user abandonment by more than 5 percentage points.
+
+### Platform & Theming Compliance
+
+- All fonts and colors MUST be sourced exclusively from `fontAndColour.css` via the primary component library theme.
+- Responsive testing MUST include at least mobile, tablet, and desktop viewports and ensure no horizontal scrolling on mobile.
+
+## Non-Functional – Operations (traceability)
+
+- NFR-OPS-001 (Rate Limiting): Export/report endpoints MUST implement rate limiting to mitigate abuse and protect performance. Acceptance: Excess requests receive HTTP 429 with retry guidance. Mapped Task: T044.
+- NFR-OPS-002 (Health Checks): Web and API MUST expose lightweight health endpoints and Docker healthchecks MUST be configured. Acceptance: Health endpoints return 200 OK; containers report healthy via Docker. Mapped Task: T046.
 
 ## Assumptions
 

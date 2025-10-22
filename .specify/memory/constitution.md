@@ -140,7 +140,6 @@ Follow-up TODOs:
 
 ### Backend Stack
 - **Express** MUST be used for the API server runtime
-- **MySQL** MUST be used as the database (WordPress-compatible schema)
 - **Drizzle ORM** MUST be used for all database communication
 - **Database Migrations** MUST be used when adding or modifying tables
 - **Jest** MUST be used for all backend testing
@@ -154,7 +153,6 @@ Follow-up TODOs:
 - **Zod** MUST be used for input validation on both frontend and backend
 
 ### Database Requirements
-- Database MUST be configured to run WordPress (WordPress-compatible schema)
 - Additional tables MAY be added as needed for application features
 - All schema changes MUST use migrations (no direct schema modifications)
 

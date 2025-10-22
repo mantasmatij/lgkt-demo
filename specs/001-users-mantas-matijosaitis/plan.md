@@ -11,13 +11,13 @@ Build a small Nx monorepo with a Next.js frontend (public form + admin UI) and a
 ## Technical Context
 
 **Language/Version**: TypeScript (Node 20+ / ES2022)
-**Primary Dependencies**: Nx (monorepo), Next.js (frontend), Express (backend), Drizzle ORM, Zod, Tailwind CSS + Tailwind UI (components), CSV generation lib
+**Primary Dependencies**: Nx (monorepo), Next.js (frontend), Express (backend), Drizzle ORM, Zod, NextUI (components) + Tailwind CSS (utilities), CSV generation lib
 **Storage**: PostgreSQL 14+
 **Testing**: Jest (backend unit/integration), Cucumber + Playwright (frontend BDD E2E)
 **Target Platform**: Docker (containerized services)
 **Project Type**: Web app (frontend + backend in monorepo)
 **Performance Goals**: CSV export for 1,000 submissions < 10s; page loads < 2s on typical network; admin list pagination responsive < 1s for paging 50 rows
-**Constraints**: Keep dependencies minimal; share types/schemas; stick to simple auth; avoid tight coupling to WordPress; accessibility for form
+**Constraints**: Keep dependencies minimal; share types/schemas; stick to simple auth; avoid tight coupling to WordPress; accessibility for form; NextUI is the primary component library; Tailwind CSS may be used for utilities only (no component library usage)
 **Scale/Scope**: Initial dataset up to ~10k submissions in first phase; single admin role
 
 NEEDS CLARIFICATION (technical): None critical outstanding after spec clarification
@@ -28,19 +28,19 @@ Gate check against LGKT Forma Constitution v1.0.0 (pre-design):
 
 - [x] I. Clean Code Excellence — Plan adopts Nx libs for shared code, clear layering, typed contracts
 - [x] II. Simple & Intuitive UX — Simple form and admin lists; consistent patterns; validation feedback
-- [x] III. Responsive Design First — Mobile-first design, accessibility notes captured in spec
+- [x] III. Responsive Design First — Mobile-first design, accessibility notes captured in spec; explicit viewport tests added in tasks
 - [x] IV. DRY — Shared Zod schemas, shared DB lib, shared UI primitives
 - [x] V. Minimal Dependencies — Justified selections (Nx, Next.js, Express, Drizzle, Zod, CSV lib)
 - [x] VI. Comprehensive Testing — Jest (backend) and Cucumber (frontend) established
-- [~] VII. Technology Stack Compliance:
+- [x] VII. Technology Stack Compliance:
   - [x] Nx monorepo
   - [x] TypeScript
   - [x] Express backend
   - [x] Drizzle ORM + migrations
   - [x] Zod validation
-  - [~] UI library: Tailwind UI instead of NextUI (justified)
-  - [~] Database: PostgreSQL instead of MySQL (justified)
-  - [x] fontAndColour.css will be integrated as Tailwind tokens
+  - [x] UI library: NextUI (components)
+  - [x] Database: PostgreSQL (no vendor mandate in constitution)
+  - [x] fontAndColour.css integrated via NextUI theme (exclusive source for fonts/colors)
 
 Justifications recorded in Complexity Tracking; re-check after Phase 1.
 
@@ -74,16 +74,11 @@ Justifications recorded in Complexity Tracking; re-check after Phase 1.
 └── tools/                   # Nx generators/executors (as needed)
 ```
 
-**Structure Decision**: Nx monorepo with two apps (`apps/web`, `apps/api`) and shared packages (`packages/db`, `packages/validation`, `packages/ui`, `packages/contracts`).
+**Structure Decision**: Nx monorepo with two apps (`apps/web`, `apps/api`) and shared packages (`packages/db`, `packages/validation`, `packages/ui`, `packages/contracts`). `packages/ui` provides NextUI theme, primitives, and consumes fontAndColour.css; Tailwind CSS may be used for utility classes only.
 
-## Complexity Tracking (Constitution deviations)
+## Notes on Stack Choices
 
-| Violation | Why Needed | Simpler Alternative Rejected Because |
-|-----------|------------|-------------------------------------|
-| VII Stack: Use PostgreSQL vs MySQL | App is independent of WordPress DB; Postgres better fits team preference and ecosystem; Drizzle supports it | Using MySQL solely for WordPress compatibility is unnecessary; we do not integrate or share WP schema |
-| VII Stack: Tailwind UI vs NextUI | Team prefers Tailwind utility approach and Tailwind UI components; faster to scaffold responsive form/admin | NextUI adds another component lib; mixing both increases deps; Tailwind UI meets UX and responsiveness goals |
-
-We will still consume `fontAndColour.css` via Tailwind CSS tokens to maintain design consistency.
+PostgreSQL is selected for this service as there is no constitutional database vendor mandate and there is no direct DB integration with WordPress. NextUI is adopted as the primary component library per constitution; `fontAndColour.css` is consumed exclusively via the NextUI theme. Tailwind CSS is permitted for utility classes only (no separate component library).
 
 ---
 
@@ -113,7 +108,7 @@ Artifacts to produce:
 
 Constitution re-check will be performed post-design.
 
-## Phase 2: Planning Outputs (Stop here)
+## Phase 2: Planning Outputs
 
-This command stops after generating the above design artifacts. Task breakdown will be created later via `/speckit.tasks`.
+Design artifacts have been generated and implementation proceeds according to `tasks.md` in this feature directory.
 

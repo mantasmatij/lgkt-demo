@@ -147,3 +147,21 @@ Rules:
   - Submission.companyCode index
   - Submission.createdAt index
 - Create tables for SubmissionOrgan, GenderBalanceRow, SubmissionMeasure, Attachment, SubmissionMeta with FKs to Submission.
+
+## File Uploads
+
+### Strategy
+- Files are uploaded inline while the user is filling out the form. Selecting or dragging files starts an asynchronous upload to `POST /uploads` (multipart/form-data, field `file`) without leaving the form.
+- The UI shows per-file progress, allows removing a file, and validates type/size on the client before upload. No extra steps or pages are required for the user.
+- The server validates content type and size, stores the file (local filesystem or object storage), and returns an `uploadId` plus metadata (fileName, contentType, fileSize, storageKey).
+- When the user submits the form, the payload includes attachments as either links or file references by `uploadId`. On successful submission, the server persists `Attachment` rows linked to `Submission` and finalizes any temporary storage state.
+
+### Constraints
+- Allowed content types: `application/pdf`, `image/png`, `image/jpeg`.
+- Max file size: 10 MB per file (configurable via environment variable).
+- Max attachments per submission: 5 files (configurable).
+- Storage: Local development uses `./uploads/` directory; production SHOULD use an object store (e.g., S3 or S3-compatible). `storageKey` records the object key.
+
+### API Contract References
+- `POST /uploads` — returns `{ uploadId, fileName, contentType, fileSize, storageKey }`
+- `PublicSubmissionRequest.attachments[]` — may include either a link (`{ type: 'LINK', url }`) or a file reference (`{ type: 'FILE', uploadId }`).

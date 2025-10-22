@@ -43,6 +43,71 @@ paths:
           description: Created
         '400':
           description: Validation error
+  /uploads:
+    post:
+      summary: Upload a file (pre-submission)
+      description: Accepts a single file under field name `file`. Max size 10MB. Allowed types: application/pdf, image/png, image/jpeg.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+              required: [file]
+      responses:
+        '201':
+          description: Uploaded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadFileResponse'
+        '400':
+          description: Invalid file
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '413':
+          description: File too large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '415':
+          description: Unsupported media type
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Unprocessable file
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /uploads/{uploadId}:
+    delete:
+      summary: Delete an uploaded (unattached) file
+      description: Allows clients to abandon and delete a previously uploaded file by its uploadId.
+      parameters:
+        - in: path
+          name: uploadId
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Deleted
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
   /admin/submissions:
     get:
       summary: List submissions
@@ -151,7 +216,7 @@ components:
         attachments:
           type: array
           items:
-            $ref: '#/components/schemas/AttachmentLink'
+            $ref: '#/components/schemas/AttachmentRef'
         reasonsForUnderrepresentation:
           type: string
         consent:
@@ -235,6 +300,44 @@ components:
         url:
           type: string
       required: [type, url]
+    AttachmentFileRef:
+      type: object
+      properties:
+        type:
+          type: string
+          enum: [FILE]
+        uploadId:
+          type: string
+      required: [type, uploadId]
+    AttachmentRef:
+      oneOf:
+        - $ref: '#/components/schemas/AttachmentLink'
+        - $ref: '#/components/schemas/AttachmentFileRef'
+    UploadFileResponse:
+      type: object
+      properties:
+        uploadId:
+          type: string
+        fileName:
+          type: string
+        contentType:
+          type: string
+        fileSize:
+          type: integer
+        storageKey:
+          type: string
+      required: [uploadId, fileName, contentType, fileSize, storageKey]
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        details:
+          type: object
+          additionalProperties: true
+      required: [code, message]
     Submitter:
       type: object
       properties:

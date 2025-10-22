@@ -46,7 +46,9 @@ paths:
   /uploads:
     post:
       summary: Upload a file (pre-submission)
-      description: Accepts a single file under field name `file`. Max size 10MB. Allowed types: application/pdf, image/png, image/jpeg.
+      description: >-
+        Accepts a single file under field name `file`. Max size 10MB. Allowed types:
+        application/pdf, image/png, image/jpeg.
       requestBody:
         required: true
         content:

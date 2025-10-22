@@ -1,6 +1,5 @@
 //@ts-check
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const { composePlugins, withNx } = require('@nx/next');
 
 /**
@@ -10,6 +9,19 @@ const nextConfig = {
   // Use this to set Nx-specific options
   // See: https://nx.dev/recipes/next/next-config-setup
   nx: {},
+  // Produce a minimal standalone server output for Docker runtime
+  output: 'standalone',
+  async rewrites() {
+    // Proxy web requests made to /api/* to the Express API.
+    // In containers, we want to hit the 'api' service; locally, default to localhost.
+    const target = process.env.API_INTERNAL_ORIGIN || 'http://localhost:3001';
+    return [
+      {
+        source: '/api/:path*',
+        destination: `${target}/:path*`,
+      },
+    ];
+  },
 };
 
 const plugins = [

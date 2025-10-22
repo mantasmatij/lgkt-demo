@@ -29,7 +29,6 @@ Plan: /Users/mantas.matijosaitis/repos/lgkt-forma/specs/001-users-mantas-matijos
 - [x] T018 Add auth session strategy and middleware skeleton in apps/api/src/middleware/auth.ts
 - [x] T019 Add CAPTCHA verification service interface in apps/api/src/services/captcha.ts
 - [x] T020 Add CSV export utility in apps/api/src/utils/csv.ts
-- [ ] T021 Configure NextUI provider, theme, and base layout components in packages/ui; Tailwind CSS allowed for utility classes only (no component lib)
 - [x] T021 Configure NextUI provider, theme, and base layout components in packages/ui; Tailwind CSS allowed for utility classes only (no component lib)
 - [x] T021a Add security hardening scaffolding in apps/api: helmet, CORS, error handler, request logging
  - [x] T021b Define authentication security details: password hashing (Argon2/bcrypt), session cookie flags (Secure, HttpOnly, SameSite), CSRF strategy for admin UI
@@ -40,15 +39,14 @@ Plan: /Users/mantas.matijosaitis/repos/lgkt-forma/specs/001-users-mantas-matijos
 Story goal: Company user submits the public form without login.
 Independent test criteria: Able to submit valid data and see confirmation; invalid fields block submit with clear errors.
 
-- [ ] T022 [US1] Create public form page in apps/web/src/app/form/page.tsx (fields per spec; include repeating sections Organs/GenderBalance/Measures/Attachments)
-- [ ] T023 [P] [US1] Build form field components for repeating sections in packages/ui (Organs, GenderBalance, Measures, Attachments)
-- [ ] T024 [US1] Wire Zod schema validation in apps/web for client-side validation (packages/validation)
+- [x] T022 [US1] Create public form page in apps/web/src/app/form/page.tsx (fields per spec; include repeating sections Organs/GenderBalance/Measures/Attachments)
+- [x] T023 [P] [US1] Build form field components for repeating sections in packages/ui (Organs, GenderBalance, Measures, Attachments)
+- [x] T024 [US1] Wire Zod schema validation in apps/web for client-side validation (packages/validation)
 - [x] T025 [US1] Implement POST /submissions endpoint in apps/api/src/routes/submissions.ts
- - [ ] T025a Implement POST /uploads endpoint in apps/api/src/routes/uploads.ts (multipart form-data, limits, type validation)
  - [x] T025a Implement POST /uploads endpoint in apps/api/src/routes/uploads.ts (multipart form-data, limits, type validation)
 - [ ] T026 [US1] Implement CAPTCHA verification in apps/api/src/services/captcha.ts and integrate in submissions route
 - [ ] T026a [US1] Handle CAPTCHA service unavailability gracefully: block submission with retriable message; add unit/integration test
-- [ ] T027 [US1] Persist submission + child records (including repeating sections and attachments metadata) via packages/db repository functions
+- [x] T027 [US1] Persist submission + child records (including repeating sections and attachments metadata) via packages/db repository functions
  - [x] T027a [US1] On submission, resolve `uploadId` file references into Attachment rows; cleanup temp state if applicable
 - [ ] T028 [US1] Update Company record by company code on submission (upsert) in packages/db
 - [ ] T029 [US1] Show success confirmation page/state in apps/web/src/app/form/success/page.tsx

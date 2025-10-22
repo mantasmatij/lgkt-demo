@@ -31,8 +31,12 @@ services:
     build:
       context: ..
       dockerfile: docker/Dockerfile.web
+      args:
+        API_INTERNAL_ORIGIN: http://api:3001
     environment:
       API_BASE_URL: http://localhost:3001
+      # Internal origin used by Next.js rewrites to reach the API service from inside the container
+      API_INTERNAL_ORIGIN: http://api:3001
     ports:
       - "3000:3000"
     depends_on:

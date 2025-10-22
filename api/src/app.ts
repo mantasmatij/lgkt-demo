@@ -8,6 +8,8 @@ import { uploadsRouter } from './routes/uploads';
 import { submissionsRouter } from './routes/submissions';
 import { authRouter } from './routes/auth';
 import { adminSubmissionsRouter } from './routes/admin/submissions';
+import { adminCompaniesRouter } from './routes/admin/companies';
+import { adminReportsRouter } from './routes/admin/reports';
 import { issueCsrfToken } from './middleware/csrf';
 import { parseSession } from './middleware/auth';
 
@@ -43,6 +45,8 @@ export function createApp() {
   app.use('/api/uploads', uploadsRouter);
   app.use('/api/submissions', submissionsRouter);
   app.use('/api/admin/submissions', adminSubmissionsRouter);
+  app.use('/api/admin/companies', adminCompaniesRouter);
+  app.use('/api/admin/reports', adminReportsRouter);
 
   // Central error handler
   type HttpError = Error & { statusCode?: number; code?: string };

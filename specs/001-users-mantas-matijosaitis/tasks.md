@@ -73,10 +73,10 @@ Independent test criteria: Unauthed redirects to sign-in; authed sees dashboard;
 Story goal: Admin can view companies aggregated by company code, and export CSV for date range.
 Independent test criteria: Companies aggregated by code; CSV download contains required columns and respects date range.
 
-- [ ] T038 [US3] Implement GET /admin/companies endpoint in apps/api/src/routes/admin/companies.ts (aggregate by company code)
-- [ ] T039 [US3] Create Companies page apps/web/src/app/admin/companies/page.tsx (shows count per company code, name is latest)
-- [ ] T040 [US3] Implement GET /admin/reports/export.csv in apps/api/src/routes/admin/reports.ts (streamed CSV)
-- [ ] T041 [US3] Add date range picker and export link in apps/web/src/app/admin/reports/page.tsx
+- [x] T038 [US3] Implement GET /admin/companies endpoint in apps/api/src/routes/admin/companies.ts (aggregate by company code)
+- [x] T039 [US3] Create Companies page apps/web/src/app/admin/companies/page.tsx (shows count per company code, name is latest)
+- [x] T040 [US3] Implement GET /admin/reports/export.csv in apps/api/src/routes/admin/reports.ts (streamed CSV)
+- [x] T041 [US3] Add date range picker and export link in apps/web/src/app/admin/reports/page.tsx
 - [ ] T042 [US3] Add E2E scenario: export CSV for date range (apps/web/tests/e2e/us3-export.feature)
  - [ ] T042a [US3] Seed dataset with duplicates and naming variations; add tests asserting aggregation accuracy (latest name, counts)
  - [ ] T042b [US3] Add performance test for CSV export: seed 1,000 submissions and assert generation ≤ 10s for 30-day range

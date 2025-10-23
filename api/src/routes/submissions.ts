@@ -3,10 +3,11 @@ import { submissionSchema } from 'validation';
 import { createSubmissionTree, upsertCompany } from 'db';
 import { getUpload, deleteUpload } from '../services/uploadIndex';
 import { getCaptchaVerifier } from '../services/captcha';
+import { submissionLimiter } from '../middleware/rateLimit';
 
 export const submissionsRouter = Router();
 
-submissionsRouter.post('/', async (req, res, next) => {
+submissionsRouter.post('/', submissionLimiter, async (req, res, next) => {
   const parse = submissionSchema.safeParse(req.body);
   if (!parse.success) {
     return res.status(400).json({ code: 'VALIDATION_ERROR', message: 'Invalid request', details: parse.error.flatten() });

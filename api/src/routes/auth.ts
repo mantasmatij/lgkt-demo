@@ -2,10 +2,11 @@ import { Router } from 'express';
 import { getDb, adminUsers } from 'db';
 import { eq } from 'drizzle-orm';
 import { verifyPassword, createSession, cookieOptions, deleteSession, requireAuth } from '../middleware/auth';
+import { authLimiter } from '../middleware/rateLimit';
 
 export const authRouter = Router();
 
-authRouter.post('/login', async (req, res, next) => {
+authRouter.post('/login', authLimiter, async (req, res, next) => {
   try {
     const { email, password } = req.body;
 

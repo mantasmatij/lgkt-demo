@@ -174,6 +174,10 @@ API documentation is available in OpenAPI format:
 - CSRF protection for admin endpoints
 - File upload validation (type, size limits)
 - CAPTCHA verification for form submissions
+- **Rate limiting**:
+  - **CSV Export**: 10 requests per 15 minutes per IP
+  - **Login**: 5 attempts per 15 minutes per IP (failed attempts only)
+  - **Form Submission**: 3 submissions per hour per IP
 
 See [api/SECURITY.md](./api/SECURITY.md) for details.
 

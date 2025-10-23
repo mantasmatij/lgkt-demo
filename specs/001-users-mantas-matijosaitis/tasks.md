@@ -86,9 +86,9 @@ Independent test criteria: Companies aggregated by code; CSV download contains r
 - [ ] T043 Improve accessibility: labels, error summary, keyboard nav (apps/web)
 - [ ] T043a Add responsive viewport E2E checks: mobile, tablet, desktop; assert no horizontal scroll on mobile and tappable targets
 - [ ] T044 Add rate limiting on export endpoint (apps/api/src/middleware/rateLimit.ts)
-- [ ] T045 Add basic observability: request logging and error handling middleware (apps/api/src/middleware)
-- [ ] T046 Add health checks for web/api and Docker healthcheck configs (docker/)
-- [ ] T047 README updates and environment docs at repo root
+- [x] T045 Add basic observability: request logging and error handling middleware (apps/api/src/middleware)
+- [x] T046 Add health checks for web/api and Docker healthcheck configs (docker/)
+- [x] T047 README updates and environment docs at repo root
  - [ ] T048 Add SC-001 usability measurement plan and run a small usability test (n>=10) to validate "95% in <5m"; report findings
  - [ ] T049 Add SC-005 CAPTCHA effectiveness measurement: collect telemetry (bot blocks vs submits, abandonment deltas), analyze for 80% drop without >5pp legit abandonment
 

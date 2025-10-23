@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { getDb, submissions, companies } from 'db';
 import { and, gte, lte, sql } from 'drizzle-orm';
 import { requireAuth } from '../../middleware/auth';
+import { csvExportLimiter } from '../../middleware/rateLimit';
 import { stringify } from 'csv-stringify';
 
 export const adminReportsRouter = Router();
@@ -9,7 +10,7 @@ export const adminReportsRouter = Router();
 // All admin routes require authentication
 adminReportsRouter.use(requireAuth);
 
-adminReportsRouter.get('/export.csv', async (req, res, next) => {
+adminReportsRouter.get('/export.csv', csvExportLimiter, async (req, res, next) => {
   try {
     const fromDate = req.query.from as string;
     const toDate = req.query.to as string;

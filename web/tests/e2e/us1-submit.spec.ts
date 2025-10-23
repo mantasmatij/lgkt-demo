@@ -59,8 +59,8 @@ test.describe('US1: Public Form Submission', () => {
     // Try to submit empty form
     await page.click('button[type="submit"]');
     
-    // Wait for error summary to appear
-    const errorSummary = page.locator('[role="alert"]');
+    // Wait for error summary to appear (use specific selector to avoid Next.js route announcer)
+    const errorSummary = page.locator('[role="alert"]:has(#error-summary-title)');
     await expect(errorSummary).toBeVisible({ timeout: 2000 });
     
     // Verify error summary has content
@@ -93,8 +93,8 @@ test.describe('US1: Public Form Submission', () => {
     // Try to submit
     await page.click('button[type="submit"]');
     
-    // Should show validation error
-    const errorSummary = page.locator('[role="alert"]');
+    // Should show validation error (use specific selector)
+    const errorSummary = page.locator('[role="alert"]:has(#error-summary-title)');
     await expect(errorSummary).toBeVisible({ timeout: 2000 });
     
     // Should not navigate away
@@ -110,8 +110,8 @@ test.describe('US1: Public Form Submission', () => {
     // Try to submit
     await page.click('button[type="submit"]');
     
-    // Should show validation error
-    await expect(page.locator('[role="alert"]')).toBeVisible({ timeout: 2000 });
+    // Should show validation error (use specific selector)
+    await expect(page.locator('[role="alert"]:has(#error-summary-title)')).toBeVisible({ timeout: 2000 });
   });
 
   test('T030a: should validate date range (from < to)', async ({ page }) => {
@@ -138,8 +138,8 @@ test.describe('US1: Public Form Submission', () => {
     // Try to submit
     await page.click('button[type="submit"]');
     
-    // Should show validation error
-    await expect(page.locator('[role="alert"]')).toBeVisible({ timeout: 2000 });
+    // Should show validation error (use specific selector)
+    await expect(page.locator('[role="alert"]:has(#error-summary-title)')).toBeVisible({ timeout: 2000 });
   });
 
   test('should have accessible skip-to-content link', async ({ page }) => {

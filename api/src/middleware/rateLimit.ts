@@ -1,13 +1,17 @@
 import rateLimit from 'express-rate-limit';
 import { Request, Response } from 'express';
 
+// In development/test, use much higher limits to avoid blocking E2E tests
+const isDevelopment = process.env.NODE_ENV !== 'production';
+
 /**
  * Rate limiter for CSV export endpoint
- * Limits: 10 requests per 15 minutes per IP
+ * Production: 10 requests per 15 minutes per IP
+ * Development: 1000 requests per 15 minutes per IP
  */
 export const csvExportLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 10, // Limit each IP to 10 requests per windowMs
+  max: isDevelopment ? 1000 : 10, // Much higher limit in dev/test
   message: {
     error: 'Too many export requests from this IP, please try again later.',
     retryAfter: '15 minutes',
@@ -24,11 +28,12 @@ export const csvExportLimiter = rateLimit({
 
 /**
  * Rate limiter for authentication endpoints
- * Limits: 5 login attempts per 15 minutes per IP
+ * Production: 5 login attempts per 15 minutes per IP
+ * Development: 100 login attempts per 15 minutes per IP
  */
 export const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 5, // Limit each IP to 5 login attempts per windowMs
+  max: isDevelopment ? 100 : 5, // Much higher limit in dev/test
   message: {
     error: 'Too many login attempts from this IP, please try again later.',
     retryAfter: '15 minutes',
@@ -46,11 +51,12 @@ export const authLimiter = rateLimit({
 
 /**
  * Rate limiter for public form submission
- * Limits: 3 submissions per hour per IP
+ * Production: 3 submissions per hour per IP
+ * Development: 100 submissions per hour per IP
  */
 export const submissionLimiter = rateLimit({
   windowMs: 60 * 60 * 1000, // 1 hour
-  max: 3, // Limit each IP to 3 submissions per hour
+  max: isDevelopment ? 100 : 3, // Much higher limit in dev/test
   message: {
     error: 'Too many submissions from this IP, please try again later.',
     retryAfter: '1 hour',

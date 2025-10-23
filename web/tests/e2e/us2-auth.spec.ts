@@ -105,13 +105,16 @@ test.describe('US2: Admin Authentication', () => {
     await page.click('button[type="submit"]');
     await page.waitForURL('/admin/dashboard');
     
+    // Wait for page to finish loading (spinner should disappear)
+    await page.waitForSelector('text=Admin Dashboard', { state: 'visible' });
+    
     // Check for either submissions or empty state
     const emptyState = page.locator('text=/no submissions/i');
     const submissionsTable = page.locator('table');
     
-    // Either should be visible
-    const hasEmptyState = await emptyState.isVisible().catch(() => false);
-    const hasTable = await submissionsTable.isVisible().catch(() => false);
+    // Either should be visible (use waitFor to handle race conditions)
+    const hasEmptyState = await emptyState.isVisible({ timeout: 3000 }).catch(() => false);
+    const hasTable = await submissionsTable.isVisible({ timeout: 3000 }).catch(() => false);
     
     expect(hasEmptyState || hasTable).toBeTruthy();
   });

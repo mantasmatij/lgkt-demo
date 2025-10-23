@@ -34,7 +34,12 @@ test.describe('US3: CSV Export', () => {
   });
 
   test('T042: should export CSV with date range', async ({ page }) => {
+    test.setTimeout(60000); // Increase timeout to 60s to handle rate limiting
+    
     await page.goto('/admin/reports');
+    
+    // Add delay to avoid rate limiting from previous tests
+    await page.waitForTimeout(2000);
     
     // Set date range
     const fromDate = '2024-01-01';
@@ -46,11 +51,11 @@ test.describe('US3: CSV Export', () => {
     await fromInput.fill(fromDate);
     await toInput.fill(toDate);
     
-    // Start waiting for download before clicking
-    const downloadPromise = page.waitForEvent('download');
+    // Start waiting for download before clicking (with extended timeout for rate limiting)
+    const downloadPromise = page.waitForEvent('download', { timeout: 50000 });
     
-    // Click export button
-    const exportButton = page.locator('button, a').filter({ hasText: /export|download/i }).first();
+    // Click export button (more specific selector)
+    const exportButton = page.locator('button[type="submit"]').filter({ hasText: /export/i });
     await exportButton.click();
     
     // Wait for download

@@ -116,6 +116,7 @@ Follow-up TODOs:
 - Critical paths MUST have integration tests in addition to unit tests
 - Tests MUST be written concisely without unnecessary repetition
 - Test names MUST clearly describe what is being tested
+- All available tests must be passing before commiting changes to repository
 
 **Rationale**: Comprehensive testing catches bugs early, enables confident refactoring, serves as living documentation, and ensures reliability in production.
 

@@ -84,22 +84,25 @@ export default function AdminDashboardPage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6">Admin Dashboard</h1>
+      <h1 className="text-3xl font-bold mb-6" tabIndex={-1} id="page-title">Admin Dashboard</h1>
 
       {isEmpty ? (
-        <Card className="p-8 text-center">
+        <Card className="p-8 text-center" role="status" aria-live="polite">
           <p className="text-gray-600 text-lg">No submissions yet.</p>
           <p className="text-gray-500 mt-2">Submissions will appear here once companies start submitting forms.</p>
         </Card>
       ) : (
         <>
-          <Card className="p-4 mb-4">
+          <Card className="p-4 mb-4" role="status" aria-live="polite">
             <p className="text-gray-700">
               <span className="font-semibold">{data.total}</span> total submissions
             </p>
           </Card>
 
-          <Table aria-label="Submissions table">
+          <Table 
+            aria-label="Submissions table"
+            aria-describedby="submissions-description"
+          >
             <TableHeader>
               <TableColumn>Company Code</TableColumn>
               <TableColumn>Company Name</TableColumn>
@@ -119,6 +122,9 @@ export default function AdminDashboardPage() {
               ))}
             </TableBody>
           </Table>
+          <p id="submissions-description" className="sr-only">
+            Table showing all company form submissions with company code, name, country, contact email, and submission date.
+          </p>
 
           {data.pages > 1 && (
             <div className="flex justify-center mt-4">
@@ -127,6 +133,7 @@ export default function AdminDashboardPage() {
                 page={page}
                 onChange={setPage}
                 showControls
+                aria-label="Submissions pagination"
               />
             </div>
           )}

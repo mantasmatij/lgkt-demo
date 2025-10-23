@@ -83,7 +83,7 @@ Independent test criteria: Companies aggregated by code; CSV download contains r
 
 ## Phase 6 – Polish & Cross-Cutting
 
-- [ ] T043 Improve accessibility: labels, error summary, keyboard nav (apps/web)
+- [x] T043 Improve accessibility: labels, error summary, keyboard nav (apps/web)
 - [ ] T043a Add responsive viewport E2E checks: mobile, tablet, desktop; assert no horizontal scroll on mobile and tappable targets
 - [x] T044 Add rate limiting on export endpoint (apps/api/src/middleware/rateLimit.ts)
 - [x] T045 Add basic observability: request logging and error handling middleware (apps/api/src/middleware)

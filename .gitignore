@@ -28,8 +28,7 @@ Thumbs.db
 *.swp
 *.swo
 
-# Docker
-Dockerfile*
+# Docker - ignore .dockerignore but keep Dockerfiles
 .dockerignore
 
 # Jest

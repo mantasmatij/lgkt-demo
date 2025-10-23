@@ -98,7 +98,10 @@ npm run dev:up              # Start Docker services
 npm run dev:down            # Stop and remove containers
 
 # Testing
-npm test                    # Run all tests
+npm test                    # Run all unit tests
+npm run test:e2e            # Run E2E tests with Playwright
+npm run test:e2e:ui         # Run E2E tests in UI mode
+npm run test:e2e:headed     # Run E2E tests in headed mode (see browser)
 npm run lint                # Run linters
 
 # Database
@@ -108,16 +111,35 @@ npm run db:migrate          # Run migrations
 ### Running Tests
 
 ```bash
-# All tests
+# Unit tests
 npm test
 
-# Specific project
+# E2E tests (requires services running)
+npm run dev:up              # Start services first
+npm run test:e2e            # Run all E2E tests
+
+# E2E tests in UI mode (interactive)
+npm run test:e2e:ui
+
+# Specific project unit tests
 npx nx test api
 npx nx test web
 
 # With coverage
 npx nx test api --coverage
 ```
+
+### E2E Testing
+
+The project includes comprehensive E2E tests using Playwright:
+
+- **Form submission tests**: Happy path, validation, consent requirements
+- **Admin authentication tests**: Sign-in, session management, redirects
+- **CSV export tests**: Date range filtering, rate limiting
+- **Responsive design tests**: Mobile, tablet, desktop viewports
+- **Accessibility tests**: Keyboard navigation, screen readers
+
+Tests run against multiple browsers (Chromium, Firefox, WebKit) and viewports.
 
 ### Linting
 

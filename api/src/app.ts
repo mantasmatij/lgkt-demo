@@ -10,6 +10,7 @@ import { authRouter } from './routes/auth';
 import { adminSubmissionsRouter } from './routes/admin/submissions';
 import { adminCompaniesRouter } from './routes/admin/companies';
 import { adminReportsRouter } from './routes/admin/reports';
+import { healthRouter } from './routes/health';
 import { issueCsrfToken } from './middleware/csrf';
 import { parseSession } from './middleware/auth';
 
@@ -33,9 +34,8 @@ export function createApp() {
 
   app.use('/assets', express.static(path.join(__dirname, 'assets')));
 
-  app.get('/api/health', (_req, res) => {
-    res.send({ status: 'ok' });
-  });
+  // Health check endpoints (no auth required)
+  app.use('/api', healthRouter);
 
   // CSRF token issuance endpoint
   app.get('/api/csrf', issueCsrfToken);

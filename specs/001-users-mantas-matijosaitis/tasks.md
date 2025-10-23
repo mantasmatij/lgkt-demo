@@ -50,8 +50,8 @@ Independent test criteria: Able to submit valid data and see confirmation; inval
  - [x] T027a [US1] On submission, resolve `uploadId` file references into Attachment rows; cleanup temp state if applicable
 - [x] T028 [US1] Update Company record by company code on submission (upsert) in packages/db
 - [x] T029 [US1] Show success confirmation page/state in apps/web/src/app/form/success/page.tsx
-- [ ] T030 [US1] Add basic E2E scenario (Cucumber) for happy path submit (apps/web/tests/e2e/us1-submit.feature)
-- [ ] T030a [US1] Add E2E scenario for client-side validation errors and consent requirement
+- [x] T030 [US1] Add basic E2E scenario (Cucumber) for happy path submit (apps/web/tests/e2e/us1-submit.feature)
+- [x] T030a [US1] Add E2E scenario for client-side validation errors and consent requirement
 - [ ] T022a [US1] Implement inline client-side uploader: drag-and-drop + file picker, per-file progress, remove option; client-side type/size validation; call /uploads; include `uploadId` refs in submission payload; display clear inline errors (no extra steps/pages)
 
 ## Phase 4 – User Story 2 (P2): Admin sign-in and dashboard
@@ -65,8 +65,8 @@ Independent test criteria: Unauthed redirects to sign-in; authed sees dashboard;
 - [x] T034 [US2] Protect admin routes and add /admin redirect behaviors in apps/web
 - [x] T035 [US2] Implement GET /admin/submissions endpoint with pagination in apps/api/src/routes/admin/submissions.ts
 - [x] T036 [US2] Build admin dashboard page apps/web/src/app/admin/dashboard/page.tsx (list or empty state)
-- [ ] T037 [US2] Add E2E scenario: redirect unauthenticated to sign-in; sign-in to dashboard (apps/web/tests/e2e/us2-auth.feature)
- - [ ] T037a [US2] Add CSRF verification test for protected admin actions (form-based or token-based per strategy)
+- [x] T037 [US2] Add E2E scenario: redirect unauthenticated to sign-in; sign-in to dashboard (apps/web/tests/e2e/us2-auth.feature)
+ - [x] T037a [US2] Add CSRF verification test for protected admin actions (form-based or token-based per strategy)
 
 ## Phase 5 – User Story 3 (P3): Companies view and CSV export
 
@@ -77,14 +77,14 @@ Independent test criteria: Companies aggregated by code; CSV download contains r
 - [x] T039 [US3] Create Companies page apps/web/src/app/admin/companies/page.tsx (shows count per company code, name is latest)
 - [x] T040 [US3] Implement GET /admin/reports/export.csv in apps/api/src/routes/admin/reports.ts (streamed CSV)
 - [x] T041 [US3] Add date range picker and export link in apps/web/src/app/admin/reports/page.tsx
-- [ ] T042 [US3] Add E2E scenario: export CSV for date range (apps/web/tests/e2e/us3-export.feature)
+- [x] T042 [US3] Add E2E scenario: export CSV for date range (apps/web/tests/e2e/us3-export.feature)
  - [ ] T042a [US3] Seed dataset with duplicates and naming variations; add tests asserting aggregation accuracy (latest name, counts)
  - [ ] T042b [US3] Add performance test for CSV export: seed 1,000 submissions and assert generation ≤ 10s for 30-day range
 
 ## Phase 6 – Polish & Cross-Cutting
 
 - [x] T043 Improve accessibility: labels, error summary, keyboard nav (apps/web)
-- [ ] T043a Add responsive viewport E2E checks: mobile, tablet, desktop; assert no horizontal scroll on mobile and tappable targets
+- [x] T043a Add responsive viewport E2E checks: mobile, tablet, desktop; assert no horizontal scroll on mobile and tappable targets
 - [x] T044 Add rate limiting on export endpoint (apps/api/src/middleware/rateLimit.ts)
 - [x] T045 Add basic observability: request logging and error handling middleware (apps/api/src/middleware)
 - [x] T046 Add health checks for web/api and Docker healthcheck configs (docker/)

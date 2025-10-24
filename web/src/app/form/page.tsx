@@ -83,7 +83,7 @@ export default function PublicFormPage() {
   return (
     <div className="container mx-auto max-w-3xl px-4 py-6">
       <div className="flex flex-col gap-3">
-        <h1 className="text-2xl font-semibold">Anonymous Company Form</h1>
+        <h1 className="text-3xl font-bold mb-2">Anonymous Company Form</h1>
       
       <ErrorSummary errors={errors} />
       
@@ -92,7 +92,7 @@ export default function PublicFormPage() {
       <form onSubmit={onSubmit} noValidate>
         <Card className="p-6">
           <div className="flex flex-col gap-3">
-            <h3 className="text-lg font-medium mb-2">Company</h3>
+            <h2 className="text-xl font-semibold mb-2">Company</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <Input 
               id="name"
@@ -211,7 +211,7 @@ export default function PublicFormPage() {
 
         <Card className="p-6">
           <div className="flex flex-col gap-3">
-            <h3 className="text-lg font-medium mb-2">Contact & Other</h3>
+            <h2 className="text-xl font-semibold mb-2">Contact & Other</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <Input 
               id="contactName"
@@ -255,7 +255,7 @@ export default function PublicFormPage() {
 
         <Card className="p-6">
           <div className="flex flex-col gap-3">
-            <h3 className="text-lg font-medium mb-2">Submitter</h3>
+            <h2 className="text-xl font-semibold mb-2">Submitter</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <Input 
               id="submitter.name"

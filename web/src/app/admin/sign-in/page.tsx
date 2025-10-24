@@ -43,7 +43,7 @@ export default function AdminSignInPage() {
     <div className="container mx-auto px-4 py-6 max-w-md">
       <Card className="p-6">
         <div className="flex flex-col gap-3">
-          <h1 className="text-2xl font-bold mb-2 text-center">Admin Sign In</h1>
+          <h1 className="text-3xl font-bold mb-2 text-center">Admin Sign In</h1>
           
           {error && (
             <div className="p-3 bg-red-50 border border-red-200 rounded text-red-700 text-sm">

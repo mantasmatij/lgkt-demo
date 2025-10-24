@@ -209,11 +209,11 @@ Phase 8 (Polish) → Final integration and performance optimization
 
 ### Tasks
 
-- [ ] T058 [P] [US4] Audit all interactive elements for touch target size: Find buttons, links, inputs, checkboxes, radio buttons that are <44x44px and fix using HeroUI size prop or custom padding
-- [ ] T059 [P] [US4] Ensure adequate spacing between interactive elements: Verify minimum 8px gap (gap-1) between adjacent buttons, links, or inputs on mobile
-- [ ] T060 [P] [US4] Optimize select dropdowns for mobile in form components: Ensure HeroUI Select components have large enough touch targets, proper dropdown sizing
-- [ ] T061 [P] [US4] Optimize date pickers for mobile (if applicable): Ensure date inputs use native mobile date picker or appropriately sized custom picker
-- [ ] T062 [P] [US4] Test scrolling performance on mobile: Verify smooth scrolling without janky animations, no layout shift during scroll (CLS < 0.1)
+- [x] T058 [P] [US4] Audit all interactive elements for touch target size: Find buttons, links, inputs, checkboxes, radio buttons that are <44x44px and fix using HeroUI size prop or custom padding
+- [x] T059 [P] [US4] Ensure adequate spacing between interactive elements: Verify minimum 8px gap (gap-1) between adjacent buttons, links, or inputs on mobile
+- [x] T060 [P] [US4] Optimize select dropdowns for mobile in form components: Ensure HeroUI Select components have large enough touch targets, proper dropdown sizing
+- [x] T061 [P] [US4] Optimize date pickers for mobile (if applicable): Ensure date inputs use native mobile date picker or appropriately sized custom picker
+- [x] T062 [P] [US4] Test scrolling performance on mobile: Verify smooth scrolling without janky animations, no layout shift during scroll (CLS < 0.1)
 - [ ] T063 [US4] Mobile touch test - Form inputs: On mobile device, tap each form field, verify correct field receives focus without triggering adjacent elements
 - [ ] T064 [US4] Mobile touch test - Buttons and actions: On mobile device, tap all buttons and links, verify proper activation without accidental adjacent clicks
 - [ ] T065 [US4] Mobile touch test - Admin dashboard: On mobile device, perform admin tasks (view submissions, export CSV, navigate), verify all actions are easily tappable
@@ -236,12 +236,12 @@ Phase 8 (Polish) → Final integration and performance optimization
 
 ### Tasks
 
-- [ ] T066 [P] [US5] Define typography scale in apps/web/tailwind.config.ts or global CSS: Establish h1 (text-3xl or text-4xl), h2 (text-2xl), h3 (text-xl), body (text-base = 16px), small (text-sm)
-- [ ] T067 [P] [US5] Apply heading hierarchy to form page in apps/web/src/app/page.tsx: Use h1 for page title, h2 for section headings, proper font weight (font-semibold or font-bold)
-- [ ] T068 [P] [US5] Apply heading hierarchy to admin pages: Use h1 for page titles, h2 for sections in apps/web/src/app/admin/dashboard/page.tsx and apps/web/src/app/admin/companies/page.tsx
-- [ ] T069 [P] [US5] Ensure body text readability: Verify all paragraphs and lists use text-base (16px) with line-height-relaxed (1.5) or line-height-loose (1.8)
-- [ ] T070 [P] [US5] Style form labels for clarity: Ensure labels use proper font weight (font-medium) and spacing (mb-1 or mb-2) to associate with inputs
-- [ ] T071 [P] [US5] Style secondary information (hints, captions, metadata): Use text-sm with muted color (text-gray-600 or text-secondary) to indicate lower importance
+- [x] T066 [P] [US5] Define typography scale in apps/web/tailwind.config.ts or global CSS: Establish h1 (text-3xl or text-4xl), h2 (text-2xl), h3 (text-xl), body (text-base = 16px), small (text-sm)
+- [x] T067 [P] [US5] Apply heading hierarchy to form page in apps/web/src/app/page.tsx: Use h1 for page title, h2 for section headings, proper font weight (font-semibold or font-bold)
+- [x] T068 [P] [US5] Apply heading hierarchy to admin pages: Use h1 for page titles, h2 for sections in apps/web/src/app/admin/dashboard/page.tsx and apps/web/src/app/admin/companies/page.tsx
+- [x] T069 [P] [US5] Ensure body text readability: Verify all paragraphs and lists use text-base (16px) with line-height-relaxed (1.5) or line-height-loose (1.8)
+- [x] T070 [P] [US5] Style form labels for clarity: Ensure labels use proper font weight (font-medium) and spacing (mb-1 or mb-2) to associate with inputs
+- [x] T071 [P] [US5] Style secondary information (hints, captions, metadata): Use text-sm with muted color (text-gray-600 or text-secondary) to indicate lower importance
 - [ ] T072 [US5] Visual inspection - Typography hierarchy: Review each page, verify headings are visually distinct, body text is readable, labels are clear
 - [ ] T073 [US5] Test typography at 200% zoom: Zoom browser to 200%, verify text remains readable and layout doesn't break
 

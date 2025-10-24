@@ -1,0 +1,25 @@
+# Web Dockerfile
+FROM node:20-alpine AS deps
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --omit=dev
+
+FROM node:20-alpine AS build
+WORKDIR /app
+ARG API_INTERNAL_ORIGIN
+ENV API_INTERNAL_ORIGIN=${API_INTERNAL_ORIGIN}
+COPY . .
+RUN npm ci && npx nx build web
+
+FROM node:20-alpine AS runtime
+WORKDIR /app
+ENV NODE_ENV=production
+# Copy the standalone server output
+COPY --from=build /app/web/.next/standalone ./
+# Copy static files - Next.js expects them in web/.next/static when running from standalone/web/
+COPY --from=build /app/web/.next/static ./web/.next/static
+# Copy public files
+COPY --from=build /app/web/public ./web/public
+EXPOSE 3000
+# Run the standalone server from the web directory
+CMD ["node", "web/server.js"]

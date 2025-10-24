@@ -1,0 +1,355 @@
+openapi: 3.0.3
+info:
+  title: LGKT Forma API
+  version: 0.1.0
+servers:
+  - url: https://{host}/api
+    variables:
+      host:
+        default: example.com
+paths:
+  /auth/login:
+    post:
+      summary: Admin login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+              required: [email, password]
+      responses:
+        '200':
+          description: Logged in
+        '401':
+          description: Invalid credentials
+  /submissions:
+    post:
+      summary: Public company form submission
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PublicSubmissionRequest'
+      responses:
+        '201':
+          description: Created
+        '400':
+          description: Validation error
+  /uploads:
+    post:
+      summary: Upload a file (pre-submission)
+      description: >-
+        Accepts a single file under field name `file`. Max size 10MB. Allowed types:
+        application/pdf, image/png, image/jpeg.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+              required: [file]
+      responses:
+        '201':
+          description: Uploaded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadFileResponse'
+        '400':
+          description: Invalid file
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '413':
+          description: File too large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '415':
+          description: Unsupported media type
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Unprocessable file
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /uploads/{uploadId}:
+    delete:
+      summary: Delete an uploaded (unattached) file
+      description: Allows clients to abandon and delete a previously uploaded file by its uploadId.
+      parameters:
+        - in: path
+          name: uploadId
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Deleted
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /admin/submissions:
+    get:
+      summary: List submissions
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            minimum: 1
+          required: false
+        - in: query
+          name: pageSize
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+          required: false
+        - in: query
+          name: from
+          schema:
+            type: string
+            format: date
+        - in: query
+          name: to
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: OK
+  /admin/companies:
+    get:
+      summary: List companies (aggregated)
+      responses:
+        '200':
+          description: OK
+  /admin/reports/export.csv:
+    get:
+      summary: Export submissions to CSV by date range
+      parameters:
+        - in: query
+          name: from
+          schema:
+            type: string
+            format: date
+          required: true
+        - in: query
+          name: to
+          schema:
+            type: string
+            format: date
+          required: true
+      responses:
+        '200':
+          description: CSV stream
+
+components:
+  schemas:
+    PublicSubmissionRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        code:
+          type: string
+        country:
+          type: string
+        legalForm:
+          type: string
+        address:
+          type: string
+        registry:
+          type: string
+        eDeliveryAddress:
+          type: string
+        reportingFrom:
+          type: string
+          format: date
+        reportingTo:
+          type: string
+          format: date
+        contactName:
+          type: string
+        contactEmail:
+          type: string
+          format: email
+        contactPhone:
+          type: string
+        requirementsApplied:
+          type: boolean
+        requirementsLink:
+          type: string
+        organs:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganRow'
+        genderBalance:
+          type: array
+          items:
+            $ref: '#/components/schemas/GenderBalanceRow'
+          minItems: 1
+        measures:
+          type: array
+          items:
+            $ref: '#/components/schemas/Measure'
+        attachments:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttachmentRef'
+        reasonsForUnderrepresentation:
+          type: string
+        consent:
+          type: boolean
+        consentText:
+          type: string
+        submitter:
+          $ref: '#/components/schemas/Submitter'
+        captchaToken:
+          type: string
+      required:
+        - name
+        - code
+        - country
+        - legalForm
+        - address
+        - registry
+        - eDeliveryAddress
+        - reportingFrom
+        - reportingTo
+        - contactName
+        - contactEmail
+        - contactPhone
+        - requirementsApplied
+        - genderBalance
+        - consent
+        - consentText
+        - submitter
+        - captchaToken
+    OrganRow:
+      type: object
+      properties:
+        organType:
+          type: string
+          enum: [VALDYBA, STEBETOJU_TARYBA]
+        lastElectionDate:
+          type: string
+          format: date
+        plannedElectionDate:
+          type: string
+          format: date
+      required: [organType, lastElectionDate, plannedElectionDate]
+    GenderBalanceRow:
+      type: object
+      properties:
+        role:
+          type: string
+          enum: [CEO, BOARD, SUPERVISORY_BOARD]
+        women:
+          type: integer
+          minimum: 0
+        men:
+          type: integer
+          minimum: 0
+        total:
+          type: integer
+          minimum: 0
+      required: [role, women, men, total]
+    Measure:
+      type: object
+      properties:
+        name:
+          type: string
+        plannedResult:
+          type: string
+        indicator:
+          type: string
+        indicatorValue:
+          type: string
+        indicatorUnit:
+          type: string
+        year:
+          type: string
+      required: [name, plannedResult]
+    AttachmentLink:
+      type: object
+      properties:
+        type:
+          type: string
+          enum: [LINK]
+        url:
+          type: string
+      required: [type, url]
+    AttachmentFileRef:
+      type: object
+      properties:
+        type:
+          type: string
+          enum: [FILE]
+        uploadId:
+          type: string
+      required: [type, uploadId]
+    AttachmentRef:
+      oneOf:
+        - $ref: '#/components/schemas/AttachmentLink'
+        - $ref: '#/components/schemas/AttachmentFileRef'
+    UploadFileResponse:
+      type: object
+      properties:
+        uploadId:
+          type: string
+        fileName:
+          type: string
+        contentType:
+          type: string
+        fileSize:
+          type: integer
+        storageKey:
+          type: string
+      required: [uploadId, fileName, contentType, fileSize, storageKey]
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        details:
+          type: object
+          additionalProperties: true
+      required: [code, message]
+    Submitter:
+      type: object
+      properties:
+        name:
+          type: string
+        title:
+          type: string
+        phone:
+          type: string
+        email:
+          type: string
+          format: email
+      required: [name, phone, email]

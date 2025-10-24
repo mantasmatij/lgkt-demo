@@ -116,6 +116,7 @@ Follow-up TODOs:
 - Critical paths MUST have integration tests in addition to unit tests
 - Tests MUST be written concisely without unnecessary repetition
 - Test names MUST clearly describe what is being tested
+- All available tests must be passing before commiting changes to repository
 
 **Rationale**: Comprehensive testing catches bugs early, enables confident refactoring, serves as living documentation, and ensures reliability in production.
 
@@ -140,7 +141,6 @@ Follow-up TODOs:
 
 ### Backend Stack
 - **Express** MUST be used for the API server runtime
-- **MySQL** MUST be used as the database (WordPress-compatible schema)
 - **Drizzle ORM** MUST be used for all database communication
 - **Database Migrations** MUST be used when adding or modifying tables
 - **Jest** MUST be used for all backend testing
@@ -154,7 +154,6 @@ Follow-up TODOs:
 - **Zod** MUST be used for input validation on both frontend and backend
 
 ### Database Requirements
-- Database MUST be configured to run WordPress (WordPress-compatible schema)
 - Additional tables MAY be added as needed for application features
 - All schema changes MUST use migrations (no direct schema modifications)
 

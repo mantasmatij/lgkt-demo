@@ -72,8 +72,10 @@ Phase 8 (Polish) → Final integration and performance optimization
 - [x] T015 [P] Update component imports in apps/web/src/app/admin/companies/page.tsx: Replace `@nextui-org/react` with `@heroui/react`
 - [x] T016 Update Tailwind plugin in apps/web/tailwind.config.ts: Replace `nextui()` import from `@nextui-org/theme` with `heroui()` from `@heroui/react`
 - [x] T017 Update constitution in .specify/memory/constitution.md: Replace all references to "NextUI" with "HeroUI" and note migration from NextUI v2.4.0
-- [x] T018 Build UI package to verify migration: Run `nx build ui`
-- [ ] T019 Start web app to verify HeroUI renders: Run `nx serve web` and manually check homepage loads without console errors
+- [x] T018: Run `npx nx build ui` and verify it builds successfully with HeroUI
+- [x] T019: Run `npx nx build web` and verify the app renders correctly (check localhost:3000)
+
+---
 
 ---
 

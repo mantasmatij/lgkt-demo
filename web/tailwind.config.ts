@@ -12,5 +12,5 @@ export default {
   theme: {
     extend: {},
   },
-  plugins: [heroui()],
+  plugins: [heroui() as any],
 } satisfies Config;

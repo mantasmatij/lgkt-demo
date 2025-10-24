@@ -23,6 +23,7 @@ services:
       PORT: "3001"
       DATABASE_URL: postgres://forma:forma@postgres:5432/forma
       SESSION_SECRET: devsecret
+      NODE_ENV: development
     ports:
       - "3001:3001"
     healthcheck:

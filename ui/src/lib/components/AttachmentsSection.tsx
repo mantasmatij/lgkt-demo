@@ -155,7 +155,7 @@ export function AttachmentsSection({ value, onChange }: { value: AttachmentRef[]
         <label htmlFor="file-upload" className="cursor-pointer">
           <div className="space-y-2">
             <svg
-              className="mx-auto h-12 w-12 text-gray-400"
+              className="mx-auto size-12 text-gray-400"
               stroke="currentColor"
               fill="none"
               viewBox="0 0 48 48"

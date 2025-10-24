@@ -5,6 +5,14 @@
 **Status**: Draft  
 **Input**: User description: "UI update. Currently the UI is all over the place and messy. Components are not aligned and are hard to navigate. Build an easy to use and simple UI, that is adaptive and easy to use on all different types of devices."
 
+## Clarifications
+
+### Session 2025-10-24
+
+- Q: How should the UI redesign be rolled out to minimize user disruption? → A: Big bang - deploy all UI changes at once after testing
+- Q: What testing approach should be used to validate responsive design across different viewports? → A: Playwright E2E with viewport testing and screenshot comparison
+- Q: What spacing scale base unit should be used for the consistent spacing system? → A: 8-point grid system (8px base)
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - Improved Form Navigation and Layout (Priority: P1)
@@ -51,7 +59,7 @@ All pages throughout the application need consistent spacing, margins, padding, 
 
 **Acceptance Scenarios**:
 
-1. **Given** a user navigates between different pages, **When** they observe page layouts, **Then** all pages use the same spacing scale (e.g., 4px, 8px, 16px, 24px, 32px) and margins are consistent
+1. **Given** a user navigates between different pages, **When** they observe page layouts, **Then** all pages use the 8-point grid spacing scale (8px, 16px, 24px, 32px, 40px, 48px) and margins are consistent
 2. **Given** a user views any card or panel component, **When** they examine padding and content spacing, **Then** all cards use consistent internal padding and spacing between elements
 3. **Given** a user views form fields across different pages, **When** they compare field heights and spacing, **Then** all inputs have consistent height (e.g., 40px or 48px) and vertical spacing between fields (e.g., 16px)
 4. **Given** a user views buttons across the application, **When** they compare sizes and spacing, **Then** primary, secondary, and tertiary buttons follow consistent sizing and have appropriate margins from adjacent elements
@@ -105,7 +113,7 @@ Users need clear visual distinction between headings, body text, labels, and sec
 
 ### Functional Requirements
 
-- **FR-001**: System MUST use a consistent spacing scale (e.g., 4px, 8px, 16px, 24px, 32px, 48px) throughout the entire application for margins, padding, and gaps
+- **FR-001**: System MUST use an 8-point grid spacing scale (8px, 16px, 24px, 32px, 40px, 48px, etc.) throughout the entire application for margins, padding, and gaps
 - **FR-002**: All interactive elements (buttons, links, input fields) MUST have a minimum touch target size of 44x44px on mobile devices
 - **FR-003**: System MUST display properly on all standard viewports: mobile (320px-767px), tablet (768px-1023px), and desktop (1024px+)
 - **FR-004**: Form layouts MUST adapt responsively, with fields stacking vertically on mobile and arranging in grids on larger screens
@@ -117,6 +125,7 @@ Users need clear visual distinction between headings, body text, labels, and sec
 - **FR-010**: System MUST prevent horizontal scrolling on all standard viewport sizes at default zoom (100%)
 - **FR-011**: Loading and error states MUST display without causing layout shift or breaking alignment
 - **FR-012**: File upload drag-and-drop zone MUST be clearly visible and appropriately sized on all devices
+- **FR-013**: Responsive design MUST be validated using Playwright E2E tests with viewport testing and screenshot comparison across mobile (320px-767px), tablet (768px-1023px), and desktop (1024px+) breakpoints
 
 ### Constitutional Requirements *(auto-checked against constitution v1.0.0)*
 
@@ -151,8 +160,9 @@ This feature focuses on presentation layer improvements and does not introduce n
 - fontAndColour.css contains all necessary color and typography tokens; no additional colors will be needed
 - Current breakpoint strategy (mobile: 320-767px, tablet: 768-1023px, desktop: 1024px+) is appropriate
 - Existing E2E tests will need updates to reflect new component selectors and layouts
-- Design tokens for spacing will follow an 8-point grid system (multiples of 8: 8px, 16px, 24px, 32px, etc.)
+- 8-point grid spacing system (8px base unit: 8px, 16px, 24px, 32px, 40px, 48px, etc.) will be used consistently
 - Performance is not significantly impacted by responsive CSS (modern browsers handle media queries efficiently)
+- All UI changes will be deployed together in a single release after comprehensive testing
 
 ## Out of Scope
 
@@ -178,7 +188,7 @@ This feature focuses on presentation layer improvements and does not introduce n
   - **Mitigation**: Update tests incrementally as layouts are changed; maintain test coverage above 90%
   
 - **Risk**: Users accustomed to current layout may resist changes
-  - **Mitigation**: Gradual rollout with feedback mechanism; document improvements
+  - **Mitigation**: All UI changes will be deployed together after thorough testing; provide clear communication about improvements before launch
 
 - **Risk**: Touch target size requirements may conflict with existing dense layouts
   - **Mitigation**: Review each interface with design; prioritize usability over information density

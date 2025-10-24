@@ -52,7 +52,7 @@ Independent test criteria: Able to submit valid data and see confirmation; inval
 - [x] T029 [US1] Show success confirmation page/state in apps/web/src/app/form/success/page.tsx
 - [x] T030 [US1] Add basic E2E scenario (Cucumber) for happy path submit (apps/web/tests/e2e/us1-submit.feature)
 - [x] T030a [US1] Add E2E scenario for client-side validation errors and consent requirement
-- [ ] T022a [US1] Implement inline client-side uploader: drag-and-drop + file picker, per-file progress, remove option; client-side type/size validation; call /uploads; include `uploadId` refs in submission payload; display clear inline errors (no extra steps/pages)
+- [x] T022a [US1] Implement inline client-side uploader: drag-and-drop + file picker, per-file progress, remove option; client-side type/size validation; call /uploads; include `uploadId` refs in submission payload; display clear inline errors (no extra steps/pages)
 
 ## Phase 4 – User Story 2 (P2): Admin sign-in and dashboard
 

@@ -52,7 +52,7 @@ Follow-up TODOs:
 **User interfaces MUST be simple, intuitive, and require minimal learning curve.** Every interaction MUST feel natural and predictable.
 
 **Non-Negotiable Rules**:
-- UI components MUST follow established patterns from NextUI component library
+- UI components MUST follow established patterns from HeroUI component library
 - Navigation MUST be obvious and consistent across all pages
 - Forms MUST provide clear, immediate validation feedback using Zod schemas
 - User actions MUST have immediate visual feedback
@@ -146,7 +146,7 @@ Follow-up TODOs:
 - **Jest** MUST be used for all backend testing
 
 ### Frontend Stack
-- **NextUI** MUST be used as the component library
+- **HeroUI** MUST be used as the component library, because NextUI is deprecated.
 - **Cucumber** MUST be used for frontend behavior-driven testing
 - **fontAndColour.css** MUST be used as the source for all fonts and colors
 

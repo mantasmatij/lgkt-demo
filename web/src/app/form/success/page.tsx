@@ -1,12 +1,13 @@
 'use client';
 
-import { Button } from '@heroui/react';
+import { Button, Card } from '@heroui/react';
 import Link from 'next/link';
 
 export default function FormSuccessPage() {
   return (
-    <div className="container mx-auto px-4 py-12 max-w-2xl">
-      <div className="bg-green-50 border border-green-200 rounded-lg p-8 text-center">
+    <div className="container mx-auto px-4 py-6 max-w-2xl">
+      <Card className="bg-green-50 border border-green-200 p-6 text-center">
+        <div className="flex flex-col gap-3">
         <div className="mb-4">
           <svg
             className="mx-auto h-16 w-16 text-green-600"
@@ -41,7 +42,7 @@ export default function FormSuccessPage() {
           </p>
         </div>
         
-        <div className="mt-8">
+        <div>
           <Button
             as={Link}
             href="/form"
@@ -51,7 +52,8 @@ export default function FormSuccessPage() {
             Pateikti kitą pranešimą
           </Button>
         </div>
-      </div>
+        </div>
+      </Card>
     </div>
   );
 }

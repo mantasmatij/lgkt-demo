@@ -81,16 +81,18 @@ export default function PublicFormPage() {
   }
 
   return (
-    <div className="container mx-auto max-w-3xl py-8 space-y-6">
-      <h1 className="text-2xl font-semibold">Anonymous Company Form</h1>
+    <div className="container mx-auto max-w-3xl px-4 py-6">
+      <div className="flex flex-col gap-3">
+        <h1 className="text-2xl font-semibold">Anonymous Company Form</h1>
       
       <ErrorSummary errors={errors} />
       
       {result && <Card className="p-3 text-sm" role="alert">{result}</Card>}
       
-      <form onSubmit={onSubmit} className="space-y-6" noValidate>
-        <Card className="p-4 space-y-3">
-          <h3 className="text-lg font-medium">Company</h3>
+      <form onSubmit={onSubmit} noValidate>
+        <Card className="p-6">
+          <div className="flex flex-col gap-3">
+            <h3 className="text-lg font-medium mb-2">Company</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <Input 
               id="name"
@@ -199,6 +201,7 @@ export default function PublicFormPage() {
           >
             Requirements applied
           </Checkbox>
+          </div>
         </Card>
 
   <OrgansSection value={form.organs || []} onChange={(rows) => update('organs', rows)} />
@@ -206,9 +209,10 @@ export default function PublicFormPage() {
   <MeasuresSection value={form.measures || []} onChange={(rows) => update('measures', rows)} />
   <AttachmentsSection value={form.attachments || []} onChange={(rows) => update('attachments', rows)} />
 
-        <Card className="p-4 space-y-3">
-          <h3 className="text-lg font-medium">Contact & Other</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <Card className="p-6">
+          <div className="flex flex-col gap-3">
+            <h3 className="text-lg font-medium mb-2">Contact & Other</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <Input 
               id="contactName"
               name="contactName"
@@ -246,11 +250,13 @@ export default function PublicFormPage() {
             onChange={(e) => update('reasonsForUnderrepresentation', e.target.value || undefined)}
             aria-required="false"
           />
+          </div>
         </Card>
 
-        <Card className="p-4 space-y-3">
-          <h3 className="text-lg font-medium">Submitter</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <Card className="p-6">
+          <div className="flex flex-col gap-3">
+            <h3 className="text-lg font-medium mb-2">Submitter</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <Input 
               id="submitter.name"
               name="submitter.name"
@@ -298,6 +304,7 @@ export default function PublicFormPage() {
           >
             I agree to the processing of my data.
           </Checkbox>
+          </div>
         </Card>
 
         <div className="flex justify-end">
@@ -311,6 +318,7 @@ export default function PublicFormPage() {
           </Button>
         </div>
       </form>
+      </div>
     </div>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 import * as React from 'react';
 import { Button, Input, Select, SelectItem, Card } from '@heroui/react';
+import { cn } from '../utils/cn';
 
 export type OrganRow = {
   organType: 'VALDYBA' | 'STEBETOJU_TARYBA';
@@ -17,14 +18,15 @@ export function OrgansSection({ value, onChange }: { value: OrganRow[]; onChange
     onChange(next);
   };
   return (
-    <Card className="p-4 space-y-3">
-      <div className="flex items-center justify-between">
-        <h3 className="text-lg font-medium">Governance Organs</h3>
-        <Button size="sm" onPress={addRow} color="primary">Add organ</Button>
-      </div>
-      {value.length === 0 && <p className="text-sm text-default-500">No organs added.</p>}
-      {value.map((row, idx) => (
-        <div key={idx} className="grid grid-cols-1 md:grid-cols-4 gap-3 items-end">
+    <Card className={cn("p-6")}>
+      <div className="flex flex-col gap-3">
+        <div className="flex items-center justify-between mb-2">
+          <h3 className="text-lg font-medium">Governance Organs</h3>
+          <Button size="sm" onPress={addRow} color="primary">Add organ</Button>
+        </div>
+        {value.length === 0 && <p className="text-sm text-default-500">No organs added.</p>}
+        {value.map((row, idx) => (
+          <div key={idx} className="grid grid-cols-1 md:grid-cols-4 gap-3 items-end">
           <Select
             label="Organ type"
             selectedKeys={[row.organType]}
@@ -39,7 +41,8 @@ export function OrgansSection({ value, onChange }: { value: OrganRow[]; onChange
             <Button size="sm" color="danger" variant="flat" onPress={() => removeRow(idx)}>Remove</Button>
           </div>
         </div>
-      ))}
+        ))}
+      </div>
     </Card>
   );
 }

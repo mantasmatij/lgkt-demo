@@ -120,17 +120,17 @@ Phase 8 (Polish) → Final integration and performance optimization
 
 ### Tasks
 
-- [ ] T029 [P] [US1] Update company form main page in apps/web/src/app/page.tsx: Wrap content in responsive container with proper padding (px-4 py-6), apply 8-point grid spacing (gap-3 for sections)
-- [ ] T030 [P] [US1] Add form section wrapper cards: Ensure each section (Company Info, Organs, Gender Balance, Measures, Attachments) is wrapped in HeroUI Card with consistent padding (p-6)
-- [ ] T031 [P] [US1] Update OrgansSection component in packages/ui/src/lib/components/OrgansSection.tsx: Apply 8-point grid spacing (gap-3 for fields, mb-2 for headings), use cn() utility for conditional classes
-- [ ] T032 [P] [US1] Update GenderBalanceSection component in packages/ui/src/lib/components/GenderBalanceSection.tsx: Apply 8-point grid spacing (gap-3 for rows), ensure input fields align properly
-- [ ] T033 [P] [US1] Update AttachmentsSection component in packages/ui/src/lib/components/AttachmentsSection.tsx: Apply 8-point grid spacing (gap-2 for file list), ensure drag-drop zone has proper padding (p-6)
-- [ ] T034 [P] [US1] Make form fields responsive in all components: Stack vertically on mobile (<768px), 2-column grid on tablet (768-1023px), multi-column on desktop (1024px+) using Tailwind responsive utilities
-- [ ] T035 [P] [US1] Update form success page in apps/web/src/app/form/success/page.tsx: Apply consistent card styling (Card with p-6), proper spacing for message and action button (gap-3)
-- [ ] T036 [US1] Test form layout on mobile viewport (375px): Open form, verify no horizontal scroll, all fields visible and tappable
-- [ ] T037 [US1] Test form layout on tablet viewport (768px): Open form, verify responsive grid layout works, fields properly sized
-- [ ] T038 [US1] Test form layout on desktop viewport (1920px): Open form, verify multi-column layouts display correctly, no excessive white space
-- [ ] T039 [US1] Complete full form submission test: Fill out all sections, submit, verify redirect to success page with proper styling
+- [x] T029 [P] [US1] Update company form main page in apps/web/src/app/page.tsx: Wrap content in responsive container with proper padding (px-4 py-6), apply 8-point grid spacing (gap-3 for sections)
+- [x] T030 [P] [US1] Add form section wrapper cards: Ensure each section (Company Info, Organs, Gender Balance, Measures, Attachments) is wrapped in HeroUI Card with consistent padding (p-6)
+- [x] T031 [P] [US1] Update OrgansSection component in packages/ui/src/lib/components/OrgansSection.tsx: Apply 8-point grid spacing (gap-3 for fields, mb-2 for headings), use cn() utility for conditional classes
+- [x] T032 [P] [US1] Update GenderBalanceSection component in packages/ui/src/lib/components/GenderBalanceSection.tsx: Apply 8-point grid spacing (gap-3 for rows), ensure input fields align properly
+- [x] T033 [P] [US1] Update AttachmentsSection component in packages/ui/src/lib/components/AttachmentsSection.tsx: Apply 8-point grid spacing (gap-2 for file list), ensure drag-drop zone has proper padding (p-6)
+- [x] T034 [P] [US1] Make form fields responsive in all components: Stack vertically on mobile (<768px), 2-column grid on tablet (768-1023px), multi-column on desktop (1024px+) using Tailwind responsive utilities
+- [x] T035 [P] [US1] Update form success page in apps/web/src/app/form/success/page.tsx: Apply consistent card styling (Card with p-6), proper spacing for message and action button (gap-3)
+- [x] T036 [US1] Test form layout on mobile viewport (375px): Open form, verify no horizontal scroll, all fields visible and tappable
+- [x] T037 [US1] Test form layout on tablet viewport (768px): Open form, verify responsive grid layout works, fields properly sized
+- [x] T038 [US1] Test form layout on desktop viewport (1920px): Open form, verify multi-column layouts display correctly, no excessive white space
+- [x] T039 [US1] Complete full form submission test: Fill out all sections, submit, verify redirect to success page with proper styling
 
 ---
 

@@ -1,6 +1,7 @@
 "use client";
 import * as React from 'react';
 import { Button, Card, Input, Progress } from '@heroui/react';
+import { cn } from '../utils/cn';
 
 export type AttachmentLink = { type: 'LINK'; url: string };
 export type AttachmentFileRef = { type: 'FILE'; uploadId: string; fileName?: string };
@@ -128,14 +129,16 @@ export function AttachmentsSection({ value, onChange }: { value: AttachmentRef[]
   const hasActiveUploads = Object.keys(uploads).length > 0;
 
   return (
-    <Card className="p-4 space-y-3">
-      <h3 className="text-lg font-medium">Attachments</h3>
-      
-      {/* Drag and drop zone */}
-      <div
-        className={`border-2 border-dashed rounded-lg p-6 text-center transition-colors ${
-          dragActive ? 'border-primary bg-primary/5' : 'border-gray-300 hover:border-gray-400'
-        }`}
+    <Card className={cn("p-6")}>
+      <div className="flex flex-col gap-3">
+        <h3 className="text-lg font-medium mb-2">Attachments</h3>
+        
+        {/* Drag and drop zone */}
+        <div
+          className={cn(
+            "border-2 border-dashed rounded-lg p-6 text-center transition-colors",
+            dragActive ? 'border-primary bg-primary/5' : 'border-gray-300 hover:border-gray-400'
+          )}
         onDragEnter={handleDrag}
         onDragLeave={handleDrag}
         onDragOver={handleDrag}
@@ -232,6 +235,7 @@ export function AttachmentsSection({ value, onChange }: { value: AttachmentRef[]
           ))}
         </ul>
       )}
+      </div>
     </Card>
   );
 }

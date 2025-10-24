@@ -78,6 +78,7 @@ export default function ReportsPage() {
               isRequired
             />
             <Button
+              size="lg"
               type="submit"
               color="primary"
               isLoading={isExporting}

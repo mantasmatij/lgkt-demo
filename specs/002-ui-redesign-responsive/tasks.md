@@ -154,12 +154,12 @@ Phase 8 (Polish) → Final integration and performance optimization
 - [x] T040 [P] [US3] Update admin sign-in page in apps/web/src/app/admin/sign-in/page.tsx: Apply 8-point grid spacing (gap-3 for form fields, p-6 for card), ensure buttons have consistent padding
 - [x] T041 [P] [US3] Update admin dashboard page in apps/web/src/app/admin/dashboard/page.tsx: Apply 8-point grid spacing (gap-4 for page sections, p-6 for cards), consistent spacing around table
 - [x] T042 [P] [US3] Update admin companies page in apps/web/src/app/admin/companies/page.tsx: Apply 8-point grid spacing (gap-4 for page layout, p-6 for table card)
-- [ ] T043 [P] [US3] Audit all Button components across codebase: Ensure consistent sizing using HeroUI size prop (size="md" or size="lg"), proper spacing with adjacent elements (gap-2 or gap-3)
-- [ ] T044 [P] [US3] Audit all Input components across codebase: Ensure consistent height (HeroUI default), proper vertical spacing (gap-3 between fields), labels properly aligned
-- [ ] T045 [P] [US3] Audit all Card components across codebase: Ensure consistent padding (p-6 for content, gap-3 for internal elements)
+- [x] T043 [P] [US3] Audit all Button components across codebase: Ensure consistent sizing using HeroUI size prop (size="md" or size="lg"), proper spacing with adjacent elements (gap-2 or gap-3)
+- [x] T044 [P] [US3] Audit all Input components across codebase: Ensure consistent height (HeroUI default), proper vertical spacing (gap-3 between fields), labels properly aligned
+- [x] T045 [P] [US3] Audit all Card components across codebase: Ensure consistent padding (p-6 for content, gap-3 for internal elements)
 - [ ] T046 [US3] Visual inspection test - Form page: Measure spacing between sections (should be 24px), padding inside cards (should be 48px), verify consistency
 - [ ] T047 [US3] Visual inspection test - Admin pages: Measure spacing between page elements (should follow grid), padding consistency, verify alignment
-- [ ] T048 [US3] Run ESLint to catch arbitrary Tailwind values: Fix any warnings about non-grid spacing values
+- [x] T048 [US3] Run ESLint to catch arbitrary Tailwind values: Fix any warnings about non-grid spacing values
 
 ---
 

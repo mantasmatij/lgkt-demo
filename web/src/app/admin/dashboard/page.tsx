@@ -73,7 +73,7 @@ export default function AdminDashboardPage() {
   if (error) {
     return (
       <div className="container mx-auto px-4 py-12">
-        <Card className="p-4 bg-red-50 border-red-200">
+        <Card className="p-6 bg-red-50 border-red-200">
           <p className="text-red-700">{error}</p>
         </Card>
       </div>

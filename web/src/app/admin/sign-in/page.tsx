@@ -33,7 +33,7 @@ export default function AdminSignInPage() {
 
       // Redirect to dashboard on success
       router.push('/admin/dashboard');
-    } catch (err) {
+    } catch {
       setError('Network error. Please try again.');
       setLoading(false);
     }
@@ -71,6 +71,7 @@ export default function AdminSignInPage() {
           />
 
           <Button
+            size="lg"
             type="submit"
             color="primary"
             className="w-full"

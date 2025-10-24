@@ -309,6 +309,7 @@ export default function PublicFormPage() {
 
         <div className="flex justify-end">
           <Button 
+            size="lg"
             color="primary" 
             type="submit" 
             isLoading={submitting}

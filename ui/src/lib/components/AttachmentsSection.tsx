@@ -203,7 +203,7 @@ export function AttachmentsSection({ value, onChange }: { value: AttachmentRef[]
           onChange={(e) => setLink(e.target.value)}
           placeholder="https://example.com/document.pdf"
         />
-        <Button onPress={addLink} disabled={!link} color="primary">Add link</Button>
+        <Button size="md" onPress={addLink} disabled={!link} color="primary">Add link</Button>
       </div>
 
       {/* Uploaded files and links list */}

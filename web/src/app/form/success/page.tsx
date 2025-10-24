@@ -10,7 +10,7 @@ export default function FormSuccessPage() {
         <div className="flex flex-col gap-3">
         <div className="mb-4">
           <svg
-            className="mx-auto h-16 w-16 text-green-600"
+            className="mx-auto size-16 text-green-600"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"

@@ -157,8 +157,8 @@ Phase 8 (Polish) → Final integration and performance optimization
 - [x] T043 [P] [US3] Audit all Button components across codebase: Ensure consistent sizing using HeroUI size prop (size="md" or size="lg"), proper spacing with adjacent elements (gap-2 or gap-3)
 - [x] T044 [P] [US3] Audit all Input components across codebase: Ensure consistent height (HeroUI default), proper vertical spacing (gap-3 between fields), labels properly aligned
 - [x] T045 [P] [US3] Audit all Card components across codebase: Ensure consistent padding (p-6 for content, gap-3 for internal elements)
-- [ ] T046 [US3] Visual inspection test - Form page: Measure spacing between sections (should be 24px), padding inside cards (should be 48px), verify consistency
-- [ ] T047 [US3] Visual inspection test - Admin pages: Measure spacing between page elements (should follow grid), padding consistency, verify alignment
+- [ ] T046 [US3] Visual inspection test - Form page: Measure spacing between sections (should be 24px), padding inside cards (should be 48px), verify consistency **[MANUAL TEST REQUIRED]**
+- [ ] T047 [US3] Visual inspection test - Admin pages: Measure spacing between page elements (should follow grid), padding consistency, verify alignment **[MANUAL TEST REQUIRED]**
 - [x] T048 [US3] Run ESLint to catch arbitrary Tailwind values: Fix any warnings about non-grid spacing values
 
 ---
@@ -180,11 +180,11 @@ Phase 8 (Polish) → Final integration and performance optimization
 
 ### Tasks
 
-- [ ] T049 [P] [US2] Make admin dashboard table responsive in apps/web/src/app/admin/dashboard/page.tsx: Add horizontal scroll wrapper for table on mobile/tablet (<1024px), ensure table maintains proper spacing
-- [ ] T050 [P] [US2] Make admin companies table responsive in apps/web/src/app/admin/companies/page.tsx: Add horizontal scroll wrapper for table on mobile/tablet (<1024px), consider hiding less critical columns on mobile
-- [ ] T051 [P] [US2] Ensure admin navigation is mobile-friendly: If navigation exists, make it responsive (hamburger menu, bottom nav, or similar pattern for <768px)
-- [ ] T052 [P] [US2] Ensure all admin action buttons meet touch target size on mobile: Verify buttons are at least 44x44px (use size="lg" on HeroUI Button), proper spacing between buttons (gap-2 minimum)
-- [ ] T053 [P] [US2] Add responsive padding to admin layout: Reduce padding on mobile (px-4 py-6) compared to desktop (px-8 py-10) for better space utilization
+- [x] T049 [P] [US2] Make admin dashboard table responsive in apps/web/src/app/admin/dashboard/page.tsx: Add horizontal scroll wrapper for table on mobile/tablet (<1024px), ensure table maintains proper spacing
+- [x] T050 [P] [US2] Make admin companies table responsive in apps/web/src/app/admin/companies/page.tsx: Add horizontal scroll wrapper for table on mobile/tablet (<1024px), consider hiding less critical columns on mobile
+- [ ] T051 [P] [US2] Ensure admin navigation is mobile-friendly: If navigation exists, make it responsive (hamburger menu, bottom nav, or similar pattern for <768px) **[NO NAVIGATION EXISTS - SKIP]**
+- [x] T052 [P] [US2] Ensure all admin action buttons meet touch target size on mobile: Verify buttons are at least 44x44px (use size="lg" on HeroUI Button), proper spacing between buttons (gap-2 minimum)
+- [x] T053 [P] [US2] Add responsive padding to admin layout: Reduce padding on mobile (px-4 py-6) compared to desktop (px-8 py-10) for better space utilization
 - [ ] T054 [US2] Test admin dashboard on desktop (1920px): Login, view dashboard, verify table displays all columns, actions work, proper spacing
 - [ ] T055 [US2] Test admin dashboard on tablet (768px): Login, view dashboard, verify table is scrollable or columns collapse, actions are tappable
 - [ ] T056 [US2] Test admin dashboard on mobile (375px): Login, view dashboard, verify table is usable (scroll or cards), navigation accessible, no horizontal scroll

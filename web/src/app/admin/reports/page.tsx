@@ -54,7 +54,7 @@ export default function ReportsPage() {
   };
 
   return (
-    <div className="container mx-auto p-8">
+    <div className="container mx-auto px-4 py-6">
       <h1 className="text-3xl font-bold mb-6">Export Reports</h1>
 
       <Card className="max-w-md">

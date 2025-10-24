@@ -94,30 +94,32 @@ export default function AdminCompaniesPage() {
             </Card>
 
             <Card className="p-6">
-              <Table aria-label="Companies table">
-            <TableHeader>
-              <TableColumn>Company Code</TableColumn>
-              <TableColumn>Company Name</TableColumn>
-              <TableColumn>Country</TableColumn>
-              <TableColumn>Submissions</TableColumn>
-              <TableColumn>Latest Submission</TableColumn>
-            </TableHeader>
-            <TableBody>
-              {data.items.map((company) => (
-                <TableRow key={company.code}>
-                  <TableCell>{company.code}</TableCell>
-                  <TableCell>{company.name}</TableCell>
-                  <TableCell>{company.country}</TableCell>
-                  <TableCell>{company.submissionCount}</TableCell>
-                  <TableCell>
-                    {company.latestSubmission 
-                      ? new Date(company.latestSubmission).toLocaleDateString()
-                      : 'N/A'}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              <div className="overflow-x-auto">
+                <Table aria-label="Companies table">
+                  <TableHeader>
+                    <TableColumn>Company Code</TableColumn>
+                    <TableColumn>Company Name</TableColumn>
+                    <TableColumn>Country</TableColumn>
+                    <TableColumn>Submissions</TableColumn>
+                    <TableColumn>Latest Submission</TableColumn>
+                  </TableHeader>
+                  <TableBody>
+                    {data.items.map((company) => (
+                      <TableRow key={company.code}>
+                        <TableCell>{company.code}</TableCell>
+                        <TableCell>{company.name}</TableCell>
+                        <TableCell>{company.country}</TableCell>
+                        <TableCell>{company.submissionCount}</TableCell>
+                        <TableCell>
+                          {company.latestSubmission 
+                            ? new Date(company.latestSubmission).toLocaleDateString()
+                            : 'N/A'}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
             </Card>
           </>
         )}

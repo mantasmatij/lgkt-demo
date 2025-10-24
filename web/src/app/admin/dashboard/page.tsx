@@ -101,29 +101,31 @@ export default function AdminDashboardPage() {
             </Card>
 
             <Card className="p-6">
-              <Table 
-                aria-label="Submissions table"
-                aria-describedby="submissions-description"
-              >
-                <TableHeader>
-              <TableColumn>Company Code</TableColumn>
-              <TableColumn>Company Name</TableColumn>
-              <TableColumn>Country</TableColumn>
-              <TableColumn>Contact Email</TableColumn>
-              <TableColumn>Submitted At</TableColumn>
-            </TableHeader>
-            <TableBody>
-              {data.items.map((sub) => (
-                <TableRow key={sub.id}>
-                  <TableCell>{sub.companyCode}</TableCell>
-                  <TableCell>{sub.nameAtSubmission}</TableCell>
-                  <TableCell>{sub.country}</TableCell>
-                  <TableCell>{sub.contactEmail}</TableCell>
-                  <TableCell>{new Date(sub.createdAt).toLocaleDateString()}</TableCell>
-                </TableRow>
-              ))}
-                </TableBody>
-              </Table>
+              <div className="overflow-x-auto">
+                <Table 
+                  aria-label="Submissions table"
+                  aria-describedby="submissions-description"
+                >
+                  <TableHeader>
+                    <TableColumn>Company Code</TableColumn>
+                    <TableColumn>Company Name</TableColumn>
+                    <TableColumn>Country</TableColumn>
+                    <TableColumn>Contact Email</TableColumn>
+                    <TableColumn>Submitted At</TableColumn>
+                  </TableHeader>
+                  <TableBody>
+                    {data.items.map((sub) => (
+                      <TableRow key={sub.id}>
+                        <TableCell>{sub.companyCode}</TableCell>
+                        <TableCell>{sub.nameAtSubmission}</TableCell>
+                        <TableCell>{sub.country}</TableCell>
+                        <TableCell>{sub.contactEmail}</TableCell>
+                        <TableCell>{new Date(sub.createdAt).toLocaleDateString()}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
               <p id="submissions-description" className="sr-only">
                 Table showing all company form submissions with company code, name, country, contact email, and submission date.
               </p>

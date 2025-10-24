@@ -3,6 +3,11 @@ import express from 'express';
 import { csvExportLimiter, authLimiter, submissionLimiter } from '../rateLimit';
 
 describe('Rate Limiting Middleware', () => {
+  const isProduction = process.env.NODE_ENV === 'production';
+  const csvLimit = isProduction ? 10 : 1000;
+  const authLimit = isProduction ? 5 : 500;
+  const submissionLimit = isProduction ? 3 : 300;
+
   describe('csvExportLimiter', () => {
     let app: express.Application;
 
@@ -14,19 +19,20 @@ describe('Rate Limiting Middleware', () => {
     });
 
     it('should allow requests within the limit', async () => {
-      for (let i = 0; i < 5; i++) {
+      const testCount = Math.min(5, Math.floor(csvLimit / 2));
+      for (let i = 0; i < testCount; i++) {
         const response = await request(app).get('/export');
         expect(response.status).toBe(200);
       }
     });
 
     it('should return 429 after exceeding the limit', async () => {
-      // Make 10 requests (the limit)
-      for (let i = 0; i < 10; i++) {
+      // Make requests up to the limit
+      for (let i = 0; i < csvLimit; i++) {
         await request(app).get('/export');
       }
 
-      // 11th request should be rate limited
+      // Next request should be rate limited
       const response = await request(app).get('/export');
       expect(response.status).toBe(429);
       expect(response.body).toHaveProperty('error');
@@ -53,19 +59,20 @@ describe('Rate Limiting Middleware', () => {
     });
 
     it('should allow requests within the limit', async () => {
-      for (let i = 0; i < 3; i++) {
+      const testCount = Math.min(3, Math.floor(authLimit / 2));
+      for (let i = 0; i < testCount; i++) {
         const response = await request(app).post('/login');
         expect(response.status).toBe(401);
       }
     });
 
     it('should return 429 after exceeding the limit', async () => {
-      // Make 5 requests (the limit) - all failed logins count
-      for (let i = 0; i < 5; i++) {
+      // Make requests up to the limit - all failed logins count
+      for (let i = 0; i < authLimit; i++) {
         await request(app).post('/login');
       }
 
-      // 6th request should be rate limited
+      // Next request should be rate limited
       const response = await request(app).post('/login');
       expect(response.status).toBe(429);
       expect(response.body).toHaveProperty('error');
@@ -84,19 +91,20 @@ describe('Rate Limiting Middleware', () => {
     });
 
     it('should allow requests within the limit', async () => {
-      for (let i = 0; i < 3; i++) {
+      const testCount = Math.min(3, Math.floor(submissionLimit / 2));
+      for (let i = 0; i < testCount; i++) {
         const response = await request(app).post('/submit');
         expect(response.status).toBe(200);
       }
     });
 
     it('should return 429 after exceeding the limit', async () => {
-      // Make 3 requests (the limit)
-      for (let i = 0; i < 3; i++) {
+      // Make requests up to the limit
+      for (let i = 0; i < submissionLimit; i++) {
         await request(app).post('/submit');
       }
 
-      // 4th request should be rate limited
+      // Next request should be rate limited
       const response = await request(app).post('/submit');
       expect(response.status).toBe(429);
       expect(response.body).toHaveProperty('error');

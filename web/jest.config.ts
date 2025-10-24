@@ -14,6 +14,8 @@ const config: Config = {
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   coverageDirectory: '../coverage/web',
   testEnvironment: 'jsdom',
+  // Exclude E2E tests - they should only run via Playwright
+  testPathIgnorePatterns: ['/node_modules/', '/tests/e2e/'],
   // Ensure Jest exits cleanly; useful when Next.js or JSDOM leaves handles open in simple tests
   forceExit: true,
 };

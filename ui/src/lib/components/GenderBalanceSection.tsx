@@ -1,6 +1,6 @@
 "use client";
 import * as React from 'react';
-import { Card, Input } from '@nextui-org/react';
+import { Card, Input } from '@heroui/react';
 
 export type GenderRow = { role: 'CEO' | 'BOARD' | 'SUPERVISORY_BOARD'; women: number; men: number; total: number };
 

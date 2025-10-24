@@ -2,7 +2,7 @@
 
 import { useState, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
-import { Button, Card, CardBody, CardHeader, Input } from '@nextui-org/react';
+import { Button, Card, CardBody, CardHeader, Input } from '@heroui/react';
 
 export default function ReportsPage() {
   const router = useRouter();

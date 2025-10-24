@@ -55,24 +55,24 @@ Phase 8 (Polish) → Final integration and performance optimization
 
 ### Tasks
 
-- [ ] T001 Remove deprecated NextUI packages from root package.json and packages/ui/package.json
-- [ ] T002 Install HeroUI v2.5.x in root package.json: `@heroui/react@^2.5.0`
-- [ ] T003 [P] Install Framer Motion in root package.json: `framer-motion@^11.0.0`
-- [ ] T004 [P] Install React Hook Form dependencies in root package.json: `react-hook-form@^7.50.0`, `@hookform/resolvers@^3.3.0`
-- [ ] T005 [P] Install class composition utilities in root package.json: `clsx@^2.1.0`, `tailwind-merge@^2.2.0`
-- [ ] T006 [P] Install ESLint Tailwind plugin as dev dependency in root package.json: `eslint-plugin-tailwindcss@^3.14.0`
-- [ ] T007 Run `npm install` to install all new dependencies
-- [ ] T008 Update UI provider in packages/ui/src/lib/provider.tsx: Replace `NextUIProvider` import and component with `HeroUIProvider` from `@heroui/react`
-- [ ] T009 [P] Update component imports in packages/ui/src/lib/components/OrgansSection.tsx: Replace `@nextui-org/react` with `@heroui/react`
-- [ ] T010 [P] Update component imports in packages/ui/src/lib/components/GenderBalanceSection.tsx: Replace `@nextui-org/react` with `@heroui/react`
-- [ ] T011 [P] Update component imports in packages/ui/src/lib/components/AttachmentsSection.tsx: Replace `@nextui-org/react` with `@heroui/react`
-- [ ] T012 [P] Update component imports in apps/web/src/app/form/success/page.tsx: Replace `@nextui-org/react` with `@heroui/react`
-- [ ] T013 [P] Update component imports in apps/web/src/app/admin/sign-in/page.tsx: Replace `@nextui-org/react` with `@heroui/react`
-- [ ] T014 [P] Update component imports in apps/web/src/app/admin/dashboard/page.tsx: Replace `@nextui-org/react` with `@heroui/react`
-- [ ] T015 [P] Update component imports in apps/web/src/app/admin/companies/page.tsx: Replace `@nextui-org/react` with `@heroui/react`
-- [ ] T016 Update Tailwind plugin in apps/web/tailwind.config.ts: Replace `nextui()` import from `@nextui-org/theme` with `heroui()` from `@heroui/react`
-- [ ] T017 Update constitution in .specify/memory/constitution.md: Replace all references to "NextUI" with "HeroUI" and note migration from NextUI v2.4.0
-- [ ] T018 Build UI package to verify migration: Run `nx build ui`
+- [x] T001 Remove deprecated NextUI packages from root package.json and packages/ui/package.json
+- [x] T002 Install HeroUI v2.5.x in root package.json: `@heroui/react@^2.5.0`
+- [x] T003 [P] Install Framer Motion in root package.json: `framer-motion@^11.0.0`
+- [x] T004 [P] Install React Hook Form dependencies in root package.json: `react-hook-form@^7.50.0`, `@hookform/resolvers@^3.3.0`
+- [x] T005 [P] Install class composition utilities in root package.json: `clsx@^2.1.0`, `tailwind-merge@^2.2.0`
+- [x] T006 [P] Install ESLint Tailwind plugin as dev dependency in root package.json: `eslint-plugin-tailwindcss@^3.14.0`
+- [x] T007 Run `npm install` to install all new dependencies
+- [x] T008 Update UI provider in packages/ui/src/lib/provider.tsx: Replace `NextUIProvider` import and component with `HeroUIProvider` from `@heroui/react`
+- [x] T009 [P] Update component imports in packages/ui/src/lib/components/OrgansSection.tsx: Replace `@nextui-org/react` with `@heroui/react`
+- [x] T010 [P] Update component imports in packages/ui/src/lib/components/GenderBalanceSection.tsx: Replace `@nextui-org/react` with `@heroui/react`
+- [x] T011 [P] Update component imports in packages/ui/src/lib/components/AttachmentsSection.tsx: Replace `@nextui-org/react` with `@heroui/react`
+- [x] T012 [P] Update component imports in apps/web/src/app/form/success/page.tsx: Replace `@nextui-org/react` with `@heroui/react`
+- [x] T013 [P] Update component imports in apps/web/src/app/admin/sign-in/page.tsx: Replace `@nextui-org/react` with `@heroui/react`
+- [x] T014 [P] Update component imports in apps/web/src/app/admin/dashboard/page.tsx: Replace `@nextui-org/react` with `@heroui/react`
+- [x] T015 [P] Update component imports in apps/web/src/app/admin/companies/page.tsx: Replace `@nextui-org/react` with `@heroui/react`
+- [x] T016 Update Tailwind plugin in apps/web/tailwind.config.ts: Replace `nextui()` import from `@nextui-org/theme` with `heroui()` from `@heroui/react`
+- [x] T017 Update constitution in .specify/memory/constitution.md: Replace all references to "NextUI" with "HeroUI" and note migration from NextUI v2.4.0
+- [x] T018 Build UI package to verify migration: Run `nx build ui`
 - [ ] T019 Start web app to verify HeroUI renders: Run `nx serve web` and manually check homepage loads without console errors
 
 ---

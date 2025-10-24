@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Card } from '@nextui-org/react';
+import { Card } from '@heroui/react';
 
 interface ErrorSummaryProps {
   errors: Record<string, string[]>;

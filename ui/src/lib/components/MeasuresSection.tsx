@@ -1,6 +1,6 @@
 "use client";
 import * as React from 'react';
-import { Button, Card, Input, Textarea } from '@nextui-org/react';
+import { Button, Card, Input, Textarea } from '@heroui/react';
 
 export type MeasureRow = {
   name: string;

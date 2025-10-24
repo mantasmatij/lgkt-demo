@@ -1,7 +1,7 @@
 "use client";
 import * as React from 'react';
 import { useRouter } from 'next/navigation';
-import { Button, Card, Checkbox, Input, Textarea } from '@nextui-org/react';
+import { Button, Card, Checkbox, Input, Textarea } from '@heroui/react';
 import { OrgansSection, GenderBalanceSection, MeasuresSection, AttachmentsSection, ErrorSummary } from 'ui';
 import { submissionSchema, type SubmissionInput } from 'validation';
 

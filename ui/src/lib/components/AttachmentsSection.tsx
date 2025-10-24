@@ -1,6 +1,6 @@
 "use client";
 import * as React from 'react';
-import { Button, Card, Input, Progress } from '@nextui-org/react';
+import { Button, Card, Input, Progress } from '@heroui/react';
 
 export type AttachmentLink = { type: 'LINK'; url: string };
 export type AttachmentFileRef = { type: 'FILE'; uploadId: string; fileName?: string };

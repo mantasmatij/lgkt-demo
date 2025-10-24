@@ -1,6 +1,6 @@
 "use client";
 import * as React from 'react';
-import { Button, Input, Select, SelectItem, Card } from '@nextui-org/react';
+import { Button, Input, Select, SelectItem, Card } from '@heroui/react';
 
 export type OrganRow = {
   organType: 'VALDYBA' | 'STEBETOJU_TARYBA';
@@ -30,8 +30,8 @@ export function OrgansSection({ value, onChange }: { value: OrganRow[]; onChange
             selectedKeys={[row.organType]}
             onChange={(e) => update(idx, { organType: (e.target.value as OrganRow['organType']) })}
           >
-            <SelectItem key="VALDYBA" value="VALDYBA">Valdyba</SelectItem>
-            <SelectItem key="STEBETOJU_TARYBA" value="STEBETOJU_TARYBA">Stebėtojų taryba</SelectItem>
+            <SelectItem key="VALDYBA">Valdyba</SelectItem>
+            <SelectItem key="STEBETOJU_TARYBA">Stebėtojų taryba</SelectItem>
           </Select>
           <Input type="date" label="Last election date" value={row.lastElectionDate ?? ''} onChange={(e) => update(idx, { lastElectionDate: e.target.value || undefined })} />
           <Input type="date" label="Planned election date" value={row.plannedElectionDate ?? ''} onChange={(e) => update(idx, { plannedElectionDate: e.target.value || undefined })} />

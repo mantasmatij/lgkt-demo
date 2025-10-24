@@ -5,3 +5,4 @@ export * from './lib/components/GenderBalanceSection';
 export * from './lib/components/MeasuresSection';
 export * from './lib/components/AttachmentsSection';
 export * from './lib/ErrorSummary';
+export { cn } from './lib/utils/cn';

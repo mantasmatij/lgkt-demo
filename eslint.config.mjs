@@ -1,4 +1,5 @@
 import nx from '@nx/eslint-plugin';
+import tailwindcss from 'eslint-plugin-tailwindcss';
 
 export default [
   ...nx.configs['flat/base'],
@@ -48,5 +49,17 @@ export default [
     ],
     // Override or add rules here
     rules: {},
+  },
+  // Tailwind CSS plugin configuration (T026)
+  {
+    files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
+    plugins: {
+      tailwindcss,
+    },
+    rules: {
+      'tailwindcss/no-arbitrary-value': 'warn',
+      'tailwindcss/enforces-shorthand': 'warn',
+      'tailwindcss/no-contradicting-classname': 'error',
+    },
   },
 ];

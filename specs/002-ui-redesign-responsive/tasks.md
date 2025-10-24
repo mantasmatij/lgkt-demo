@@ -92,15 +92,15 @@ Phase 8 (Polish) → Final integration and performance optimization
 
 ### Tasks
 
-- [ ] T020 Configure 8-point grid spacing scale in apps/web/tailwind.config.ts theme.extend.spacing: Map 1→8px, 2→16px, 3→24px, 4→32px, 5→40px, 6→48px, 8→64px, 10→80px, 12→96px
-- [ ] T021 Map fontAndColour.css color variables in apps/web/tailwind.config.ts theme.extend.colors: Map primary, secondary, success, danger, warning, info, light, dark to corresponding --bs-* variables
-- [ ] T022 Map fontAndColour.css font families in apps/web/tailwind.config.ts theme.extend.fontFamily: Map sans to --bs-body-font-family, mono to --bs-font-monospace
-- [ ] T023 Configure HeroUI theme colors in apps/web/tailwind.config.ts heroui plugin: Map semantic colors (primary, success, danger, warning, focus) to fontAndColour.css variables
-- [ ] T024 Create class composition utility in packages/ui/src/lib/utils/cn.ts: Implement `cn()` function using clsx and tailwind-merge
-- [ ] T025 Export cn utility from packages/ui/src/index.ts: Add `export { cn } from './lib/utils/cn'`
-- [ ] T026 Configure ESLint Tailwind plugin in eslint.config.mjs: Add tailwindcss/recommended, enable no-arbitrary-value (warn), enforces-shorthand (warn), no-contradicting-classname (error)
-- [ ] T027 Verify 8-point grid works: Create test component with gap-1, gap-2, gap-3 and inspect computed styles (should be 8px, 16px, 24px)
-- [ ] T028 Verify fontAndColour.css mapping works: Create test component with bg-primary, text-danger and inspect computed styles (should use CSS variables)
+- [x] T020 Configure 8-point grid spacing scale in apps/web/tailwind.config.ts theme.extend.spacing: Map 1→8px, 2→16px, 3→24px, 4→32px, 5→40px, 6→48px, 8→64px, 10→80px, 12→96px
+- [x] T021 Map fontAndColour.css color variables in apps/web/tailwind.config.ts theme.extend.colors: Map primary, secondary, success, danger, warning, info, light, dark to corresponding --bs-* variables
+- [x] T022 Map fontAndColour.css font families in apps/web/tailwind.config.ts theme.extend.fontFamily: Map sans to --bs-body-font-family, mono to --bs-font-monospace
+- [x] T023 Configure HeroUI theme colors in apps/web/tailwind.config.ts heroui plugin: Map semantic colors (primary, success, danger, warning, focus) to fontAndColour.css variables
+- [x] T024 Create class composition utility in packages/ui/src/lib/utils/cn.ts: Implement `cn()` function using clsx and tailwind-merge
+- [x] T025 Export cn utility from packages/ui/src/index.ts: Add `export { cn } from './lib/utils/cn'`
+- [x] T026 Configure ESLint Tailwind plugin in eslint.config.mjs: Add tailwindcss/recommended, enable no-arbitrary-value (warn), enforces-shorthand (warn), no-contradicting-classname (error)
+- [x] T027 Verify 8-point grid works: Create test component with gap-1, gap-2, gap-3 and inspect computed styles (should be 8px, 16px, 24px)
+- [x] T028 Verify fontAndColour.css mapping works: Create test component with bg-primary, text-danger and inspect computed styles (should use CSS variables)
 
 ---
 

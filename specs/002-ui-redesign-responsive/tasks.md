@@ -151,9 +151,9 @@ Phase 8 (Polish) → Final integration and performance optimization
 
 ### Tasks
 
-- [ ] T040 [P] [US3] Update admin sign-in page in apps/web/src/app/admin/sign-in/page.tsx: Apply 8-point grid spacing (gap-3 for form fields, p-6 for card), ensure buttons have consistent padding
-- [ ] T041 [P] [US3] Update admin dashboard page in apps/web/src/app/admin/dashboard/page.tsx: Apply 8-point grid spacing (gap-4 for page sections, p-6 for cards), consistent spacing around table
-- [ ] T042 [P] [US3] Update admin companies page in apps/web/src/app/admin/companies/page.tsx: Apply 8-point grid spacing (gap-4 for page layout, p-6 for table card)
+- [x] T040 [P] [US3] Update admin sign-in page in apps/web/src/app/admin/sign-in/page.tsx: Apply 8-point grid spacing (gap-3 for form fields, p-6 for card), ensure buttons have consistent padding
+- [x] T041 [P] [US3] Update admin dashboard page in apps/web/src/app/admin/dashboard/page.tsx: Apply 8-point grid spacing (gap-4 for page sections, p-6 for cards), consistent spacing around table
+- [x] T042 [P] [US3] Update admin companies page in apps/web/src/app/admin/companies/page.tsx: Apply 8-point grid spacing (gap-4 for page layout, p-6 for table card)
 - [ ] T043 [P] [US3] Audit all Button components across codebase: Ensure consistent sizing using HeroUI size prop (size="md" or size="lg"), proper spacing with adjacent elements (gap-2 or gap-3)
 - [ ] T044 [P] [US3] Audit all Input components across codebase: Ensure consistent height (HeroUI default), proper vertical spacing (gap-3 between fields), labels properly aligned
 - [ ] T045 [P] [US3] Audit all Card components across codebase: Ensure consistent padding (p-6 for content, gap-3 for internal elements)

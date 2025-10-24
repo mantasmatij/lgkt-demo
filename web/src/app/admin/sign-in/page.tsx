@@ -40,17 +40,18 @@ export default function AdminSignInPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-12 max-w-md">
-      <Card className="p-8">
-        <h1 className="text-2xl font-bold mb-6 text-center">Admin Sign In</h1>
-        
-        {error && (
-          <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded text-red-700 text-sm">
-            {error}
-          </div>
-        )}
+    <div className="container mx-auto px-4 py-6 max-w-md">
+      <Card className="p-6">
+        <div className="flex flex-col gap-3">
+          <h1 className="text-2xl font-bold mb-2 text-center">Admin Sign In</h1>
+          
+          {error && (
+            <div className="p-3 bg-red-50 border border-red-200 rounded text-red-700 text-sm">
+              {error}
+            </div>
+          )}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-3">
           <Input
             type="email"
             label="Email"
@@ -79,6 +80,7 @@ export default function AdminSignInPage() {
             Sign In
           </Button>
         </form>
+        </div>
       </Card>
     </div>
   );

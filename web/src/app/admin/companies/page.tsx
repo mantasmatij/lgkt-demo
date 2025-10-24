@@ -76,23 +76,25 @@ export default function AdminCompaniesPage() {
   const isEmpty = !data || data.items.length === 0;
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6">Companies</h1>
+    <div className="container mx-auto px-4 py-6">
+      <div className="flex flex-col gap-4">
+        <h1 className="text-3xl font-bold">Companies</h1>
 
-      {isEmpty ? (
-        <Card className="p-8 text-center">
-          <p className="text-gray-600 text-lg">No companies yet.</p>
-          <p className="text-gray-500 mt-2">Companies will appear here once submissions are received.</p>
-        </Card>
-      ) : (
-        <>
-          <Card className="p-4 mb-4">
-            <p className="text-gray-700">
-              <span className="font-semibold">{data.items.length}</span> companies
-            </p>
+        {isEmpty ? (
+          <Card className="p-6 text-center">
+            <p className="text-gray-600 text-lg">No companies yet.</p>
+            <p className="text-gray-500 mt-2">Companies will appear here once submissions are received.</p>
           </Card>
+        ) : (
+          <>
+            <Card className="p-6">
+              <p className="text-gray-700">
+                <span className="font-semibold">{data.items.length}</span> companies
+              </p>
+            </Card>
 
-          <Table aria-label="Companies table">
+            <Card className="p-6">
+              <Table aria-label="Companies table">
             <TableHeader>
               <TableColumn>Company Code</TableColumn>
               <TableColumn>Company Name</TableColumn>
@@ -116,8 +118,10 @@ export default function AdminCompaniesPage() {
               ))}
             </TableBody>
           </Table>
-        </>
-      )}
+            </Card>
+          </>
+        )}
+      </div>
     </div>
   );
 }

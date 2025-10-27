@@ -194,6 +194,7 @@ export default function PublicFormPage() {
             />
           </div>
           <Checkbox 
+            size="sm"
             id="requirementsApplied"
             name="requirementsApplied"
             isSelected={form.requirementsApplied} 
@@ -295,6 +296,7 @@ export default function PublicFormPage() {
             />
           </div>
           <Checkbox 
+            size="sm"
             id="consent"
             name="consent"
             isSelected={form.consent} 

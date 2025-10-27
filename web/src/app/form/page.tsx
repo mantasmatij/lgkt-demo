@@ -193,19 +193,22 @@ export default function PublicFormPage() {
               aria-required="true"
             />
           </div>
-          <Checkbox 
-            size="sm"
-            id="requirementsApplied"
-            name="requirementsApplied"
-            isSelected={form.requirementsApplied} 
-            onValueChange={(v) => update('requirementsApplied', v)}
-            classNames={{
-              wrapper: "w-4 h-4",
-              icon: "w-3 h-3"
-            }}
-          >
-            Requirements applied
-          </Checkbox>
+          <div className="flex items-center justify-between">
+            <span className="text-sm">Requirements applied</span>
+            <Checkbox 
+              size="sm"
+              id="requirementsApplied"
+              name="requirementsApplied"
+              isSelected={form.requirementsApplied} 
+              onValueChange={(v) => update('requirementsApplied', v)}
+              classNames={{
+                base: "m-0 p-0",
+                wrapper: "w-4 h-4",
+                icon: "w-3 h-3"
+              }}
+              aria-label="Requirements applied"
+            />
+          </div>
           </div>
         </Card>
 
@@ -299,21 +302,24 @@ export default function PublicFormPage() {
               aria-required="true"
             />
           </div>
-          <Checkbox 
-            size="sm"
-            id="consent"
-            name="consent"
-            isSelected={form.consent} 
-            onValueChange={(v) => update('consent', v)}
-            isRequired
-            aria-required="true"
-            classNames={{
-              wrapper: "w-4 h-4",
-              icon: "w-3 h-3"
-            }}
-          >
-            I agree to the processing of my data.
-          </Checkbox>
+          <div className="flex items-center justify-between">
+            <span className="text-sm">I agree to the processing of my data.</span>
+            <Checkbox 
+              size="sm"
+              id="consent"
+              name="consent"
+              isSelected={form.consent} 
+              onValueChange={(v) => update('consent', v)}
+              isRequired
+              aria-required="true"
+              classNames={{
+                base: "m-0 p-0",
+                wrapper: "w-4 h-4",
+                icon: "w-3 h-3"
+              }}
+              aria-label="I agree to the processing of my data"
+            />
+          </div>
           </div>
         </Card>
 

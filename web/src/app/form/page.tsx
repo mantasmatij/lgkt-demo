@@ -199,6 +199,10 @@ export default function PublicFormPage() {
             name="requirementsApplied"
             isSelected={form.requirementsApplied} 
             onValueChange={(v) => update('requirementsApplied', v)}
+            classNames={{
+              wrapper: "w-4 h-4",
+              icon: "w-3 h-3"
+            }}
           >
             Requirements applied
           </Checkbox>
@@ -303,6 +307,10 @@ export default function PublicFormPage() {
             onValueChange={(v) => update('consent', v)}
             isRequired
             aria-required="true"
+            classNames={{
+              wrapper: "w-4 h-4",
+              icon: "w-3 h-3"
+            }}
           >
             I agree to the processing of my data.
           </Checkbox>

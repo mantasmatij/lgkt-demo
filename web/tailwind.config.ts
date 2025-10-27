@@ -24,15 +24,16 @@ export default {
         '12': '96px', // 6rem
       },
       // Map fontAndColour.css color variables (T021)
+      // These are available at runtime via CSS variables
       colors: {
-        primary: 'var(--bs-primary)',
-        secondary: 'var(--bs-secondary)',
-        success: 'var(--bs-success)',
-        danger: 'var(--bs-danger)',
-        warning: 'var(--bs-warning)',
-        info: 'var(--bs-info)',
-        light: 'var(--bs-light)',
-        dark: 'var(--bs-dark)',
+        primary: '#0d6efd',
+        secondary: '#6c757d',
+        success: '#198754',
+        danger: '#dc3545',
+        warning: '#ffc107',
+        info: '#0dcaf0',
+        light: '#f8f9fa',
+        dark: '#212529',
       },
       // Map fontAndColour.css font families (T022)
       fontFamily: {
@@ -43,30 +44,31 @@ export default {
   },
   // Configure HeroUI theme colors (T023)
   plugins: [
+    // @ts-expect-error - HeroUI plugin type mismatch with Tailwind CSS types
     heroui({
       themes: {
         light: {
           colors: {
             primary: {
-              DEFAULT: 'var(--bs-primary)',
-              foreground: 'var(--bs-white)',
+              DEFAULT: '#0d6efd',
+              foreground: '#ffffff',
             },
             success: {
-              DEFAULT: 'var(--bs-success)',
-              foreground: 'var(--bs-white)',
+              DEFAULT: '#198754',
+              foreground: '#ffffff',
             },
             danger: {
-              DEFAULT: 'var(--bs-danger)',
-              foreground: 'var(--bs-white)',
+              DEFAULT: '#dc3545',
+              foreground: '#ffffff',
             },
             warning: {
-              DEFAULT: 'var(--bs-warning)',
-              foreground: 'var(--bs-dark)',
+              DEFAULT: '#ffc107',
+              foreground: '#212529',
             },
-            focus: 'var(--bs-primary)',
+            focus: '#0d6efd',
           },
         },
       },
-    }) as any,
+    }),
   ],
 } satisfies Config;

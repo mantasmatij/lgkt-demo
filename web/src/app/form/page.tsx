@@ -7,9 +7,10 @@ import { submissionSchema, type SubmissionInput } from 'validation';
 
 // Consistent input styling to match reference design
 const inputClassNames = {
-  inputWrapper: "border-2 border-gray-300 data-[hover=true]:border-gray-400",
+  inputWrapper: "border-2 border-gray-500 data-[hover=true]:border-gray-600 shadow-sm",
   input: "text-base",
-  label: "text-black font-medium",
+  label: "!text-black font-medium",
+  mainWrapper: "h-auto",
 };
 
 export default function PublicFormPage() {
@@ -105,10 +106,7 @@ export default function PublicFormPage() {
                 variant="bordered" 
                 radius="full" 
                 size="lg"
-                classNames={{
-                  inputWrapper: "border-2 border-gray-300",
-                  input: "text-base",
-                }}
+                classNames={inputClassNames} labelPlacement="outside"
                 id="name"
                 name="name"
                 label="Company name" 
@@ -123,10 +121,7 @@ export default function PublicFormPage() {
                 variant="bordered" 
                 radius="full" 
                 size="lg"
-                classNames={{
-                  inputWrapper: "border-2 border-gray-300",
-                  input: "text-base",
-                }}
+                classNames={inputClassNames} labelPlacement="outside"
                 id="code"
                 name="code"
                 label="Company code" 

@@ -262,23 +262,23 @@ Phase 8 (Polish) → Final integration and performance optimization
 
 ### Tasks
 
-- [ ] T074 Create viewport test utilities in apps/web/tests/e2e/utils/viewports.ts: Define VIEWPORTS constant with mobile (375x667), tablet (768x1024), desktop (1920x1080)
-- [ ] T075 Create responsive test suite in apps/web/tests/e2e/responsive.spec.ts: Implement viewport-specific tests for form page with screenshot comparison
-- [ ] T076 [P] Add viewport tests for admin sign-in in apps/web/tests/e2e/responsive.spec.ts: Test responsive layout across mobile, tablet, desktop with screenshots
-- [ ] T077 [P] Add viewport tests for admin dashboard in apps/web/tests/e2e/responsive.spec.ts: Test responsive layout, table handling, no horizontal scroll with screenshots
-- [ ] T078 [P] Add touch target size tests in apps/web/tests/e2e/responsive.spec.ts: Test all interactive elements meet 44x44px minimum on mobile and tablet viewports
-- [ ] T079 Update Playwright config in playwright.config.ts: Add viewport configurations for mobile, tablet, desktop test projects
-- [ ] T080 Update existing E2E tests in apps/web/tests/e2e/form.spec.ts: Update selectors if needed for HeroUI components, ensure tests still pass
-- [ ] T081 Update existing E2E tests in apps/web/tests/e2e/admin.spec.ts: Update selectors if needed for HeroUI components, ensure tests still pass
-- [ ] T082 Run all Playwright tests and generate baseline screenshots: Execute `npx playwright test` to create initial screenshot baselines
-- [ ] T083 Run full test suite: Execute `npm test` to verify all unit tests pass after changes
-- [ ] T084 Run ESLint and fix remaining issues: Execute `npm run lint`, address any errors or warnings
-- [ ] T085 Run performance audit with Lighthouse: Test form page and admin dashboard, verify CLS < 0.1, FCP < 1.8s, TTI < 3.8s
-- [ ] T086 Manual cross-browser testing: Test on Chrome, Safari, Mobile Safari, Mobile Chrome - verify responsive behavior consistent
-- [ ] T087 Measure form completion time improvement: Have users test new form, measure completion time, verify 20% improvement over baseline
-- [ ] T088 Final visual inspection: Navigate through all pages, verify consistent spacing, no alignment issues, professional appearance
-- [ ] T089 Update CHANGELOG.md: Document NextUI → HeroUI migration, 8-point grid implementation, responsive design improvements
-- [ ] T090 Commit all changes: Stage changes by category (migration, grid system, responsive components, tests), create descriptive commits
+- [x] T074 Create viewport test utilities in apps/web/tests/e2e/utils/viewports.ts: Define VIEWPORTS constant with mobile (375x667), tablet (768x1024), desktop (1920x1080)
+- [ ] T075 Create responsive test suite in apps/web/tests/e2e/responsive.spec.ts: Implement viewport-specific tests for form page with screenshot comparison **[E2E TEST - REQUIRES PLAYWRIGHT]**
+- [ ] T076 [P] Add viewport tests for admin sign-in in apps/web/tests/e2e/responsive.spec.ts: Test responsive layout across mobile, tablet, desktop with screenshots **[E2E TEST - REQUIRES PLAYWRIGHT]**
+- [ ] T077 [P] Add viewport tests for admin dashboard in apps/web/tests/e2e/responsive.spec.ts: Test responsive layout, table handling, no horizontal scroll with screenshots **[E2E TEST - REQUIRES PLAYWRIGHT]**
+- [ ] T078 [P] Add touch target size tests in apps/web/tests/e2e/responsive.spec.ts: Test all interactive elements meet 44x44px minimum on mobile and tablet viewports **[E2E TEST - REQUIRES PLAYWRIGHT]**
+- [x] T079 Update Playwright config in playwright.config.ts: Add viewport configurations for mobile, tablet, desktop test projects
+- [x] T080 Update existing E2E tests in apps/web/tests/e2e/form.spec.ts: Update selectors if needed for HeroUI components, ensure tests still pass
+- [x] T081 Update existing E2E tests in apps/web/tests/e2e/admin.spec.ts: Update selectors if needed for HeroUI components, ensure tests still pass
+- [ ] T082 Run all Playwright tests and generate baseline screenshots: Execute `npx playwright test` to create initial screenshot baselines **[E2E TEST - REQUIRES PLAYWRIGHT]**
+- [x] T083 Run full test suite: Execute `npm test` to verify all unit tests pass after changes
+- [x] T084 Run ESLint and fix remaining issues: Execute `npm run lint`, address any errors or warnings
+- [ ] T085 Run performance audit with Lighthouse: Test form page and admin dashboard, verify CLS < 0.1, FCP < 1.8s, TTI < 3.8s **[MANUAL PERFORMANCE TEST]**
+- [ ] T086 Manual cross-browser testing: Test on Chrome, Safari, Mobile Safari, Mobile Chrome - verify responsive behavior consistent **[MANUAL BROWSER TEST]**
+- [ ] T087 Measure form completion time improvement: Have users test new form, measure completion time, verify 20% improvement over baseline **[MANUAL USER TEST]**
+- [ ] T088 Final visual inspection: Navigate through all pages, verify consistent spacing, no alignment issues, professional appearance **[MANUAL VISUAL TEST]**
+- [x] T089 Update CHANGELOG.md: Document NextUI → HeroUI migration, 8-point grid implementation, responsive design improvements
+- [x] T090 Commit all changes: Stage changes by category (migration, grid system, responsive components, tests), create descriptive commits
 
 ---
 

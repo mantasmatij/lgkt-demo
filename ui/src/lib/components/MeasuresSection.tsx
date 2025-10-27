@@ -32,18 +32,18 @@ export function MeasuresSection({ value, onChange }: { value: MeasureRow[]; onCh
           <Card key={idx} className={cn("p-4")}>
             <div className="flex flex-col gap-3">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-            <Input variant="bordered" label="Name" value={row.name} onChange={(e) => update(idx, { name: e.target.value })} />
-            <Input variant="bordered" label="Year" value={row.year ?? ''} onChange={(e) => update(idx, { year: e.target.value || undefined })} />
-            <Input variant="bordered" label="Indicator" value={row.indicator ?? ''} onChange={(e) => update(idx, { indicator: e.target.value || undefined })} />
+            <Input variant="bordered" radius="full" size="lg" label="Name" value={row.name} onChange={(e) => update(idx, { name: e.target.value })} />
+            <Input variant="bordered" radius="full" size="lg" label="Year" value={row.year ?? ''} onChange={(e) => update(idx, { year: e.target.value || undefined })} />
+            <Input variant="bordered" radius="full" size="lg" label="Indicator" value={row.indicator ?? ''} onChange={(e) => update(idx, { indicator: e.target.value || undefined })} />
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-            <Input variant="bordered" label="Indicator value" value={row.indicatorValue ?? ''} onChange={(e) => update(idx, { indicatorValue: e.target.value || undefined })} />
-            <Input variant="bordered" label="Indicator unit" value={row.indicatorUnit ?? ''} onChange={(e) => update(idx, { indicatorUnit: e.target.value || undefined })} />
+            <Input variant="bordered" radius="full" size="lg" label="Indicator value" value={row.indicatorValue ?? ''} onChange={(e) => update(idx, { indicatorValue: e.target.value || undefined })} />
+            <Input variant="bordered" radius="full" size="lg" label="Indicator unit" value={row.indicatorUnit ?? ''} onChange={(e) => update(idx, { indicatorUnit: e.target.value || undefined })} />
             <div className="flex justify-end">
               <Button size="sm" color="danger" variant="flat" onPress={() => removeRow(idx)}>Remove</Button>
             </div>
           </div>
-          <Textarea variant="bordered" label="Planned result" value={row.plannedResult ?? ''} onChange={(e) => update(idx, { plannedResult: e.target.value || undefined })} />
+          <Textarea variant="bordered" radius="full" size="lg" label="Planned result" value={row.plannedResult ?? ''} onChange={(e) => update(idx, { plannedResult: e.target.value || undefined })} />
             </div>
         </Card>
         ))}

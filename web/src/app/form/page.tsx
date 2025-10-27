@@ -94,7 +94,7 @@ export default function PublicFormPage() {
           <div className="flex flex-col gap-3">
             <h2 className="text-xl font-semibold mb-2">Company</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              <Input variant="bordered" 
+              <Input variant="bordered" radius="full" size="lg" 
                 id="name"
                 name="name"
                 label="Company name" 
@@ -105,7 +105,7 @@ export default function PublicFormPage() {
                 isRequired
                 aria-required="true"
               />
-              <Input variant="bordered" 
+              <Input variant="bordered" radius="full" size="lg" 
                 id="code"
                 name="code"
                 label="Company code" 
@@ -116,7 +116,7 @@ export default function PublicFormPage() {
                 isRequired
                 aria-required="true"
               />
-              <Input variant="bordered" 
+              <Input variant="bordered" radius="full" size="lg" 
                 id="country"
                 name="country"
                 label="Country (ISO2)" 
@@ -127,7 +127,7 @@ export default function PublicFormPage() {
                 isRequired
                 aria-required="true"
               />
-              <Input variant="bordered" 
+              <Input variant="bordered" radius="full" size="lg" 
                 id="legalForm"
                 name="legalForm"
                 label="Legal form" 
@@ -136,7 +136,7 @@ export default function PublicFormPage() {
                 isRequired
                 aria-required="true"
               />
-              <Input variant="bordered" 
+              <Input variant="bordered" radius="full" size="lg" 
                 id="address"
                 name="address"
                 label="Address" 
@@ -145,7 +145,7 @@ export default function PublicFormPage() {
                 isRequired
                 aria-required="true"
               />
-              <Input variant="bordered" 
+              <Input variant="bordered" radius="full" size="lg" 
                 id="registry"
                 name="registry"
                 label="Registry" 
@@ -154,7 +154,7 @@ export default function PublicFormPage() {
                 isRequired
                 aria-required="true"
               />
-              <Input variant="bordered" 
+              <Input variant="bordered" radius="full" size="lg" 
                 id="eDeliveryAddress"
                 name="eDeliveryAddress"
                 label="eDelivery address" 
@@ -163,7 +163,7 @@ export default function PublicFormPage() {
                 isRequired
                 aria-required="true"
               />
-              <Input variant="bordered" 
+              <Input variant="bordered" radius="full" size="lg" 
                 id="requirementsLink"
                 name="requirementsLink"
                 type="url" 
@@ -172,7 +172,7 @@ export default function PublicFormPage() {
                 onChange={(e) => update('requirementsLink', e.target.value || undefined)}
                 aria-required="false"
               />
-              <Input variant="bordered" 
+              <Input variant="bordered" radius="full" size="lg" 
                 id="reportingFrom"
                 name="reportingFrom"
                 type="date" 
@@ -182,7 +182,7 @@ export default function PublicFormPage() {
                 isRequired
                 aria-required="true"
               />
-              <Input variant="bordered" 
+              <Input variant="bordered" radius="full" size="lg" 
                 id="reportingTo"
                 name="reportingTo"
                 type="date" 
@@ -217,7 +217,7 @@ export default function PublicFormPage() {
           <div className="flex flex-col gap-3">
             <h2 className="text-xl font-semibold mb-2">Contact & Other</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <Input variant="bordered" 
+            <Input variant="bordered" radius="full" size="lg" 
               id="contactName"
               name="contactName"
               label="Contact name" 
@@ -226,7 +226,7 @@ export default function PublicFormPage() {
               isRequired
               aria-required="true"
             />
-            <Input variant="bordered" 
+            <Input variant="bordered" radius="full" size="lg" 
               id="contactEmail"
               name="contactEmail"
               type="email" 
@@ -236,7 +236,7 @@ export default function PublicFormPage() {
               isRequired
               aria-required="true"
             />
-            <Input variant="bordered" 
+            <Input variant="bordered" radius="full" size="lg" 
               id="contactPhone"
               name="contactPhone"
               label="Contact phone" 
@@ -246,7 +246,7 @@ export default function PublicFormPage() {
               aria-required="true"
             />
           </div>
-          <Textarea variant="bordered" 
+          <Textarea variant="bordered" radius="full" size="lg" 
             id="reasonsForUnderrepresentation"
             name="reasonsForUnderrepresentation"
             label="Reasons for underrepresentation (optional)" 
@@ -261,7 +261,7 @@ export default function PublicFormPage() {
           <div className="flex flex-col gap-3">
             <h2 className="text-xl font-semibold mb-2">Submitter</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <Input variant="bordered" 
+            <Input variant="bordered" radius="full" size="lg" 
               id="submitter.name"
               name="submitter.name"
               label="Full name" 
@@ -270,7 +270,7 @@ export default function PublicFormPage() {
               isRequired
               aria-required="true"
             />
-            <Input variant="bordered" 
+            <Input variant="bordered" radius="full" size="lg" 
               id="submitter.title"
               name="submitter.title"
               label="Title" 
@@ -278,7 +278,7 @@ export default function PublicFormPage() {
               onChange={(e) => update('submitter', { ...form.submitter, title: e.target.value })}
               aria-required="false"
             />
-            <Input variant="bordered" 
+            <Input variant="bordered" radius="full" size="lg" 
               id="submitter.phone"
               name="submitter.phone"
               label="Phone" 
@@ -287,7 +287,7 @@ export default function PublicFormPage() {
               isRequired
               aria-required="true"
             />
-            <Input variant="bordered" 
+            <Input variant="bordered" radius="full" size="lg" 
               id="submitter.email"
               name="submitter.email"
               type="email" 

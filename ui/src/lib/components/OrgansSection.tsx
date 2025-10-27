@@ -54,34 +54,37 @@ export function OrgansSection({ value, onChange }: { value: OrganRow[]; onChange
                 <tr key={idx} className="border-b border-gray-100 last:border-b-0">
                   <td className="py-3 px-2">
                     <Select
+                      variant="bordered"
+                      radius="full"
                       label="Organ type"
                       selectedKeys={[row.organType]}
                       onChange={(e) => update(idx, { organType: (e.target.value as OrganRow['organType']) })}
                       size="sm"
-                      classNames={{ trigger: "min-h-unit-10" }}
                     >
                       <SelectItem key="VALDYBA">Valdyba</SelectItem>
                       <SelectItem key="STEBETOJU_TARYBA">Stebėtojų taryba</SelectItem>
                     </Select>
                   </td>
                   <td className="py-3 px-2">
-                    <Input variant="bordered" 
+                    <Input 
+                      variant="bordered" 
+                      radius="full"
                       type="date" 
                       label="Last election date" 
                       value={row.lastElectionDate ?? ''} 
                       onChange={(e) => update(idx, { lastElectionDate: e.target.value || undefined })}
                       size="sm"
-                      classNames={{ inputWrapper: "min-h-unit-10" }}
                     />
                   </td>
                   <td className="py-3 px-2">
-                    <Input variant="bordered" 
+                    <Input 
+                      variant="bordered" 
+                      radius="full"
                       type="date" 
                       label="Planned election date" 
                       value={row.plannedElectionDate ?? ''} 
                       onChange={(e) => update(idx, { plannedElectionDate: e.target.value || undefined })}
                       size="sm"
-                      classNames={{ inputWrapper: "min-h-unit-10" }}
                     />
                   </td>
                   <td className="py-3 px-2 text-right">

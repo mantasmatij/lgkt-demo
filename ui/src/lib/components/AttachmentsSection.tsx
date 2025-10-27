@@ -197,7 +197,7 @@ export function AttachmentsSection({ value, onChange }: { value: AttachmentRef[]
 
       {/* Link input */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-2 items-end pt-2 border-t">
-        <Input variant="bordered" 
+        <Input variant="bordered" radius="full" size="lg" 
           label="Attachment link (URL)" 
           value={link} 
           onChange={(e) => setLink(e.target.value)}

@@ -65,7 +65,7 @@ export function OrgansSection({ value, onChange }: { value: OrganRow[]; onChange
                     </Select>
                   </td>
                   <td className="py-3 px-2">
-                    <Input 
+                    <Input variant="bordered" 
                       type="date" 
                       label="Last election date" 
                       value={row.lastElectionDate ?? ''} 
@@ -75,7 +75,7 @@ export function OrgansSection({ value, onChange }: { value: OrganRow[]; onChange
                     />
                   </td>
                   <td className="py-3 px-2">
-                    <Input 
+                    <Input variant="bordered" 
                       type="date" 
                       label="Planned election date" 
                       value={row.plannedElectionDate ?? ''} 

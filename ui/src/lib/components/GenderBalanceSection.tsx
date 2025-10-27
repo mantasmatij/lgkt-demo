@@ -39,9 +39,9 @@ export function GenderBalanceSection({ value, onChange }: { value: GenderRow[]; 
                 <div className="text-sm font-semibold">{role.replace('_', ' ')}</div>
                 
                 <div className="grid grid-cols-3 gap-2">
-                  <Input type="number" min={0} label="Women" value={String(row.women)} onChange={(e) => update(role, { women: Number(e.target.value || 0) })} />
-                  <Input type="number" min={0} label="Men" value={String(row.men)} onChange={(e) => update(role, { men: Number(e.target.value || 0) })} />
-                  <Input type="number" isReadOnly label="Total" value={String(row.total)} />
+                  <Input variant="bordered" type="number" min={0} label="Women" value={String(row.women)} onChange={(e) => update(role, { women: Number(e.target.value || 0) })} />
+                  <Input variant="bordered" type="number" min={0} label="Men" value={String(row.men)} onChange={(e) => update(role, { men: Number(e.target.value || 0) })} />
+                  <Input variant="bordered" type="number" isReadOnly label="Total" value={String(row.total)} />
                 </div>
                 
                 {row.total > 0 && (

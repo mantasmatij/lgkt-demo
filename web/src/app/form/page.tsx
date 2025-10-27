@@ -5,6 +5,13 @@ import { Button, Card, Input, Textarea } from '@heroui/react';
 import { OrgansSection, GenderBalanceSection, MeasuresSection, AttachmentsSection, ErrorSummary } from 'ui';
 import { submissionSchema, type SubmissionInput } from 'validation';
 
+// Consistent input styling to match reference design
+const inputClassNames = {
+  inputWrapper: "border-2 border-gray-300 data-[hover=true]:border-gray-400",
+  input: "text-base",
+  label: "text-black font-medium",
+};
+
 export default function PublicFormPage() {
   const router = useRouter();
   const [form, setForm] = React.useState<SubmissionInput>({
@@ -94,7 +101,14 @@ export default function PublicFormPage() {
           <div className="flex flex-col gap-3">
             <h2 className="text-xl font-semibold mb-2">Company</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              <Input variant="bordered" radius="full" size="lg" 
+              <Input 
+                variant="bordered" 
+                radius="full" 
+                size="lg"
+                classNames={{
+                  inputWrapper: "border-2 border-gray-300",
+                  input: "text-base",
+                }}
                 id="name"
                 name="name"
                 label="Company name" 
@@ -105,7 +119,14 @@ export default function PublicFormPage() {
                 isRequired
                 aria-required="true"
               />
-              <Input variant="bordered" radius="full" size="lg" 
+              <Input 
+                variant="bordered" 
+                radius="full" 
+                size="lg"
+                classNames={{
+                  inputWrapper: "border-2 border-gray-300",
+                  input: "text-base",
+                }}
                 id="code"
                 name="code"
                 label="Company code" 
@@ -116,7 +137,7 @@ export default function PublicFormPage() {
                 isRequired
                 aria-required="true"
               />
-              <Input variant="bordered" radius="full" size="lg" 
+              <Input variant="bordered" radius="full" size="lg" classNames={inputClassNames} 
                 id="country"
                 name="country"
                 label="Country (ISO2)" 
@@ -127,7 +148,7 @@ export default function PublicFormPage() {
                 isRequired
                 aria-required="true"
               />
-              <Input variant="bordered" radius="full" size="lg" 
+              <Input variant="bordered" radius="full" size="lg" classNames={inputClassNames} 
                 id="legalForm"
                 name="legalForm"
                 label="Legal form" 
@@ -136,7 +157,7 @@ export default function PublicFormPage() {
                 isRequired
                 aria-required="true"
               />
-              <Input variant="bordered" radius="full" size="lg" 
+              <Input variant="bordered" radius="full" size="lg" classNames={inputClassNames} 
                 id="address"
                 name="address"
                 label="Address" 
@@ -145,7 +166,7 @@ export default function PublicFormPage() {
                 isRequired
                 aria-required="true"
               />
-              <Input variant="bordered" radius="full" size="lg" 
+              <Input variant="bordered" radius="full" size="lg" classNames={inputClassNames} 
                 id="registry"
                 name="registry"
                 label="Registry" 
@@ -154,7 +175,7 @@ export default function PublicFormPage() {
                 isRequired
                 aria-required="true"
               />
-              <Input variant="bordered" radius="full" size="lg" 
+              <Input variant="bordered" radius="full" size="lg" classNames={inputClassNames} 
                 id="eDeliveryAddress"
                 name="eDeliveryAddress"
                 label="eDelivery address" 
@@ -163,7 +184,7 @@ export default function PublicFormPage() {
                 isRequired
                 aria-required="true"
               />
-              <Input variant="bordered" radius="full" size="lg" 
+              <Input variant="bordered" radius="full" size="lg" classNames={inputClassNames} 
                 id="requirementsLink"
                 name="requirementsLink"
                 type="url" 
@@ -172,7 +193,7 @@ export default function PublicFormPage() {
                 onChange={(e) => update('requirementsLink', e.target.value || undefined)}
                 aria-required="false"
               />
-              <Input variant="bordered" radius="full" size="lg" 
+              <Input variant="bordered" radius="full" size="lg" classNames={inputClassNames} 
                 id="reportingFrom"
                 name="reportingFrom"
                 type="date" 
@@ -182,7 +203,7 @@ export default function PublicFormPage() {
                 isRequired
                 aria-required="true"
               />
-              <Input variant="bordered" radius="full" size="lg" 
+              <Input variant="bordered" radius="full" size="lg" classNames={inputClassNames} 
                 id="reportingTo"
                 name="reportingTo"
                 type="date" 
@@ -217,7 +238,7 @@ export default function PublicFormPage() {
           <div className="flex flex-col gap-3">
             <h2 className="text-xl font-semibold mb-2">Contact & Other</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <Input variant="bordered" radius="full" size="lg" 
+            <Input variant="bordered" radius="full" size="lg" classNames={inputClassNames} 
               id="contactName"
               name="contactName"
               label="Contact name" 
@@ -226,7 +247,7 @@ export default function PublicFormPage() {
               isRequired
               aria-required="true"
             />
-            <Input variant="bordered" radius="full" size="lg" 
+            <Input variant="bordered" radius="full" size="lg" classNames={inputClassNames} 
               id="contactEmail"
               name="contactEmail"
               type="email" 
@@ -236,7 +257,7 @@ export default function PublicFormPage() {
               isRequired
               aria-required="true"
             />
-            <Input variant="bordered" radius="full" size="lg" 
+            <Input variant="bordered" radius="full" size="lg" classNames={inputClassNames} 
               id="contactPhone"
               name="contactPhone"
               label="Contact phone" 
@@ -246,7 +267,7 @@ export default function PublicFormPage() {
               aria-required="true"
             />
           </div>
-          <Textarea variant="bordered" radius="full" size="lg" 
+          <Textarea variant="bordered" radius="full" size="lg" classNames={inputClassNames} 
             id="reasonsForUnderrepresentation"
             name="reasonsForUnderrepresentation"
             label="Reasons for underrepresentation (optional)" 
@@ -261,7 +282,7 @@ export default function PublicFormPage() {
           <div className="flex flex-col gap-3">
             <h2 className="text-xl font-semibold mb-2">Submitter</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <Input variant="bordered" radius="full" size="lg" 
+            <Input variant="bordered" radius="full" size="lg" classNames={inputClassNames} 
               id="submitter.name"
               name="submitter.name"
               label="Full name" 
@@ -270,7 +291,7 @@ export default function PublicFormPage() {
               isRequired
               aria-required="true"
             />
-            <Input variant="bordered" radius="full" size="lg" 
+            <Input variant="bordered" radius="full" size="lg" classNames={inputClassNames} 
               id="submitter.title"
               name="submitter.title"
               label="Title" 
@@ -278,7 +299,7 @@ export default function PublicFormPage() {
               onChange={(e) => update('submitter', { ...form.submitter, title: e.target.value })}
               aria-required="false"
             />
-            <Input variant="bordered" radius="full" size="lg" 
+            <Input variant="bordered" radius="full" size="lg" classNames={inputClassNames} 
               id="submitter.phone"
               name="submitter.phone"
               label="Phone" 
@@ -287,7 +308,7 @@ export default function PublicFormPage() {
               isRequired
               aria-required="true"
             />
-            <Input variant="bordered" radius="full" size="lg" 
+            <Input variant="bordered" radius="full" size="lg" classNames={inputClassNames} 
               id="submitter.email"
               name="submitter.email"
               type="email" 

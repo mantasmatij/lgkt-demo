@@ -74,33 +74,34 @@
 }
 
 /* Custom HeroUI input styling to match lygybe.lt reference design */
-[data-slot="input-wrapper"],
-[data-slot="innerWrapper"] {
-    border-radius: 50rem !important; /* Full rounded/pill shape */
+
+/* Target HeroUI Input wrapper for full rounded borders */
+[data-slot="input-wrapper"] {
+    border-radius: 9999px !important; /* Full rounded/pill shape */
+    min-height: 48px !important;
 }
 
+/* Target HeroUI Textarea wrapper */
+[data-slot="base"] [data-slot="input-wrapper"] {
+    border-radius: 24px !important; /* Rounded but not full pill for textareas */
+}
+
+/* Input field itself */
 [data-slot="input"],
 [data-slot="textarea"] {
-    min-height: 48px !important; /* More height for better touch targets */
-    padding: 12px 20px !important; /* More internal padding */
+    padding-left: 20px !important;
+    padding-right: 20px !important;
 }
 
+/* Label styling */
 [data-slot="label"] {
-    color: #000 !important; /* Black label text */
+    color: #000 !important;
     font-weight: 500 !important;
     margin-bottom: 8px !important;
 }
 
-/* Bordered variant styling */
-.hero-input-wrapper[data-variant="bordered"],
-.hero-select-wrapper[data-variant="bordered"],
-.hero-textarea-wrapper[data-variant="bordered"] {
-    border: 2px solid #dee2e6 !important; /* Thicker border */
-    border-radius: 50rem !important; /* Full rounded */
-}
-
-.hero-input-wrapper[data-variant="bordered"]:focus-within,
-.hero-select-wrapper[data-variant="bordered"]:focus-within,
-.hero-textarea-wrapper[data-variant="bordered"]:focus-within {
-    border-color: #0d6efd !important; /* Blue border on focus */
+/* Select trigger styling */
+[data-slot="trigger"] {
+    border-radius: 9999px !important;
+    min-height: 48px !important;
 }

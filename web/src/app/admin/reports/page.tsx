@@ -2,7 +2,8 @@
 
 import { useState, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
-import { Button, Card, CardBody, CardHeader, Input } from '@heroui/react';
+import { Card, CardBody, CardHeader, Input } from '@heroui/react';
+import { pillButtonClass } from 'ui';
 
 export default function ReportsPage() {
   const router = useRouter();
@@ -77,15 +78,14 @@ export default function ReportsPage() {
               onChange={(e) => setTo(e.target.value)}
               isRequired
             />
-            <Button
-              size="lg"
+            <button
               type="submit"
-              color="primary"
-              isLoading={isExporting}
-              className="w-full"
+              className={`${pillButtonClass} w-full`}
+              disabled={isExporting}
+              aria-busy={isExporting}
             >
-              {isExporting ? 'Exporting...' : 'Export CSV'}
-            </Button>
+              {isExporting ? 'Exporting…' : 'Export CSV'}
+            </button>
           </form>
         </CardBody>
       </Card>

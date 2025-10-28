@@ -6,3 +6,8 @@ export * from './lib/components/MeasuresSection';
 export * from './lib/components/AttachmentsSection';
 export * from './lib/ErrorSummary';
 export { cn } from './lib/utils/cn';
+export { InputField } from './lib/components/fields/InputField';
+export { TextareaField } from './lib/components/fields/TextareaField';
+export { SelectField } from './lib/components/fields/SelectField';
+export { CheckboxField } from './lib/components/fields/CheckboxField';
+export { pillButtonClass, iconButtonClass } from './lib/components/fields/buttonStyles';

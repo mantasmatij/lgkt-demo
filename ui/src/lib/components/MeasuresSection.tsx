@@ -1,7 +1,10 @@
 "use client";
 import * as React from 'react';
-import { Button, Card, Input, Textarea } from '@heroui/react';
+import { Card } from '@heroui/react';
 import { cn } from '../utils/cn';
+import { InputField } from './fields/InputField';
+import { TextareaField } from './fields/TextareaField';
+import { iconButtonClass } from './fields/buttonStyles';
 
 export type MeasureRow = {
   name: string;
@@ -25,27 +28,75 @@ export function MeasuresSection({ value, onChange }: { value: MeasureRow[]; onCh
       <div className="flex flex-col gap-3">
         <div className="flex items-center justify-between mb-2">
           <h3 className="text-lg font-medium">Measures</h3>
-          <Button size="sm" onPress={addRow} color="primary">Add measure</Button>
+          <button type="button" aria-label="Add measure" className={iconButtonClass} onClick={addRow}>+</button>
         </div>
         {value.length === 0 && <p className="text-sm text-default-500">No measures added.</p>}
         {value.map((row, idx) => (
-          <Card key={idx} className={cn("p-4")}>
+          <Card key={idx} className={cn("p-4")}> 
             <div className="flex flex-col gap-3">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-            <Input variant="bordered" radius="full" size="lg" label="Name" value={row.name} onChange={(e) => update(idx, { name: e.target.value })} />
-            <Input variant="bordered" radius="full" size="lg" label="Year" value={row.year ?? ''} onChange={(e) => update(idx, { year: e.target.value || undefined })} />
-            <Input variant="bordered" radius="full" size="lg" label="Indicator" value={row.indicator ?? ''} onChange={(e) => update(idx, { indicator: e.target.value || undefined })} />
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-            <Input variant="bordered" radius="full" size="lg" label="Indicator value" value={row.indicatorValue ?? ''} onChange={(e) => update(idx, { indicatorValue: e.target.value || undefined })} />
-            <Input variant="bordered" radius="full" size="lg" label="Indicator unit" value={row.indicatorUnit ?? ''} onChange={(e) => update(idx, { indicatorUnit: e.target.value || undefined })} />
-            <div className="flex justify-end">
-              <Button size="sm" color="danger" variant="flat" onPress={() => removeRow(idx)}>Remove</Button>
+              {/* Measure name as large input block */}
+              <TextareaField
+                id={`measure.${idx}.name`}
+                name={`measure.${idx}.name`}
+                label="Measure name"
+                value={row.name}
+                onChange={(e: unknown) => update(idx, { name: (e as React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>).target.value })}
+                disableAutosize
+                minRows={3}
+                classNames={{ inputWrapper: "min-h-28 rounded-2xl border-2 border-black px-4 py-3" }}
+              />
+
+              {/* Planned result block */}
+              <TextareaField
+                id={`measure.${idx}.plannedResult`}
+                name={`measure.${idx}.plannedResult`}
+                label="Planned result"
+                value={row.plannedResult ?? ''}
+                onChange={(e: unknown) => update(idx, { plannedResult: (e as React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>).target.value || undefined })}
+                disableAutosize
+                minRows={3}
+                classNames={{ inputWrapper: "min-h-28 rounded-2xl border-2 border-black px-4 py-3" }}
+              />
+
+              {/* Indicator rows */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <InputField
+                  id={`measure.${idx}.indicator`}
+                  name={`measure.${idx}.indicator`}
+                  label="Planned indicator"
+                  value={row.indicator ?? ''}
+                  onChange={(e) => update(idx, { indicator: e.target.value || undefined })}
+                />
+                <InputField
+                  id={`measure.${idx}.indicatorValue`}
+                  name={`measure.${idx}.indicatorValue`}
+                  label="Indicator value"
+                  value={row.indicatorValue ?? ''}
+                  onChange={(e) => update(idx, { indicatorValue: e.target.value || undefined })}
+                />
+                <InputField
+                  id={`measure.${idx}.indicatorUnit`}
+                  name={`measure.${idx}.indicatorUnit`}
+                  label="Indicator unit"
+                  value={row.indicatorUnit ?? ''}
+                  onChange={(e) => update(idx, { indicatorUnit: e.target.value || undefined })}
+                />
+                <InputField
+                  id={`measure.${idx}.year`}
+                  name={`measure.${idx}.year`}
+                  label="Year"
+                  value={row.year ?? ''}
+                  onChange={(e) => update(idx, { year: e.target.value || undefined })}
+                />
+              </div>
+
+              <div className="flex justify-end">
+                <button type="button" aria-label="Remove measure" className={iconButtonClass} onClick={() => removeRow(idx)}>
+                  −
+                </button>
+              </div>
             </div>
-          </div>
-          <Textarea variant="bordered" radius="full" size="lg" label="Planned result" value={row.plannedResult ?? ''} onChange={(e) => update(idx, { plannedResult: e.target.value || undefined })} />
-            </div>
-        </Card>
+          </Card>
         ))}
       </div>
     </Card>

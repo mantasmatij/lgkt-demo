@@ -1,7 +1,8 @@
 'use client';
 
-import { Button, Card } from '@heroui/react';
+import { Card } from '@heroui/react';
 import Link from 'next/link';
+import { pillButtonClass } from 'ui';
 
 export default function FormSuccessPage() {
   return (
@@ -43,14 +44,9 @@ export default function FormSuccessPage() {
         </div>
         
         <div>
-          <Button
-            as={Link}
-            href="/form"
-            color="primary"
-            size="lg"
-          >
+          <Link href="/form" className={pillButtonClass}>
             Pateikti kitą pranešimą
-          </Button>
+          </Link>
         </div>
         </div>
       </Card>

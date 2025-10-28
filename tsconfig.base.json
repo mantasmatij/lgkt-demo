@@ -4,7 +4,7 @@
     "rootDir": ".",
     "sourceMap": true,
     "declaration": false,
-    "moduleResolution": "node",
+    // "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "importHelpers": true,
@@ -13,12 +13,12 @@
     "lib": ["es2020", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
-    "baseUrl": ".",
+    // "baseUrl": ".",
     "paths": {
-      "contracts": ["contracts/src/index.ts"],
-      "db": ["db/src/index.ts"],
-      "ui": ["ui/src/index.ts"],
-      "validation": ["validation/src/index.ts"]
+      "contracts": ["./contracts/src/index.ts"],
+      "db": ["./db/src/index.ts"],
+      "ui": ["./ui/src/index.ts"],
+      "validation": ["./validation/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

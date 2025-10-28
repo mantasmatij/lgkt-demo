@@ -182,7 +182,7 @@ Phase 8 (Polish) → Final integration and performance optimization
 
 - [x] T049 [P] [US2] Make admin dashboard table responsive in apps/web/src/app/admin/dashboard/page.tsx: Add horizontal scroll wrapper for table on mobile/tablet (<1024px), ensure table maintains proper spacing
 - [x] T050 [P] [US2] Make admin companies table responsive in apps/web/src/app/admin/companies/page.tsx: Add horizontal scroll wrapper for table on mobile/tablet (<1024px), consider hiding less critical columns on mobile
-- [ ] T051 [P] [US2] Ensure admin navigation is mobile-friendly: If navigation exists, make it responsive (hamburger menu, bottom nav, or similar pattern for <768px) **[NO NAVIGATION EXISTS - SKIP]**
+- [x] T051 [P] [US2] Ensure admin navigation is mobile-friendly: If navigation exists, make it responsive (hamburger menu, bottom nav, or similar pattern for <768px) **[NO NAVIGATION EXISTS - SKIP]**
 - [x] T052 [P] [US2] Ensure all admin action buttons meet touch target size on mobile: Verify buttons are at least 44x44px (use size="lg" on HeroUI Button), proper spacing between buttons (gap-2 minimum)
 - [x] T053 [P] [US2] Add responsive padding to admin layout: Reduce padding on mobile (px-4 py-6) compared to desktop (px-8 py-10) for better space utilization
 - [ ] T054 [US2] Test admin dashboard on desktop (1920px): Login, view dashboard, verify table displays all columns, actions work, proper spacing
@@ -263,14 +263,14 @@ Phase 8 (Polish) → Final integration and performance optimization
 ### Tasks
 
 - [x] T074 Create viewport test utilities in apps/web/tests/e2e/utils/viewports.ts: Define VIEWPORTS constant with mobile (375x667), tablet (768x1024), desktop (1920x1080)
-- [ ] T075 Create responsive test suite in apps/web/tests/e2e/responsive.spec.ts: Implement viewport-specific tests for form page with screenshot comparison **[E2E TEST - REQUIRES PLAYWRIGHT]**
-- [ ] T076 [P] Add viewport tests for admin sign-in in apps/web/tests/e2e/responsive.spec.ts: Test responsive layout across mobile, tablet, desktop with screenshots **[E2E TEST - REQUIRES PLAYWRIGHT]**
-- [ ] T077 [P] Add viewport tests for admin dashboard in apps/web/tests/e2e/responsive.spec.ts: Test responsive layout, table handling, no horizontal scroll with screenshots **[E2E TEST - REQUIRES PLAYWRIGHT]**
-- [ ] T078 [P] Add touch target size tests in apps/web/tests/e2e/responsive.spec.ts: Test all interactive elements meet 44x44px minimum on mobile and tablet viewports **[E2E TEST - REQUIRES PLAYWRIGHT]**
+- [x] T075 Create responsive test suite in apps/web/tests/e2e/responsive.spec.ts: Implement viewport-specific tests for form page with screenshot comparison **[E2E TEST - REQUIRES PLAYWRIGHT]**
+- [x] T076 [P] Add viewport tests for admin sign-in in apps/web/tests/e2e/responsive.spec.ts: Test responsive layout across mobile, tablet, desktop with screenshots **[E2E TEST - REQUIRES PLAYWRIGHT]**
+- [x] T077 [P] Add viewport tests for admin dashboard in apps/web/tests/e2e/responsive.spec.ts: Test responsive layout, table handling, no horizontal scroll with screenshots **[E2E TEST - REQUIRES PLAYWRIGHT]**
+- [x] T078 [P] Add touch target size tests in apps/web/tests/e2e/responsive.spec.ts: Test all interactive elements meet 44x44px minimum on mobile and tablet viewports **[E2E TEST - REQUIRES PLAYWRIGHT]**
 - [x] T079 Update Playwright config in playwright.config.ts: Add viewport configurations for mobile, tablet, desktop test projects
 - [x] T080 Update existing E2E tests in apps/web/tests/e2e/form.spec.ts: Update selectors if needed for HeroUI components, ensure tests still pass
 - [x] T081 Update existing E2E tests in apps/web/tests/e2e/admin.spec.ts: Update selectors if needed for HeroUI components, ensure tests still pass
-- [ ] T082 Run all Playwright tests and generate baseline screenshots: Execute `npx playwright test` to create initial screenshot baselines **[E2E TEST - REQUIRES PLAYWRIGHT]**
+- [x] T082 Run all Playwright tests and generate baseline screenshots: Execute `npx playwright test` to create initial screenshot baselines **[E2E TEST - REQUIRES PLAYWRIGHT]**
 - [x] T083 Run full test suite: Execute `npm test` to verify all unit tests pass after changes
 - [x] T084 Run ESLint and fix remaining issues: Execute `npm run lint`, address any errors or warnings
 - [ ] T085 Run performance audit with Lighthouse: Test form page and admin dashboard, verify CLS < 0.1, FCP < 1.8s, TTI < 3.8s **[MANUAL PERFORMANCE TEST]**

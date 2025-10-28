@@ -1,7 +1,8 @@
 "use client";
 import * as React from 'react';
-import { Button, Card, Input, Progress } from '@heroui/react';
+import { Card, Input, Progress } from '@heroui/react';
 import { cn } from '../utils/cn';
+import { pillButtonClass } from './fields/buttonStyles';
 
 export type AttachmentLink = { type: 'LINK'; url: string };
 export type AttachmentFileRef = { type: 'FILE'; uploadId: string; fileName?: string };
@@ -203,7 +204,7 @@ export function AttachmentsSection({ value, onChange }: { value: AttachmentRef[]
           onChange={(e) => setLink(e.target.value)}
           placeholder="https://example.com/document.pdf"
         />
-        <Button size="md" onPress={addLink} disabled={!link} color="primary">Add link</Button>
+        <button type="button" onClick={addLink} disabled={!link} className={pillButtonClass}>Add link</button>
       </div>
 
       {/* Uploaded files and links list */}
@@ -222,15 +223,14 @@ export function AttachmentsSection({ value, onChange }: { value: AttachmentRef[]
                   </>
                 )}
               </span>
-              <Button 
-                size="sm" 
-                color="danger" 
-                variant="flat" 
-                onPress={() => remove(idx)}
-                isDisabled={hasActiveUploads}
+              <button
+                type="button"
+                onClick={() => remove(idx)}
+                disabled={hasActiveUploads}
+                className={pillButtonClass}
               >
                 Remove
-              </Button>
+              </button>
             </li>
           ))}
         </ul>

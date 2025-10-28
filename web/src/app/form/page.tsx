@@ -1,17 +1,11 @@
 "use client";
 import * as React from 'react';
 import { useRouter } from 'next/navigation';
-import { Button, Card, Input, Textarea } from '@heroui/react';
-import { OrgansSection, GenderBalanceSection, MeasuresSection, AttachmentsSection, ErrorSummary } from 'ui';
+import { Button, Card } from '@heroui/react';
+import { OrgansSection, GenderBalanceSection, MeasuresSection, AttachmentsSection, ErrorSummary, InputField, TextareaField, CheckboxField, pillButtonClass } from 'ui';
 import { submissionSchema, type SubmissionInput } from 'validation';
 
-// Consistent input styling to match reference design
-const inputClassNames = {
-  inputWrapper: "border-2 border-gray-500 data-[hover=true]:border-gray-600 shadow-sm",
-  input: "text-base",
-  label: "!text-black font-medium",
-  mainWrapper: "h-auto",
-};
+// Input styling is handled by shared UI components (InputField/TextareaField)
 
 export default function PublicFormPage() {
   const router = useRouter();
@@ -102,123 +96,103 @@ export default function PublicFormPage() {
           <div className="flex flex-col gap-3">
             <h2 className="text-xl font-semibold mb-2">Company</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              <Input 
-                variant="bordered" 
-                radius="full" 
-                size="lg"
-                classNames={inputClassNames} labelPlacement="outside"
+              <InputField
                 id="name"
                 name="name"
-                label="Company name" 
-                value={form.name} 
-                onChange={(e) => update('name', e.target.value)} 
-                isInvalid={!!errors.name} 
+                label="Company name"
+                value={form.name}
+                onChange={(e) => update('name', e.target.value)}
+                isInvalid={!!errors.name}
                 errorMessage={errors.name?.[0]}
                 isRequired
-                aria-required="true"
               />
-              <Input 
-                variant="bordered" 
-                radius="full" 
-                size="lg"
-                classNames={inputClassNames} labelPlacement="outside"
+              <InputField
                 id="code"
                 name="code"
-                label="Company code" 
-                value={form.code} 
-                onChange={(e) => update('code', e.target.value)} 
-                isInvalid={!!errors.code} 
+                label="Company code"
+                value={form.code}
+                onChange={(e) => update('code', e.target.value)}
+                isInvalid={!!errors.code}
                 errorMessage={errors.code?.[0]}
                 isRequired
-                aria-required="true"
               />
-              <Input variant="bordered" radius="full" size="lg" classNames={inputClassNames} 
+              <InputField
                 id="country"
                 name="country"
-                label="Country (ISO2)" 
-                value={form.country} 
-                onChange={(e) => update('country', e.target.value)} 
-                isInvalid={!!errors.country} 
+                label="Country (ISO2)"
+                value={form.country}
+                onChange={(e) => update('country', e.target.value)}
+                isInvalid={!!errors.country}
                 errorMessage={errors.country?.[0]}
                 isRequired
-                aria-required="true"
               />
-              <Input variant="bordered" radius="full" size="lg" classNames={inputClassNames} 
+              <InputField
                 id="legalForm"
                 name="legalForm"
-                label="Legal form" 
-                value={form.legalForm} 
+                label="Legal form"
+                value={form.legalForm}
                 onChange={(e) => update('legalForm', e.target.value)}
                 isRequired
-                aria-required="true"
               />
-              <Input variant="bordered" radius="full" size="lg" classNames={inputClassNames} 
+              <InputField
                 id="address"
                 name="address"
-                label="Address" 
-                value={form.address} 
+                label="Address"
+                value={form.address}
                 onChange={(e) => update('address', e.target.value)}
                 isRequired
-                aria-required="true"
               />
-              <Input variant="bordered" radius="full" size="lg" classNames={inputClassNames} 
+              <InputField
                 id="registry"
                 name="registry"
-                label="Registry" 
-                value={form.registry} 
+                label="Registry"
+                value={form.registry}
                 onChange={(e) => update('registry', e.target.value)}
                 isRequired
-                aria-required="true"
               />
-              <Input variant="bordered" radius="full" size="lg" classNames={inputClassNames} 
+              <InputField
                 id="eDeliveryAddress"
                 name="eDeliveryAddress"
-                label="eDelivery address" 
-                value={form.eDeliveryAddress} 
+                label="eDelivery address"
+                value={form.eDeliveryAddress}
                 onChange={(e) => update('eDeliveryAddress', e.target.value)}
                 isRequired
-                aria-required="true"
               />
-              <Input variant="bordered" radius="full" size="lg" classNames={inputClassNames} 
+              <InputField
                 id="requirementsLink"
                 name="requirementsLink"
-                type="url" 
-                label="Requirements link (optional)" 
-                value={form.requirementsLink ?? ''} 
+                type="url"
+                label="Requirements link (optional)"
+                value={form.requirementsLink ?? ''}
                 onChange={(e) => update('requirementsLink', e.target.value || undefined)}
-                aria-required="false"
               />
-              <Input variant="bordered" radius="full" size="lg" classNames={inputClassNames} 
+              <InputField
                 id="reportingFrom"
                 name="reportingFrom"
-                type="date" 
-                label="Reporting from" 
-                value={form.reportingFrom} 
+                type="date"
+                label="Reporting from"
+                value={form.reportingFrom}
                 onChange={(e) => update('reportingFrom', e.target.value)}
                 isRequired
-                aria-required="true"
               />
-              <Input variant="bordered" radius="full" size="lg" classNames={inputClassNames} 
+              <InputField
                 id="reportingTo"
                 name="reportingTo"
-                type="date" 
-                label="Reporting to" 
-                value={form.reportingTo} 
+                type="date"
+                label="Reporting to"
+                value={form.reportingTo}
                 onChange={(e) => update('reportingTo', e.target.value)}
                 isRequired
-                aria-required="true"
               />
             </div>
             <div className="flex items-center justify-between">
               <span className="text-sm">Requirements applied</span>
-              <input
-                type="checkbox"
+              <CheckboxField
                 id="requirementsApplied"
                 name="requirementsApplied"
                 checked={form.requirementsApplied}
-                onChange={(e) => update('requirementsApplied', e.target.checked)}
-                className="size-5 border-2 border-gray-300 rounded cursor-pointer accent-blue-600"
-                aria-label="Requirements applied"
+                onChange={(checked) => update('requirementsApplied', checked)}
+                ariaLabel="Requirements applied"
               />
             </div>
           </div>
@@ -233,16 +207,15 @@ export default function PublicFormPage() {
           <div className="flex flex-col gap-3">
             <h2 className="text-xl font-semibold mb-2">Contact & Other</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <Input variant="bordered" radius="full" size="lg" classNames={inputClassNames} 
+            <InputField 
               id="contactName"
               name="contactName"
               label="Contact name" 
               value={form.contactName} 
               onChange={(e) => update('contactName', e.target.value)}
               isRequired
-              aria-required="true"
             />
-            <Input variant="bordered" radius="full" size="lg" classNames={inputClassNames} 
+            <InputField 
               id="contactEmail"
               name="contactEmail"
               type="email" 
@@ -250,25 +223,25 @@ export default function PublicFormPage() {
               value={form.contactEmail} 
               onChange={(e) => update('contactEmail', e.target.value)}
               isRequired
-              aria-required="true"
             />
-            <Input variant="bordered" radius="full" size="lg" classNames={inputClassNames} 
+            <InputField 
               id="contactPhone"
               name="contactPhone"
               label="Contact phone" 
               value={form.contactPhone} 
               onChange={(e) => update('contactPhone', e.target.value)}
               isRequired
-              aria-required="true"
             />
           </div>
-          <Textarea variant="bordered" radius="full" size="lg" classNames={inputClassNames} 
+          <TextareaField 
             id="reasonsForUnderrepresentation"
             name="reasonsForUnderrepresentation"
             label="Reasons for underrepresentation (optional)" 
             value={form.reasonsForUnderrepresentation ?? ''} 
             onChange={(e) => update('reasonsForUnderrepresentation', e.target.value || undefined)}
-            aria-required="false"
+            disableAutosize
+            minRows={4}
+            classNames={{ inputWrapper: "min-h-32 max-h-32", input: "resize-none" }}
           />
           </div>
         </Card>
@@ -277,33 +250,30 @@ export default function PublicFormPage() {
           <div className="flex flex-col gap-3">
             <h2 className="text-xl font-semibold mb-2">Submitter</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <Input variant="bordered" radius="full" size="lg" classNames={inputClassNames} 
+            <InputField 
               id="submitter.name"
               name="submitter.name"
               label="Full name" 
               value={form.submitter.name} 
               onChange={(e) => update('submitter', { ...form.submitter, name: e.target.value })}
               isRequired
-              aria-required="true"
             />
-            <Input variant="bordered" radius="full" size="lg" classNames={inputClassNames} 
+            <InputField 
               id="submitter.title"
               name="submitter.title"
               label="Title" 
               value={form.submitter.title ?? ''} 
               onChange={(e) => update('submitter', { ...form.submitter, title: e.target.value })}
-              aria-required="false"
             />
-            <Input variant="bordered" radius="full" size="lg" classNames={inputClassNames} 
+            <InputField 
               id="submitter.phone"
               name="submitter.phone"
               label="Phone" 
               value={form.submitter.phone} 
               onChange={(e) => update('submitter', { ...form.submitter, phone: e.target.value })}
               isRequired
-              aria-required="true"
             />
-            <Input variant="bordered" radius="full" size="lg" classNames={inputClassNames} 
+            <InputField 
               id="submitter.email"
               name="submitter.email"
               type="email" 
@@ -311,36 +281,30 @@ export default function PublicFormPage() {
               value={form.submitter.email} 
               onChange={(e) => update('submitter', { ...form.submitter, email: e.target.value })}
               isRequired
-              aria-required="true"
             />
           </div>
           <div className="flex items-center justify-between">
             <span className="text-sm">I agree to the processing of my data.</span>
-            <input
-              type="checkbox"
+            <CheckboxField
               id="consent"
               name="consent"
               checked={form.consent}
-              onChange={(e) => update('consent', e.target.checked)}
-              required
-              aria-required="true"
-              className="size-5 border-2 border-gray-300 rounded cursor-pointer accent-blue-600"
-              aria-label="I agree to the processing of my data"
+              onChange={(checked) => update('consent', checked)}
+              ariaLabel="I agree to the processing of my data"
             />
           </div>
           </div>
         </Card>
 
         <div className="flex justify-end">
-          <Button 
-            size="lg"
-            color="primary" 
-            type="submit" 
-            isLoading={submitting}
+          <button
+            type="submit"
+            className={pillButtonClass}
             aria-label={submitting ? "Submitting form..." : "Submit form"}
+            disabled={submitting}
           >
             Submit
-          </Button>
+          </button>
         </div>
       </form>
       </div>

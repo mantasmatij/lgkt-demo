@@ -1,8 +1,9 @@
 'use client';
 
-import { Button, Card, Input } from '@heroui/react';
+import { Card, Input } from '@heroui/react';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { pillButtonClass } from 'ui';
 
 export default function AdminSignInPage() {
   const router = useRouter();
@@ -70,16 +71,14 @@ export default function AdminSignInPage() {
             autoComplete="current-password"
           />
 
-          <Button
-            size="lg"
+          <button
             type="submit"
-            color="primary"
-            className="w-full"
-            isLoading={loading}
-            isDisabled={loading}
+            className={`${pillButtonClass} w-full`}
+            aria-busy={loading}
+            disabled={loading}
           >
-            Sign In
-          </Button>
+            {loading ? 'Signing In…' : 'Sign In'}
+          </button>
         </form>
         </div>
       </Card>

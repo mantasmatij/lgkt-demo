@@ -52,8 +52,8 @@
 
 - [x] T011 [P] [US1] Build language switcher component at web/src/app/components/LanguageSwitcher.tsx
 - [x] T012 [P] [US1] Integrate provider and switcher in shared layout at web/src/app/layout.tsx
-- [ ] T013 [P] [US1] Replace hardcoded strings with i18n keys in top-level navigation at web/src/app/(site)/_nav.tsx
-- [ ] T014 [P] [US1] Migrate provided field labels to i18n keys at web/src/lib/i18n/{lt.ts,en.ts} using specs/003-faster-dev-i18n/contracts/translations/fields.md
+- [x] T013 [P] [US1] Replace hardcoded strings with i18n keys in top-level navigation at web/src/app/(site)/_nav.tsx
+- [x] T014 [P] [US1] Migrate provided field labels to i18n keys at web/src/lib/i18n/{lt.ts,en.ts} using specs/003-faster-dev-i18n/contracts/translations/fields.md
 - [ ] T015 [US1] Ensure deep-linked pages preserve chosen language without URL prefix at web/src/app/(site)/**/page.tsx
 - [ ] T037 [P] [US1] Inventory top 10 journeys and migrate remaining UI strings to i18n (enable missing-key logging) across web/src/app/** and web/src/components/**
 
@@ -69,7 +69,7 @@
 
 ### Tests for User Story 2 (Required by Constitution VI)
 
-- [ ] T031 [P] [US2] Jest unit tests for /i18n/locale handlers at api/src/routes/__tests__/i18n.locale.spec.ts
+- [x] T031 [P] [US2] Jest unit tests for /i18n/locale handlers at api/src/routes/__tests__/i18n.locale.spec.ts
 - [ ] T032 [P] [US2] Cucumber scenario for session persistence at web/tests/features/session_locale.feature
 - [ ] T033 [P] [US2] Step definitions for session persistence at web/tests/step_definitions/session_locale.steps.ts
 

@@ -4,9 +4,10 @@ import { csvExportLimiter, authLimiter, submissionLimiter } from '../rateLimit';
 
 describe('Rate Limiting Middleware', () => {
   const isProduction = process.env.NODE_ENV === 'production';
-  const csvLimit = isProduction ? 10 : 1000;
-  const authLimit = isProduction ? 5 : 500;
-  const submissionLimit = isProduction ? 3 : 300;
+  // Keep test loops reasonable to avoid HTTP parser saturation
+  const csvLimit = isProduction ? 10 : 50;
+  const authLimit = isProduction ? 5 : 20;
+  const submissionLimit = isProduction ? 3 : 20;
 
   describe('csvExportLimiter', () => {
     let app: express.Application;

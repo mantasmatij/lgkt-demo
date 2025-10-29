@@ -14,7 +14,7 @@ const isDevelopment = env !== 'production';
 export const csvExportLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   // Lower the limit in test to keep suites fast and avoid HTTP parser churn
-  max: isTest ? 100 : isDevelopment ? 1000 : 10,
+  max: isTest ? 50 : isDevelopment ? 1000 : 10,
   message: {
     error: 'Too many export requests from this IP, please try again later.',
     retryAfter: '15 minutes',

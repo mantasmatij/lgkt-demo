@@ -1,12 +1,15 @@
-'use client';
+"use client";
 
 import { useState, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { Card, CardBody, CardHeader, Input } from '@heroui/react';
 import { pillButtonClass } from 'ui';
+import { useI18n } from '../../providers/i18n-provider';
 
 export default function ReportsPage() {
   const router = useRouter();
+  const { t } = useI18n();
+  const ta = t('admin');
   const [from, setFrom] = useState('');
   const [to, setTo] = useState('');
   const [isExporting, setIsExporting] = useState(false);
@@ -15,7 +18,7 @@ export default function ReportsPage() {
     e.preventDefault();
 
     if (!from || !to) {
-      alert('Please select both start and end dates');
+      alert(ta('select_both_dates_alert'));
       return;
     }
 
@@ -48,7 +51,7 @@ export default function ReportsPage() {
       document.body.removeChild(a);
     } catch (error) {
       console.error('Export error:', error);
-      alert('Failed to export CSV. Please try again.');
+      alert(ta('export_failed_alert'));
     } finally {
       setIsExporting(false);
     }
@@ -56,24 +59,24 @@ export default function ReportsPage() {
 
   return (
     <div className="container mx-auto px-4 py-6">
-      <h1 className="text-3xl font-bold mb-6">Export Reports</h1>
+  <h1 className="text-3xl font-bold mb-6">{ta('reports_page_title')}</h1>
 
       <Card className="max-w-md">
         <CardHeader>
-          <h2 className="text-xl font-semibold">CSV Export</h2>
+          <h2 className="text-xl font-semibold">{ta('reports_csv_export')}</h2>
         </CardHeader>
         <CardBody>
           <form onSubmit={handleExport} className="space-y-4">
             <Input
               type="date"
-              label="Start Date"
+              label={ta('start_date_label')}
               value={from}
               onChange={(e) => setFrom(e.target.value)}
               isRequired
             />
             <Input
               type="date"
-              label="End Date"
+              label={ta('end_date_label')}
               value={to}
               onChange={(e) => setTo(e.target.value)}
               isRequired
@@ -84,7 +87,7 @@ export default function ReportsPage() {
               disabled={isExporting}
               aria-busy={isExporting}
             >
-              {isExporting ? 'Exporting…' : 'Export CSV'}
+              {isExporting ? ta('exporting') : ta('export_csv')}
             </button>
           </form>
         </CardBody>

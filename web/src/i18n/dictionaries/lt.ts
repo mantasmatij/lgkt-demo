@@ -5,6 +5,10 @@ export const lt = {
     english: 'Anglų',
     submit: 'Pateikti',
     optional: 'pasirinktinai',
+    title: 'LGKT Forma - Įmonių ataskaitos',
+    description: 'Anoniminė įmonių ataskaitų forma ir administratoriaus portalas',
+    skip_to_main: 'Pereiti prie pagrindinio turinio',
+    submission_failed: 'Pateikimas nepavyko',
   },
   form: {
     title: 'Anoniminė įmonės forma',
@@ -14,7 +18,8 @@ export const lt = {
     requirements_applied: 'Reikalavimai taikomi',
     reasons_optional: 'Nepakankamos atstovybės priežastys (pasirinktinai)',
     consent_label: 'Sutinku su mano duomenų tvarkymu.',
-    submitting: 'Pildoma forma...'
+    submitting: 'Pildoma forma...',
+    consent_text: 'Sutinku, kad mano duomenys būtų tvarkomi, kaip aprašyta.',
   },
   fields: {
     company_name: 'Juridinio asmens pavadinimas',
@@ -38,6 +43,23 @@ export const lt = {
   home: {
     title: 'LGKT Forma - Įmonių ataskaitos',
     welcome: 'Sveiki atvykę',
+  },
+  success: {
+    title: 'Pranešimas pateiktas sėkmingai',
+    body: 'Jūsų įmonės duomenys ir darbo aplinkos informacija buvo sėkmingai gauti. Dėkojame už dalyvavimą lyčių lygybės iniciatyvoje.',
+    contact_prompt: 'Jei turite klausimų, susisiekite su mumis:',
+    contact_email_label: 'El. paštas',
+    submit_another: 'Pateikti kitą pranešimą',
+  },
+  admin: {
+    reports_page_title: 'Eksportuoti ataskaitas',
+    reports_csv_export: 'CSV eksportas',
+    start_date_label: 'Pradžios data',
+    end_date_label: 'Pabaigos data',
+    export_csv: 'Atsisiųsti CSV',
+    exporting: 'Eksportuojama…',
+    select_both_dates_alert: 'Pasirinkite pradžios ir pabaigos datas',
+    export_failed_alert: 'Nepavyko eksportuoti CSV. Bandykite dar kartą.',
   },
 } as const;
 

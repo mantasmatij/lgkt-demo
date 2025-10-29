@@ -40,7 +40,7 @@ export default function PublicFormPage() {
     attachments: [],
     reasonsForUnderrepresentation: '',
     consent: false,
-    consentText: 'I consent to data processing as described.',
+  consentText: tform('consent_text') as unknown as string,
     submitter: { name: '', title: '', phone: '', email: '' },
     captchaToken: 'dev',
   });
@@ -77,8 +77,8 @@ export default function PublicFormPage() {
         body: JSON.stringify(parsed.data),
       });
       if (!res.ok) {
-        const err = await res.json().catch(() => ({}));
-        setResult(err?.message || 'Submission failed');
+  const err = await res.json().catch(() => ({}));
+  setResult(err?.message || tc('submission_failed'));
       } else {
         // Redirect to success page on successful submission
         router.push('/form/success');

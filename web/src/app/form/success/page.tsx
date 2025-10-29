@@ -1,10 +1,13 @@
-'use client';
+"use client";
 
 import { Card } from '@heroui/react';
 import Link from 'next/link';
 import { pillButtonClass } from 'ui';
+import { useI18n } from '../../providers/i18n-provider';
 
 export default function FormSuccessPage() {
+  const { t } = useI18n();
+  const ts = t('success');
   return (
     <div className="container mx-auto px-4 py-6 max-w-2xl">
       <Card className="bg-green-50 border border-green-200 p-6 text-center">
@@ -24,28 +27,22 @@ export default function FormSuccessPage() {
             />
           </svg>
         </div>
-        
         <h1 className="text-3xl font-bold text-gray-900 mb-4">
-          Pranešimas pateiktas sėkmingai
+          {ts('title')}
         </h1>
-        
         <p className="text-lg text-gray-700 mb-8">
-          Jūsų įmonės duomenys ir darbo aplinkos informacija buvo sėkmingai gauti. 
-          Dėkojame už dalyvavimą lyčių lygybės iniciatyvoje.
+          {ts('body')}
         </p>
-        
         <div className="space-y-4">
-          <p className="text-gray-600">
-            Jei turite klausimų, susisiekite su mumis:
-          </p>
+          <p className="text-gray-600">{ts('contact_prompt')}</p>
           <p className="text-gray-600 font-medium">
-            El. paštas: info@lgkt.lt
+            {ts('contact_email_label')}: info@lgkt.lt
           </p>
         </div>
         
         <div>
           <Link href="/form" className={pillButtonClass}>
-            Pateikti kitą pranešimą
+            {ts('submit_another')}
           </Link>
         </div>
         </div>

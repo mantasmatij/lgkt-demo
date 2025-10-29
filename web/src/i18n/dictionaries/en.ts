@@ -5,6 +5,10 @@ export const en = {
     english: 'English',
     submit: 'Submit',
     optional: 'optional',
+    title: 'LGKT Form - Company Reporting',
+    description: 'Anonymous company form submission and admin portal',
+    skip_to_main: 'Skip to main content',
+    submission_failed: 'Submission failed',
   },
   form: {
     title: 'Anonymous Company Form',
@@ -14,7 +18,8 @@ export const en = {
     requirements_applied: 'Requirements applied',
     reasons_optional: 'Reasons for underrepresentation (optional)',
     consent_label: 'I agree to the processing of my data.',
-    submitting: 'Submitting form...'
+    submitting: 'Submitting form...',
+    consent_text: 'I consent to data processing as described.',
   },
   fields: {
     company_name: 'Company name',
@@ -38,6 +43,23 @@ export const en = {
   home: {
     title: 'LGKT Form - Company Reporting',
     welcome: 'Welcome',
+  },
+  success: {
+    title: 'Submission successful',
+    body: 'Your company data and workplace information have been received successfully. Thank you for participating in the gender equality initiative.',
+    contact_prompt: 'If you have questions, contact us:',
+    contact_email_label: 'Email',
+    submit_another: 'Submit another report',
+  },
+  admin: {
+    reports_page_title: 'Export Reports',
+    reports_csv_export: 'CSV Export',
+    start_date_label: 'Start Date',
+    end_date_label: 'End Date',
+    export_csv: 'Export CSV',
+    exporting: 'Exporting…',
+    select_both_dates_alert: 'Please select both start and end dates',
+    export_failed_alert: 'Failed to export CSV. Please try again.',
   },
 } as const;
 

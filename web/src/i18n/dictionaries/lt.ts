@@ -15,9 +15,9 @@ export const lt = {
     section_company: 'Įmonė',
     section_contact: 'Kontaktai ir kita',
     section_submitter: 'Pateikėjas',
-    section_organs: 'Valdymo organai',
-    section_gender: 'Lyčių balansas',
-    section_measures: 'Priemonės',
+  section_organs: 'Įmonės valdymo organai',
+  section_gender: 'Lyčių balansas',
+  section_measures: 'Priemonės',
     requirements_applied: 'Reikalavimai taikomi',
     reasons_optional: 'Nepakankamos atstovybės priežastys (pasirinktinai)',
     consent_label: 'Sutinku su mano duomenų tvarkymu.',
@@ -42,8 +42,8 @@ export const lt = {
     submitter_title: 'Pareigos',
     submitter_phone: 'Telefonas',
     submitter_email: 'El. paštas',
-    // Organs
-    organ_type: 'Organas',
+  // Organs
+  organ_type: 'Organo tipas',
     last_election_date: 'Paskutinių rinkimų data',
     planned_election_date: 'Planuojamų rinkimų data',
     organ_option_valdyba: 'Valdyba',
@@ -57,9 +57,8 @@ export const lt = {
     role_ceo: 'Vadovas',
     role_board: 'Valdyba',
     role_supervisory_board: 'Stebėtojų taryba',
-    // Measures
-    measures_title: 'Priemonės',
-    no_measures: 'Priemonių nepridėta.',
+  // Measures
+  no_measures: 'Priemonių nepridėta.',
     measure_name: 'Priemonės pavadinimas',
     planned_result: 'Planuojamas rezultatas',
     planned_indicator: 'Planuojamas rodiklis',

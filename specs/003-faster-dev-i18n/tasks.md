@@ -46,7 +46,7 @@
 
 - [ ] T029 [P] [US1] Cucumber feature for language toggle at web/tests/features/language_toggle.feature
 - [ ] T030 [P] [US1] Step definitions for toggle at web/tests/step_definitions/language_toggle.steps.ts
-- [ ] T038 [P] [US1] Playwright i18n consistency on key routes (LT/EN) at web/tests/e2e/i18n_consistency.spec.ts
+- [x] T038 [P] [US1] Playwright i18n consistency on key routes (LT/EN) at web/tests/e2e/i18n_consistency.spec.ts
 
 ### Implementation for User Story 1
 
@@ -54,7 +54,7 @@
 - [x] T012 [P] [US1] Integrate provider and switcher in shared layout at web/src/app/layout.tsx
 - [x] T013 [P] [US1] Replace hardcoded strings with i18n keys in top-level navigation at web/src/app/(site)/_nav.tsx
 - [x] T014 [P] [US1] Migrate provided field labels to i18n keys at web/src/lib/i18n/{lt.ts,en.ts} using specs/003-faster-dev-i18n/contracts/translations/fields.md
-- [ ] T015 [US1] Ensure deep-linked pages preserve chosen language without URL prefix at web/src/app/(site)/**/page.tsx
+- [x] T015 [US1] Ensure deep-linked pages preserve chosen language without URL prefix at web/src/app/(site)/**/page.tsx
 - [ ] T037 [P] [US1] Inventory top 10 journeys and migrate remaining UI strings to i18n (enable missing-key logging) across web/src/app/** and web/src/components/**
 
 **Checkpoint**: US1 independently demonstrable (switcher present; default LT; pages toggle LT/EN)

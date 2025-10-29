@@ -204,9 +204,51 @@ export default function PublicFormPage() {
           </div>
         </Card>
 
-  <OrgansSection value={form.organs || []} onChange={(rows) => update('organs', rows)} />
-  <GenderBalanceSection value={form.genderBalance} onChange={(rows) => update('genderBalance', rows)} />
-  <MeasuresSection value={form.measures || []} onChange={(rows) => update('measures', rows)} />
+  <OrgansSection 
+    value={form.organs || []} 
+    onChange={(rows) => update('organs', rows)} 
+    labels={{
+      title: tform('section_organs') as unknown as string,
+      organ_type: tf('organ_type') as unknown as string,
+      last_election_date: tf('last_election_date') as unknown as string,
+      planned_election_date: tf('planned_election_date') as unknown as string,
+      option_VALDYBA: tf('organ_option_valdyba') as unknown as string,
+      option_STEBETOJU_TARYBA: tf('organ_option_stebetoju_taryba') as unknown as string,
+      add: tf('add_organ') as unknown as string,
+      remove: tf('remove_organ') as unknown as string,
+    }}
+  />
+  <GenderBalanceSection 
+    value={form.genderBalance} 
+    onChange={(rows) => update('genderBalance', rows)} 
+    labels={{
+      title: tform('section_gender') as unknown as string,
+      women: tf('women') as unknown as string,
+      men: tf('men') as unknown as string,
+      total: tf('total') as unknown as string,
+      roles: {
+        CEO: tf('role_ceo') as unknown as string,
+        BOARD: tf('role_board') as unknown as string,
+        SUPERVISORY_BOARD: tf('role_supervisory_board') as unknown as string,
+      },
+    }}
+  />
+  <MeasuresSection 
+    value={form.measures || []} 
+    onChange={(rows) => update('measures', rows)} 
+    labels={{
+      title: tform('section_measures') as unknown as string,
+      no_measures: tf('no_measures') as unknown as string,
+      name: tf('measure_name') as unknown as string,
+      planned_result: tf('planned_result') as unknown as string,
+      planned_indicator: tf('planned_indicator') as unknown as string,
+      indicator_value: tf('indicator_value') as unknown as string,
+      indicator_unit: tf('indicator_unit') as unknown as string,
+      year: tf('year') as unknown as string,
+      add: tf('add_measure') as unknown as string,
+      remove: tf('remove_measure') as unknown as string,
+    }}
+  />
   <AttachmentsSection value={form.attachments || []} onChange={(rows) => update('attachments', rows)} />
 
         <Card className="p-6">

@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Card, Spinner, Table, TableHeader, TableColumn, TableBody, TableRow, TableCell } from '@heroui/react';
+import { useI18n } from '../../providers/i18n-provider';
 
 type Company = {
   code: string;
@@ -18,6 +19,8 @@ type CompaniesResponse = {
 
 export default function AdminCompaniesPage() {
   const router = useRouter();
+  const { t } = useI18n();
+  const ta = t('admin');
   const [data, setData] = useState<CompaniesResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -38,7 +41,7 @@ export default function AdminCompaniesPage() {
         }
 
         if (!res.ok) {
-          setError('Failed to load companies');
+          setError(ta('failed_load_companies'));
           setLoading(false);
           return;
         }
@@ -46,7 +49,7 @@ export default function AdminCompaniesPage() {
         const result = await res.json();
         setData(result);
       } catch {
-        setError('Network error');
+        setError(ta('network_error'));
       } finally {
         setLoading(false);
       }
@@ -78,30 +81,30 @@ export default function AdminCompaniesPage() {
   return (
     <div className="container mx-auto px-4 py-6">
       <div className="flex flex-col gap-4">
-        <h1 className="text-3xl font-bold">Companies</h1>
+  <h1 className="text-3xl font-bold">{ta('companies_title')}</h1>
 
         {isEmpty ? (
           <Card className="p-6 text-center">
-            <p className="text-gray-600 text-lg">No companies yet.</p>
-            <p className="text-gray-500 mt-2">Companies will appear here once submissions are received.</p>
+            <p className="text-gray-600 text-lg">{ta('no_companies_yet')}</p>
+            <p className="text-gray-500 mt-2">{ta('companies_empty_hint')}</p>
           </Card>
         ) : (
           <>
             <Card className="p-6">
               <p className="text-gray-700">
-                <span className="font-semibold">{data.items.length}</span> companies
+                <span className="font-semibold">{data.items.length}</span> {ta('companies_suffix')}
               </p>
             </Card>
 
             <Card className="p-6">
               <div className="overflow-x-auto">
-                <Table aria-label="Companies table">
+                <Table aria-label={ta('companies_table_aria')}>
                   <TableHeader>
-                    <TableColumn>Company Code</TableColumn>
-                    <TableColumn>Company Name</TableColumn>
-                    <TableColumn>Country</TableColumn>
-                    <TableColumn>Submissions</TableColumn>
-                    <TableColumn>Latest Submission</TableColumn>
+                    <TableColumn>{ta('companies_columns_company_code')}</TableColumn>
+                    <TableColumn>{ta('companies_columns_company_name')}</TableColumn>
+                    <TableColumn>{ta('companies_columns_country')}</TableColumn>
+                    <TableColumn>{ta('companies_columns_submissions')}</TableColumn>
+                    <TableColumn>{ta('companies_columns_latest_submission')}</TableColumn>
                   </TableHeader>
                   <TableBody>
                     {data.items.map((company) => (
@@ -113,7 +116,7 @@ export default function AdminCompaniesPage() {
                         <TableCell>
                           {company.latestSubmission 
                             ? new Date(company.latestSubmission).toLocaleDateString()
-                            : 'N/A'}
+                            : ta('not_available')}
                         </TableCell>
                       </TableRow>
                     ))}

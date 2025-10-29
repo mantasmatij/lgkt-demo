@@ -1,8 +1,9 @@
 'use client';
 
-import { Button, Card, Input } from '@nextui-org/react';
+import { Card, Input } from '@heroui/react';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { pillButtonClass } from 'ui';
 
 export default function AdminSignInPage() {
   const router = useRouter();
@@ -33,24 +34,25 @@ export default function AdminSignInPage() {
 
       // Redirect to dashboard on success
       router.push('/admin/dashboard');
-    } catch (err) {
+    } catch {
       setError('Network error. Please try again.');
       setLoading(false);
     }
   }
 
   return (
-    <div className="container mx-auto px-4 py-12 max-w-md">
-      <Card className="p-8">
-        <h1 className="text-2xl font-bold mb-6 text-center">Admin Sign In</h1>
-        
-        {error && (
-          <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded text-red-700 text-sm">
-            {error}
-          </div>
-        )}
+    <div className="container mx-auto px-4 py-6 max-w-md">
+      <Card className="p-6">
+        <div className="flex flex-col gap-3">
+          <h1 className="text-3xl font-bold mb-2 text-center">Admin Sign In</h1>
+          
+          {error && (
+            <div className="p-3 bg-red-50 border border-red-200 rounded text-red-700 text-sm">
+              {error}
+            </div>
+          )}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-3">
           <Input
             type="email"
             label="Email"
@@ -69,16 +71,16 @@ export default function AdminSignInPage() {
             autoComplete="current-password"
           />
 
-          <Button
+          <button
             type="submit"
-            color="primary"
-            className="w-full"
-            isLoading={loading}
-            isDisabled={loading}
+            className={`${pillButtonClass} w-full`}
+            aria-busy={loading}
+            disabled={loading}
           >
-            Sign In
-          </Button>
+            {loading ? 'Signing In…' : 'Sign In'}
+          </button>
         </form>
+        </div>
       </Card>
     </div>
   );

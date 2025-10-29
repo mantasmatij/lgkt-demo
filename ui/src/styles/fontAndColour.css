@@ -72,3 +72,36 @@
     --bs-code-color: #d63384;
     --bs-highlight-bg: #fff3cd
 }
+
+/* Custom HeroUI input styling to match lygybe.lt reference design */
+
+/* Target HeroUI Input wrapper for full rounded borders */
+[data-slot="input-wrapper"] {
+    border-radius: 9999px !important; /* Full rounded/pill shape */
+    min-height: 48px !important;
+}
+
+/* Target HeroUI Textarea wrapper */
+[data-slot="base"] [data-slot="input-wrapper"] {
+    border-radius: 24px !important; /* Rounded but not full pill for textareas */
+}
+
+/* Input field itself */
+[data-slot="input"],
+[data-slot="textarea"] {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+}
+
+/* Label styling */
+[data-slot="label"] {
+    color: #000 !important;
+    font-weight: 500 !important;
+    margin-bottom: 8px !important;
+}
+
+/* Select trigger styling */
+[data-slot="trigger"] {
+    border-radius: 9999px !important;
+    min-height: 48px !important;
+}

@@ -1,9 +1,11 @@
 "use client";
 import * as React from 'react';
 import { useRouter } from 'next/navigation';
-import { Button, Card, Checkbox, Input, Textarea } from '@nextui-org/react';
-import { OrgansSection, GenderBalanceSection, MeasuresSection, AttachmentsSection, ErrorSummary } from 'ui';
+import { Button, Card } from '@heroui/react';
+import { OrgansSection, GenderBalanceSection, MeasuresSection, AttachmentsSection, ErrorSummary, InputField, TextareaField, CheckboxField, pillButtonClass } from 'ui';
 import { submissionSchema, type SubmissionInput } from 'validation';
+
+// Input styling is handled by shared UI components (InputField/TextareaField)
 
 export default function PublicFormPage() {
   const router = useRouter();
@@ -81,124 +83,119 @@ export default function PublicFormPage() {
   }
 
   return (
-    <div className="container mx-auto max-w-3xl py-8 space-y-6">
-      <h1 className="text-2xl font-semibold">Anonymous Company Form</h1>
+    <div className="container mx-auto max-w-3xl px-4 py-6">
+      <div className="flex flex-col gap-3">
+        <h1 className="text-3xl font-bold mb-2">Anonymous Company Form</h1>
       
       <ErrorSummary errors={errors} />
       
       {result && <Card className="p-3 text-sm" role="alert">{result}</Card>}
       
-      <form onSubmit={onSubmit} className="space-y-6" noValidate>
-        <Card className="p-4 space-y-3">
-          <h3 className="text-lg font-medium">Company</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <Input 
-              id="name"
-              name="name"
-              label="Company name" 
-              value={form.name} 
-              onChange={(e) => update('name', e.target.value)} 
-              isInvalid={!!errors.name} 
-              errorMessage={errors.name?.[0]}
-              isRequired
-              aria-required="true"
-            />
-            <Input 
-              id="code"
-              name="code"
-              label="Company code" 
-              value={form.code} 
-              onChange={(e) => update('code', e.target.value)} 
-              isInvalid={!!errors.code} 
-              errorMessage={errors.code?.[0]}
-              isRequired
-              aria-required="true"
-            />
-            <Input 
-              id="country"
-              name="country"
-              label="Country (ISO2)" 
-              value={form.country} 
-              onChange={(e) => update('country', e.target.value)} 
-              isInvalid={!!errors.country} 
-              errorMessage={errors.country?.[0]}
-              isRequired
-              aria-required="true"
-            />
-            <Input 
-              id="legalForm"
-              name="legalForm"
-              label="Legal form" 
-              value={form.legalForm} 
-              onChange={(e) => update('legalForm', e.target.value)}
-              isRequired
-              aria-required="true"
-            />
-            <Input 
-              id="address"
-              name="address"
-              label="Address" 
-              value={form.address} 
-              onChange={(e) => update('address', e.target.value)}
-              isRequired
-              aria-required="true"
-            />
-            <Input 
-              id="registry"
-              name="registry"
-              label="Registry" 
-              value={form.registry} 
-              onChange={(e) => update('registry', e.target.value)}
-              isRequired
-              aria-required="true"
-            />
-            <Input 
-              id="eDeliveryAddress"
-              name="eDeliveryAddress"
-              label="eDelivery address" 
-              value={form.eDeliveryAddress} 
-              onChange={(e) => update('eDeliveryAddress', e.target.value)}
-              isRequired
-              aria-required="true"
-            />
-            <Input 
-              id="requirementsLink"
-              name="requirementsLink"
-              type="url" 
-              label="Requirements link (optional)" 
-              value={form.requirementsLink ?? ''} 
-              onChange={(e) => update('requirementsLink', e.target.value || undefined)}
-              aria-required="false"
-            />
-            <Input 
-              id="reportingFrom"
-              name="reportingFrom"
-              type="date" 
-              label="Reporting from" 
-              value={form.reportingFrom} 
-              onChange={(e) => update('reportingFrom', e.target.value)}
-              isRequired
-              aria-required="true"
-            />
-            <Input 
-              id="reportingTo"
-              name="reportingTo"
-              type="date" 
-              label="Reporting to" 
-              value={form.reportingTo} 
-              onChange={(e) => update('reportingTo', e.target.value)}
-              isRequired
-              aria-required="true"
-            />
+      <form onSubmit={onSubmit} noValidate>
+        <Card className="p-6">
+          <div className="flex flex-col gap-3">
+            <h2 className="text-xl font-semibold mb-2">Company</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <InputField
+                id="name"
+                name="name"
+                label="Company name"
+                value={form.name}
+                onChange={(e) => update('name', e.target.value)}
+                isInvalid={!!errors.name}
+                errorMessage={errors.name?.[0]}
+                isRequired
+              />
+              <InputField
+                id="code"
+                name="code"
+                label="Company code"
+                value={form.code}
+                onChange={(e) => update('code', e.target.value)}
+                isInvalid={!!errors.code}
+                errorMessage={errors.code?.[0]}
+                isRequired
+              />
+              <InputField
+                id="country"
+                name="country"
+                label="Country (ISO2)"
+                value={form.country}
+                onChange={(e) => update('country', e.target.value)}
+                isInvalid={!!errors.country}
+                errorMessage={errors.country?.[0]}
+                isRequired
+              />
+              <InputField
+                id="legalForm"
+                name="legalForm"
+                label="Legal form"
+                value={form.legalForm}
+                onChange={(e) => update('legalForm', e.target.value)}
+                isRequired
+              />
+              <InputField
+                id="address"
+                name="address"
+                label="Address"
+                value={form.address}
+                onChange={(e) => update('address', e.target.value)}
+                isRequired
+              />
+              <InputField
+                id="registry"
+                name="registry"
+                label="Registry"
+                value={form.registry}
+                onChange={(e) => update('registry', e.target.value)}
+                isRequired
+              />
+              <InputField
+                id="eDeliveryAddress"
+                name="eDeliveryAddress"
+                label="eDelivery address"
+                value={form.eDeliveryAddress}
+                onChange={(e) => update('eDeliveryAddress', e.target.value)}
+                isRequired
+              />
+              <InputField
+                id="requirementsLink"
+                name="requirementsLink"
+                type="url"
+                label="Requirements link (optional)"
+                value={form.requirementsLink ?? ''}
+                onChange={(e) => update('requirementsLink', e.target.value || undefined)}
+              />
+              <InputField
+                id="reportingFrom"
+                name="reportingFrom"
+                type="date"
+                label="Reporting from"
+                value={form.reportingFrom}
+                onChange={(e) => update('reportingFrom', e.target.value)}
+                isRequired
+              />
+              <InputField
+                id="reportingTo"
+                name="reportingTo"
+                type="date"
+                label="Reporting to"
+                value={form.reportingTo}
+                onChange={(e) => update('reportingTo', e.target.value)}
+                isRequired
+              />
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-sm">Requirements applied</span>
+              <CheckboxField
+                id="requirementsApplied"
+                name="requirementsApplied"
+                checked={form.requirementsApplied}
+                onChange={(checked) => update('requirementsApplied', checked)}
+                ariaLabel="Requirements applied"
+              />
+            </div>
           </div>
-          <Checkbox 
-            id="requirementsApplied"
-            name="requirementsApplied"
-            isSelected={form.requirementsApplied} 
-            onValueChange={(v) => update('requirementsApplied', v)}
-          >
-            Requirements applied
-          </Checkbox>
         </Card>
 
   <OrgansSection value={form.organs || []} onChange={(rows) => update('organs', rows)} />
@@ -206,19 +203,19 @@ export default function PublicFormPage() {
   <MeasuresSection value={form.measures || []} onChange={(rows) => update('measures', rows)} />
   <AttachmentsSection value={form.attachments || []} onChange={(rows) => update('attachments', rows)} />
 
-        <Card className="p-4 space-y-3">
-          <h3 className="text-lg font-medium">Contact & Other</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <Input 
+        <Card className="p-6">
+          <div className="flex flex-col gap-3">
+            <h2 className="text-xl font-semibold mb-2">Contact & Other</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <InputField 
               id="contactName"
               name="contactName"
               label="Contact name" 
               value={form.contactName} 
               onChange={(e) => update('contactName', e.target.value)}
               isRequired
-              aria-required="true"
             />
-            <Input 
+            <InputField 
               id="contactEmail"
               name="contactEmail"
               type="email" 
@@ -226,58 +223,57 @@ export default function PublicFormPage() {
               value={form.contactEmail} 
               onChange={(e) => update('contactEmail', e.target.value)}
               isRequired
-              aria-required="true"
             />
-            <Input 
+            <InputField 
               id="contactPhone"
               name="contactPhone"
               label="Contact phone" 
               value={form.contactPhone} 
               onChange={(e) => update('contactPhone', e.target.value)}
               isRequired
-              aria-required="true"
             />
           </div>
-          <Textarea 
+          <TextareaField 
             id="reasonsForUnderrepresentation"
             name="reasonsForUnderrepresentation"
             label="Reasons for underrepresentation (optional)" 
             value={form.reasonsForUnderrepresentation ?? ''} 
             onChange={(e) => update('reasonsForUnderrepresentation', e.target.value || undefined)}
-            aria-required="false"
+            disableAutosize
+            minRows={4}
+            classNames={{ inputWrapper: "min-h-32 max-h-32", input: "resize-none" }}
           />
+          </div>
         </Card>
 
-        <Card className="p-4 space-y-3">
-          <h3 className="text-lg font-medium">Submitter</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <Input 
+        <Card className="p-6">
+          <div className="flex flex-col gap-3">
+            <h2 className="text-xl font-semibold mb-2">Submitter</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <InputField 
               id="submitter.name"
               name="submitter.name"
               label="Full name" 
               value={form.submitter.name} 
               onChange={(e) => update('submitter', { ...form.submitter, name: e.target.value })}
               isRequired
-              aria-required="true"
             />
-            <Input 
+            <InputField 
               id="submitter.title"
               name="submitter.title"
               label="Title" 
               value={form.submitter.title ?? ''} 
               onChange={(e) => update('submitter', { ...form.submitter, title: e.target.value })}
-              aria-required="false"
             />
-            <Input 
+            <InputField 
               id="submitter.phone"
               name="submitter.phone"
               label="Phone" 
               value={form.submitter.phone} 
               onChange={(e) => update('submitter', { ...form.submitter, phone: e.target.value })}
               isRequired
-              aria-required="true"
             />
-            <Input 
+            <InputField 
               id="submitter.email"
               name="submitter.email"
               type="email" 
@@ -285,32 +281,33 @@ export default function PublicFormPage() {
               value={form.submitter.email} 
               onChange={(e) => update('submitter', { ...form.submitter, email: e.target.value })}
               isRequired
-              aria-required="true"
             />
           </div>
-          <Checkbox 
-            id="consent"
-            name="consent"
-            isSelected={form.consent} 
-            onValueChange={(v) => update('consent', v)}
-            isRequired
-            aria-required="true"
-          >
-            I agree to the processing of my data.
-          </Checkbox>
+          <div className="flex items-center justify-between">
+            <span className="text-sm">I agree to the processing of my data.</span>
+            <CheckboxField
+              id="consent"
+              name="consent"
+              checked={form.consent}
+              onChange={(checked) => update('consent', checked)}
+              ariaLabel="I agree to the processing of my data"
+            />
+          </div>
+          </div>
         </Card>
 
         <div className="flex justify-end">
-          <Button 
-            color="primary" 
-            type="submit" 
-            isLoading={submitting}
+          <button
+            type="submit"
+            className={pillButtonClass}
             aria-label={submitting ? "Submitting form..." : "Submit form"}
+            disabled={submitting}
           >
             Submit
-          </Button>
+          </button>
         </div>
       </form>
+      </div>
     </div>
   );
 }

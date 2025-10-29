@@ -2,7 +2,8 @@
 
 import { useState, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
-import { Button, Card, CardBody, CardHeader, Input } from '@nextui-org/react';
+import { Card, CardBody, CardHeader, Input } from '@heroui/react';
+import { pillButtonClass } from 'ui';
 
 export default function ReportsPage() {
   const router = useRouter();
@@ -54,7 +55,7 @@ export default function ReportsPage() {
   };
 
   return (
-    <div className="container mx-auto p-8">
+    <div className="container mx-auto px-4 py-6">
       <h1 className="text-3xl font-bold mb-6">Export Reports</h1>
 
       <Card className="max-w-md">
@@ -77,14 +78,14 @@ export default function ReportsPage() {
               onChange={(e) => setTo(e.target.value)}
               isRequired
             />
-            <Button
+            <button
               type="submit"
-              color="primary"
-              isLoading={isExporting}
-              className="w-full"
+              className={`${pillButtonClass} w-full`}
+              disabled={isExporting}
+              aria-busy={isExporting}
             >
-              {isExporting ? 'Exporting...' : 'Export CSV'}
-            </Button>
+              {isExporting ? 'Exporting…' : 'Export CSV'}
+            </button>
           </form>
         </CardBody>
       </Card>

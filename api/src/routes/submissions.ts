@@ -27,7 +27,12 @@ submissionsRouter.post('/', submissionLimiter, async (req, res, next) => {
 
     // Resolve attachments: convert FILE refs via uploadId to file metadata
     const attachments = (input.attachments || []).map((a) => {
-      if (a.type === 'LINK') return a;
+      if (a.type === 'LINK') {
+        return {
+          type: 'LINK' as const,
+          url: a.url ?? '',
+        };
+      }
       const saved = getUpload(a.uploadId);
       if (!saved) {
         throw Object.assign(new Error('Attachment upload not found'), { statusCode: 400 });
@@ -66,8 +71,20 @@ submissionsRouter.post('/', submissionLimiter, async (req, res, next) => {
         lastElectionDate: o.lastElectionDate ?? null,
         plannedElectionDate: o.plannedElectionDate ?? null,
       })) || [],
-      genderBalance: input.genderBalance,
-      measures: input.measures,
+      genderBalance: input.genderBalance.map((g) => ({
+        role: g.role ?? 'CEO',
+        women: g.women ?? 0,
+        men: g.men ?? 0,
+        total: g.total ?? 0,
+      })),
+      measures: input.measures?.map((m) => ({
+        name: m.name ?? '',
+        plannedResult: m.plannedResult ?? null,
+        indicator: m.indicator ?? null,
+        indicatorValue: m.indicatorValue ?? null,
+        indicatorUnit: m.indicatorUnit ?? null,
+        year: m.year ?? null,
+      })) || [],
       attachments,
       meta: {
         reasonsForUnderrepresentation: input.reasonsForUnderrepresentation ?? null,

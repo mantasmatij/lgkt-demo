@@ -1,6 +1,8 @@
 "use client";
 import * as React from 'react';
-import { Button, Card, Input, Progress } from '@nextui-org/react';
+import { Card, Input, Progress } from '@heroui/react';
+import { cn } from '../utils/cn';
+import { pillButtonClass } from './fields/buttonStyles';
 
 export type AttachmentLink = { type: 'LINK'; url: string };
 export type AttachmentFileRef = { type: 'FILE'; uploadId: string; fileName?: string };
@@ -128,14 +130,16 @@ export function AttachmentsSection({ value, onChange }: { value: AttachmentRef[]
   const hasActiveUploads = Object.keys(uploads).length > 0;
 
   return (
-    <Card className="p-4 space-y-3">
-      <h3 className="text-lg font-medium">Attachments</h3>
-      
-      {/* Drag and drop zone */}
-      <div
-        className={`border-2 border-dashed rounded-lg p-6 text-center transition-colors ${
-          dragActive ? 'border-primary bg-primary/5' : 'border-gray-300 hover:border-gray-400'
-        }`}
+    <Card className={cn("p-6")}>
+      <div className="flex flex-col gap-3">
+        <h3 className="text-lg font-medium mb-2">Attachments</h3>
+        
+        {/* Drag and drop zone */}
+        <div
+          className={cn(
+            "border-2 border-dashed rounded-lg p-6 text-center transition-colors",
+            dragActive ? 'border-primary bg-primary/5' : 'border-gray-300 hover:border-gray-400'
+          )}
         onDragEnter={handleDrag}
         onDragLeave={handleDrag}
         onDragOver={handleDrag}
@@ -152,7 +156,7 @@ export function AttachmentsSection({ value, onChange }: { value: AttachmentRef[]
         <label htmlFor="file-upload" className="cursor-pointer">
           <div className="space-y-2">
             <svg
-              className="mx-auto h-12 w-12 text-gray-400"
+              className="mx-auto size-12 text-gray-400"
               stroke="currentColor"
               fill="none"
               viewBox="0 0 48 48"
@@ -194,13 +198,13 @@ export function AttachmentsSection({ value, onChange }: { value: AttachmentRef[]
 
       {/* Link input */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-2 items-end pt-2 border-t">
-        <Input 
+        <Input variant="bordered" radius="full" size="lg" 
           label="Attachment link (URL)" 
           value={link} 
           onChange={(e) => setLink(e.target.value)}
           placeholder="https://example.com/document.pdf"
         />
-        <Button onPress={addLink} disabled={!link} color="primary">Add link</Button>
+        <button type="button" onClick={addLink} disabled={!link} className={pillButtonClass}>Add link</button>
       </div>
 
       {/* Uploaded files and links list */}
@@ -219,19 +223,19 @@ export function AttachmentsSection({ value, onChange }: { value: AttachmentRef[]
                   </>
                 )}
               </span>
-              <Button 
-                size="sm" 
-                color="danger" 
-                variant="flat" 
-                onPress={() => remove(idx)}
-                isDisabled={hasActiveUploads}
+              <button
+                type="button"
+                onClick={() => remove(idx)}
+                disabled={hasActiveUploads}
+                className={pillButtonClass}
               >
                 Remove
-              </Button>
+              </button>
             </li>
           ))}
         </ul>
       )}
+      </div>
     </Card>
   );
 }

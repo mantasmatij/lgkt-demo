@@ -42,8 +42,10 @@ test.describe('US1: Public Form Submission', () => {
     await page.fill('input[name="submitter.phone"]', '+37060000001');
     await page.fill('input[name="submitter.email"]', 'jane@test.com');
     
-    // Accept consent
-    await page.check('input[name="consent"]');
+  // Accept consent via associated label to avoid overlay intercepting hidden input
+  const consentLabel = page.locator('label[for="consent"]');
+  await consentLabel.scrollIntoViewIfNeeded();
+  await consentLabel.click();
     
     // Submit form
     await page.click('button[type="submit"]');
@@ -134,7 +136,10 @@ test.describe('US1: Public Form Submission', () => {
     await page.fill('input[name="submitter.name"]', 'Jane Smith');
     await page.fill('input[name="submitter.phone"]', '+37060000001');
     await page.fill('input[name="submitter.email"]', 'jane@test.com');
-    await page.check('input[name="consent"]');
+  // Accept consent via associated label to avoid overlay intercepting hidden input
+  const consentLabel2 = page.locator('label[for="consent"]');
+  await consentLabel2.scrollIntoViewIfNeeded();
+  await consentLabel2.click();
     
     // Try to submit
     await page.click('button[type="submit"]');

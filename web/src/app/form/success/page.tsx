@@ -1,15 +1,17 @@
 'use client';
 
-import { Button } from '@nextui-org/react';
+import { Card } from '@heroui/react';
 import Link from 'next/link';
+import { pillButtonClass } from 'ui';
 
 export default function FormSuccessPage() {
   return (
-    <div className="container mx-auto px-4 py-12 max-w-2xl">
-      <div className="bg-green-50 border border-green-200 rounded-lg p-8 text-center">
+    <div className="container mx-auto px-4 py-6 max-w-2xl">
+      <Card className="bg-green-50 border border-green-200 p-6 text-center">
+        <div className="flex flex-col gap-3">
         <div className="mb-4">
           <svg
-            className="mx-auto h-16 w-16 text-green-600"
+            className="mx-auto size-16 text-green-600"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -41,17 +43,13 @@ export default function FormSuccessPage() {
           </p>
         </div>
         
-        <div className="mt-8">
-          <Button
-            as={Link}
-            href="/form"
-            color="primary"
-            size="lg"
-          >
+        <div>
+          <Link href="/form" className={pillButtonClass}>
             Pateikti kitą pranešimą
-          </Button>
+          </Link>
         </div>
-      </div>
+        </div>
+      </Card>
     </div>
   );
 }

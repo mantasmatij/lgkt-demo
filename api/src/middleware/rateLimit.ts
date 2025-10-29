@@ -1,8 +1,10 @@
 import rateLimit from 'express-rate-limit';
 import { Request, Response } from 'express';
 
-// In development/test, use much higher limits to avoid blocking E2E tests
-const isDevelopment = process.env.NODE_ENV !== 'production';
+// Environment flags
+const env = process.env.NODE_ENV;
+const isTest = env === 'test';
+const isDevelopment = env !== 'production';
 
 /**
  * Rate limiter for CSV export endpoint
@@ -11,7 +13,8 @@ const isDevelopment = process.env.NODE_ENV !== 'production';
  */
 export const csvExportLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: isDevelopment ? 1000 : 10, // Much higher limit in dev/test
+  // Lower the limit in test to keep suites fast and avoid HTTP parser churn
+  max: isTest ? 100 : isDevelopment ? 1000 : 10,
   message: {
     error: 'Too many export requests from this IP, please try again later.',
     retryAfter: '15 minutes',
@@ -33,7 +36,7 @@ export const csvExportLimiter = rateLimit({
  */
 export const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: isDevelopment ? 100 : 5, // Much higher limit in dev/test
+  max: isTest ? 20 : isDevelopment ? 100 : 5,
   message: {
     error: 'Too many login attempts from this IP, please try again later.',
     retryAfter: '15 minutes',
@@ -56,7 +59,7 @@ export const authLimiter = rateLimit({
  */
 export const submissionLimiter = rateLimit({
   windowMs: 60 * 60 * 1000, // 1 hour
-  max: isDevelopment ? 100 : 3, // Much higher limit in dev/test
+  max: isTest ? 20 : isDevelopment ? 100 : 3,
   message: {
     error: 'Too many submissions from this IP, please try again later.',
     retryAfter: '1 hour',

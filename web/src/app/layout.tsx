@@ -1,5 +1,7 @@
 import './global.css';
 import { UIProvider } from 'ui';
+import { LocaleProvider } from '../i18n/LocaleProvider';
+import LanguageSwitcher from '../components/LanguageSwitcher';
 
 export const metadata = {
   title: 'LGKT Forma - Company Reporting',
@@ -12,7 +14,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="lt">
       <body>
         {/* Skip to main content link for keyboard navigation */}
         <a
@@ -22,9 +24,14 @@ export default function RootLayout({
           Skip to main content
         </a>
         <UIProvider>
-          <main id="main-content" tabIndex={-1}>
-            {children}
-          </main>
+          <LocaleProvider>
+            <header className="w-full flex justify-end p-4">
+              <LanguageSwitcher />
+            </header>
+            <main id="main-content" tabIndex={-1}>
+              {children}
+            </main>
+          </LocaleProvider>
         </UIProvider>
       </body>
     </html>

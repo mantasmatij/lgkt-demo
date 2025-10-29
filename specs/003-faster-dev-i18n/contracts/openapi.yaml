@@ -1,0 +1,45 @@
+openapi: 3.0.3
+info:
+  title: LGKT Forma - i18n Preference API
+  version: 0.1.0
+  description: Session-based language preference endpoints (no URL locale prefixes)
+servers:
+  - url: http://localhost:3001
+paths:
+  /i18n/locale:
+    get:
+      summary: Get current session language
+      operationId: getLocale
+      responses:
+        '200':
+          description: Current session language
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  language:
+                    type: string
+                    enum: [lt, en]
+                required: [language]
+    post:
+      summary: Set session language
+      operationId: setLocale
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                language:
+                  type: string
+                  enum: [lt, en]
+              required: [language]
+      responses:
+        '204':
+          description: Language updated for current session
+        '400':
+          description: Invalid language code
+components:
+  schemas: {}

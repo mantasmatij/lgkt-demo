@@ -55,7 +55,7 @@
 - [x] T013 [P] [US1] Replace hardcoded strings with i18n keys in top-level navigation at web/src/app/(site)/_nav.tsx
 - [x] T014 [P] [US1] Migrate provided field labels to i18n keys at web/src/lib/i18n/{lt.ts,en.ts} using specs/003-faster-dev-i18n/contracts/translations/fields.md
 - [x] T015 [US1] Ensure deep-linked pages preserve chosen language without URL prefix at web/src/app/(site)/**/page.tsx
-- [ ] T037 [P] [US1] Inventory top 10 journeys and migrate remaining UI strings to i18n (enable missing-key logging) across web/src/app/** and web/src/components/**
+- [x] T037 [P] [US1] Inventory top 10 journeys and migrate remaining UI strings to i18n (enable missing-key logging) across web/src/app/** and web/src/components/**
 
 **Checkpoint**: US1 independently demonstrable (switcher present; default LT; pages toggle LT/EN)
 

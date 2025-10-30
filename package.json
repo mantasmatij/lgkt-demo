@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "nx run-many -t test --exclude lgkt-forma",
+    "test:cucumber": "cucumber-js -c web/tests/e2e/web.cucumber.mjs",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:headed": "playwright test --headed",
@@ -12,6 +13,8 @@
     "dev": "docker compose -f docker/docker-compose.yml up --build",
     "dev:up": "docker compose -f docker/docker-compose.yml up -d --build",
     "dev:down": "docker compose -f docker/docker-compose.yml down -v",
+    "dev:api-local": "nx serve api -c development",
+    "dev:web-local": "next dev web",
     "contracts:gen": "openapi-typescript specs/001-users-mantas-matijosaitis/contracts/openapi.yaml -o contracts/src/generated.ts",
     "db:generate": "drizzle-kit generate --config db/drizzle.config.ts",
     "db:migrate": "drizzle-kit migrate --config db/drizzle.config.ts"

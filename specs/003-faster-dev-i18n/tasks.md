@@ -14,9 +14,9 @@
 
 **Purpose**: Prepare local dev paths and common scaffolding for i18n
 
-- [ ] T001 Add feature docs to README pointers (root README.md → link to specs/003-faster-dev-i18n/quickstart.md)
-- [ ] T002 [P] Ensure Node 20+ and Nx available (document in specs/003-faster-dev-i18n/quickstart.md)
-- [ ] T003 [P] Verify Postgres container healthcheck works for local DB in docker/docker-compose.yml
+- [x] T001 Add feature docs to README pointers (root README.md → link to specs/003-faster-dev-i18n/quickstart.md)
+- [x] T002 [P] Ensure Node 20+ and Nx available (document in specs/003-faster-dev-i18n/quickstart.md)
+- [x] T003 [P] Verify Postgres container healthcheck works for local DB in docker/docker-compose.yml
 
 ---
 
@@ -44,8 +44,8 @@
 
 ### Tests for User Story 1 (Required by Constitution VI)
 
-- [ ] T029 [P] [US1] Cucumber feature for language toggle at web/tests/features/language_toggle.feature
-- [ ] T030 [P] [US1] Step definitions for toggle at web/tests/step_definitions/language_toggle.steps.ts
+- [x] T029 [P] [US1] Cucumber feature for language toggle at web/tests/e2e/language_toggle.feature
+- [x] T030 [P] [US1] Step definitions for toggle at web/tests/e2e/steps/language_toggle.steps.ts
 - [x] T038 [P] [US1] Playwright i18n consistency on key routes (LT/EN) at web/tests/e2e/i18n_consistency.spec.ts
 
 ### Implementation for User Story 1
@@ -70,8 +70,8 @@
 ### Tests for User Story 2 (Required by Constitution VI)
 
 - [x] T031 [P] [US2] Jest unit tests for /i18n/locale handlers at api/src/routes/__tests__/i18n.locale.spec.ts
-- [ ] T032 [P] [US2] Cucumber scenario for session persistence at web/tests/features/session_locale.feature
-- [ ] T033 [P] [US2] Step definitions for session persistence at web/tests/step_definitions/session_locale.steps.ts
+- [x] T032 [P] [US2] Cucumber scenario for session persistence at web/tests/e2e/session_locale.feature
+- [x] T033 [P] [US2] Step definitions for session persistence at web/tests/e2e/steps/session_locale.steps.ts
 
 ### Implementation for User Story 2
 
@@ -92,13 +92,13 @@
 
 ### Tests for User Story 3 (Documentation Validation)
 
-- [ ] T034 [P] [US3] Playwright smoke: start local dev (documented), assert homepage responds and basic text visible at web/tests/e2e/dev_quickstart.spec.ts
+- [x] T034 [P] [US3] Playwright smoke: start local dev (documented), assert homepage responds and basic text visible at web/tests/e2e/dev_quickstart.spec.ts
 
 ### Implementation for User Story 3
 
-- [ ] T020 [P] [US3] Document local dev flow (no Docker) in specs/003-faster-dev-i18n/quickstart.md
-- [ ] T021 [P] [US3] Add optional docker-compose.override.yml example with bind mounts at docker/docker-compose.override.yml (commented template)
-- [ ] T022 [P] [US3] Add convenience npm scripts: root package.json → "dev:api-local" (nx serve api), "dev:web-local" (next dev)
+- [x] T020 [P] [US3] Document local dev flow (no Docker) in specs/003-faster-dev-i18n/quickstart.md
+- [x] T021 [P] [US3] Add optional docker-compose.override.yml example with bind mounts at docker/docker-compose.override.yml (commented template)
+- [x] T022 [P] [US3] Add convenience npm scripts: root package.json → "dev:api-local" (nx serve api), "dev:web-local" (next dev)
 - [ ] T023 [US3] Validate feedback loop p90 < 30s with a manual stopwatch note in specs/003-faster-dev-i18n/quickstart.md
 
 **Checkpoint**: US3 independently demonstrable (fast feedback via local dev; optional Docker override available)
@@ -110,7 +110,8 @@
 - [ ] T024 [P] Localize one transactional email template at api/src/templates/email/accountNotice.html and accountNotice.lt.html
 - [ ] T025 [P] Localize one standard PDF/export at api/src/services/pdf/templates/standard.hbs and standard.lt.hbs; generator at api/src/services/pdf/generator.ts
 - [ ] T026 [P] Ensure locale-aware date/number formatting used consistently across UI forms at web/src/lib/i18n/format.ts
-- [ ] T027 Update specs/003-faster-dev-i18n/quickstart.md with final run instructions and troubleshooting
+- [x] T027 Update specs/003-faster-dev-i18n/quickstart.md with final run instructions and troubleshooting
+- [x] T035 Add a11y checks for LanguageSwitcher (aria-labels, focus order, roles) at web/tests/a11y/switcher.a11y.spec.ts
 - [ ] T028 Perform visual checks on mobile and desktop for long Lithuanian strings (no overflow) across top pages
 - [ ] T035 Add a11y checks for LanguageSwitcher (aria-labels, focus order, roles) at web/tests/a11y/switcher.a11y.spec.ts
 - [ ] T036 Harden POST /i18n/locale with CSRF check and document secrets handling guidelines in specs/003-faster-dev-i18n/quickstart.md

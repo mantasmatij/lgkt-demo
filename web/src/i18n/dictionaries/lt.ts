@@ -11,7 +11,7 @@ export const lt = {
     submission_failed: 'Pateikimas nepavyko',
   },
   form: {
-    title: 'Anoniminė įmonės forma',
+    title: 'Lyčių lygybės ataskaitos forma',
     section_company: 'Įmonė',
     section_contact: 'Kontaktai ir kita',
     section_submitter: 'Pateikėjas',

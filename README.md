@@ -97,6 +97,10 @@ lgkt-forma/
 npm run dev:up              # Start Docker services
 npm run dev:down            # Stop and remove containers
 
+For the i18n + faster dev feature, see the Quickstart guide:
+
+- specs/003-faster-dev-i18n/quickstart.md
+
 # Testing
 npm test                    # Run all unit tests
 npm run test:e2e            # Run E2E tests with Playwright

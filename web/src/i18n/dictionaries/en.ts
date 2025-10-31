@@ -18,6 +18,8 @@ export const en = {
     section_organs: 'Governance Organs',
     section_gender: 'Gender balance',
     section_measures: 'Measures',
+  measures_example_label: 'Example for section 11:',
+  measures_example_link_text: 'See example',
     requirements_applied: 'Requirements applied',
     reasons_optional: 'Reasons for underrepresentation (optional)',
     reasons_required: 'Reasons for underrepresentation',

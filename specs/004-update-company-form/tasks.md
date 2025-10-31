@@ -36,7 +36,7 @@ Independent test: Fill all fields, ensure validation blocks <1990 dates, submit 
 - [x] T018 [US1] Ensure confirmation checkbox is required in web/src/components/forms/company/CompanyForm.tsx
 - [x] T019 [US1] Map payload per FR-004/FR-016/FR-017 in web/src/app/api/submitCompanyForm/route.ts
 - [ ] T020 [US1] Manual QA script: follow quickstart.md and verify payload shape via network devtools
- - [ ] T034 [US1] Ensure example link (section 11) remains visible and clickable in web/src/components/forms/company/CompanyForm.tsx
+ - [x] T034 [US1] Ensure example link (section 11) remains visible and clickable in web/src/components/forms/company/CompanyForm.tsx
 
 ## Phase 4 — User Story 2 (P2): Localized option labels
 

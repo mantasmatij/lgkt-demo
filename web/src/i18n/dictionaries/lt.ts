@@ -18,6 +18,8 @@ export const lt = {
   section_organs: 'Didelės įmonės valdymo ir priežiūros organų rinkimo ir (ar) sudarymo data',
   section_gender: 'Lyčių balansas',
   section_measures: 'Priemonės',
+    measures_example_label: '11 skyriaus pavyzdys:',
+    measures_example_link_text: 'Žiūrėti pavyzdį',
     requirements_applied: 'Reikalavimai taikomi',
     reasons_optional: 'Nepakankamos atstovybės priežastys (pasirinktinai)',
     reasons_required: 'Nepakankamos atstovybės priežastys',

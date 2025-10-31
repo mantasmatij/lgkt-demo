@@ -252,6 +252,21 @@ export default function PublicFormPage() {
       },
     }}
   />
+  {/* Measures example link (Section 11) */}
+  <Card className="p-4">
+    <p className="text-sm">
+      <span className="mr-2">{tform('measures_example_label')}</span>
+      <a
+        href={process.env.NEXT_PUBLIC_MEASURES_EXAMPLE_URL || '#'}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="underline text-blue-600"
+      >
+        {tform('measures_example_link_text')}
+      </a>
+    </p>
+  </Card>
+
   <MeasuresSection 
     value={form.measures || []} 
     onChange={(rows) => update('measures', rows)} 

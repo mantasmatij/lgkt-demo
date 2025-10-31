@@ -30,7 +30,13 @@ async function deleteUpload(uploadId: string) {
   await fetch(`/api/uploads/${encodeURIComponent(uploadId)}`, { method: 'DELETE' });
 }
 
-export function AttachmentsSection({ value, onChange }: { value: AttachmentRef[]; onChange: (rows: AttachmentRef[]) => void }) {
+type AttachmentLabels = {
+  title?: string;
+  link_input_label?: string;
+  add_link?: string;
+};
+
+export function AttachmentsSection({ value, onChange, labels }: { value: AttachmentRef[]; onChange: (rows: AttachmentRef[]) => void; labels?: AttachmentLabels }) {
   const [link, setLink] = React.useState('');
   const [uploads, setUploads] = React.useState<Record<string, UploadProgress>>({});
   const [dragActive, setDragActive] = React.useState(false);
@@ -128,11 +134,27 @@ export function AttachmentsSection({ value, onChange }: { value: AttachmentRef[]
   };
 
   const hasActiveUploads = Object.keys(uploads).length > 0;
+  const L: Required<AttachmentLabels> = {
+    title: labels?.title ?? 'Attachments',
+    link_input_label: labels?.link_input_label ?? 'Attachment link (URL)',
+    add_link: labels?.add_link ?? 'Add link',
+  } as const;
 
   return (
-    <Card className={cn("p-6")}>
+    <Card className={cn("p-6")}> 
       <div className="flex flex-col gap-3">
-        <h3 className="text-lg font-medium mb-2">Attachments</h3>
+        <h3 className="text-lg font-medium mb-2">{L.title}</h3>
+
+        {/* Link input (moved above file input) */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-2 items-end">
+          <Input variant="bordered" radius="full" size="lg"
+            label={L.link_input_label}
+            value={link}
+            onChange={(e) => setLink(e.target.value)}
+            placeholder="https://example.com/document.pdf"
+          />
+          <button type="button" onClick={addLink} disabled={!link} className={pillButtonClass}>{L.add_link}</button>
+        </div>
         
         {/* Drag and drop zone */}
         <div
@@ -196,16 +218,7 @@ export function AttachmentsSection({ value, onChange }: { value: AttachmentRef[]
         </div>
       ))}
 
-      {/* Link input */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-2 items-end pt-2 border-t">
-        <Input variant="bordered" radius="full" size="lg" 
-          label="Attachment link (URL)" 
-          value={link} 
-          onChange={(e) => setLink(e.target.value)}
-          placeholder="https://example.com/document.pdf"
-        />
-        <button type="button" onClick={addLink} disabled={!link} className={pillButtonClass}>Add link</button>
-      </div>
+      
 
       {/* Uploaded files and links list */}
       {value.length > 0 && (

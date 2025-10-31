@@ -196,13 +196,15 @@ export default function PublicFormPage() {
                 />
               </div>
 
-              {/* Reporting period and requirements link */}
+              {/* Reporting period */}
+              <div className="font-semibold">{tform('reporting_period_heading') as unknown as string}</div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <InputField
                   id="reportingFrom"
                   name="reportingFrom"
                   type="date"
                   label={tf('reporting_from')}
+                  labelClassName="font-normal"
                   value={form.reportingFrom}
                   onChange={(e) => update('reportingFrom', e.target.value)}
                   min={MIN_DATE_STR}
@@ -213,31 +215,14 @@ export default function PublicFormPage() {
                   name="reportingTo"
                   type="date"
                   label={tf('reporting_to')}
+                  labelClassName="font-normal"
                   value={form.reportingTo}
                   onChange={(e) => update('reportingTo', e.target.value)}
                   min={MIN_DATE_STR}
                   isRequired
                 />
               </div>
-              <InputField
-                id="requirementsLink"
-                name="requirementsLink"
-                type="url"
-                label={tf('requirements_link_optional')}
-                value={form.requirementsLink ?? ''}
-                onChange={(e) => update('requirementsLink', e.target.value || undefined)}
-              />
-
-              <div className="flex items-center justify-between">
-                <span className="text-sm">{tform('requirements_applied')}</span>
-                <CheckboxField
-                  id="requirementsApplied"
-                  name="requirementsApplied"
-                  checked={form.requirementsApplied}
-                  onChange={(checked) => update('requirementsApplied', checked)}
-                  ariaLabel={tform('requirements_applied')}
-                />
-              </div>
+              
             </div>
           </Card>
 
@@ -270,6 +255,7 @@ export default function PublicFormPage() {
                 SUPERVISORY_BOARD: tf('role_supervisory_board') as unknown as string,
               },
             }}
+            rowVisualization={false}
           />
 
           {/* Overall gender distribution visualization */}
@@ -282,6 +268,23 @@ export default function PublicFormPage() {
               <p className="text-sm">
                 {tf('women')}: {genderTotals.women} ({genderTotals.wp}%) — {tf('men')}: {genderTotals.men} ({genderTotals.mp}%) — {tf('total')}: {genderTotals.total}
               </p>
+            </div>
+          </Card>
+
+          {/* Requirements applied moved here with bold label */}
+          <Card className="p-6">
+            <div className="flex flex-col gap-2">
+              <div className="font-semibold">{tform('requirements_applied_question')}</div>
+              <div className="flex items-center justify-between">
+                <span className="text-sm opacity-0 select-none">spacer</span>
+                <CheckboxField
+                  id="requirementsApplied"
+                  name="requirementsApplied"
+                  checked={form.requirementsApplied}
+                  onChange={(checked) => update('requirementsApplied', checked)}
+                  ariaLabel={tform('requirements_applied_question')}
+                />
+              </div>
             </div>
           </Card>
 
@@ -300,6 +303,18 @@ export default function PublicFormPage() {
             </p>
           </Card>
 
+          {/* Attachments before Measures with localized labels */}
+          <AttachmentsSection 
+            value={form.attachments || []} 
+            onChange={(rows) => update('attachments', rows)}
+            labels={{
+              title: tform('attachments_title') as unknown as string,
+              link_input_label: tform('attachments_link_label') as unknown as string,
+              add_link: tform('attachments_add_link_button') as unknown as string,
+            }}
+          />
+
+          {/* Measures moved below Attachments */}
           <MeasuresSection
             value={form.measures || []}
             onChange={(rows) => update('measures', rows)}
@@ -316,7 +331,6 @@ export default function PublicFormPage() {
               remove: tf('remove_measure') as unknown as string,
             }}
           />
-          <AttachmentsSection value={form.attachments || []} onChange={(rows) => update('attachments', rows)} />
 
           {/* Section 12: Reasons (placed above Submitter section) */}
           <Card className="p-6">
@@ -329,7 +343,6 @@ export default function PublicFormPage() {
                 onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => update('reasonsForUnderrepresentation', e.target.value || '')}
                 disableAutosize
                 minRows={4}
-                classNames={{ inputWrapper: 'min-h-32 max-h-32', input: 'resize-none' }}
                 isRequired
               />
             </div>

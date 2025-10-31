@@ -8,13 +8,14 @@ export type InputFieldProps = Omit<InputProps, 'label'> & {
   name: string;
   label: string;
   required?: boolean;
+  labelClassName?: string;
 };
 
-export function InputField({ id, name, label, required, isRequired, ...rest }: InputFieldProps) {
+export function InputField({ id, name, label, required, isRequired, labelClassName, ...rest }: InputFieldProps) {
   const req = required ?? isRequired ?? false;
   return (
     <div className="flex flex-col">
-      <label htmlFor={id} className="text-black font-medium mb-2">
+      <label htmlFor={id} className={"text-black mb-2 " + (labelClassName ?? "font-medium")}>
         {label}{req ? ' *' : ''}
       </label>
       <Input

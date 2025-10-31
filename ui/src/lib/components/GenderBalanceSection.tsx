@@ -16,7 +16,7 @@ type GenderLabels = {
   roles?: Partial<Record<GenderRow['role'], string>>;
 };
 
-export function GenderBalanceSection({ value, onChange, labels }: { value: GenderRow[]; onChange: (rows: GenderRow[]) => void; labels?: GenderLabels }) {
+export function GenderBalanceSection({ value, onChange, labels, rowVisualization = true }: { value: GenderRow[]; onChange: (rows: GenderRow[]) => void; labels?: GenderLabels; rowVisualization?: boolean }) {
   React.useEffect(() => {
     if (value.length !== roles.length) {
       const next = roles.map((r) => value.find((v) => v.role === r) || { role: r, women: 0, men: 0, total: 0 });
@@ -62,7 +62,7 @@ export function GenderBalanceSection({ value, onChange, labels }: { value: Gende
                   <InputField type="number" id={`${role}.total`} name={`${role}.total`} label={L.total} value={String(row.total)} readOnly />
                 </div>
                 
-                {row.total > 0 && (
+                {rowVisualization && row.total > 0 && (
                   <div className="flex flex-col gap-1">
                     <div className="flex items-center gap-2">
                       <div className="flex-1 h-6 bg-gray-200 rounded-md overflow-hidden flex">

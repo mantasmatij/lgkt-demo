@@ -123,8 +123,8 @@ export default function PublicFormPage() {
             <div className="flex flex-col gap-3">
               <h2 className="text-xl font-semibold mb-2">{tform('section_company')}</h2>
 
-              {/* Row 1: name, code, company type */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+              {/* Company fields vertically stacked (single column) */}
+              <div className="flex flex-col gap-3">
                 <InputField
                   id="name"
                   name="name"
@@ -162,16 +162,20 @@ export default function PublicFormPage() {
                     </SelectItem>
                   ))}
                 </SelectField>
-              </div>
-
-              {/* Row 2: legal form, registry, eDelivery */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                 <InputField
                   id="legalForm"
                   name="legalForm"
                   label={tf('legal_form')}
                   value={form.legalForm}
                   onChange={(e) => update('legalForm', e.target.value)}
+                  isRequired
+                />
+                <InputField
+                  id="address"
+                  name="address"
+                  label={tf('address')}
+                  value={form.address}
+                  onChange={(e) => update('address', e.target.value)}
                   isRequired
                 />
                 <InputField
@@ -188,19 +192,6 @@ export default function PublicFormPage() {
                   label={tf('e_delivery_address')}
                   value={form.eDeliveryAddress}
                   onChange={(e) => update('eDeliveryAddress', e.target.value)}
-                  isRequired
-                />
-              </div>
-
-              {/* Row 3: address full width on desktop */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                <InputField
-                  id="address"
-                  name="address"
-                  label={tf('address')}
-                  value={form.address}
-                  onChange={(e) => update('address', e.target.value)}
-                  classNames={{ inputWrapper: 'md:col-span-3' }}
                   isRequired
                 />
               </div>

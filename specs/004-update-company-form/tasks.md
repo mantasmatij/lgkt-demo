@@ -66,6 +66,7 @@ Independent test: Desktop shows single-line groupings for 1.1–1.3; mobile stac
 ## Additional
 
 - [x] T035 [US1] Add overall gender distribution visualization below gender section in web/src/app/form/page.tsx
+- [x] T036 [UX] Align company fields to single-column layout (revert desktop 3-column grouping) in web/src/app/form/page.tsx
 
 ## Dependencies (Story Order)
 

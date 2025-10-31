@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Card, Spinner, Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Pagination } from '@heroui/react';
+import { useI18n } from '../../providers/i18n-provider';
 
 type Submission = {
   id: string;
@@ -23,6 +24,8 @@ type SubmissionsResponse = {
 
 export default function AdminDashboardPage() {
   const router = useRouter();
+  const { t } = useI18n();
+  const ta = t('admin');
   const [data, setData] = useState<SubmissionsResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -45,7 +48,7 @@ export default function AdminDashboardPage() {
         }
 
         if (!res.ok) {
-          setError('Failed to load submissions');
+          setError(ta('failed_load_submissions'));
           setLoading(false);
           return;
         }
@@ -53,7 +56,7 @@ export default function AdminDashboardPage() {
         const result = await res.json();
         setData(result);
       } catch {
-        setError('Network error');
+        setError(ta('network_error'));
       } finally {
         setLoading(false);
       }
@@ -85,33 +88,33 @@ export default function AdminDashboardPage() {
   return (
     <div className="container mx-auto px-4 py-6">
       <div className="flex flex-col gap-4">
-        <h1 className="text-3xl font-bold" tabIndex={-1} id="page-title">Admin Dashboard</h1>
+  <h1 className="text-3xl font-bold" tabIndex={-1} id="page-title">{ta('dashboard_title')}</h1>
 
         {isEmpty ? (
           <Card className="p-6 text-center" role="status" aria-live="polite">
-            <p className="text-gray-600 text-lg">No submissions yet.</p>
-            <p className="text-gray-500 mt-2">Submissions will appear here once companies start submitting forms.</p>
+            <p className="text-gray-600 text-lg">{ta('no_submissions_yet')}</p>
+            <p className="text-gray-500 mt-2">{ta('submissions_empty_hint')}</p>
           </Card>
         ) : (
           <>
             <Card className="p-6" role="status" aria-live="polite">
               <p className="text-gray-700">
-                <span className="font-semibold">{data.total}</span> total submissions
+                <span className="font-semibold">{data.total}</span> {ta('total_submissions_suffix')}
               </p>
             </Card>
 
             <Card className="p-6">
               <div className="overflow-x-auto">
                 <Table 
-                  aria-label="Submissions table"
+                  aria-label={ta('submissions_table_aria')}
                   aria-describedby="submissions-description"
                 >
                   <TableHeader>
-                    <TableColumn>Company Code</TableColumn>
-                    <TableColumn>Company Name</TableColumn>
-                    <TableColumn>Country</TableColumn>
-                    <TableColumn>Contact Email</TableColumn>
-                    <TableColumn>Submitted At</TableColumn>
+                    <TableColumn>{ta('submissions_columns_company_code')}</TableColumn>
+                    <TableColumn>{ta('submissions_columns_company_name')}</TableColumn>
+                    <TableColumn>{ta('submissions_columns_country')}</TableColumn>
+                    <TableColumn>{ta('submissions_columns_contact_email')}</TableColumn>
+                    <TableColumn>{ta('submissions_columns_submitted_at')}</TableColumn>
                   </TableHeader>
                   <TableBody>
                     {data.items.map((sub) => (
@@ -127,7 +130,7 @@ export default function AdminDashboardPage() {
                 </Table>
               </div>
               <p id="submissions-description" className="sr-only">
-                Table showing all company form submissions with company code, name, country, contact email, and submission date.
+                {ta('submissions_table_aria')}
               </p>
             </Card>
 
@@ -138,7 +141,7 @@ export default function AdminDashboardPage() {
                   page={page}
                   onChange={setPage}
                   showControls
-                  aria-label="Submissions pagination"
+                  aria-label={ta('submissions_pagination_aria')}
                 />
               </div>
             )}

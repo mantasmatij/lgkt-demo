@@ -17,7 +17,7 @@ test.describe('US3: CSV Export', () => {
     await page.goto('/admin/reports');
     
     // Verify reports heading
-    const heading = page.locator('h1, h2').filter({ hasText: /report/i });
+    const heading = page.locator('h1, h2').filter({ hasText: /report|ataskait/i });
     await expect(heading).toBeVisible();
     
     // Verify date range inputs exist
@@ -27,8 +27,8 @@ test.describe('US3: CSV Export', () => {
     await expect(fromInput).toBeVisible();
     await expect(toInput).toBeVisible();
     
-    // Verify export button/link exists
-    const exportButton = page.locator('button, a').filter({ hasText: /export|download/i });
+    // Verify export button/link exists (LT: "Atsisiųsti CSV")
+    const exportButton = page.locator('button, a').filter({ hasText: /export|download|atsisiųsti|csv/i });
     await expect(exportButton.first()).toBeVisible();
   });
 
@@ -56,8 +56,8 @@ test.describe('US3: CSV Export', () => {
       { timeout: 30000 }
     );
     
-    // Click export button
-    await page.locator('button[type="submit"]').filter({ hasText: /export/i }).click();
+  // Click export button (tolerate LT/EN labels)
+  await page.locator('button[type="submit"]').filter({ hasText: /export|atsisiųsti/i }).click();
     
     // Wait for the response
     const response = await responsePromise;
@@ -84,12 +84,12 @@ test.describe('US3: CSV Export', () => {
     await page.goto('/admin/reports');
     
     // Try to export without setting dates
-    const exportButton = page.locator('button, a').filter({ hasText: /export|download/i }).first();
+    const exportButton = page.locator('button, a').filter({ hasText: /export|download|atsisiųsti/i }).first();
     await exportButton.click();
     
     // Should show validation error or prevent download
     // Either form validation or error message should appear
-    const errorMessage = page.locator('text=/required|error|invalid/i');
+    const errorMessage = page.locator('text=/required|error|invalid|privalom|klaid|neteising|būtina/i');
     await errorMessage.isVisible().catch(() => false);
     
     // Or check if we're still on the same page (no download started)
@@ -110,7 +110,7 @@ test.describe('US3: CSV Export', () => {
     const downloadPromise = page.waitForEvent('download', { timeout: 5000 }).catch(() => null);
     
     // Click export
-    const exportButton = page.locator('button, a').filter({ hasText: /export|download/i }).first();
+  const exportButton = page.locator('button, a').filter({ hasText: /export|download|atsisiųsti/i }).first();
     await exportButton.click();
     
     const download = await downloadPromise;
@@ -132,12 +132,12 @@ test.describe('US3: CSV Export', () => {
     await page.goto('/admin/companies');
     
     // Verify companies heading
-    const heading = page.locator('h1, h2').filter({ hasText: /compan/i });
+    const heading = page.locator('h1, h2').filter({ hasText: /(Companies|Įmonės)/i });
     await expect(heading).toBeVisible();
     
     // Check for either companies table or empty state
     const table = page.locator('table');
-    const emptyState = page.locator('text=/no companies/i');
+  const emptyState = page.locator('text=/(no companies|Nėra įmonių)/i');
     
     const hasTable = await table.isVisible().catch(() => false);
     const hasEmptyState = await emptyState.isVisible().catch(() => false);
@@ -147,8 +147,8 @@ test.describe('US3: CSV Export', () => {
     // If table exists, verify columns
     if (hasTable) {
       const headers = await page.locator('th').allTextContents();
-      expect(headers.some(h => h.match(/company.*code/i))).toBeTruthy();
-      expect(headers.some(h => h.match(/company.*name/i))).toBeTruthy();
+      expect(headers.some(h => h.match(/company.*code|įmonės.*kodas/i))).toBeTruthy();
+      expect(headers.some(h => h.match(/company.*name|įmonės.*pavadinimas/i))).toBeTruthy();
     }
   });
 
@@ -162,7 +162,7 @@ test.describe('US3: CSV Export', () => {
     await fromInput.fill('2024-01-01');
     await toInput.fill('2024-12-31');
     
-    const exportButton = page.locator('button, a').filter({ hasText: /export|download/i }).first();
+  const exportButton = page.locator('button, a').filter({ hasText: /export|download|atsisiųsti/i }).first();
     
     // Make multiple rapid export requests
     const requests: Promise<unknown>[] = [];
@@ -178,7 +178,7 @@ test.describe('US3: CSV Export', () => {
     
     // After rate limit (10 requests per 15 min), should show error
     // Check for rate limit error message
-    const rateLimitError = page.locator('text=/too many|rate limit|try again later/i');
+  const rateLimitError = page.locator('text=/too many|rate limit|try again later|per daug|bandykite vėliau/i');
     const hasRateLimitError = await rateLimitError.isVisible().catch(() => false);
     
     // Rate limiting should eventually kick in
@@ -209,7 +209,7 @@ test.describe('US3: CSV Export', () => {
   test('T042: export button should have proper accessibility', async ({ page }) => {
     await page.goto('/admin/reports');
     
-    const exportButton = page.locator('button, a').filter({ hasText: /export|download/i }).first();
+    const exportButton = page.locator('button, a').filter({ hasText: /export|download|atsisiųsti/i }).first();
     
     // Should have accessible name
     const ariaLabel = await exportButton.getAttribute('aria-label');

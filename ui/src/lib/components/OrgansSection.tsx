@@ -12,7 +12,18 @@ export type OrganRow = {
   plannedElectionDate?: string;
 };
 
-export function OrgansSection({ value, onChange }: { value: OrganRow[]; onChange: (rows: OrganRow[]) => void }) {
+type OrgansLabels = {
+  title?: string;
+  organ_type?: string;
+  last_election_date?: string;
+  planned_election_date?: string;
+  option_VALDYBA?: string;
+  option_STEBETOJU_TARYBA?: string;
+  add?: string; // aria-label
+  remove?: string; // aria-label
+};
+
+export function OrgansSection({ value, onChange, labels }: { value: OrganRow[]; onChange: (rows: OrganRow[]) => void; labels?: OrgansLabels }) {
   // Ensure at least one row exists
   React.useEffect(() => {
     if (value.length === 0) {
@@ -33,10 +44,21 @@ export function OrgansSection({ value, onChange }: { value: OrganRow[]; onChange
     onChange(next);
   };
 
+  const L: Required<OrgansLabels> = {
+    title: labels?.title ?? 'Governance Organs',
+    organ_type: labels?.organ_type ?? 'Organ type',
+    last_election_date: labels?.last_election_date ?? 'Last election date',
+    planned_election_date: labels?.planned_election_date ?? 'Planned election date',
+    option_VALDYBA: labels?.option_VALDYBA ?? 'Valdyba',
+    option_STEBETOJU_TARYBA: labels?.option_STEBETOJU_TARYBA ?? 'Stebėtojų taryba',
+    add: labels?.add ?? 'Add organ',
+    remove: labels?.remove ?? 'Remove organ',
+  };
+
   return (
     <Card className={cn("p-6")}> 
       <div className="flex flex-col gap-3">
-        <h3 className="text-lg font-medium">Governance Organs</h3>
+        <h3 className="text-lg font-medium">{L.title}</h3>
 
         {value.map((row, idx) => (
           <Card key={idx} className="p-4">
@@ -44,7 +66,7 @@ export function OrgansSection({ value, onChange }: { value: OrganRow[]; onChange
               <SelectField
                 id={`organ.${idx}.type`}
                 name={`organ.${idx}.type`}
-                label="Organ type"
+                label={L.organ_type}
                 selectedKeys={[row.organType]}
                 classNames={{
                   // Increase only horizontal padding to prevent text touching the border/chevron
@@ -56,8 +78,8 @@ export function OrgansSection({ value, onChange }: { value: OrganRow[]; onChange
                 }}
                 onChange={(e) => update(idx, { organType: (e.target.value as OrganRow['organType']) })}
               >
-                <SelectItem key="VALDYBA">Valdyba</SelectItem>
-                <SelectItem key="STEBETOJU_TARYBA">Stebėtojų taryba</SelectItem>
+                <SelectItem key="VALDYBA">{L.option_VALDYBA}</SelectItem>
+                <SelectItem key="STEBETOJU_TARYBA">{L.option_STEBETOJU_TARYBA}</SelectItem>
               </SelectField>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -65,7 +87,7 @@ export function OrgansSection({ value, onChange }: { value: OrganRow[]; onChange
                   id={`organ.${idx}.lastElectionDate`}
                   name={`organ.${idx}.lastElectionDate`}
                   type="date"
-                  label="Last election date"
+                  label={L.last_election_date}
                   value={row.lastElectionDate ?? ''}
                   onChange={(e) => update(idx, { lastElectionDate: e.target.value || undefined })}
                 />
@@ -73,7 +95,7 @@ export function OrgansSection({ value, onChange }: { value: OrganRow[]; onChange
                   id={`organ.${idx}.plannedElectionDate`}
                   name={`organ.${idx}.plannedElectionDate`}
                   type="date"
-                  label="Planned election date"
+                  label={L.planned_election_date}
                   value={row.plannedElectionDate ?? ''}
                   onChange={(e) => update(idx, { plannedElectionDate: e.target.value || undefined })}
                 />
@@ -84,7 +106,7 @@ export function OrgansSection({ value, onChange }: { value: OrganRow[]; onChange
                 {idx === value.length - 1 ? (
                   <button
                     type="button"
-                    aria-label="Add organ"
+                    aria-label={L.add}
                     className={iconButtonClass}
                     onClick={addRow}
                   >
@@ -97,7 +119,7 @@ export function OrgansSection({ value, onChange }: { value: OrganRow[]; onChange
                 {value.length > 1 && (
                   <button
                     type="button"
-                    aria-label="Remove organ"
+                    aria-label={L.remove}
                     className={iconButtonClass}
                     onClick={() => removeRow(idx)}
                   >

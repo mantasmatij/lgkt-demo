@@ -1,0 +1,29 @@
+# Optional dev override enabling live-reload inside containers
+# NOTE: This template is provided for convenience. It assumes you want to run
+# dev commands (Next.js dev / Nx serve) within containers with bind-mounted
+# source code. Your production Dockerfiles exclude devDependencies, so either:
+#  - build images that include devDependencies for this override, or
+#  - mount node_modules from the host, or
+#  - use Option A in quickstart (recommended): run api/web locally without Docker
+
+version: "3.9"
+services:
+  api:
+    # Bind mount source for fast reloads
+    volumes:
+      - ..:/app:delegated
+    working_dir: /app
+    # Run API in dev/watch mode via Nx
+    command: ["sh", "-lc", "npx nx serve api -c development"]
+
+  web:
+    # Bind mount source for fast reloads
+    volumes:
+      - ..:/app:delegated
+    working_dir: /app
+    # Run Next.js dev server via Nx
+    command: ["sh", "-lc", "npx nx serve web -c development"]
+
+# Tip: Start with `docker compose -f docker/docker-compose.yml -f docker/docker-compose.override.yml up`
+#      Ensure the images have devDependencies available for dev commands to work.
+ 

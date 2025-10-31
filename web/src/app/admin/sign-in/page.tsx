@@ -1,12 +1,15 @@
-'use client';
+"use client";
 
 import { Card, Input } from '@heroui/react';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { pillButtonClass } from 'ui';
+import { useI18n } from '../../providers/i18n-provider';
 
 export default function AdminSignInPage() {
   const router = useRouter();
+  const { t } = useI18n();
+  const ta = t('admin');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -27,7 +30,7 @@ export default function AdminSignInPage() {
 
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
-        setError(data?.message || 'Sign in failed');
+        setError(data?.message || ta('sign_in_failed'));
         setLoading(false);
         return;
       }
@@ -35,7 +38,7 @@ export default function AdminSignInPage() {
       // Redirect to dashboard on success
       router.push('/admin/dashboard');
     } catch {
-      setError('Network error. Please try again.');
+      setError(ta('network_error'));
       setLoading(false);
     }
   }
@@ -44,7 +47,7 @@ export default function AdminSignInPage() {
     <div className="container mx-auto px-4 py-6 max-w-md">
       <Card className="p-6">
         <div className="flex flex-col gap-3">
-          <h1 className="text-3xl font-bold mb-2 text-center">Admin Sign In</h1>
+          <h1 className="text-3xl font-bold mb-2 text-center">{ta('sign_in_title')}</h1>
           
           {error && (
             <div className="p-3 bg-red-50 border border-red-200 rounded text-red-700 text-sm">
@@ -55,7 +58,7 @@ export default function AdminSignInPage() {
           <form onSubmit={handleSubmit} className="flex flex-col gap-3">
           <Input
             type="email"
-            label="Email"
+            label={ta('sign_in_email_label')}
             value={email}
             onValueChange={setEmail}
             required
@@ -64,7 +67,7 @@ export default function AdminSignInPage() {
           
           <Input
             type="password"
-            label="Password"
+            label={ta('sign_in_password_label')}
             value={password}
             onValueChange={setPassword}
             required
@@ -77,7 +80,7 @@ export default function AdminSignInPage() {
             aria-busy={loading}
             disabled={loading}
           >
-            {loading ? 'Signing In…' : 'Sign In'}
+            {loading ? ta('signing_in') : ta('sign_in_button')}
           </button>
         </form>
         </div>

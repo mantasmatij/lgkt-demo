@@ -5,22 +5,23 @@ set -e
 JSON_MODE=false
 SHORT_NAME=""
 ARGS=()
-i=0
-while [ $i -lt $# ]; do
-    arg="${!i}"
-    case "$arg" in
-        --json) 
-            JSON_MODE=true 
+
+# Robust, shift-based CLI parsing
+while [ $# -gt 0 ]; do
+    case "$1" in
+        --json)
+            JSON_MODE=true
+            shift
             ;;
         --short-name)
-            if [ $((i + 1)) -ge $# ]; then
+            if [ -z "${2:-}" ]; then
                 echo 'Error: --short-name requires a value' >&2
                 exit 1
             fi
-            i=$((i + 1))
-            SHORT_NAME="${!i}"
+            SHORT_NAME="$2"
+            shift 2
             ;;
-        --help|-h) 
+        --help|-h)
             echo "Usage: $0 [--json] [--short-name <name>] <feature_description>"
             echo ""
             echo "Options:"
@@ -29,15 +30,15 @@ while [ $i -lt $# ]; do
             echo "  --help, -h          Show this help message"
             echo ""
             echo "Examples:"
-            echo "  $0 'Add user authentication system' --short-name 'user-auth'"
-            echo "  $0 'Implement OAuth2 integration for API'"
+            echo "  $0 --json --short-name 'user-auth' 'Add user authentication system'"
+            echo "  $0 --json 'Implement OAuth2 integration for API'"
             exit 0
             ;;
-        *) 
-            ARGS+=("$arg") 
+        *)
+            ARGS+=("$1")
+            shift
             ;;
     esac
-    i=$((i + 1))
 done
 
 FEATURE_DESCRIPTION="${ARGS[*]}"

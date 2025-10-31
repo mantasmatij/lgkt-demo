@@ -1,14 +1,20 @@
 "use client";
 import * as React from 'react';
 import { useRouter } from 'next/navigation';
-import { Button, Card } from '@heroui/react';
+import { Card } from '@heroui/react';
 import { OrgansSection, GenderBalanceSection, MeasuresSection, AttachmentsSection, ErrorSummary, InputField, TextareaField, CheckboxField, pillButtonClass } from 'ui';
 import { submissionSchema, type SubmissionInput } from 'validation';
+import { useI18n } from '../providers/i18n-provider';
 
 // Input styling is handled by shared UI components (InputField/TextareaField)
 
 export default function PublicFormPage() {
   const router = useRouter();
+  const { t } = useI18n();
+  type FieldsDict = (typeof import('../../i18n/dictionaries').dictionaries)['lt']['fields'];
+  const tf = <K extends keyof FieldsDict>(k: K) => t('fields')(k as K);
+  const tc = t('common');
+  const tform = t('form');
   const [form, setForm] = React.useState<SubmissionInput>({
     name: '',
     code: '',
@@ -34,7 +40,7 @@ export default function PublicFormPage() {
     attachments: [],
     reasonsForUnderrepresentation: '',
     consent: false,
-    consentText: 'I consent to data processing as described.',
+  consentText: tform('consent_text') as unknown as string,
     submitter: { name: '', title: '', phone: '', email: '' },
     captchaToken: 'dev',
   });
@@ -71,8 +77,8 @@ export default function PublicFormPage() {
         body: JSON.stringify(parsed.data),
       });
       if (!res.ok) {
-        const err = await res.json().catch(() => ({}));
-        setResult(err?.message || 'Submission failed');
+  const err = await res.json().catch(() => ({}));
+  setResult(err?.message || tc('submission_failed'));
       } else {
         // Redirect to success page on successful submission
         router.push('/form/success');
@@ -85,7 +91,7 @@ export default function PublicFormPage() {
   return (
     <div className="container mx-auto max-w-3xl px-4 py-6">
       <div className="flex flex-col gap-3">
-        <h1 className="text-3xl font-bold mb-2">Anonymous Company Form</h1>
+        <h1 className="text-3xl font-bold mb-2">{tform('title')}</h1>
       
       <ErrorSummary errors={errors} />
       
@@ -94,12 +100,12 @@ export default function PublicFormPage() {
       <form onSubmit={onSubmit} noValidate>
         <Card className="p-6">
           <div className="flex flex-col gap-3">
-            <h2 className="text-xl font-semibold mb-2">Company</h2>
+            <h2 className="text-xl font-semibold mb-2">{tform('section_company')}</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               <InputField
                 id="name"
                 name="name"
-                label="Company name"
+                label={tf('company_name')}
                 value={form.name}
                 onChange={(e) => update('name', e.target.value)}
                 isInvalid={!!errors.name}
@@ -109,7 +115,7 @@ export default function PublicFormPage() {
               <InputField
                 id="code"
                 name="code"
-                label="Company code"
+                label={tf('company_code')}
                 value={form.code}
                 onChange={(e) => update('code', e.target.value)}
                 isInvalid={!!errors.code}
@@ -119,7 +125,7 @@ export default function PublicFormPage() {
               <InputField
                 id="country"
                 name="country"
-                label="Country (ISO2)"
+                label={tf('country_iso2')}
                 value={form.country}
                 onChange={(e) => update('country', e.target.value)}
                 isInvalid={!!errors.country}
@@ -129,7 +135,7 @@ export default function PublicFormPage() {
               <InputField
                 id="legalForm"
                 name="legalForm"
-                label="Legal form"
+                label={tf('legal_form')}
                 value={form.legalForm}
                 onChange={(e) => update('legalForm', e.target.value)}
                 isRequired
@@ -137,7 +143,7 @@ export default function PublicFormPage() {
               <InputField
                 id="address"
                 name="address"
-                label="Address"
+                label={tf('address')}
                 value={form.address}
                 onChange={(e) => update('address', e.target.value)}
                 isRequired
@@ -145,7 +151,7 @@ export default function PublicFormPage() {
               <InputField
                 id="registry"
                 name="registry"
-                label="Registry"
+                label={tf('registry')}
                 value={form.registry}
                 onChange={(e) => update('registry', e.target.value)}
                 isRequired
@@ -153,7 +159,7 @@ export default function PublicFormPage() {
               <InputField
                 id="eDeliveryAddress"
                 name="eDeliveryAddress"
-                label="eDelivery address"
+                label={tf('e_delivery_address')}
                 value={form.eDeliveryAddress}
                 onChange={(e) => update('eDeliveryAddress', e.target.value)}
                 isRequired
@@ -162,7 +168,7 @@ export default function PublicFormPage() {
                 id="requirementsLink"
                 name="requirementsLink"
                 type="url"
-                label="Requirements link (optional)"
+                label={tf('requirements_link_optional')}
                 value={form.requirementsLink ?? ''}
                 onChange={(e) => update('requirementsLink', e.target.value || undefined)}
               />
@@ -170,7 +176,7 @@ export default function PublicFormPage() {
                 id="reportingFrom"
                 name="reportingFrom"
                 type="date"
-                label="Reporting from"
+                label={tf('reporting_from')}
                 value={form.reportingFrom}
                 onChange={(e) => update('reportingFrom', e.target.value)}
                 isRequired
@@ -179,38 +185,80 @@ export default function PublicFormPage() {
                 id="reportingTo"
                 name="reportingTo"
                 type="date"
-                label="Reporting to"
+                label={tf('reporting_to')}
                 value={form.reportingTo}
                 onChange={(e) => update('reportingTo', e.target.value)}
                 isRequired
               />
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-sm">Requirements applied</span>
+              <span className="text-sm">{tform('requirements_applied')}</span>
               <CheckboxField
                 id="requirementsApplied"
                 name="requirementsApplied"
                 checked={form.requirementsApplied}
                 onChange={(checked) => update('requirementsApplied', checked)}
-                ariaLabel="Requirements applied"
+                ariaLabel={tform('requirements_applied')}
               />
             </div>
           </div>
         </Card>
 
-  <OrgansSection value={form.organs || []} onChange={(rows) => update('organs', rows)} />
-  <GenderBalanceSection value={form.genderBalance} onChange={(rows) => update('genderBalance', rows)} />
-  <MeasuresSection value={form.measures || []} onChange={(rows) => update('measures', rows)} />
+  <OrgansSection 
+    value={form.organs || []} 
+    onChange={(rows) => update('organs', rows)} 
+    labels={{
+      title: tform('section_organs') as unknown as string,
+      organ_type: tf('organ_type') as unknown as string,
+      last_election_date: tf('last_election_date') as unknown as string,
+      planned_election_date: tf('planned_election_date') as unknown as string,
+      option_VALDYBA: tf('organ_option_valdyba') as unknown as string,
+      option_STEBETOJU_TARYBA: tf('organ_option_stebetoju_taryba') as unknown as string,
+      add: tf('add_organ') as unknown as string,
+      remove: tf('remove_organ') as unknown as string,
+    }}
+  />
+  <GenderBalanceSection 
+    value={form.genderBalance} 
+    onChange={(rows) => update('genderBalance', rows)} 
+    labels={{
+      title: tform('section_gender') as unknown as string,
+      women: tf('women') as unknown as string,
+      men: tf('men') as unknown as string,
+      total: tf('total') as unknown as string,
+      roles: {
+        CEO: tf('role_ceo') as unknown as string,
+        BOARD: tf('role_board') as unknown as string,
+        SUPERVISORY_BOARD: tf('role_supervisory_board') as unknown as string,
+      },
+    }}
+  />
+  <MeasuresSection 
+    value={form.measures || []} 
+    onChange={(rows) => update('measures', rows)} 
+    labels={{
+      title: tform('section_measures') as unknown as string,
+      no_measures: tf('no_measures') as unknown as string,
+      name: tf('measure_name') as unknown as string,
+      planned_result: tf('planned_result') as unknown as string,
+      planned_indicator: tf('planned_indicator') as unknown as string,
+      indicator_value: tf('indicator_value') as unknown as string,
+      indicator_unit: tf('indicator_unit') as unknown as string,
+      year: tf('year') as unknown as string,
+      add: tf('add_measure') as unknown as string,
+      remove: tf('remove_measure') as unknown as string,
+    }}
+  />
   <AttachmentsSection value={form.attachments || []} onChange={(rows) => update('attachments', rows)} />
 
         <Card className="p-6">
           <div className="flex flex-col gap-3">
-            <h2 className="text-xl font-semibold mb-2">Contact & Other</h2>
+            <h2 className="text-xl font-semibold mb-2">{tform('section_contact')}</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <InputField 
               id="contactName"
               name="contactName"
-              label="Contact name" 
+              label={tf('contact_name')} 
               value={form.contactName} 
               onChange={(e) => update('contactName', e.target.value)}
               isRequired
@@ -219,7 +267,7 @@ export default function PublicFormPage() {
               id="contactEmail"
               name="contactEmail"
               type="email" 
-              label="Contact email" 
+              label={tf('contact_email')} 
               value={form.contactEmail} 
               onChange={(e) => update('contactEmail', e.target.value)}
               isRequired
@@ -227,7 +275,7 @@ export default function PublicFormPage() {
             <InputField 
               id="contactPhone"
               name="contactPhone"
-              label="Contact phone" 
+              label={tf('contact_phone')} 
               value={form.contactPhone} 
               onChange={(e) => update('contactPhone', e.target.value)}
               isRequired
@@ -236,7 +284,7 @@ export default function PublicFormPage() {
           <TextareaField 
             id="reasonsForUnderrepresentation"
             name="reasonsForUnderrepresentation"
-            label="Reasons for underrepresentation (optional)" 
+            label={tform('reasons_optional')} 
             value={form.reasonsForUnderrepresentation ?? ''} 
             onChange={(e) => update('reasonsForUnderrepresentation', e.target.value || undefined)}
             disableAutosize
@@ -248,12 +296,12 @@ export default function PublicFormPage() {
 
         <Card className="p-6">
           <div className="flex flex-col gap-3">
-            <h2 className="text-xl font-semibold mb-2">Submitter</h2>
+            <h2 className="text-xl font-semibold mb-2">{tform('section_submitter')}</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <InputField 
               id="submitter.name"
               name="submitter.name"
-              label="Full name" 
+              label={tf('submitter_full_name')} 
               value={form.submitter.name} 
               onChange={(e) => update('submitter', { ...form.submitter, name: e.target.value })}
               isRequired
@@ -261,14 +309,14 @@ export default function PublicFormPage() {
             <InputField 
               id="submitter.title"
               name="submitter.title"
-              label="Title" 
+              label={tf('submitter_title')} 
               value={form.submitter.title ?? ''} 
               onChange={(e) => update('submitter', { ...form.submitter, title: e.target.value })}
             />
             <InputField 
               id="submitter.phone"
               name="submitter.phone"
-              label="Phone" 
+              label={tf('submitter_phone')} 
               value={form.submitter.phone} 
               onChange={(e) => update('submitter', { ...form.submitter, phone: e.target.value })}
               isRequired
@@ -277,20 +325,20 @@ export default function PublicFormPage() {
               id="submitter.email"
               name="submitter.email"
               type="email" 
-              label="Email" 
+              label={tf('submitter_email')} 
               value={form.submitter.email} 
               onChange={(e) => update('submitter', { ...form.submitter, email: e.target.value })}
               isRequired
             />
           </div>
           <div className="flex items-center justify-between">
-            <span className="text-sm">I agree to the processing of my data.</span>
+            <span className="text-sm">{tform('consent_label')}</span>
             <CheckboxField
               id="consent"
               name="consent"
               checked={form.consent}
               onChange={(checked) => update('consent', checked)}
-              ariaLabel="I agree to the processing of my data"
+              ariaLabel={tform('consent_label')}
             />
           </div>
           </div>
@@ -300,10 +348,10 @@ export default function PublicFormPage() {
           <button
             type="submit"
             className={pillButtonClass}
-            aria-label={submitting ? "Submitting form..." : "Submit form"}
+            aria-label={submitting ? tform('submitting') : tc('submit')}
             disabled={submitting}
           >
-            Submit
+            {tc('submit')}
           </button>
         </div>
       </form>

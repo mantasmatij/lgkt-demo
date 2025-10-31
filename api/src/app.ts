@@ -11,6 +11,8 @@ import { adminSubmissionsRouter } from './routes/admin/submissions';
 import { adminCompaniesRouter } from './routes/admin/companies';
 import { adminReportsRouter } from './routes/admin/reports';
 import { healthRouter } from './routes/health';
+import { i18nRouter } from './routes/i18n';
+import { attachLocale } from './middleware/locale';
 import { issueCsrfToken } from './middleware/csrf';
 import { parseSession } from './middleware/auth';
 
@@ -31,6 +33,8 @@ export function createApp() {
   
   // Parse session from cookie
   app.use(parseSession);
+  // Attach locale (from its own session cookie)
+  app.use(attachLocale);
 
   app.use('/assets', express.static(path.join(__dirname, 'assets')));
 
@@ -42,6 +46,7 @@ export function createApp() {
 
   // Routes
   app.use('/api/auth', authRouter);
+  app.use('/api/i18n', i18nRouter);
   app.use('/api/uploads', uploadsRouter);
   app.use('/api/submissions', submissionsRouter);
   app.use('/api/admin/submissions', adminSubmissionsRouter);

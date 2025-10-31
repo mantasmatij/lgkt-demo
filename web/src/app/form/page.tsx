@@ -288,20 +288,7 @@ export default function PublicFormPage() {
             </div>
           </Card>
 
-          {/* Measures example link (Section 11) */}
-          <Card className="p-4">
-            <p className="text-sm">
-              <span className="mr-2">{tform('measures_example_label')}</span>
-              <a
-                href={process.env.NEXT_PUBLIC_MEASURES_EXAMPLE_URL || '#'}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="underline text-blue-600"
-              >
-                {tform('measures_example_link_text')}
-              </a>
-            </p>
-          </Card>
+          
 
           {/* Attachments before Measures with localized labels */}
           <AttachmentsSection 
@@ -314,7 +301,7 @@ export default function PublicFormPage() {
             }}
           />
 
-          {/* Measures moved below Attachments */}
+          {/* Measures moved below Attachments; include example link at the top */}
           <MeasuresSection
             value={form.measures || []}
             onChange={(rows) => update('measures', rows)}
@@ -330,6 +317,19 @@ export default function PublicFormPage() {
               add: tf('add_measure') as unknown as string,
               remove: tf('remove_measure') as unknown as string,
             }}
+            topSlot={
+              <div className="text-sm">
+                <span className="mr-2">{tform('measures_example_label')}</span>
+                <a
+                  href={process.env.NEXT_PUBLIC_MEASURES_EXAMPLE_URL || '#'}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline text-blue-600"
+                >
+                  {tform('measures_example_link_text')}
+                </a>
+              </div>
+            }
           />
 
           {/* Section 12: Reasons (placed above Submitter section) */}

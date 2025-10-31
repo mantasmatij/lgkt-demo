@@ -1,8 +1,9 @@
 "use client";
 import * as React from 'react';
-import { Card, Input, Progress } from '@heroui/react';
+import { Card, Progress } from '@heroui/react';
 import { cn } from '../utils/cn';
 import { pillButtonClass } from './fields/buttonStyles';
+import { InputField } from './fields/InputField';
 
 export type AttachmentLink = { type: 'LINK'; url: string };
 export type AttachmentFileRef = { type: 'FILE'; uploadId: string; fileName?: string };
@@ -147,12 +148,17 @@ export function AttachmentsSection({ value, onChange, labels }: { value: Attachm
 
         {/* Link input (moved above file input) */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-2 items-end">
-          <Input variant="bordered" radius="full" size="lg"
-            label={L.link_input_label}
-            value={link}
-            onChange={(e) => setLink(e.target.value)}
-            placeholder="https://example.com/document.pdf"
-          />
+          <div className="md:col-span-2">
+            <InputField
+              id="attachment-link"
+              name="attachment-link"
+              label={L.link_input_label}
+              value={link}
+              onChange={(e) => setLink((e as React.ChangeEvent<HTMLInputElement>).target.value)}
+              placeholder="https://example.com/document.pdf"
+              isRequired={false}
+            />
+          </div>
           <button type="button" onClick={addLink} disabled={!link} className={pillButtonClass}>{L.add_link}</button>
         </div>
         

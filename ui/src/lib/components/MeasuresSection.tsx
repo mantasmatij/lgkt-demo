@@ -28,7 +28,7 @@ type MeasuresLabels = {
   remove?: string; // aria-label
 };
 
-export function MeasuresSection({ value, onChange, labels }: { value: MeasureRow[]; onChange: (rows: MeasureRow[]) => void; labels?: MeasuresLabels }) {
+export function MeasuresSection({ value, onChange, labels, topSlot }: { value: MeasureRow[]; onChange: (rows: MeasureRow[]) => void; labels?: MeasuresLabels; topSlot?: React.ReactNode }) {
   const addRow = () => onChange([...value, { name: '' }]);
   const removeRow = (idx: number) => onChange(value.filter((_, i) => i !== idx));
   const update = (idx: number, patch: Partial<MeasureRow>) => {
@@ -55,6 +55,7 @@ export function MeasuresSection({ value, onChange, labels }: { value: MeasureRow
           <h3 className="text-lg font-medium">{L.title}</h3>
           <button type="button" aria-label={L.add} className={iconButtonClass} onClick={addRow}>+</button>
         </div>
+        {topSlot}
         {value.length === 0 && <p className="text-sm text-default-500">{L.no_measures}</p>}
         {value.map((row, idx) => (
           <Card key={idx} className={cn("p-4")}> 

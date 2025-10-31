@@ -28,6 +28,7 @@ export const en = {
     company_name: 'Company name',
     company_code: 'Company code',
     country_iso2: 'Country (ISO2)',
+    company_type: 'Company Type',
     legal_form: 'Legal form',
     address: 'Address',
     registry: 'Registry',
@@ -68,6 +69,10 @@ export const en = {
     year: 'Year',
     add_measure: 'Add measure',
     remove_measure: 'Remove measure',
+    // Company Type options
+    company_type_option_listed: 'Listed company',
+    company_type_option_state_owned: 'State-owned company',
+    company_type_option_large: 'Large company',
   },
   home: {
     title: 'LGKT Form - Company Reporting',

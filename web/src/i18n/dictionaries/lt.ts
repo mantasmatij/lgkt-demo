@@ -28,6 +28,7 @@ export const lt = {
     company_name: 'Juridinio asmens pavadinimas',
     company_code: 'Juridinio asmens kodas',
     country_iso2: 'Šalis (ISO2)',
+    company_type: 'Įmonės tipas',
     legal_form: 'Juridinio asmens teisinė forma',
     address: 'Juridinio asmens buveinės adresas',
     registry: 'Registras, kuriame kaupiami ir saugomi duomenys',
@@ -67,6 +68,10 @@ export const lt = {
     year: 'Metai',
     add_measure: 'Pridėti priemonę',
     remove_measure: 'Pašalinti priemonę',
+    // Company Type options
+    company_type_option_listed: 'Biržinė įmonė',
+    company_type_option_state_owned: 'Valstybės valdoma įmonė',
+    company_type_option_large: 'Didelė įmonė',
   },
   home: {
     title: 'LGKT Forma - Įmonių ataskaitos',

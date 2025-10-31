@@ -342,7 +342,7 @@ export default function PublicFormPage() {
                 value={form.reasonsForUnderrepresentation ?? ''}
                 onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => update('reasonsForUnderrepresentation', e.target.value || '')}
                 disableAutosize
-                minRows={4}
+                minRows={8}
                 isRequired
               />
             </div>

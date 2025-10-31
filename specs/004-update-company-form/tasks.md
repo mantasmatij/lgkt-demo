@@ -52,7 +52,7 @@ Independent test: Toggle language and verify labels change but underlying value 
 Goal: Most inputs are single-line on desktop; vertical stacking on mobile; labels clear and readable.
 Independent test: Desktop shows single-line groupings for 1.1–1.3; mobile stacks vertically.
 
-- [ ] T024 [US3] Implement single-line groupings for 1.1–1.3 in web/src/components/forms/company/CompanyForm.tsx
+- [x] T024 [US3] Implement single-line groupings for 1.1–1.3 in web/src/components/forms/company/CompanyForm.tsx
 - [ ] T025 [US3] Align remaining sections per pseudo-layout with clear labels in web/src/components/forms/company/CompanyForm.tsx
 - [ ] T026 [US3] Ensure responsive stacking on mobile (Tailwind classes) in web/src/components/forms/company/CompanyForm.tsx
 
@@ -62,6 +62,10 @@ Independent test: Desktop shows single-line groupings for 1.1–1.3; mobile stac
 - [ ] T028 Add Cucumber scenarios for US1 happy path in web/tests/e2e/company-form.feature
 - [ ] T029 Add Playwright e2e for submission and layout checks in web/tests/e2e/company-form.spec.ts
 - [ ] T030 Update docs if paths differ (research.md/quickstart.md) in specs/004-update-company-form
+
+## Additional
+
+- [x] T035 [US1] Add overall gender distribution visualization below gender section in web/src/app/form/page.tsx
 
 ## Dependencies (Story Order)
 

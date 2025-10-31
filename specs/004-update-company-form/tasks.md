@@ -8,33 +8,33 @@ Plan: /specs/004-update-company-form/plan.md
 ## Phase 1 — Setup
 
 - [ ] T001 Confirm local dev services run with Docker compose (postgres, api, web) in docker/docker-compose.yml
-- [ ] T002 Add shared enum and labels for Company Type in web/src/lib/constants/companyType.ts
-- [ ] T003 Add i18n keys for Company Type options (LT/EN) in web/src/i18n/company.json
-- [ ] T004 Ensure Zod is available in web (package.json already includes zod)
-- [ ] T005 Wire root script to run e2e UI tests (already present: test:e2e), verify availability in package.json
+- [x] T002 Add shared enum and labels for Company Type in web/src/lib/constants/companyType.ts
+- [x] T003 Add i18n keys for Company Type options (LT/EN) in web/src/i18n/company.json
+- [x] T004 Ensure Zod is available in web (package.json already includes zod)
+- [x] T005 Wire root script to run e2e UI tests (already present: test:e2e), verify availability in package.json
 
 ## Phase 2 — Foundational
 
-- [ ] T006 Create/extend form validation schema (Zod) for company form in web/src/lib/validation/companyForm.ts
-- [ ] T007 Implement stable payload mapping (enum → value; removed fields as null/empty) in web/src/lib/mappers/companyFormMapper.ts
-- [ ] T008 Introduce shared date constraint helper (min 1990-01-01) in web/src/lib/validation/date.ts
-- [ ] T009 Add gender-balance triplet validator (women + men = total) in web/src/lib/validation/gender.ts
+- [x] T006 Create/extend form validation schema (Zod) for company form in web/src/lib/validation/companyForm.ts
+- [x] T007 Implement stable payload mapping (enum → value; removed fields as null/empty) in web/src/lib/mappers/companyFormMapper.ts
+- [x] T008 Introduce shared date constraint helper (min 1990-01-01) in web/src/lib/validation/date.ts
+- [x] T009 Add gender-balance triplet validator (women + men = total) in web/src/lib/validation/gender.ts
 
 ## Phase 3 — User Story 1 (P1): Submit updated company form
 
 Goal: User can complete the updated company form, including Company Type and Section 12 (required), with date constraints, and submit successfully.
 Independent test: Fill all fields, ensure validation blocks <1990 dates, submit and verify payload includes Company Type and removed fields keys as null/empty.
 
-- [ ] T010 [US1] Remove Country field from UI components in web/src/components/forms/company/CompanyForm.tsx
-- [ ] T011 [US1] Remove Contact & Other section from UI in web/src/components/forms/company/CompanyForm.tsx
-- [ ] T012 [US1] Add Company Type select bound to schema in web/src/components/forms/company/CompanyForm.tsx
-- [ ] T013 [US1] Add Section 12 reasons text (required) in web/src/components/forms/company/CompanyForm.tsx
-- [ ] T014 [US1] Apply min date (>=1990) to all date inputs (report period; governance dates) in web/src/components/forms/company/CompanyForm.tsx
-- [ ] T015 [US1] Validate From <= To for report period in web/src/components/forms/company/CompanyForm.tsx
-- [ ] T016 [US1] Apply gender-balance totals validation (8.1–8.3) in web/src/components/forms/company/CompanyForm.tsx
-- [ ] T017 [US1] Ensure requirements radio + link + optional files continue to work in web/src/components/forms/company/CompanyForm.tsx
-- [ ] T018 [US1] Ensure confirmation checkbox is required in web/src/components/forms/company/CompanyForm.tsx
-- [ ] T019 [US1] Map payload per FR-004/FR-016/FR-017 in web/src/app/api/submitCompanyForm/route.ts
+- [x] T010 [US1] Remove Country field from UI components in web/src/components/forms/company/CompanyForm.tsx
+- [x] T011 [US1] Remove Contact & Other section from UI in web/src/components/forms/company/CompanyForm.tsx
+- [x] T012 [US1] Add Company Type select bound to schema in web/src/components/forms/company/CompanyForm.tsx
+- [x] T013 [US1] Add Section 12 reasons text (required) in web/src/components/forms/company/CompanyForm.tsx
+- [x] T014 [US1] Apply min date (>=1990) to all date inputs (report period; governance dates) in web/src/components/forms/company/CompanyForm.tsx
+- [x] T015 [US1] Validate From <= To for report period in web/src/components/forms/company/CompanyForm.tsx
+- [x] T016 [US1] Apply gender-balance totals validation (8.1–8.3) in web/src/components/forms/company/CompanyForm.tsx
+- [x] T017 [US1] Ensure requirements radio + link + optional files continue to work in web/src/components/forms/company/CompanyForm.tsx
+- [x] T018 [US1] Ensure confirmation checkbox is required in web/src/components/forms/company/CompanyForm.tsx
+- [x] T019 [US1] Map payload per FR-004/FR-016/FR-017 in web/src/app/api/submitCompanyForm/route.ts
 - [ ] T020 [US1] Manual QA script: follow quickstart.md and verify payload shape via network devtools
  - [ ] T034 [US1] Ensure example link (section 11) remains visible and clickable in web/src/components/forms/company/CompanyForm.tsx
 

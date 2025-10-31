@@ -20,6 +20,7 @@ export const lt = {
   section_measures: 'Priemonės',
     requirements_applied: 'Reikalavimai taikomi',
     reasons_optional: 'Nepakankamos atstovybės priežastys (pasirinktinai)',
+    reasons_required: 'Nepakankamos atstovybės priežastys',
     consent_label: 'Sutinku su mano duomenų tvarkymu.',
     submitting: 'Pildoma forma...',
     consent_text: 'Sutinku, kad mano duomenys būtų tvarkomi, kaip aprašyta.',

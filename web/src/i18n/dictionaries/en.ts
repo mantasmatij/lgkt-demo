@@ -20,6 +20,7 @@ export const en = {
     section_measures: 'Measures',
     requirements_applied: 'Requirements applied',
     reasons_optional: 'Reasons for underrepresentation (optional)',
+    reasons_required: 'Reasons for underrepresentation',
     consent_label: 'I agree to the processing of my data.',
     submitting: 'Submitting form...',
     consent_text: 'I consent to data processing as described.',

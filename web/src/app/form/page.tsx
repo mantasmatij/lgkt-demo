@@ -1,10 +1,12 @@
 "use client";
 import * as React from 'react';
 import { useRouter } from 'next/navigation';
-import { Card } from '@heroui/react';
-import { OrgansSection, GenderBalanceSection, MeasuresSection, AttachmentsSection, ErrorSummary, InputField, TextareaField, CheckboxField, pillButtonClass } from 'ui';
-import { submissionSchema, type SubmissionInput } from 'validation';
+import { Card, SelectItem } from '@heroui/react';
+import { OrgansSection, GenderBalanceSection, MeasuresSection, AttachmentsSection, ErrorSummary, InputField, TextareaField, CheckboxField, SelectField, pillButtonClass } from 'ui';
 import { useI18n } from '../providers/i18n-provider';
+import { companyFormSchema, type CompanyFormInput } from '../../lib/validation/companyForm';
+import { COMPANY_TYPE_VALUES, COMPANY_TYPE_LABEL_KEYS, COMPANY_TYPE_FIELD_LABEL_KEY } from '../../lib/constants/companyType';
+import { MIN_DATE_STR } from '../../lib/validation/date';
 
 // Input styling is handled by shared UI components (InputField/TextareaField)
 
@@ -15,21 +17,25 @@ export default function PublicFormPage() {
   const tf = <K extends keyof FieldsDict>(k: K) => t('fields')(k as K);
   const tc = t('common');
   const tform = t('form');
-  const [form, setForm] = React.useState<SubmissionInput>({
+  const [form, setForm] = React.useState<CompanyFormInput>({
+    // Company
     name: '',
     code: '',
-    country: 'LT',
+    companyType: 'LISTED',
     legalForm: '',
     address: '',
     registry: '',
     eDeliveryAddress: '',
+
+    // Reporting period
     reportingFrom: '',
     reportingTo: '',
-    contactName: '',
-    contactEmail: '',
-    contactPhone: '',
+
+    // Requirements & link
     requirementsApplied: false,
     requirementsLink: undefined,
+
+    // Organs & gender & measures & attachments
     organs: [],
     genderBalance: [
       { role: 'CEO', women: 0, men: 0, total: 0 },
@@ -38,9 +44,13 @@ export default function PublicFormPage() {
     ],
     measures: [],
     attachments: [],
+
+    // Section 12
     reasonsForUnderrepresentation: '',
+
+    // Consent & submitter
     consent: false,
-  consentText: tform('consent_text') as unknown as string,
+    consentText: tform('consent_text') as unknown as string,
     submitter: { name: '', title: '', phone: '', email: '' },
     captchaToken: 'dev',
   });
@@ -48,15 +58,15 @@ export default function PublicFormPage() {
   const [submitting, setSubmitting] = React.useState(false);
   const [result, setResult] = React.useState<string | null>(null);
 
-  function update<K extends keyof SubmissionInput>(key: K, value: SubmissionInput[K]) {
-    setForm((prev) => ({ ...prev, [key]: value }));
+  function update<K extends keyof CompanyFormInput>(key: K, value: CompanyFormInput[K]) {
+    setForm((prev: CompanyFormInput) => ({ ...prev, [key]: value }));
   }
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     setResult(null);
     setErrors({});
-    const parsed = submissionSchema.safeParse(form);
+    const parsed = companyFormSchema.safeParse(form);
     if (!parsed.success) {
       const f = parsed.error.flatten().fieldErrors as Record<string, string[]>;
       setErrors(f);
@@ -71,7 +81,7 @@ export default function PublicFormPage() {
     }
     setSubmitting(true);
     try {
-      const res = await fetch('/api/submissions', {
+      const res = await fetch('/api/submitCompanyForm', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(parsed.data),
@@ -122,16 +132,23 @@ export default function PublicFormPage() {
                 errorMessage={errors.code?.[0]}
                 isRequired
               />
-              <InputField
-                id="country"
-                name="country"
-                label={tf('country_iso2')}
-                value={form.country}
-                onChange={(e) => update('country', e.target.value)}
-                isInvalid={!!errors.country}
-                errorMessage={errors.country?.[0]}
+              <SelectField
+                id="companyType"
+                name="companyType"
+                label={tf(COMPANY_TYPE_FIELD_LABEL_KEY as keyof FieldsDict)}
+                selectedKeys={[form.companyType]}
+                onSelectionChange={(keys) => {
+                  const k = Array.from(keys as Set<string>)[0] as CompanyFormInput['companyType'];
+                  if (k) update('companyType', k);
+                }}
                 isRequired
-              />
+              >
+                {COMPANY_TYPE_VALUES.map((val: (typeof COMPANY_TYPE_VALUES)[number]) => (
+                  <SelectItem key={val}>
+                    {tf(COMPANY_TYPE_LABEL_KEYS[val] as keyof FieldsDict)}
+                  </SelectItem>
+                ))}
+              </SelectField>
               <InputField
                 id="legalForm"
                 name="legalForm"
@@ -179,6 +196,7 @@ export default function PublicFormPage() {
                 label={tf('reporting_from')}
                 value={form.reportingFrom}
                 onChange={(e) => update('reportingFrom', e.target.value)}
+                min={MIN_DATE_STR}
                 isRequired
               />
               <InputField
@@ -188,6 +206,7 @@ export default function PublicFormPage() {
                 label={tf('reporting_to')}
                 value={form.reportingTo}
                 onChange={(e) => update('reportingTo', e.target.value)}
+                min={MIN_DATE_STR}
                 isRequired
               />
             </div>
@@ -253,49 +272,6 @@ export default function PublicFormPage() {
 
         <Card className="p-6">
           <div className="flex flex-col gap-3">
-            <h2 className="text-xl font-semibold mb-2">{tform('section_contact')}</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <InputField 
-              id="contactName"
-              name="contactName"
-              label={tf('contact_name')} 
-              value={form.contactName} 
-              onChange={(e) => update('contactName', e.target.value)}
-              isRequired
-            />
-            <InputField 
-              id="contactEmail"
-              name="contactEmail"
-              type="email" 
-              label={tf('contact_email')} 
-              value={form.contactEmail} 
-              onChange={(e) => update('contactEmail', e.target.value)}
-              isRequired
-            />
-            <InputField 
-              id="contactPhone"
-              name="contactPhone"
-              label={tf('contact_phone')} 
-              value={form.contactPhone} 
-              onChange={(e) => update('contactPhone', e.target.value)}
-              isRequired
-            />
-          </div>
-          <TextareaField 
-            id="reasonsForUnderrepresentation"
-            name="reasonsForUnderrepresentation"
-            label={tform('reasons_optional')} 
-            value={form.reasonsForUnderrepresentation ?? ''} 
-            onChange={(e) => update('reasonsForUnderrepresentation', e.target.value || undefined)}
-            disableAutosize
-            minRows={4}
-            classNames={{ inputWrapper: "min-h-32 max-h-32", input: "resize-none" }}
-          />
-          </div>
-        </Card>
-
-        <Card className="p-6">
-          <div className="flex flex-col gap-3">
             <h2 className="text-xl font-semibold mb-2">{tform('section_submitter')}</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <InputField 
@@ -331,6 +307,17 @@ export default function PublicFormPage() {
               isRequired
             />
           </div>
+          <TextareaField 
+            id="reasonsForUnderrepresentation"
+            name="reasonsForUnderrepresentation"
+            label={tform('reasons_required')} 
+            value={form.reasonsForUnderrepresentation ?? ''} 
+            onChange={(e) => update('reasonsForUnderrepresentation', e.target.value || '')}
+            disableAutosize
+            minRows={4}
+            classNames={{ inputWrapper: "min-h-32 max-h-32", input: "resize-none" }}
+            isRequired
+          />
           <div className="flex items-center justify-between">
             <span className="text-sm">{tform('consent_label')}</span>
             <CheckboxField

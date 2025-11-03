@@ -8,20 +8,36 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
 :root {
-    --bs-blue: #0d6efd;
+    /* Brand palette */
+    --brand-ink: #292929;
+    --brand-gray: #606060;
+    --brand-paper: #EDEDE6;
+    --brand-bronze: #B99269;
+    --brand-gold: #F1BA3C;
+    --brand-slate: #4D5C71;
+    --brand-mist: #88A0A8;
+    --brand-wine: #773849;
+    --brand-peach: #FBBEAC;
+    --brand-sky: #6599C1;
+    --brand-sky-light: #AFC8DA;
+    --brand-green: #00A87D;
+    --brand-orange: #F1754B;
+
+    /* Bootstrap-compatible fallbacks mapped to brand */
+    --bs-blue: var(--brand-sky);
     --bs-indigo: #6610f2;
     --bs-purple: #6f42c1;
     --bs-pink: #d63384;
-    --bs-red: #dc3545;
-    --bs-orange: #fd7e14;
-    --bs-yellow: #ffc107;
-    --bs-green: #198754;
+    --bs-red: var(--brand-orange);
+    --bs-orange: var(--brand-orange);
+    --bs-yellow: var(--brand-gold);
+    --bs-green: var(--brand-green);
     --bs-teal: #20c997;
-    --bs-cyan: #0dcaf0;
+    --bs-cyan: var(--brand-sky);
     --bs-black: #000;
     --bs-white: #fff;
-    --bs-gray: #6c757d;
-    --bs-gray-dark: #343a40;
+    --bs-gray: var(--brand-gray);
+    --bs-gray-dark: var(--brand-ink);
     --bs-gray-100: #f8f9fa;
     --bs-gray-200: #e9ecef;
     --bs-gray-300: #dee2e6;
@@ -31,14 +47,14 @@
     --bs-gray-700: #495057;
     --bs-gray-800: #343a40;
     --bs-gray-900: #212529;
-    --bs-primary: #0d6efd;
-    --bs-secondary: #6c757d;
-    --bs-success: #198754;
-    --bs-info: #0dcaf0;
-    --bs-warning: #ffc107;
-    --bs-danger: #dc3545;
-    --bs-light: #f8f9fa;
-    --bs-dark: #212529;
+    --bs-primary: var(--brand-ink);
+    --bs-secondary: var(--brand-gray);
+    --bs-success: var(--brand-green);
+    --bs-info: var(--brand-sky);
+    --bs-warning: var(--brand-gold);
+    --bs-danger: var(--brand-orange);
+    --bs-light: var(--brand-paper);
+    --bs-dark: var(--brand-ink);
     --bs-primary-rgb: 13,110,253;
     --bs-secondary-rgb: 108,117,125;
     --bs-success-rgb: 25,135,84;
@@ -70,8 +86,8 @@
     --bs-border-radius-xl: 1rem;
     --bs-border-radius-2xl: 2rem;
     --bs-border-radius-pill: 50rem;
-    --bs-link-color: #0d6efd;
-    --bs-link-hover-color: #0a58ca;
-    --bs-code-color: #d63384;
+    --bs-link-color: var(--brand-slate);
+    --bs-link-hover-color: var(--brand-gold);
+    --bs-code-color: var(--brand-wine);
     --bs-highlight-bg: #fff3cd
 }

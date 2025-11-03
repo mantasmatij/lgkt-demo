@@ -9,9 +9,10 @@ export type TextareaFieldProps = Omit<TextAreaProps, 'label'> & {
   name: string;
   label: string;
   required?: boolean;
+  labelClassName?: string;
 };
 
-export function TextareaField({ id, name, label, required, isRequired, classNames: userClassNames, ...rest }: TextareaFieldProps) {
+export function TextareaField({ id, name, label, labelClassName, required, isRequired, classNames: userClassNames, ...rest}: TextareaFieldProps) {
   const req = required ?? isRequired ?? false;
   const mergedClassNames = {
     inputWrapper: cn(textareaClassNames.inputWrapper, userClassNames?.inputWrapper),
@@ -21,7 +22,7 @@ export function TextareaField({ id, name, label, required, isRequired, className
   } as TextAreaProps['classNames'];
   return (
     <div className="flex flex-col">
-      <label htmlFor={id} className="text-black font-medium mb-2">
+      <label htmlFor={id} className={cn("text-black font-medium mb-2", labelClassName)}>
         {label}{req ? ' *' : ''}
       </label>
       <Textarea

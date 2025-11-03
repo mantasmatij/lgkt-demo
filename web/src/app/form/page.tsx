@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { useRouter } from 'next/navigation';
 import { Card, SelectItem } from '@heroui/react';
-import { OrgansSection, GenderBalanceSection, MeasuresSection, AttachmentsSection, ErrorSummary, InputField, TextareaField, CheckboxField, SelectField, pillButtonClass } from 'ui';
+import { OrgansSection, GenderBalanceSection, MeasuresSection, AttachmentsSection, ErrorSummary, InputField, TextareaField, CheckboxField, RadioField, SelectField, pillButtonClass } from 'ui';
 import { useI18n } from '../providers/i18n-provider';
 import { companyFormSchema, type CompanyFormInput } from '../../lib/validation/companyForm';
 import { COMPANY_TYPE_VALUES, COMPANY_TYPE_LABEL_KEYS, COMPANY_TYPE_FIELD_LABEL_KEY } from '../../lib/constants/companyType';
@@ -121,14 +121,13 @@ export default function PublicFormPage() {
         <form onSubmit={onSubmit} noValidate>
           <Card className="p-6">
             <div className="flex flex-col gap-3">
-              <h2 className="text-xl font-semibold mb-2">{tform('section_company')}</h2>
-
               {/* Company fields vertically stacked (single column) */}
               <div className="flex flex-col gap-3">
                 <InputField
                   id="name"
                   name="name"
                   label={`1.1 ${tf('company_name')}`}
+                  labelClassName="font-bold"
                   value={form.name}
                   onChange={(e) => update('name', e.target.value)}
                   isInvalid={!!errors.name}
@@ -139,6 +138,7 @@ export default function PublicFormPage() {
                   id="code"
                   name="code"
                   label={`1.2 ${tf('company_code')}`}
+                  labelClassName="font-bold"
                   value={form.code}
                   onChange={(e) => update('code', e.target.value)}
                   isInvalid={!!errors.code}
@@ -149,6 +149,7 @@ export default function PublicFormPage() {
                   id="companyType"
                   name="companyType"
                   label={`1.3 ${tf(COMPANY_TYPE_FIELD_LABEL_KEY as keyof FieldsDict)}`}
+                  labelClassName="font-bold"
                   selectedKeys={[form.companyType]}
                   onSelectionChange={(keys) => {
                     const k = Array.from(keys as Set<string>)[0] as CompanyFormInput['companyType'];
@@ -166,6 +167,7 @@ export default function PublicFormPage() {
                   id="legalForm"
                   name="legalForm"
                   label={`2. ${tf('legal_form')}`}
+                  labelClassName="font-bold"
                   value={form.legalForm}
                   onChange={(e) => update('legalForm', e.target.value)}
                   isRequired
@@ -174,6 +176,7 @@ export default function PublicFormPage() {
                   id="address"
                   name="address"
                   label={`3. ${tf('address')}`}
+                  labelClassName="font-bold"
                   value={form.address}
                   onChange={(e) => update('address', e.target.value)}
                   isRequired
@@ -182,6 +185,7 @@ export default function PublicFormPage() {
                   id="registry"
                   name="registry"
                   label={`4. ${tf('registry')}`}
+                  labelClassName="font-bold"
                   value={form.registry}
                   onChange={(e) => update('registry', e.target.value)}
                   isRequired
@@ -190,6 +194,7 @@ export default function PublicFormPage() {
                   id="eDeliveryAddress"
                   name="eDeliveryAddress"
                   label={`5. ${tf('e_delivery_address')}`}
+                  labelClassName="font-bold"
                   value={form.eDeliveryAddress}
                   onChange={(e) => update('eDeliveryAddress', e.target.value)}
                   isRequired
@@ -197,7 +202,7 @@ export default function PublicFormPage() {
               </div>
 
               {/* Reporting period */}
-              <div className="font-semibold">{`6. ${tform('reporting_period_heading') as unknown as string}`}</div>
+              <div className="font-bold">{`6. ${tform('reporting_period_heading') as unknown as string}`}</div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <InputField
                   id="reportingFrom"
@@ -262,8 +267,8 @@ export default function PublicFormPage() {
           <Card className="p-4">
             <div className="flex flex-col gap-2">
               <div className="w-full h-3 bg-gray-200 rounded-full overflow-hidden relative">
-                <div className="h-full bg-pink-400 absolute left-0 top-0" style={{ width: `${genderTotals.wp}%` }} />
-                <div className="h-full bg-blue-400 absolute right-0 top-0" style={{ width: `${genderTotals.mp}%` }} />
+                <div className="h-full absolute left-0 top-0" style={{ width: `${genderTotals.wp}%`, backgroundColor: '#F1BA3C' }} />
+                <div className="h-full absolute right-0 top-0" style={{ width: `${genderTotals.mp}%`, backgroundColor: '#4D5C71' }} />
               </div>
               <p className="text-sm">
                 {tf('women')}: {genderTotals.women} ({genderTotals.wp}%) — {tf('men')}: {genderTotals.men} ({genderTotals.mp}%) — {tf('total')}: {genderTotals.total}
@@ -274,26 +279,28 @@ export default function PublicFormPage() {
           {/* 9. Requirements applied: switch to radio buttons */}
           <Card className="p-6">
             <div className="flex flex-col gap-3">
-              <div className="font-semibold">{`9. ${tform('requirements_applied_question')}`}</div>
+              <div className="font-bold">{`9. ${tform('requirements_applied_question')}`}</div>
               <div className="flex items-center gap-6">
-                <label className="inline-flex items-center gap-2 cursor-pointer">
-                  <input
-                    type="radio"
+                <div className="inline-flex items-center gap-2">
+                  <RadioField
+                    id="requirements-applied-yes"
                     name="requirementsApplied"
                     checked={!!form.requirementsApplied}
                     onChange={() => update('requirementsApplied', true)}
+                    ariaLabel={tform('requirements_yes')}
                   />
                   <span>{tform('requirements_yes')}</span>
-                </label>
-                <label className="inline-flex items-center gap-2 cursor-pointer">
-                  <input
-                    type="radio"
+                </div>
+                <div className="inline-flex items-center gap-2">
+                  <RadioField
+                    id="requirements-applied-no"
                     name="requirementsApplied"
                     checked={!form.requirementsApplied}
                     onChange={() => update('requirementsApplied', false)}
+                    ariaLabel={tform('requirements_no')}
                   />
                   <span>{tform('requirements_no')}</span>
-                </label>
+                </div>
               </div>
             </div>
           </Card>
@@ -319,7 +326,7 @@ export default function PublicFormPage() {
             value={form.measures || []}
             onChange={(rows) => update('measures', rows)}
             labels={{
-              title: `11 ${tform('section_measures') as unknown as string}`,
+              title: `11. ${tform('section_measures') as unknown as string}`,
               no_measures: tf('no_measures') as unknown as string,
               name: tf('measure_name') as unknown as string,
               planned_result: tf('planned_result') as unknown as string,
@@ -332,7 +339,6 @@ export default function PublicFormPage() {
             }}
             topSlot={
               <div className="text-sm">
-                <span className="mr-2">{tform('measures_example_label')}</span>
                 <a
                   href={process.env.NEXT_PUBLIC_MEASURES_EXAMPLE_URL || '#'}
                   target="_blank"
@@ -351,7 +357,8 @@ export default function PublicFormPage() {
               <TextareaField
                 id="reasonsForUnderrepresentation"
                 name="reasonsForUnderrepresentation"
-                label={`12 ${tform('reasons_required')}`}
+                label={`12. ${tform('reasons_required')}`}
+                labelClassName='font-bold'
                 value={form.reasonsForUnderrepresentation ?? ''}
                 onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => update('reasonsForUnderrepresentation', e.target.value || '')}
                 minRows={10}
@@ -365,7 +372,7 @@ export default function PublicFormPage() {
           {/* Consent moved below Reasons */}
           <Card className="p-6">
             <div className="flex items-center justify-between">
-              <span className="text-sm">{tform('consent_label')}</span>
+              <span className="text-md">{tform('consent_label')}</span>
               <CheckboxField
                 id="consent"
                 name="consent"

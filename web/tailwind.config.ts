@@ -23,17 +23,33 @@ export default {
         '10': '80px', // 5rem
         '12': '96px', // 6rem
       },
-      // Map fontAndColour.css color variables (T021)
-      // These are available at runtime via CSS variables
+      // Brand color palette (replaces Bootstrap defaults)
       colors: {
-        primary: '#0d6efd',
-        secondary: '#6c757d',
-        success: '#198754',
-        danger: '#dc3545',
-        warning: '#ffc107',
-        info: '#0dcaf0',
-        light: '#f8f9fa',
-        dark: '#212529',
+        // Core tokens
+        primary: '#292929',
+        secondary: '#606060',
+        success: '#00A87D',
+        danger: '#F1754B',
+        warning: '#F1BA3C',
+        info: '#6599C1',
+        light: '#EDEDE6',
+        dark: '#292929',
+        // Extended brand set for utility usage
+        brand: {
+          ink: '#292929',
+          gray: '#606060',
+          paper: '#EDEDE6',
+          bronze: '#B99269',
+          gold: '#F1BA3C',
+          slate: '#4D5C71',
+          mist: '#88A0A8',
+          wine: '#773849',
+          peach: '#FBBEAC',
+          sky: '#6599C1',
+          skyLight: '#AFC8DA',
+          green: '#00A87D',
+          orange: '#F1754B',
+        },
       },
       // Map fontAndColour.css font families (T022)
       fontFamily: {
@@ -50,22 +66,22 @@ export default {
         light: {
           colors: {
             primary: {
-              DEFAULT: '#0d6efd',
+              DEFAULT: '#292929',
               foreground: '#ffffff',
             },
             success: {
-              DEFAULT: '#198754',
+              DEFAULT: '#00A87D',
               foreground: '#ffffff',
             },
             danger: {
-              DEFAULT: '#dc3545',
+              DEFAULT: '#F1754B',
               foreground: '#ffffff',
             },
             warning: {
-              DEFAULT: '#ffc107',
+              DEFAULT: '#F1BA3C',
               foreground: '#212529',
             },
-            focus: '#0d6efd',
+            focus: '#4D5C71',
           },
         },
       },

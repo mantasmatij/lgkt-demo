@@ -58,7 +58,7 @@ export function OrgansSection({ value, onChange, labels }: { value: OrganRow[]; 
   return (
     <Card className={cn("p-6")}> 
       <div className="flex flex-col gap-3">
-  <h3 className="text-lg font-medium">{L.title}</h3>
+	  <h3 className="text-lg font-bold">{L.title}</h3>
 
         {value.map((row, idx) => (
           <Card key={idx} className="p-4">

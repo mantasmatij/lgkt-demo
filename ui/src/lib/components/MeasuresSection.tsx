@@ -51,12 +51,16 @@ export function MeasuresSection({ value, onChange, labels, topSlot }: { value: M
   return (
     <Card className={cn("p-6")}>
       <div className="flex flex-col gap-3">
-        <div className="flex items-center justify-between mb-2">
-          <h3 className="text-lg font-medium">{L.title}</h3>
-          <button type="button" aria-label={L.add} className={iconButtonClass} onClick={addRow}>+</button>
+        <div className="mb-2">
+          <h3 className="text-lg font-bold">{L.title}</h3>
         </div>
         {topSlot}
         {value.length === 0 && <p className="text-sm text-default-500">{L.no_measures}</p>}
+        {value.length === 0 && (
+          <div className="flex justify-start">
+            <button type="button" aria-label={L.add} className={iconButtonClass} onClick={addRow}>+</button>
+          </div>
+        )}
         {value.map((row, idx) => (
           <Card key={idx} className={cn("p-4")}> 
             <div className="flex flex-col gap-3">
@@ -116,10 +120,17 @@ export function MeasuresSection({ value, onChange, labels, topSlot }: { value: M
                 />
               </div>
 
-              <div className="flex justify-end">
-                <button type="button" aria-label={L.remove} className={iconButtonClass} onClick={() => removeRow(idx)}>
-                  −
-                </button>
+              <div className="flex justify-between items-center">
+                {idx === value.length - 1 ? (
+                  <button type="button" aria-label={L.add} className={iconButtonClass} onClick={addRow}>+</button>
+                ) : (
+                  <div />
+                )}
+                {value.length > 1 && (
+                  <button type="button" aria-label={L.remove} className={iconButtonClass} onClick={() => removeRow(idx)}>
+                    −
+                  </button>
+                )}
               </div>
             </div>
           </Card>

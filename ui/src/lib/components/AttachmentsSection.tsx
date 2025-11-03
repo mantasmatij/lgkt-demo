@@ -150,7 +150,7 @@ export function AttachmentsSection({ value, onChange, labels }: { value: Attachm
   return (
     <Card className={cn("p-6")}> 
       <div className="flex flex-col gap-3">
-        <h3 className="text-lg font-medium mb-2">{L.title}</h3>
+        <h3 className="text-lg font-bold mb-2">{L.title}</h3>
 
         {/* Link input (moved above file input) */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-2 items-end">

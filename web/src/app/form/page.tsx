@@ -341,8 +341,8 @@ export default function PublicFormPage() {
                 label={tform('reasons_required')}
                 value={form.reasonsForUnderrepresentation ?? ''}
                 onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => update('reasonsForUnderrepresentation', e.target.value || '')}
-                disableAutosize
                 minRows={10}
+                maxRows={10}
                 isRequired
                 classNames={{ inputWrapper: "rounded-2xl border-2 border-black px-4 py-3", input: 'resize-none overflow-y-auto' }}
               />

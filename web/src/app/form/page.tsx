@@ -7,6 +7,7 @@ import { useI18n } from '../providers/i18n-provider';
 import { companyFormSchema, type CompanyFormInput } from '../../lib/validation/companyForm';
 import { COMPANY_TYPE_VALUES, COMPANY_TYPE_LABEL_KEYS, COMPANY_TYPE_FIELD_LABEL_KEY } from '../../lib/constants/companyType';
 import { MIN_DATE_STR } from '../../lib/validation/date';
+import { twMerge } from 'tailwind-merge';
 
 // Input styling is handled by shared UI components (InputField/TextareaField)
 
@@ -333,7 +334,7 @@ export default function PublicFormPage() {
           />
 
           {/* Section 12: Reasons (placed above Submitter section) */}
-          <Card className="p-6">
+          <Card className={twMerge("p-6")}>
             <div className="flex flex-col gap-3">
               <TextareaField
                 id="reasonsForUnderrepresentation"
@@ -344,6 +345,7 @@ export default function PublicFormPage() {
                 disableAutosize
                 minRows={8}
                 isRequired
+                classNames={{ inputWrapper: "min-h-28 rounded-2xl border-2 border-black px-4 py-3" }}
               />
             </div>
           </Card>

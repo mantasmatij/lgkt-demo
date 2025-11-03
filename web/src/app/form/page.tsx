@@ -85,13 +85,12 @@ export default function PublicFormPage() {
       const res = await fetch('/api/submitCompanyForm', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(parsed.data),
+        body: JSON.stringify(form),
       });
       if (!res.ok) {
         const err = await res.json().catch(() => ({}));
         setResult(err?.message || tc('submission_failed'));
       } else {
-        // Redirect to success page on successful submission
         router.push('/form/success');
       }
     } finally {
@@ -343,9 +342,9 @@ export default function PublicFormPage() {
                 value={form.reasonsForUnderrepresentation ?? ''}
                 onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => update('reasonsForUnderrepresentation', e.target.value || '')}
                 disableAutosize
-                minRows={8}
+                minRows={10}
                 isRequired
-                classNames={{ inputWrapper: "min-h-28 rounded-2xl border-2 border-black px-4 py-3" }}
+                classNames={{ inputWrapper: "rounded-2xl border-2 border-black px-4 py-3", input: 'resize-none overflow-y-auto' }}
               />
             </div>
           </Card>

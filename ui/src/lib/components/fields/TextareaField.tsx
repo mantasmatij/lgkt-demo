@@ -1,7 +1,7 @@
 "use client";
 import * as React from 'react';
 import { Textarea, type TextAreaProps } from '@heroui/react';
-import { inputClassNames } from './fieldStyles';
+import { textareaClassNames } from './fieldStyles';
 
 export type TextareaFieldProps = Omit<TextAreaProps, 'label'> & {
   id: string;
@@ -10,7 +10,7 @@ export type TextareaFieldProps = Omit<TextAreaProps, 'label'> & {
   required?: boolean;
 };
 
-export function TextareaField({ id, name, label, required, isRequired, ...rest }: TextareaFieldProps) {
+export function TextareaField({ id, name, label, required, isRequired, classNames, ...rest }: TextareaFieldProps) {
   const req = required ?? isRequired ?? false;
   return (
     <div className="flex flex-col">
@@ -24,7 +24,7 @@ export function TextareaField({ id, name, label, required, isRequired, ...rest }
         radius="full"
         size="md"
         aria-required={req ? 'true' : 'false'}
-        classNames={inputClassNames}
+        classNames={classNames ?? textareaClassNames}
         {...rest}
       />
     </div>

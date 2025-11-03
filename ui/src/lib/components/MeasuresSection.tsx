@@ -68,8 +68,8 @@ export function MeasuresSection({ value, onChange, labels, topSlot }: { value: M
                 value={row.name}
                 onChange={(e: unknown) => update(idx, { name: (e as React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>).target.value })}
                 disableAutosize
-                minRows={3}
-                classNames={{ inputWrapper: "min-h-28 rounded-2xl border-2 border-black px-4 py-3" }}
+                minRows={10}
+                classNames={{ inputWrapper: "rounded-2xl border-2 border-black px-4 py-3", input: "resize-none overflow-y-auto" }}
               />
 
               {/* Planned result block */}
@@ -80,8 +80,8 @@ export function MeasuresSection({ value, onChange, labels, topSlot }: { value: M
                 value={row.plannedResult ?? ''}
                 onChange={(e: unknown) => update(idx, { plannedResult: (e as React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>).target.value || undefined })}
                 disableAutosize
-                minRows={3}
-                classNames={{ inputWrapper: "min-h-28 rounded-2xl border-2 border-black px-4 py-3" }}
+                minRows={10}
+                classNames={{ inputWrapper: "rounded-2xl border-2 border-black px-4 py-3", input: "resize-none overflow-y-auto" }}
               />
 
               {/* Indicator rows */}

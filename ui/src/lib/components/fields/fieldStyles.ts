@@ -9,3 +9,12 @@ export const inputClassNames = {
   // Ensure the slot wrapper doesn't force extra height
   mainWrapper: "h-auto",
 };
+
+// Textarea-specific class names: no fixed height, bordered rounded container
+export const textareaClassNames = {
+  inputWrapper:
+    "rounded-2xl border-2 border-black data-[hover=true]:border-black/80 px-4 py-3 shadow-sm",
+  input: "text-base leading-6 py-0 px-2 placeholder:text-gray-400 appearance-none resize-none",
+  label: "!text-black font-medium",
+  mainWrapper: "h-auto",
+};

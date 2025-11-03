@@ -9,9 +9,10 @@ export type SelectFieldProps = Omit<SelectProps, 'label'> & {
   name: string;
   label: string;
   required?: boolean;
+  labelClassName?: string;
 };
 
-export function SelectField({ id, name, label, required, isRequired, children, classNames: userClassNames, ...rest }: SelectFieldProps) {
+export function SelectField({ id, name, label, required, isRequired, children, classNames: userClassNames, labelClassName, ...rest }: SelectFieldProps) {
   const req = required ?? isRequired ?? false;
 
   const mergedClassNames = {
@@ -30,7 +31,7 @@ export function SelectField({ id, name, label, required, isRequired, children, c
   } as SelectProps['classNames'];
   return (
     <div className="flex flex-col">
-      <label htmlFor={id} className="text-black font-medium mb-2">
+      <label htmlFor={id} className={"text-black mb-2 " + (labelClassName ?? "font-medium")}>
         {label}{req ? ' *' : ''}
       </label>
       <Select

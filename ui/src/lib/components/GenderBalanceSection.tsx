@@ -44,7 +44,7 @@ export function GenderBalanceSection({ value, onChange, labels, rowVisualization
   return (
     <Card className={cn("p-6")}>
       <div className="flex flex-col gap-3">
-        <h3 className="text-lg font-medium mb-2">{L.title}</h3>
+  <h3 className="text-lg font-medium mb-2">{L.title}</h3>
         <div className="flex flex-col gap-4">
           {roles.map((role) => {
             const row = value.find((v) => v.role === role) || { role, women: 0, men: 0, total: 0 };
@@ -54,12 +54,12 @@ export function GenderBalanceSection({ value, onChange, labels, rowVisualization
             
             return (
               <div key={role} className="flex flex-col gap-2 pb-4 border-b last:border-b-0 last:pb-0">
-                <div className="text-sm font-semibold">{roleLabel}</div>
+                <div className="text-sm font-normal">{roleLabel}</div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                  <InputField type="number" id={`${role}.women`} name={`${role}.women`} label={L.women} value={String(row.women)} onChange={(e) => update(role, { women: Number(e.target.value || 0) })} min={0} />
-                  <InputField type="number" id={`${role}.men`} name={`${role}.men`} label={L.men} value={String(row.men)} onChange={(e) => update(role, { men: Number(e.target.value || 0) })} min={0} />
-                  <InputField type="number" id={`${role}.total`} name={`${role}.total`} label={L.total} value={String(row.total)} readOnly />
+                  <InputField type="number" id={`${role}.women`} name={`${role}.women`} label={L.women} labelClassName="font-normal" value={String(row.women)} onChange={(e) => update(role, { women: Number(e.target.value || 0) })} min={0} />
+                  <InputField type="number" id={`${role}.men`} name={`${role}.men`} label={L.men} labelClassName="font-normal" value={String(row.men)} onChange={(e) => update(role, { men: Number(e.target.value || 0) })} min={0} />
+                  <InputField type="number" id={`${role}.total`} name={`${role}.total`} label={L.total} labelClassName="font-normal" value={String(row.total)} readOnly />
                 </div>
                 
                 {rowVisualization && row.total > 0 && (

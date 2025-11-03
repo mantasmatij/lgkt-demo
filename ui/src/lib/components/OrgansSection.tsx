@@ -58,7 +58,7 @@ export function OrgansSection({ value, onChange, labels }: { value: OrganRow[]; 
   return (
     <Card className={cn("p-6")}> 
       <div className="flex flex-col gap-3">
-        <h3 className="text-lg font-medium">{L.title}</h3>
+  <h3 className="text-lg font-medium">{L.title}</h3>
 
         {value.map((row, idx) => (
           <Card key={idx} className="p-4">
@@ -67,6 +67,7 @@ export function OrgansSection({ value, onChange, labels }: { value: OrganRow[]; 
                 id={`organ.${idx}.type`}
                 name={`organ.${idx}.type`}
                 label={L.organ_type}
+                labelClassName="font-normal"
                 selectedKeys={[row.organType]}
                 classNames={{
                   // Increase only horizontal padding to prevent text touching the border/chevron
@@ -88,6 +89,7 @@ export function OrgansSection({ value, onChange, labels }: { value: OrganRow[]; 
                   name={`organ.${idx}.lastElectionDate`}
                   type="date"
                   label={L.last_election_date}
+                  labelClassName="font-normal"
                   value={row.lastElectionDate ?? ''}
                   onChange={(e) => update(idx, { lastElectionDate: e.target.value || undefined })}
                 />
@@ -96,6 +98,7 @@ export function OrgansSection({ value, onChange, labels }: { value: OrganRow[]; 
                   name={`organ.${idx}.plannedElectionDate`}
                   type="date"
                   label={L.planned_election_date}
+                  labelClassName="font-normal"
                   value={row.plannedElectionDate ?? ''}
                   onChange={(e) => update(idx, { plannedElectionDate: e.target.value || undefined })}
                 />

@@ -128,7 +128,7 @@ export default function PublicFormPage() {
                 <InputField
                   id="name"
                   name="name"
-                  label={tf('company_name')}
+                  label={`1.1 ${tf('company_name')}`}
                   value={form.name}
                   onChange={(e) => update('name', e.target.value)}
                   isInvalid={!!errors.name}
@@ -138,7 +138,7 @@ export default function PublicFormPage() {
                 <InputField
                   id="code"
                   name="code"
-                  label={tf('company_code')}
+                  label={`1.2 ${tf('company_code')}`}
                   value={form.code}
                   onChange={(e) => update('code', e.target.value)}
                   isInvalid={!!errors.code}
@@ -148,7 +148,7 @@ export default function PublicFormPage() {
                 <SelectField
                   id="companyType"
                   name="companyType"
-                  label={tf(COMPANY_TYPE_FIELD_LABEL_KEY as keyof FieldsDict)}
+                  label={`1.3 ${tf(COMPANY_TYPE_FIELD_LABEL_KEY as keyof FieldsDict)}`}
                   selectedKeys={[form.companyType]}
                   onSelectionChange={(keys) => {
                     const k = Array.from(keys as Set<string>)[0] as CompanyFormInput['companyType'];
@@ -165,7 +165,7 @@ export default function PublicFormPage() {
                 <InputField
                   id="legalForm"
                   name="legalForm"
-                  label={tf('legal_form')}
+                  label={`2. ${tf('legal_form')}`}
                   value={form.legalForm}
                   onChange={(e) => update('legalForm', e.target.value)}
                   isRequired
@@ -173,7 +173,7 @@ export default function PublicFormPage() {
                 <InputField
                   id="address"
                   name="address"
-                  label={tf('address')}
+                  label={`3. ${tf('address')}`}
                   value={form.address}
                   onChange={(e) => update('address', e.target.value)}
                   isRequired
@@ -181,7 +181,7 @@ export default function PublicFormPage() {
                 <InputField
                   id="registry"
                   name="registry"
-                  label={tf('registry')}
+                  label={`4. ${tf('registry')}`}
                   value={form.registry}
                   onChange={(e) => update('registry', e.target.value)}
                   isRequired
@@ -189,7 +189,7 @@ export default function PublicFormPage() {
                 <InputField
                   id="eDeliveryAddress"
                   name="eDeliveryAddress"
-                  label={tf('e_delivery_address')}
+                  label={`5. ${tf('e_delivery_address')}`}
                   value={form.eDeliveryAddress}
                   onChange={(e) => update('eDeliveryAddress', e.target.value)}
                   isRequired
@@ -197,7 +197,7 @@ export default function PublicFormPage() {
               </div>
 
               {/* Reporting period */}
-              <div className="font-semibold">{tform('reporting_period_heading') as unknown as string}</div>
+              <div className="font-semibold">{`6. ${tform('reporting_period_heading') as unknown as string}`}</div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <InputField
                   id="reportingFrom"
@@ -230,7 +230,7 @@ export default function PublicFormPage() {
             value={form.organs || []}
             onChange={(rows) => update('organs', rows)}
             labels={{
-              title: tform('section_organs') as unknown as string,
+              title: `7. ${tform('section_organs') as unknown as string}`,
               organ_type: tf('organ_type') as unknown as string,
               last_election_date: tf('last_election_date') as unknown as string,
               planned_election_date: tf('planned_election_date') as unknown as string,
@@ -245,7 +245,7 @@ export default function PublicFormPage() {
             value={form.genderBalance}
             onChange={(rows) => update('genderBalance', rows)}
             labels={{
-              title: tform('section_gender') as unknown as string,
+              title: `8. ${tform('section_gender') as unknown as string}`,
               women: tf('women') as unknown as string,
               men: tf('men') as unknown as string,
               total: tf('total') as unknown as string,
@@ -271,19 +271,29 @@ export default function PublicFormPage() {
             </div>
           </Card>
 
-          {/* Requirements applied moved here with bold label */}
+          {/* 9. Requirements applied: switch to radio buttons */}
           <Card className="p-6">
-            <div className="flex flex-col gap-2">
-              <div className="font-semibold">{tform('requirements_applied_question')}</div>
-              <div className="flex items-center justify-between">
-                <span className="text-sm opacity-0 select-none">spacer</span>
-                <CheckboxField
-                  id="requirementsApplied"
-                  name="requirementsApplied"
-                  checked={form.requirementsApplied}
-                  onChange={(checked) => update('requirementsApplied', checked)}
-                  ariaLabel={tform('requirements_applied_question')}
-                />
+            <div className="flex flex-col gap-3">
+              <div className="font-semibold">{`9. ${tform('requirements_applied_question')}`}</div>
+              <div className="flex items-center gap-6">
+                <label className="inline-flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="radio"
+                    name="requirementsApplied"
+                    checked={!!form.requirementsApplied}
+                    onChange={() => update('requirementsApplied', true)}
+                  />
+                  <span>{tform('requirements_yes')}</span>
+                </label>
+                <label className="inline-flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="radio"
+                    name="requirementsApplied"
+                    checked={!form.requirementsApplied}
+                    onChange={() => update('requirementsApplied', false)}
+                  />
+                  <span>{tform('requirements_no')}</span>
+                </label>
               </div>
             </div>
           </Card>
@@ -295,9 +305,12 @@ export default function PublicFormPage() {
             value={form.attachments || []} 
             onChange={(rows) => update('attachments', rows)}
             labels={{
-              title: tform('attachments_title') as unknown as string,
-              link_input_label: tform('attachments_link_label') as unknown as string,
+              title: `10. ${tform('attachments_title') as unknown as string}`,
+              link_input_label: '' as unknown as string,
               add_link: tform('attachments_add_link_button') as unknown as string,
+              upload_click_to: tform('attachments_click_to_upload') as unknown as string,
+              upload_or_drag: tform('attachments_or_drag_and_drop') as unknown as string,
+              upload_multiple_supported: tform('attachments_multiple_supported') as unknown as string,
             }}
           />
 
@@ -306,7 +319,7 @@ export default function PublicFormPage() {
             value={form.measures || []}
             onChange={(rows) => update('measures', rows)}
             labels={{
-              title: tform('section_measures') as unknown as string,
+              title: `11 ${tform('section_measures') as unknown as string}`,
               no_measures: tf('no_measures') as unknown as string,
               name: tf('measure_name') as unknown as string,
               planned_result: tf('planned_result') as unknown as string,
@@ -324,7 +337,7 @@ export default function PublicFormPage() {
                   href={process.env.NEXT_PUBLIC_MEASURES_EXAMPLE_URL || '#'}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="underline text-blue-600"
+                  className="underline text-gray-600 font-semibold"
                 >
                   {tform('measures_example_link_text')}
                 </a>
@@ -338,13 +351,27 @@ export default function PublicFormPage() {
               <TextareaField
                 id="reasonsForUnderrepresentation"
                 name="reasonsForUnderrepresentation"
-                label={tform('reasons_required')}
+                label={`12 ${tform('reasons_required')}`}
                 value={form.reasonsForUnderrepresentation ?? ''}
                 onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => update('reasonsForUnderrepresentation', e.target.value || '')}
                 minRows={10}
                 maxRows={10}
                 isRequired
                 classNames={{ inputWrapper: "rounded-2xl border-2 border-black px-4 py-3", input: 'resize-none overflow-y-auto' }}
+              />
+            </div>
+          </Card>
+
+          {/* Consent moved below Reasons */}
+          <Card className="p-6">
+            <div className="flex items-center justify-between">
+              <span className="text-sm">{tform('consent_label')}</span>
+              <CheckboxField
+                id="consent"
+                name="consent"
+                checked={form.consent}
+                onChange={(checked) => update('consent', checked)}
+                ariaLabel={tform('consent_label')}
               />
             </div>
           </Card>
@@ -385,16 +412,6 @@ export default function PublicFormPage() {
                   value={form.submitter.email}
                   onChange={(e) => update('submitter', { ...form.submitter, email: e.target.value })}
                   isRequired
-                />
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-sm">{tform('consent_label')}</span>
-                <CheckboxField
-                  id="consent"
-                  name="consent"
-                  checked={form.consent}
-                  onChange={(checked) => update('consent', checked)}
-                  ariaLabel={tform('consent_label')}
                 />
               </div>
             </div>

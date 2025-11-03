@@ -31,6 +31,11 @@ export const en = {
     attachments_title: 'Provide a link or attach documents where the applicable requirements and criteria can be seen.*',
     attachments_link_label: 'Attachment link (URL)',
     attachments_add_link_button: 'Add link',
+  attachments_click_to_upload: 'Click to upload',
+  attachments_or_drag_and_drop: 'or drag and drop',
+  attachments_multiple_supported: 'Multiple files supported',
+  requirements_yes: 'Applied',
+  requirements_no: 'Not applied',
   },
   fields: {
     company_name: 'Company name',

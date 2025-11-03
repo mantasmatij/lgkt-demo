@@ -35,6 +35,9 @@ type AttachmentLabels = {
   title?: string;
   link_input_label?: string;
   add_link?: string;
+  upload_click_to?: string;
+  upload_or_drag?: string;
+  upload_multiple_supported?: string;
 };
 
 export function AttachmentsSection({ value, onChange, labels }: { value: AttachmentRef[]; onChange: (rows: AttachmentRef[]) => void; labels?: AttachmentLabels }) {
@@ -139,6 +142,9 @@ export function AttachmentsSection({ value, onChange, labels }: { value: Attachm
     title: labels?.title ?? 'Attachments',
     link_input_label: labels?.link_input_label ?? 'Attachment link (URL)',
     add_link: labels?.add_link ?? 'Add link',
+    upload_click_to: labels?.upload_click_to ?? 'Click to upload',
+    upload_or_drag: labels?.upload_or_drag ?? 'or drag and drop',
+    upload_multiple_supported: labels?.upload_multiple_supported ?? 'Multiple files supported',
   } as const;
 
   return (
@@ -198,9 +204,9 @@ export function AttachmentsSection({ value, onChange, labels }: { value: Attachm
               />
             </svg>
             <div className="text-sm text-gray-600">
-              <span className="font-semibold text-primary">Click to upload</span> or drag and drop
+              <span className="font-semibold text-primary">{L.upload_click_to}</span> {L.upload_or_drag}
             </div>
-            <p className="text-xs text-gray-500">Multiple files supported</p>
+            <p className="text-xs text-gray-500">{L.upload_multiple_supported}</p>
           </div>
         </label>
       </div>

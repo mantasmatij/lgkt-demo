@@ -8,8 +8,8 @@ import { iconButtonClass } from './fields/buttonStyles';
 
 export type OrganRow = {
   organType: 'VALDYBA' | 'STEBETOJU_TARYBA';
-  lastElectionDate?: string;
-  plannedElectionDate?: string;
+  lastElectionDate: string;
+  plannedElectionDate: string;
 };
 
 type OrgansLabels = {
@@ -23,15 +23,15 @@ type OrgansLabels = {
   remove?: string; // aria-label
 };
 
-export function OrgansSection({ value, onChange, labels }: { value: OrganRow[]; onChange: (rows: OrganRow[]) => void; labels?: OrgansLabels }) {
+export function OrgansSection({ value, onChange, labels, errors = {} }: { value: OrganRow[]; onChange: (rows: OrganRow[]) => void; labels?: OrgansLabels; errors?: Record<string, string[]> }) {
   // Ensure at least one row exists
   React.useEffect(() => {
     if (value.length === 0) {
-      onChange([{ organType: 'VALDYBA' }]);
+      onChange([{ organType: 'VALDYBA', lastElectionDate: '', plannedElectionDate: '' }]);
     }
   }, []);
 
-  const addRow = () => onChange([...value, { organType: 'VALDYBA' }]);
+  const addRow = () => onChange([...value, { organType: 'VALDYBA', lastElectionDate: '', plannedElectionDate: '' }]);
   const removeRow = (idx: number) => {
     // Prevent removing the last row
     if (value.length > 1) {
@@ -55,18 +55,30 @@ export function OrgansSection({ value, onChange, labels }: { value: OrganRow[]; 
     remove: labels?.remove ?? 'Remove organ',
   };
 
+  const firstError = (key: string): string | undefined => {
+    if (errors[key]?.[0]) return errors[key][0];
+    const bracketKey = key.replace(/\.(\d+)\./g, '[$1].');
+    if (errors[bracketKey]?.[0]) return errors[bracketKey][0];
+    // Fallback: try to find a closely related key (helps if paths differ slightly)
+    const entry = Object.entries(errors).find(([k, v]) =>
+      Boolean(v?.length) && (k === key || k === bracketKey)
+    );
+    return entry?.[1]?.[0];
+  };
+
   return (
     <Card className={cn("p-6")}> 
       <div className="flex flex-col gap-3">
-        <h3 className="text-lg font-medium">{L.title}</h3>
+	  <h3 className="text-lg font-bold">{L.title}</h3>
 
         {value.map((row, idx) => (
           <Card key={idx} className="p-4">
             <div className="flex flex-col gap-3">
               <SelectField
-                id={`organ.${idx}.type`}
-                name={`organ.${idx}.type`}
+                id={`organs.${idx}.organType`}
+                name={`organs.${idx}.organType`}
                 label={L.organ_type}
+                labelClassName="font-normal"
                 selectedKeys={[row.organType]}
                 classNames={{
                   // Increase only horizontal padding to prevent text touching the border/chevron
@@ -76,7 +88,10 @@ export function OrgansSection({ value, onChange, labels }: { value: OrganRow[]; 
                   popoverContent: 'p-1', // 8px per 8-point grid
                   listbox: 'p-1',
                 }}
-                onChange={(e) => update(idx, { organType: (e.target.value as OrganRow['organType']) })}
+                onSelectionChange={(keys) => {
+                  const k = Array.from(keys as Set<string>)[0] as OrganRow['organType'] | undefined;
+                  if (k) update(idx, { organType: k });
+                }}
               >
                 <SelectItem key="VALDYBA">{L.option_VALDYBA}</SelectItem>
                 <SelectItem key="STEBETOJU_TARYBA">{L.option_STEBETOJU_TARYBA}</SelectItem>
@@ -84,20 +99,28 @@ export function OrgansSection({ value, onChange, labels }: { value: OrganRow[]; 
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <InputField
-                  id={`organ.${idx}.lastElectionDate`}
-                  name={`organ.${idx}.lastElectionDate`}
+                  id={`organs.${idx}.lastElectionDate`}
+                  name={`organs.${idx}.lastElectionDate`}
                   type="date"
                   label={L.last_election_date}
-                  value={row.lastElectionDate ?? ''}
-                  onChange={(e) => update(idx, { lastElectionDate: e.target.value || undefined })}
+                  labelClassName="font-normal"
+                  isRequired
+                  isInvalid={!!firstError(`organs.${idx}.lastElectionDate`)}
+                  errorMessage={firstError(`organs.${idx}.lastElectionDate`)}
+                  value={row.lastElectionDate}
+                  onChange={(e) => update(idx, { lastElectionDate: e.target.value })}
                 />
                 <InputField
-                  id={`organ.${idx}.plannedElectionDate`}
-                  name={`organ.${idx}.plannedElectionDate`}
+                  id={`organs.${idx}.plannedElectionDate`}
+                  name={`organs.${idx}.plannedElectionDate`}
                   type="date"
                   label={L.planned_election_date}
-                  value={row.plannedElectionDate ?? ''}
-                  onChange={(e) => update(idx, { plannedElectionDate: e.target.value || undefined })}
+                  labelClassName="font-normal"
+                  isRequired
+                  isInvalid={!!firstError(`organs.${idx}.plannedElectionDate`)}
+                  errorMessage={firstError(`organs.${idx}.plannedElectionDate`)}
+                  value={row.plannedElectionDate}
+                  onChange={(e) => update(idx, { plannedElectionDate: e.target.value })}
                 />
               </div>
 

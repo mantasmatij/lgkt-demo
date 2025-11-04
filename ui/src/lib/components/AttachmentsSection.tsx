@@ -1,8 +1,9 @@
 "use client";
 import * as React from 'react';
-import { Card, Input, Progress } from '@heroui/react';
+import { Card, Progress } from '@heroui/react';
 import { cn } from '../utils/cn';
 import { pillButtonClass } from './fields/buttonStyles';
+import { InputField } from './fields/InputField';
 
 export type AttachmentLink = { type: 'LINK'; url: string };
 export type AttachmentFileRef = { type: 'FILE'; uploadId: string; fileName?: string };
@@ -30,7 +31,16 @@ async function deleteUpload(uploadId: string) {
   await fetch(`/api/uploads/${encodeURIComponent(uploadId)}`, { method: 'DELETE' });
 }
 
-export function AttachmentsSection({ value, onChange }: { value: AttachmentRef[]; onChange: (rows: AttachmentRef[]) => void }) {
+type AttachmentLabels = {
+  title?: string;
+  link_input_label?: string;
+  add_link?: string;
+  upload_click_to?: string;
+  upload_or_drag?: string;
+  upload_multiple_supported?: string;
+};
+
+export function AttachmentsSection({ value, onChange, labels }: { value: AttachmentRef[]; onChange: (rows: AttachmentRef[]) => void; labels?: AttachmentLabels }) {
   const [link, setLink] = React.useState('');
   const [uploads, setUploads] = React.useState<Record<string, UploadProgress>>({});
   const [dragActive, setDragActive] = React.useState(false);
@@ -128,11 +138,35 @@ export function AttachmentsSection({ value, onChange }: { value: AttachmentRef[]
   };
 
   const hasActiveUploads = Object.keys(uploads).length > 0;
+  const L: Required<AttachmentLabels> = {
+    title: labels?.title ?? 'Attachments',
+    link_input_label: labels?.link_input_label ?? 'Attachment link (URL)',
+    add_link: labels?.add_link ?? 'Add link',
+    upload_click_to: labels?.upload_click_to ?? 'Click to upload',
+    upload_or_drag: labels?.upload_or_drag ?? 'or drag and drop',
+    upload_multiple_supported: labels?.upload_multiple_supported ?? 'Multiple files supported',
+  } as const;
 
   return (
-    <Card className={cn("p-6")}>
+    <Card className={cn("p-6")}> 
       <div className="flex flex-col gap-3">
-        <h3 className="text-lg font-medium mb-2">Attachments</h3>
+        <h3 className="text-lg font-bold mb-2">{L.title}</h3>
+
+        {/* Link input (moved above file input) */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-2 items-end">
+          <div className="md:col-span-2">
+            <InputField
+              id="attachment-link"
+              name="attachment-link"
+              label={L.link_input_label}
+              value={link}
+              onChange={(e) => setLink((e as React.ChangeEvent<HTMLInputElement>).target.value)}
+              placeholder="https://example.com/document.pdf"
+              isRequired={false}
+            />
+          </div>
+          <button type="button" onClick={addLink} disabled={!link} className={pillButtonClass}>{L.add_link}</button>
+        </div>
         
         {/* Drag and drop zone */}
         <div
@@ -170,9 +204,9 @@ export function AttachmentsSection({ value, onChange }: { value: AttachmentRef[]
               />
             </svg>
             <div className="text-sm text-gray-600">
-              <span className="font-semibold text-primary">Click to upload</span> or drag and drop
+              <span className="font-semibold text-primary">{L.upload_click_to}</span> {L.upload_or_drag}
             </div>
-            <p className="text-xs text-gray-500">Multiple files supported</p>
+            <p className="text-xs text-gray-500">{L.upload_multiple_supported}</p>
           </div>
         </label>
       </div>
@@ -196,16 +230,7 @@ export function AttachmentsSection({ value, onChange }: { value: AttachmentRef[]
         </div>
       ))}
 
-      {/* Link input */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-2 items-end pt-2 border-t">
-        <Input variant="bordered" radius="full" size="lg" 
-          label="Attachment link (URL)" 
-          value={link} 
-          onChange={(e) => setLink(e.target.value)}
-          placeholder="https://example.com/document.pdf"
-        />
-        <button type="button" onClick={addLink} disabled={!link} className={pillButtonClass}>Add link</button>
-      </div>
+      
 
       {/* Uploaded files and links list */}
       {value.length > 0 && (

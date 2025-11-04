@@ -8,7 +8,7 @@ import { iconButtonClass } from './fields/buttonStyles';
 
 export type MeasureRow = {
   name: string;
-  plannedResult?: string;
+  plannedResult: string;
   indicator?: string;
   indicatorValue?: string;
   indicatorUnit?: string;
@@ -28,8 +28,14 @@ type MeasuresLabels = {
   remove?: string; // aria-label
 };
 
-export function MeasuresSection({ value, onChange, labels }: { value: MeasureRow[]; onChange: (rows: MeasureRow[]) => void; labels?: MeasuresLabels }) {
-  const addRow = () => onChange([...value, { name: '' }]);
+export function MeasuresSection({ value, onChange, labels, topSlot, errors = {} }: { value: MeasureRow[]; onChange: (rows: MeasureRow[]) => void; labels?: MeasuresLabels; topSlot?: React.ReactNode; errors?: Record<string, string[]> }) {
+  // Ensure at least one row is visible at all times
+  React.useEffect(() => {
+    if (value.length === 0) {
+      onChange([{ name: '', plannedResult: '' }]);
+    }
+  }, []);
+  const addRow = () => onChange([...value, { name: '', plannedResult: '' }]);
   const removeRow = (idx: number) => onChange(value.filter((_, i) => i !== idx));
   const update = (idx: number, patch: Partial<MeasureRow>) => {
     const next = [...value];
@@ -48,39 +54,59 @@ export function MeasuresSection({ value, onChange, labels }: { value: MeasureRow
     add: labels?.add ?? 'Add measure',
     remove: labels?.remove ?? 'Remove measure',
   };
+  const firstError = (key: string): string | undefined => {
+    if (errors[key]?.[0]) return errors[key][0];
+    const bracketKey = key.replace(/\.(\d+)\./g, '[$1].');
+    if (errors[bracketKey]?.[0]) return errors[bracketKey][0];
+    const entry = Object.entries(errors).find(([k, v]) =>
+      Boolean(v?.length) && (k === key || k === bracketKey)
+    );
+    return entry?.[1]?.[0];
+  };
   return (
     <Card className={cn("p-6")}>
       <div className="flex flex-col gap-3">
-        <div className="flex items-center justify-between mb-2">
-          <h3 className="text-lg font-medium">{L.title}</h3>
-          <button type="button" aria-label={L.add} className={iconButtonClass} onClick={addRow}>+</button>
+        <div className="mb-2">
+          <h3 className="text-lg font-bold">{L.title}</h3>
         </div>
+        {topSlot}
         {value.length === 0 && <p className="text-sm text-default-500">{L.no_measures}</p>}
+        {value.length === 0 && (
+          <div className="flex justify-start">
+            <button type="button" aria-label={L.add} className={iconButtonClass} onClick={addRow}>+</button>
+          </div>
+        )}
         {value.map((row, idx) => (
           <Card key={idx} className={cn("p-4")}> 
             <div className="flex flex-col gap-3">
               {/* Measure name as large input block */}
               <TextareaField
-                id={`measure.${idx}.name`}
-                name={`measure.${idx}.name`}
+                id={`measures.${idx}.name`}
+                name={`measures.${idx}.name`}
                 label={L.name}
+                isRequired
+                isInvalid={!!firstError(`measures.${idx}.name`)}
+                errorMessage={firstError(`measures.${idx}.name`)}
                 value={row.name}
                 onChange={(e: unknown) => update(idx, { name: (e as React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>).target.value })}
-                disableAutosize
-                minRows={3}
-                classNames={{ inputWrapper: "min-h-28 rounded-2xl border-2 border-black px-4 py-3" }}
+                minRows={10}
+                maxRows={10}
+                classNames={{ inputWrapper: "rounded-2xl border-2 border-black px-4 py-3", input: "resize-none overflow-y-auto" }}
               />
 
               {/* Planned result block */}
               <TextareaField
-                id={`measure.${idx}.plannedResult`}
-                name={`measure.${idx}.plannedResult`}
+                id={`measures.${idx}.plannedResult`}
+                name={`measures.${idx}.plannedResult`}
                 label={L.planned_result}
+                isRequired
+                isInvalid={!!firstError(`measures.${idx}.plannedResult`)}
+                errorMessage={firstError(`measures.${idx}.plannedResult`)}
                 value={row.plannedResult ?? ''}
                 onChange={(e: unknown) => update(idx, { plannedResult: (e as React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>).target.value || undefined })}
-                disableAutosize
-                minRows={3}
-                classNames={{ inputWrapper: "min-h-28 rounded-2xl border-2 border-black px-4 py-3" }}
+                minRows={10}
+                maxRows={10}
+                classNames={{ inputWrapper: "rounded-2xl border-2 border-black px-4 py-3", input: "resize-none overflow-y-auto" }}
               />
 
               {/* Indicator rows */}
@@ -115,10 +141,17 @@ export function MeasuresSection({ value, onChange, labels }: { value: MeasureRow
                 />
               </div>
 
-              <div className="flex justify-end">
-                <button type="button" aria-label={L.remove} className={iconButtonClass} onClick={() => removeRow(idx)}>
-                  −
-                </button>
+              <div className="flex justify-between items-center">
+                {idx === value.length - 1 ? (
+                  <button type="button" aria-label={L.add} className={iconButtonClass} onClick={addRow}>+</button>
+                ) : (
+                  <div />
+                )}
+                {value.length > 1 && (
+                  <button type="button" aria-label={L.remove} className={iconButtonClass} onClick={() => removeRow(idx)}>
+                    −
+                  </button>
+                )}
               </div>
             </div>
           </Card>

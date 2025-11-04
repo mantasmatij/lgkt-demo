@@ -1,9 +1,9 @@
 "use client";
 
-import { Card, Input } from '@heroui/react';
+import { Card } from '@heroui/react';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { pillButtonClass } from 'ui';
+import { pillButtonClass, InputField } from 'ui';
 import { useI18n } from '../../providers/i18n-provider';
 
 export default function AdminSignInPage() {
@@ -56,21 +56,25 @@ export default function AdminSignInPage() {
           )}
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-          <Input
+          <InputField
+            id="admin-email"
+            name="email"
             type="email"
             label={ta('sign_in_email_label')}
             value={email}
-            onValueChange={setEmail}
-            required
+            onChange={(e) => setEmail((e as React.ChangeEvent<HTMLInputElement>).target.value)}
+            isRequired
             autoComplete="username"
           />
           
-          <Input
+          <InputField
+            id="admin-password"
+            name="password"
             type="password"
             label={ta('sign_in_password_label')}
             value={password}
-            onValueChange={setPassword}
-            required
+            onChange={(e) => setPassword((e as React.ChangeEvent<HTMLInputElement>).target.value)}
+            isRequired
             autoComplete="current-password"
           />
 

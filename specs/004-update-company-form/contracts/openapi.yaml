@@ -1,0 +1,149 @@
+openapi: 3.1.0
+info:
+  title: Company Form Submission (Feature 004) - Schema Reference
+  version: "1.0.0"
+  description: |
+    Reference schema for the updated company form submission payload.
+    No new endpoints introduced by this feature; backend integration remains unchanged.
+servers: []
+paths: {}
+components:
+  schemas:
+    CompanySubmission:
+      type: object
+      required:
+        - companyName
+        - companyCode
+        - companyType
+        - legalForm
+        - address
+        - registry
+        - reportPeriodFrom
+        - reportPeriodTo
+        - reasons
+        - confirmation
+        - submitter
+      properties:
+        companyName:
+          type: string
+        companyCode:
+          type: string
+        companyType:
+          type: string
+          enum: [LISTED, STATE_OWNED, LARGE]
+          description: Stable enum; UI labels localized (LT/EN)
+        legalForm:
+          type: string
+        address:
+          type: string
+        registry:
+          type: string
+        eDeliveryAddress:
+          type: string
+          nullable: true
+        reportPeriodFrom:
+          type: string
+          format: date
+          description: Must be >= 1990-01-01
+        reportPeriodTo:
+          type: string
+          format: date
+          description: Must be >= reportPeriodFrom and >= 1990-01-01
+        governance:
+          type: object
+          properties:
+            bodyType:
+              type: string
+            lastElectionDate:
+              type: string
+              format: date
+            plannedElectionDate:
+              type: string
+              format: date
+        genderBalance:
+          type: object
+          properties:
+            manager:
+              $ref: '#/components/schemas/GenderTriplet'
+            board:
+              $ref: '#/components/schemas/GenderTriplet'
+            supervisoryBoard:
+              $ref: '#/components/schemas/GenderTriplet'
+        requirementsCriteriaApplied:
+          type: string
+          enum: [APPLIED, NOT_APPLIED]
+        requirementsLink:
+          type: string
+          format: uri
+          nullable: true
+        attachments:
+          type: array
+          items:
+            type: string
+            format: binary
+          nullable: true
+        measures:
+          type: array
+          items:
+            $ref: '#/components/schemas/Measure'
+        reasons:
+          type: string
+          description: Section 12 reasons text (always required)
+        confirmation:
+          type: boolean
+        submitter:
+          $ref: '#/components/schemas/Submitter'
+        country:
+          type: string
+          nullable: true
+          description: Removed from UI; retained as null/empty key for backward compatibility
+        contactOther:
+          type: string
+          nullable: true
+          description: Removed from UI; retained as null/empty key for backward compatibility
+    GenderTriplet:
+      type: object
+      required: [women, men, total]
+      properties:
+        women:
+          type: integer
+          minimum: 0
+        men:
+          type: integer
+          minimum: 0
+        total:
+          type: integer
+          minimum: 0
+          description: Must equal women + men
+    Measure:
+      type: object
+      required: [name, plannedResult, targetIndicator, indicatorValue, unit, year]
+      properties:
+        name:
+          type: string
+        plannedResult:
+          type: string
+        targetIndicator:
+          type: string
+        indicatorValue:
+          oneOf:
+            - type: number
+            - type: string
+        unit:
+          type: string
+        year:
+          type: integer
+          minimum: 1990
+    Submitter:
+      type: object
+      required: [fullName, position, phone, email]
+      properties:
+        fullName:
+          type: string
+        position:
+          type: string
+        phone:
+          type: string
+        email:
+          type: string
+          format: email

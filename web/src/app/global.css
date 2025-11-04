@@ -42,6 +42,7 @@
 html {
   -webkit-text-size-adjust: 100%;
   font-family:
+    'Atkinson Hyperlegible',
     ui-sans-serif,
     system-ui,
     -apple-system,
@@ -62,6 +63,7 @@ html {
 }
 body {
   font-family: inherit;
+  font-size: 1.125rem; /* 18px base size per request */
   line-height: inherit;
   margin: 0;
 }

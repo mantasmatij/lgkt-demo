@@ -10,4 +10,5 @@ export { InputField } from './lib/components/fields/InputField';
 export { TextareaField } from './lib/components/fields/TextareaField';
 export { SelectField } from './lib/components/fields/SelectField';
 export { CheckboxField } from './lib/components/fields/CheckboxField';
+export { RadioField } from './lib/components/fields/RadioField';
 export { pillButtonClass, iconButtonClass } from './lib/components/fields/buttonStyles';

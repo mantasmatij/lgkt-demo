@@ -22,9 +22,9 @@ npm test && npm run lint
 TypeScript (Node 20+ / ES2022): Follow standard conventions
 
 ## Recent Changes
+- 004-update-company-form: Added [if applicable, e.g., PostgreSQL, CoreData, files or N/A]
 - 003-faster-dev-i18n: Added TypeScript (Node 20+ / ES2022) + Nx (workspace), Express (API), Next (web), Drizzle ORM, Zod, HeroUI, Tailwind CSS
 - 002-ui-redesign-responsive: Added TypeScript (ES2022 target), Node 20+
-- 001-users-mantas-matijosaitis: Added TypeScript (Node 20+ / ES2022) + Nx (monorepo), Next.js (frontend), Express (backend), Drizzle ORM, Zod, Tailwind CSS + Tailwind UI (components), CSV generation lib
 
 <!-- MANUAL ADDITIONS START -->
 <!-- MANUAL ADDITIONS END -->

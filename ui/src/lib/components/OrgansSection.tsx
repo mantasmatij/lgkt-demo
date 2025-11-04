@@ -23,7 +23,7 @@ type OrgansLabels = {
   remove?: string; // aria-label
 };
 
-export function OrgansSection({ value, onChange, labels }: { value: OrganRow[]; onChange: (rows: OrganRow[]) => void; labels?: OrgansLabels }) {
+export function OrgansSection({ value, onChange, labels, errors = {} }: { value: OrganRow[]; onChange: (rows: OrganRow[]) => void; labels?: OrgansLabels; errors?: Record<string, string[]> }) {
   // Ensure at least one row exists
   React.useEffect(() => {
     if (value.length === 0) {
@@ -55,6 +55,8 @@ export function OrgansSection({ value, onChange, labels }: { value: OrganRow[]; 
     remove: labels?.remove ?? 'Remove organ',
   };
 
+  const firstError = (key: string): string | undefined => errors[key]?.[0];
+
   return (
     <Card className={cn("p-6")}> 
       <div className="flex flex-col gap-3">
@@ -64,8 +66,8 @@ export function OrgansSection({ value, onChange, labels }: { value: OrganRow[]; 
           <Card key={idx} className="p-4">
             <div className="flex flex-col gap-3">
               <SelectField
-                id={`organ.${idx}.type`}
-                name={`organ.${idx}.type`}
+                id={`organs.${idx}.organType`}
+                name={`organs.${idx}.organType`}
                 label={L.organ_type}
                 labelClassName="font-normal"
                 selectedKeys={[row.organType]}
@@ -85,22 +87,26 @@ export function OrgansSection({ value, onChange, labels }: { value: OrganRow[]; 
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <InputField
-                  id={`organ.${idx}.lastElectionDate`}
-                  name={`organ.${idx}.lastElectionDate`}
+                  id={`organs.${idx}.lastElectionDate`}
+                  name={`organs.${idx}.lastElectionDate`}
                   type="date"
                   label={L.last_election_date}
                   labelClassName="font-normal"
                   isRequired
+                  isInvalid={!!firstError(`organs.${idx}.lastElectionDate`)}
+                  errorMessage={firstError(`organs.${idx}.lastElectionDate`)}
                   value={row.lastElectionDate}
                   onChange={(e) => update(idx, { lastElectionDate: e.target.value })}
                 />
                 <InputField
-                  id={`organ.${idx}.plannedElectionDate`}
-                  name={`organ.${idx}.plannedElectionDate`}
+                  id={`organs.${idx}.plannedElectionDate`}
+                  name={`organs.${idx}.plannedElectionDate`}
                   type="date"
                   label={L.planned_election_date}
                   labelClassName="font-normal"
                   isRequired
+                  isInvalid={!!firstError(`organs.${idx}.plannedElectionDate`)}
+                  errorMessage={firstError(`organs.${idx}.plannedElectionDate`)}
                   value={row.plannedElectionDate}
                   onChange={(e) => update(idx, { plannedElectionDate: e.target.value })}
                 />

@@ -259,6 +259,7 @@ export default function PublicFormPage() {
           <OrgansSection
             value={form.organs || []}
             onChange={(rows) => update('organs', rows)}
+            errors={errors}
             labels={{
               title: `7. ${tform('section_organs') as unknown as string}`,
               organ_type: tf('organ_type') as unknown as string,
@@ -350,6 +351,7 @@ export default function PublicFormPage() {
           <MeasuresSection
             value={form.measures || []}
             onChange={(rows) => update('measures', rows)}
+            errors={errors}
             labels={{
               title: `11. ${tform('section_measures') as unknown as string}`,
               no_measures: tf('no_measures') as unknown as string,

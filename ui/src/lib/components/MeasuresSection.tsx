@@ -28,7 +28,7 @@ type MeasuresLabels = {
   remove?: string; // aria-label
 };
 
-export function MeasuresSection({ value, onChange, labels, topSlot }: { value: MeasureRow[]; onChange: (rows: MeasureRow[]) => void; labels?: MeasuresLabels; topSlot?: React.ReactNode }) {
+export function MeasuresSection({ value, onChange, labels, topSlot, errors = {} }: { value: MeasureRow[]; onChange: (rows: MeasureRow[]) => void; labels?: MeasuresLabels; topSlot?: React.ReactNode; errors?: Record<string, string[]> }) {
   // Ensure at least one row is visible at all times
   React.useEffect(() => {
     if (value.length === 0) {
@@ -54,6 +54,7 @@ export function MeasuresSection({ value, onChange, labels, topSlot }: { value: M
     add: labels?.add ?? 'Add measure',
     remove: labels?.remove ?? 'Remove measure',
   };
+  const firstError = (key: string): string | undefined => errors[key]?.[0];
   return (
     <Card className={cn("p-6")}>
       <div className="flex flex-col gap-3">
@@ -72,10 +73,12 @@ export function MeasuresSection({ value, onChange, labels, topSlot }: { value: M
             <div className="flex flex-col gap-3">
               {/* Measure name as large input block */}
               <TextareaField
-                id={`measure.${idx}.name`}
-                name={`measure.${idx}.name`}
+                id={`measures.${idx}.name`}
+                name={`measures.${idx}.name`}
                 label={L.name}
                 isRequired
+                isInvalid={!!firstError(`measures.${idx}.name`)}
+                errorMessage={firstError(`measures.${idx}.name`)}
                 value={row.name}
                 onChange={(e: unknown) => update(idx, { name: (e as React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>).target.value })}
                 minRows={10}
@@ -85,10 +88,12 @@ export function MeasuresSection({ value, onChange, labels, topSlot }: { value: M
 
               {/* Planned result block */}
               <TextareaField
-                id={`measure.${idx}.plannedResult`}
-                name={`measure.${idx}.plannedResult`}
+                id={`measures.${idx}.plannedResult`}
+                name={`measures.${idx}.plannedResult`}
                 label={L.planned_result}
                 isRequired
+                isInvalid={!!firstError(`measures.${idx}.plannedResult`)}
+                errorMessage={firstError(`measures.${idx}.plannedResult`)}
                 value={row.plannedResult ?? ''}
                 onChange={(e: unknown) => update(idx, { plannedResult: (e as React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>).target.value || undefined })}
                 minRows={10}

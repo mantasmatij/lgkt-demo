@@ -54,7 +54,15 @@ export function MeasuresSection({ value, onChange, labels, topSlot, errors = {} 
     add: labels?.add ?? 'Add measure',
     remove: labels?.remove ?? 'Remove measure',
   };
-  const firstError = (key: string): string | undefined => errors[key]?.[0];
+  const firstError = (key: string): string | undefined => {
+    if (errors[key]?.[0]) return errors[key][0];
+    const bracketKey = key.replace(/\.(\d+)\./g, '[$1].');
+    if (errors[bracketKey]?.[0]) return errors[bracketKey][0];
+    const entry = Object.entries(errors).find(([k, v]) =>
+      Boolean(v?.length) && (k === key || k === bracketKey)
+    );
+    return entry?.[1]?.[0];
+  };
   return (
     <Card className={cn("p-6")}>
       <div className="flex flex-col gap-3">

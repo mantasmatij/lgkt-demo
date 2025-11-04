@@ -72,6 +72,7 @@ export default function PublicFormPage() {
       required: tv('required'),
       email: tv('invalid_email'),
       url: tv('invalid_url'),
+      invalidDate: tv('invalid_date'),
       dateMin: tv('date_min'),
       dateOrder: tv('date_order'),
       consentRequired: tv('consent_required'),
@@ -80,8 +81,17 @@ export default function PublicFormPage() {
     });
     const parsed = schema.safeParse(form);
     if (!parsed.success) {
-      const f = parsed.error.flatten().fieldErrors as Record<string, string[]>;
-      setErrors(f);
+      // Build a smarter error map: one message per field, dot-path keys that match element ids
+      const normalized: Record<string, string[]> = {};
+      const issues = (parsed.error as unknown as { issues: Array<{ path: (string | number)[]; message: string }> }).issues;
+      for (const iss of issues) {
+        const key = iss.path.join('.');
+        // Ignore array-level errors for nested sections; we show inline errors for their inner fields
+        if (key === 'organs' || key === 'measures') continue;
+        if (!key) continue;
+        if (!normalized[key]) normalized[key] = [iss.message];
+      }
+      setErrors(normalized);
       // Focus error summary for screen readers
       setTimeout(() => {
         const errorSummary = document.getElementById('error-summary-title');
@@ -124,8 +134,6 @@ export default function PublicFormPage() {
     <div className="container mx-auto max-w-3xl px-4 py-6">
       <div className="flex flex-col gap-3">
         <h1 className="text-3xl font-bold mb-2">{tform('title')}</h1>
-      
-        <ErrorSummary errors={errors} />
       
         {result && <Card className="p-3 text-sm" role="alert">{result}</Card>}
       

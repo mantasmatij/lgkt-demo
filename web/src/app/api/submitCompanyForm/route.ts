@@ -12,6 +12,7 @@ export async function POST(req: Request) {
       required: tv['required'],
       email: tv['invalid_email'],
       url: tv['invalid_url'],
+      invalidDate: tv['invalid_date'],
       dateMin: tv['date_min'],
       dateOrder: tv['date_order'],
       consentRequired: tv['consent_required'],

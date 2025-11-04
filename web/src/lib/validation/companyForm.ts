@@ -15,6 +15,7 @@ export type ValidationMessages = {
   email: string;
   url: string;
   dateMin: string;
+  invalidDate?: string;
   dateOrder: string;
   consentRequired: string;
   genderTotalMismatch: string;
@@ -24,8 +25,8 @@ export type ValidationMessages = {
 export function makeCompanyFormSchema(messages: ValidationMessages) {
   const organRowSchema = z.object({
     organType: z.enum(['VALDYBA', 'STEBETOJU_TARYBA']),
-    lastElectionDate: makeZDateOnOrAfterMin(messages.dateMin),
-    plannedElectionDate: makeZDateOnOrAfterMin(messages.dateMin),
+    lastElectionDate: makeZDateOnOrAfterMin({ invalidDate: messages.invalidDate ?? 'Invalid date', dateMin: messages.dateMin }),
+    plannedElectionDate: makeZDateOnOrAfterMin({ invalidDate: messages.invalidDate ?? 'Invalid date', dateMin: messages.dateMin }),
   });
 
   const genderBalanceRowSchema = z
@@ -80,8 +81,8 @@ export function makeCompanyFormSchema(messages: ValidationMessages) {
       eDeliveryAddress: z.string().min(1, { message: messages.required }),
 
       // Reporting period
-      reportingFrom: makeZDateOnOrAfterMin(messages.dateMin),
-      reportingTo: makeZDateOnOrAfterMin(messages.dateMin),
+  reportingFrom: makeZDateOnOrAfterMin({ invalidDate: messages.invalidDate ?? 'Invalid date', dateMin: messages.dateMin }),
+  reportingTo: makeZDateOnOrAfterMin({ invalidDate: messages.invalidDate ?? 'Invalid date', dateMin: messages.dateMin }),
 
       // Requirements & link
       requirementsApplied: z.boolean(),

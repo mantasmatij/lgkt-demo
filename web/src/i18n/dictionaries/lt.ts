@@ -41,6 +41,7 @@ export const lt = {
     required: 'Šis laukas privalomas',
     invalid_email: 'Neteisingas el. pašto adresas',
     invalid_url: 'Neteisinga nuoroda',
+    invalid_date: 'Neteisinga data',
     date_min: 'Data turi būti ne ankstesnė nei 1990-01-01',
     date_order: 'Iki data turi būti ne ankstesnė arba lygi Nuo datai',
     consent_required: 'Reikia jūsų sutikimo',

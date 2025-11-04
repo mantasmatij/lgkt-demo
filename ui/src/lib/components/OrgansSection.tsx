@@ -55,7 +55,16 @@ export function OrgansSection({ value, onChange, labels, errors = {} }: { value:
     remove: labels?.remove ?? 'Remove organ',
   };
 
-  const firstError = (key: string): string | undefined => errors[key]?.[0];
+  const firstError = (key: string): string | undefined => {
+    if (errors[key]?.[0]) return errors[key][0];
+    const bracketKey = key.replace(/\.(\d+)\./g, '[$1].');
+    if (errors[bracketKey]?.[0]) return errors[bracketKey][0];
+    // Fallback: try to find a closely related key (helps if paths differ slightly)
+    const entry = Object.entries(errors).find(([k, v]) =>
+      Boolean(v?.length) && (k === key || k === bracketKey)
+    );
+    return entry?.[1]?.[0];
+  };
 
   return (
     <Card className={cn("p-6")}> 
@@ -79,7 +88,10 @@ export function OrgansSection({ value, onChange, labels, errors = {} }: { value:
                   popoverContent: 'p-1', // 8px per 8-point grid
                   listbox: 'p-1',
                 }}
-                onChange={(e) => update(idx, { organType: (e.target.value as OrganRow['organType']) })}
+                onSelectionChange={(keys) => {
+                  const k = Array.from(keys as Set<string>)[0] as OrganRow['organType'] | undefined;
+                  if (k) update(idx, { organType: k });
+                }}
               >
                 <SelectItem key="VALDYBA">{L.option_VALDYBA}</SelectItem>
                 <SelectItem key="STEBETOJU_TARYBA">{L.option_STEBETOJU_TARYBA}</SelectItem>

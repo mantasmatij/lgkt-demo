@@ -8,8 +8,8 @@ import { iconButtonClass } from './fields/buttonStyles';
 
 export type OrganRow = {
   organType: 'VALDYBA' | 'STEBETOJU_TARYBA';
-  lastElectionDate?: string;
-  plannedElectionDate?: string;
+  lastElectionDate: string;
+  plannedElectionDate: string;
 };
 
 type OrgansLabels = {
@@ -27,11 +27,11 @@ export function OrgansSection({ value, onChange, labels }: { value: OrganRow[]; 
   // Ensure at least one row exists
   React.useEffect(() => {
     if (value.length === 0) {
-      onChange([{ organType: 'VALDYBA' }]);
+      onChange([{ organType: 'VALDYBA', lastElectionDate: '', plannedElectionDate: '' }]);
     }
   }, []);
 
-  const addRow = () => onChange([...value, { organType: 'VALDYBA' }]);
+  const addRow = () => onChange([...value, { organType: 'VALDYBA', lastElectionDate: '', plannedElectionDate: '' }]);
   const removeRow = (idx: number) => {
     // Prevent removing the last row
     if (value.length > 1) {
@@ -90,8 +90,9 @@ export function OrgansSection({ value, onChange, labels }: { value: OrganRow[]; 
                   type="date"
                   label={L.last_election_date}
                   labelClassName="font-normal"
-                  value={row.lastElectionDate ?? ''}
-                  onChange={(e) => update(idx, { lastElectionDate: e.target.value || undefined })}
+                  isRequired
+                  value={row.lastElectionDate}
+                  onChange={(e) => update(idx, { lastElectionDate: e.target.value })}
                 />
                 <InputField
                   id={`organ.${idx}.plannedElectionDate`}
@@ -99,8 +100,9 @@ export function OrgansSection({ value, onChange, labels }: { value: OrganRow[]; 
                   type="date"
                   label={L.planned_election_date}
                   labelClassName="font-normal"
-                  value={row.plannedElectionDate ?? ''}
-                  onChange={(e) => update(idx, { plannedElectionDate: e.target.value || undefined })}
+                  isRequired
+                  value={row.plannedElectionDate}
+                  onChange={(e) => update(idx, { plannedElectionDate: e.target.value })}
                 />
               </div>
 

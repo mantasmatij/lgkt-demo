@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { Card, SelectItem } from '@heroui/react';
 import { OrgansSection, GenderBalanceSection, MeasuresSection, AttachmentsSection, ErrorSummary, InputField, TextareaField, CheckboxField, RadioField, SelectField, pillButtonClass } from 'ui';
 import { useI18n } from '../providers/i18n-provider';
-import { companyFormSchema, type CompanyFormInput } from '../../lib/validation/companyForm';
+import { makeCompanyFormSchema, type CompanyFormInput } from '../../lib/validation/companyForm';
 import { COMPANY_TYPE_VALUES, COMPANY_TYPE_LABEL_KEYS, COMPANY_TYPE_FIELD_LABEL_KEY } from '../../lib/constants/companyType';
 import { MIN_DATE_STR } from '../../lib/validation/date';
 import { twMerge } from 'tailwind-merge';
@@ -43,7 +43,7 @@ export default function PublicFormPage() {
       { role: 'BOARD', women: 0, men: 0, total: 0 },
       { role: 'SUPERVISORY_BOARD', women: 0, men: 0, total: 0 },
     ],
-    measures: [],
+  measures: [],
     attachments: [],
 
     // Section 12
@@ -67,7 +67,18 @@ export default function PublicFormPage() {
     e.preventDefault();
     setResult(null);
     setErrors({});
-    const parsed = companyFormSchema.safeParse(form);
+    const tv = t('validation');
+    const schema = makeCompanyFormSchema({
+      required: tv('required'),
+      email: tv('invalid_email'),
+      url: tv('invalid_url'),
+      dateMin: tv('date_min'),
+      dateOrder: tv('date_order'),
+      consentRequired: tv('consent_required'),
+      genderTotalMismatch: tv('gender_total_mismatch'),
+      phoneMin: tv('phone_min'),
+    });
+    const parsed = schema.safeParse(form);
     if (!parsed.success) {
       const f = parsed.error.flatten().fieldErrors as Record<string, string[]>;
       setErrors(f);
@@ -151,6 +162,8 @@ export default function PublicFormPage() {
                   label={`1.3 ${tf(COMPANY_TYPE_FIELD_LABEL_KEY as keyof FieldsDict)}`}
                   labelClassName="font-bold"
                   selectedKeys={[form.companyType]}
+                  isInvalid={!!errors.companyType}
+                  errorMessage={errors.companyType?.[0]}
                   onSelectionChange={(keys) => {
                     const k = Array.from(keys as Set<string>)[0] as CompanyFormInput['companyType'];
                     if (k) update('companyType', k);
@@ -168,6 +181,8 @@ export default function PublicFormPage() {
                   name="legalForm"
                   label={`2. ${tf('legal_form')}`}
                   labelClassName="font-bold"
+                  isInvalid={!!errors.legalForm}
+                  errorMessage={errors.legalForm?.[0]}
                   value={form.legalForm}
                   onChange={(e) => update('legalForm', e.target.value)}
                   isRequired
@@ -177,6 +192,8 @@ export default function PublicFormPage() {
                   name="address"
                   label={`3. ${tf('address')}`}
                   labelClassName="font-bold"
+                  isInvalid={!!errors.address}
+                  errorMessage={errors.address?.[0]}
                   value={form.address}
                   onChange={(e) => update('address', e.target.value)}
                   isRequired
@@ -186,6 +203,8 @@ export default function PublicFormPage() {
                   name="registry"
                   label={`4. ${tf('registry')}`}
                   labelClassName="font-bold"
+                  isInvalid={!!errors.registry}
+                  errorMessage={errors.registry?.[0]}
                   value={form.registry}
                   onChange={(e) => update('registry', e.target.value)}
                   isRequired
@@ -195,6 +214,8 @@ export default function PublicFormPage() {
                   name="eDeliveryAddress"
                   label={`5. ${tf('e_delivery_address')}`}
                   labelClassName="font-bold"
+                  isInvalid={!!errors.eDeliveryAddress}
+                  errorMessage={errors.eDeliveryAddress?.[0]}
                   value={form.eDeliveryAddress}
                   onChange={(e) => update('eDeliveryAddress', e.target.value)}
                   isRequired
@@ -210,6 +231,8 @@ export default function PublicFormPage() {
                   type="date"
                   label={tf('reporting_from')}
                   labelClassName="font-normal"
+                  isInvalid={!!errors.reportingFrom}
+                  errorMessage={errors.reportingFrom?.[0]}
                   value={form.reportingFrom}
                   onChange={(e) => update('reportingFrom', e.target.value)}
                   min={MIN_DATE_STR}
@@ -221,6 +244,8 @@ export default function PublicFormPage() {
                   type="date"
                   label={tf('reporting_to')}
                   labelClassName="font-normal"
+                  isInvalid={!!errors.reportingTo}
+                  errorMessage={errors.reportingTo?.[0]}
                   value={form.reportingTo}
                   onChange={(e) => update('reportingTo', e.target.value)}
                   min={MIN_DATE_STR}
@@ -359,6 +384,8 @@ export default function PublicFormPage() {
                 name="reasonsForUnderrepresentation"
                 label={`12. ${tform('reasons_required')}`}
                 labelClassName='font-bold'
+                isInvalid={!!errors.reasonsForUnderrepresentation}
+                errorMessage={errors.reasonsForUnderrepresentation?.[0]}
                 value={form.reasonsForUnderrepresentation ?? ''}
                 onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => update('reasonsForUnderrepresentation', e.target.value || '')}
                 minRows={10}
@@ -381,6 +408,9 @@ export default function PublicFormPage() {
                 ariaLabel={tform('consent_label')}
               />
             </div>
+              {errors.consent?.[0] && (
+                <div className="text-sm text-red-600 mt-2">{errors.consent[0]}</div>
+              )}
           </Card>
 
           {/* Submitter */}
@@ -392,6 +422,8 @@ export default function PublicFormPage() {
                   id="submitter.name"
                   name="submitter.name"
                   label={tf('submitter_full_name')}
+                  isInvalid={!!errors['submitter.name']}
+                  errorMessage={errors['submitter.name']?.[0]}
                   value={form.submitter.name}
                   onChange={(e) => update('submitter', { ...form.submitter, name: e.target.value })}
                   isRequired
@@ -400,13 +432,18 @@ export default function PublicFormPage() {
                   id="submitter.title"
                   name="submitter.title"
                   label={tf('submitter_title')}
+                  isInvalid={!!errors['submitter.title']}
+                  errorMessage={errors['submitter.title']?.[0]}
                   value={form.submitter.title ?? ''}
                   onChange={(e) => update('submitter', { ...form.submitter, title: e.target.value })}
+                  isRequired
                 />
                 <InputField
                   id="submitter.phone"
                   name="submitter.phone"
                   label={tf('submitter_phone')}
+                  isInvalid={!!errors['submitter.phone']}
+                  errorMessage={errors['submitter.phone']?.[0]}
                   value={form.submitter.phone}
                   onChange={(e) => update('submitter', { ...form.submitter, phone: e.target.value })}
                   isRequired
@@ -416,6 +453,8 @@ export default function PublicFormPage() {
                   name="submitter.email"
                   type="email"
                   label={tf('submitter_email')}
+                  isInvalid={!!errors['submitter.email']}
+                  errorMessage={errors['submitter.email']?.[0]}
                   value={form.submitter.email}
                   onChange={(e) => update('submitter', { ...form.submitter, email: e.target.value })}
                   isRequired

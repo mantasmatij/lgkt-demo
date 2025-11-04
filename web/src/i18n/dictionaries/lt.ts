@@ -37,6 +37,16 @@ export const lt = {
     requirements_yes: 'Taikomi',
     requirements_no: 'Netaikomi',
   },
+  validation: {
+    required: 'Šis laukas privalomas',
+    invalid_email: 'Neteisingas el. pašto adresas',
+    invalid_url: 'Neteisinga nuoroda',
+    date_min: 'Data turi būti ne ankstesnė nei 1990-01-01',
+    date_order: 'Iki data turi būti ne ankstesnė arba lygi Nuo datai',
+    consent_required: 'Reikia jūsų sutikimo',
+    gender_total_mismatch: 'Iš viso turi būti lygu Moterų + Vyrų',
+    phone_min: 'Telefono numeris per trumpas',
+  },
   fields: {
     company_name: 'Juridinio asmens pavadinimas',
     company_code: 'Juridinio asmens kodas',

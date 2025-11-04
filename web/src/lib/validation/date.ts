@@ -8,9 +8,14 @@ export function isOnOrAfterMin(dateStr: string): boolean {
   return dateStr >= MIN_DATE_STR;
 }
 
-export const zDateOnOrAfterMin = z
-  .string()
-  .date()
-  .refine((v) => isOnOrAfterMin(v), {
-    message: `Date must be on or after ${MIN_DATE_STR}`,
-  });
+/**
+ * Factory: returns a Zod string schema that validates an ISO date and enforces >= MIN_DATE_STR with a localized message.
+ */
+export function makeZDateOnOrAfterMin(message: string) {
+  return z
+    .string()
+    .date()
+    .refine((v) => isOnOrAfterMin(v), {
+      message,
+    });
+}

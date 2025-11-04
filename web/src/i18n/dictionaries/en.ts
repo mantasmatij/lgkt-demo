@@ -37,6 +37,16 @@ export const en = {
   requirements_yes: 'Applied',
   requirements_no: 'Not applied',
   },
+  validation: {
+    required: 'This field is required',
+    invalid_email: 'Invalid email address',
+    invalid_url: 'Invalid URL',
+    date_min: 'Date must be on or after 1990-01-01',
+    date_order: 'To date must be the same as or after From date',
+    consent_required: 'Consent is required',
+    gender_total_mismatch: 'Total must equal women + men',
+    phone_min: 'Phone number is too short',
+  },
   fields: {
     company_name: 'Company name',
     company_code: 'Company code',

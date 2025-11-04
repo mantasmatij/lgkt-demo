@@ -29,6 +29,11 @@ export function SelectField({ id, name, label, required, isRequired, children, c
     // Listbox styling
     listbox: cn('p-0 bg-white [&_[role=option]:hover]:bg-gray-100 [&_[role=option][data-hover=true]]:bg-gray-100', userClassNames?.listbox),
   } as SelectProps['classNames'];
+  // Explicit inline error for consistent visibility with external labels
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const inlineError = (rest as any).errorMessage as React.ReactNode | undefined;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const isInvalid = Boolean((rest as any).isInvalid);
   return (
     <div className="flex flex-col">
       <label htmlFor={id} className={"text-black mb-2 " + (labelClassName ?? "font-medium")}>
@@ -46,6 +51,9 @@ export function SelectField({ id, name, label, required, isRequired, children, c
       >
         {children}
       </Select>
+      {isInvalid && inlineError ? (
+        <div className="text-sm text-red-600 mt-2" role="alert">{inlineError}</div>
+      ) : null}
     </div>
   );
 }

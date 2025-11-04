@@ -20,6 +20,11 @@ export function TextareaField({ id, name, label, labelClassName, required, isReq
     label: cn(textareaClassNames.label, userClassNames?.label),
     mainWrapper: cn(textareaClassNames.mainWrapper, userClassNames?.mainWrapper),
   } as TextAreaProps['classNames'];
+  // Explicit inline error for consistent visibility
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const inlineError = (rest as any).errorMessage as React.ReactNode | undefined;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const isInvalid = Boolean((rest as any).isInvalid);
   return (
     <div className="flex flex-col">
       <label htmlFor={id} className={cn("text-black font-medium mb-2", labelClassName)}>
@@ -35,6 +40,9 @@ export function TextareaField({ id, name, label, labelClassName, required, isReq
         classNames={mergedClassNames}
         {...rest}
       />
+      {isInvalid && inlineError ? (
+        <div className="text-sm text-red-600 mt-2" role="alert">{inlineError}</div>
+      ) : null}
     </div>
   );
 }

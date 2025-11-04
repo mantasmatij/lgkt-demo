@@ -4,13 +4,15 @@ import { Card } from '@heroui/react';
 interface ErrorSummaryProps {
   errors: Record<string, string[]>;
   title?: string;
+  /** Optional localized count text renderer, e.g., (n) => `Yra ${n} klaida(-ų) šiame puslapyje.` */
+  countText?: (count: number) => string;
 }
 
 /**
  * Accessible error summary component that displays validation errors
  * and allows keyboard navigation to error fields
  */
-export function ErrorSummary({ errors, title = 'Please correct the following errors:' }: ErrorSummaryProps) {
+export function ErrorSummary({ errors, title = 'Ištaisykite šias klaidas:', countText }: ErrorSummaryProps) {
   const errorEntries = Object.entries(errors).filter(([, messages]) => messages && messages.length > 0);
 
   if (errorEntries.length === 0) {
@@ -18,6 +20,7 @@ export function ErrorSummary({ errors, title = 'Please correct the following err
   }
 
   const errorCount = errorEntries.reduce((sum, [, messages]) => sum + messages.length, 0);
+  const defaultCountText = (n: number) => (n === 1 ? 'Yra 1 klaida šiame puslapyje.' : `Yra ${n} klaidos(-ų) šiame puslapyje.`);
 
   return (
     <Card
@@ -33,9 +36,7 @@ export function ErrorSummary({ errors, title = 'Please correct the following err
       >
         {title}
       </h2>
-      <p className="text-red-800 mb-3">
-        There {errorCount === 1 ? 'is' : 'are'} <strong>{errorCount}</strong> error{errorCount === 1 ? '' : 's'} on this page.
-      </p>
+      <p className="text-red-800 mb-3">{countText ? countText(errorCount) : defaultCountText(errorCount)}</p>
       <ul className="list-disc pl-5 space-y-1">
         {errorEntries.map(([field, messages]) =>
           messages.map((message, idx) => (

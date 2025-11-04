@@ -8,7 +8,7 @@ import { iconButtonClass } from './fields/buttonStyles';
 
 export type MeasureRow = {
   name: string;
-  plannedResult?: string;
+  plannedResult: string;
   indicator?: string;
   indicatorValue?: string;
   indicatorUnit?: string;
@@ -29,7 +29,13 @@ type MeasuresLabels = {
 };
 
 export function MeasuresSection({ value, onChange, labels, topSlot }: { value: MeasureRow[]; onChange: (rows: MeasureRow[]) => void; labels?: MeasuresLabels; topSlot?: React.ReactNode }) {
-  const addRow = () => onChange([...value, { name: '' }]);
+  // Ensure at least one row is visible at all times
+  React.useEffect(() => {
+    if (value.length === 0) {
+      onChange([{ name: '', plannedResult: '' }]);
+    }
+  }, []);
+  const addRow = () => onChange([...value, { name: '', plannedResult: '' }]);
   const removeRow = (idx: number) => onChange(value.filter((_, i) => i !== idx));
   const update = (idx: number, patch: Partial<MeasureRow>) => {
     const next = [...value];
@@ -69,6 +75,7 @@ export function MeasuresSection({ value, onChange, labels, topSlot }: { value: M
                 id={`measure.${idx}.name`}
                 name={`measure.${idx}.name`}
                 label={L.name}
+                isRequired
                 value={row.name}
                 onChange={(e: unknown) => update(idx, { name: (e as React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>).target.value })}
                 minRows={10}
@@ -81,6 +88,7 @@ export function MeasuresSection({ value, onChange, labels, topSlot }: { value: M
                 id={`measure.${idx}.plannedResult`}
                 name={`measure.${idx}.plannedResult`}
                 label={L.planned_result}
+                isRequired
                 value={row.plannedResult ?? ''}
                 onChange={(e: unknown) => update(idx, { plannedResult: (e as React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>).target.value || undefined })}
                 minRows={10}

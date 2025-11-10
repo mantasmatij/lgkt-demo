@@ -66,7 +66,7 @@ export function FormsTable({ items, baseQuery = '' }: Props) {
         <caption className="sr-only">{tadmin('table_caption')}</caption>
         <thead>
           <tr className="text-left bg-gray-50 border-b border-gray-200">
-            <th scope="col" className="py-2 pr-4">{tadmin('table_col_company_name')}</th>
+            <th scope="col" className="py-2 pr-4 pl-6">{tadmin('table_col_company_name')}</th>
             <th scope="col" className="py-2 pr-4">{tadmin('table_col_code')}</th>
             <th scope="col" className="py-2 pr-4">{tadmin('table_col_type')}</th>
             <th scope="col" className="py-2 pr-4">{tadmin('table_col_report_from')}</th>
@@ -88,7 +88,7 @@ export function FormsTable({ items, baseQuery = '' }: Props) {
               aria-label={`Open details for ${f.companyName}`}
               onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onRowClick(f.id); } }}
             >
-              <td className="py-2 pr-4">
+              <td className="py-2 pr-4 pl-6">
                 <span className="text-blue-700 font-medium underline-offset-2 hover:underline" role="link">{f.companyName}</span>
               </td>
               <td className="py-2 pr-4">{f.companyCode}</td>

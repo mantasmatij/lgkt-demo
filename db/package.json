@@ -13,6 +13,7 @@
     "bcryptjs": "^3.0.2"
   },
   "scripts": {
-    "reset:dev": "node scripts/reset-dev-db.js"
+    "reset:dev": "node scripts/reset-dev-db.js",
+    "seed:sample": "node scripts/seed-sample-submissions.js"
   }
 }

@@ -35,8 +35,8 @@ export default function AdminSignInPage() {
         return;
       }
 
-      // Redirect to dashboard on success
-      router.push('/admin/dashboard');
+  // Redirect to forms list on success (default admin landing)
+  router.push('/admin/forms');
     } catch {
       setError(ta('network_error'));
       setLoading(false);

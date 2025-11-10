@@ -64,7 +64,10 @@ export function AttachmentsSection({ value, onChange, labels }: { value: Attachm
     if (!files || files.length === 0) return;
 
     const fileArray = Array.from(files);
-    
+    // Start from the current value snapshot and accumulate locally to avoid
+    // race conditions where async uploads overwrite each other.
+    let nextList: AttachmentRef[] = [...(value || [])];
+
     for (const file of fileArray) {
       const uploadKey = `${Date.now()}-${file.name}`;
       
@@ -89,7 +92,9 @@ export function AttachmentsSection({ value, onChange, labels }: { value: Attachm
           [uploadKey]: { ...prev[uploadKey], progress: 100 }
         }));
 
-        onChange([...(value || []), { type: 'FILE', uploadId: up.uploadId, fileName: up.fileName }]);
+        // Append to local accumulator and emit
+        nextList = [...nextList, { type: 'FILE', uploadId: up.uploadId, fileName: up.fileName }];
+        onChange(nextList);
 
         // Remove from progress tracker after a brief delay
         setTimeout(() => {

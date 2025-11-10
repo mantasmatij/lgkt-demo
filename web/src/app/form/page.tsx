@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { useRouter } from 'next/navigation';
 import { Card, SelectItem } from '@heroui/react';
-import { OrgansSection, GenderBalanceSection, MeasuresSection, AttachmentsSection, ErrorSummary, InputField, TextareaField, CheckboxField, RadioField, SelectField, pillButtonClass } from 'ui';
+import { OrgansSection, GenderBalanceSection, MeasuresSection, AttachmentsSection, InputField, TextareaField, CheckboxField, RadioField, SelectField, pillButtonClass } from 'ui';
 import { useI18n } from '../providers/i18n-provider';
 import { makeCompanyFormSchema, type CompanyFormInput } from '../../lib/validation/companyForm';
 import { COMPANY_TYPE_VALUES, COMPANY_TYPE_LABEL_KEYS, COMPANY_TYPE_FIELD_LABEL_KEY } from '../../lib/constants/companyType';
@@ -103,10 +103,38 @@ export default function PublicFormPage() {
     }
     setSubmitting(true);
     try {
-      const res = await fetch('/api/submitCompanyForm', {
+      // Transform UI form to API submission payload shape
+      const payload = {
+        name: form.name,
+        code: form.code,
+        country: (form as unknown as { country?: string }).country ?? 'LT',
+        companyType: form.companyType,
+        legalForm: form.legalForm,
+        address: form.address,
+        registry: form.registry,
+        eDeliveryAddress: form.eDeliveryAddress,
+        reportingFrom: form.reportingFrom,
+        reportingTo: form.reportingTo,
+        contactName: form.submitter.name,
+        contactEmail: form.submitter.email,
+        contactPhone: form.submitter.phone,
+        requirementsApplied: form.requirementsApplied,
+        requirementsLink: form.requirementsLink,
+        organs: form.organs,
+        genderBalance: form.genderBalance,
+        measures: form.measures,
+        attachments: form.attachments,
+        reasonsForUnderrepresentation: form.reasonsForUnderrepresentation,
+        consent: form.consent,
+        consentText: form.consentText,
+        submitter: form.submitter,
+        captchaToken: form.captchaToken,
+      };
+
+      const res = await fetch('/api/submissions', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
+        body: JSON.stringify(payload),
       });
       if (!res.ok) {
         const err = await res.json().catch(() => ({}));

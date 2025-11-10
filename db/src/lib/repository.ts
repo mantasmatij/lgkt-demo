@@ -7,6 +7,7 @@ export type SubmissionTree = {
     companyCode: string;
     nameAtSubmission: string;
     country: string;
+    companyType?: string | null;
     legalForm?: string | null;
     address?: string | null;
     registry?: string | null;
@@ -47,6 +48,7 @@ export async function createSubmissionTree(tree: SubmissionTree) {
       companyCode: tree.submission.companyCode,
       nameAtSubmission: tree.submission.nameAtSubmission,
       country: tree.submission.country,
+      companyType: tree.submission.companyType ?? null,
       legalForm: tree.submission.legalForm ?? null,
       address: tree.submission.address ?? null,
       registry: tree.submission.registry ?? null,

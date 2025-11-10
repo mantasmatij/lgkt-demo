@@ -8,6 +8,8 @@ import { uploadsRouter } from './routes/uploads';
 import { submissionsRouter } from './routes/submissions';
 import { authRouter } from './routes/auth';
 import { adminSubmissionsRouter } from './routes/admin/submissions';
+import { adminFormsRouter } from './routes/admin/forms';
+import { adminFormDetailsRouter } from './routes/admin/formDetails';
 import { adminCompaniesRouter } from './routes/admin/companies';
 import { adminReportsRouter } from './routes/admin/reports';
 import { healthRouter } from './routes/health';
@@ -50,6 +52,9 @@ export function createApp() {
   app.use('/api/uploads', uploadsRouter);
   app.use('/api/submissions', submissionsRouter);
   app.use('/api/admin/submissions', adminSubmissionsRouter);
+  // Forms list and details
+  app.use('/api/admin/forms', adminFormsRouter);
+  app.use('/api/admin/forms', adminFormDetailsRouter);
   app.use('/api/admin/companies', adminCompaniesRouter);
   app.use('/api/admin/reports', adminReportsRouter);
 

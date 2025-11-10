@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { submissionSchema } from 'validation';
-import { createSubmissionTree, upsertCompany } from 'db';
+// Lazy-load DB to comply with repo rules
+// import { createSubmissionTree, upsertCompany } from 'db';
 import { getUpload, deleteUpload } from '../services/uploadIndex';
 import { getCaptchaVerifier } from '../services/captcha';
 import { submissionLimiter } from '../middleware/rateLimit';
@@ -51,6 +52,7 @@ submissionsRouter.post('/', submissionLimiter, async (req, res, next) => {
         companyCode: input.code,
         nameAtSubmission: input.name,
         country: input.country,
+        companyType: input.companyType,
         legalForm: input.legalForm,
         address: input.address,
         registry: input.registry,
@@ -96,6 +98,7 @@ submissionsRouter.post('/', submissionLimiter, async (req, res, next) => {
     };
 
     // Upsert company record (update with latest submission data)
+    const { upsertCompany, createSubmissionTree } = await import('db');
     await upsertCompany({
       code: input.code,
       name: input.name,

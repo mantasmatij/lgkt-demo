@@ -57,10 +57,20 @@ export function FormsPagination({ page, pageSize, total, onPageChange, onPageSiz
   return (
     <div className="mt-4 flex items-center justify-between">
       <div>
-        <button className="px-3 py-1 border rounded mr-2" aria-label={tadmin('pagination_prev')} disabled={page <= 1} onClick={() => handlePageChange(page - 1)}>
+        <button
+          className="px-3 py-1 border-2 border-black rounded mr-2 bg-black text-white hover:bg-white hover:text-black hover:border-black transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          aria-label={tadmin('pagination_prev')}
+          disabled={page <= 1}
+          onClick={() => handlePageChange(page - 1)}
+        >
           {tadmin('pagination_prev')}
         </button>
-        <button className="px-3 py-1 border rounded" aria-label={tadmin('pagination_next')} disabled={page >= totalPages} onClick={() => handlePageChange(page + 1)}>
+        <button
+          className="px-3 py-1 border-2 border-black rounded bg-black text-white hover:bg-white hover:text-black hover:border-black transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          aria-label={tadmin('pagination_next')}
+          disabled={page >= totalPages}
+          onClick={() => handlePageChange(page + 1)}
+        >
           {tadmin('pagination_next')}
         </button>
         <span className="ml-4 text-sm text-gray-600">

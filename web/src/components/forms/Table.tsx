@@ -61,7 +61,7 @@ export function FormsTable({ items, baseQuery = '' }: Props) {
     return <p className="text-gray-600">{tadmin('table_no_items')}</p>;
   }
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto border-2 border-gray-300 rounded">
       <table className="min-w-full border-collapse">
         <caption className="sr-only">{tadmin('table_caption')}</caption>
         <thead>

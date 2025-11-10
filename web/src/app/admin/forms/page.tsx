@@ -79,6 +79,9 @@ export default async function AdminFormsPage({ searchParams }: { searchParams: P
       )}
       {!unauthenticated && !forbidden && !fetchError && (
         <>
+          <Card className="p-2 mb-4">
+            <FormsPagination page={data.page} pageSize={data.pageSize as 10 | 25 | 50 | 100} total={data.total} />
+          </Card>
           <Card className="p-0 mb-4 overflow-hidden">
             <div className="p-2">
               <FormsTable items={data.items} baseQuery={normalized} />

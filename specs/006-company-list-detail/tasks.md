@@ -20,8 +20,8 @@ Parallel notes: US2 and US3 can proceed in parallel once core company list servi
 
 ## Phase 2: Foundational
 
-- [ ] T007 Implement Drizzle queries for company list in api/src/services/companies.service.ts (search, sort name desc, pagination, filters type/registry)
-- [ ] T008 Implement Drizzle query for single company detail + submissions in api/src/services/companies.service.ts
+- [x] T007 Implement Drizzle queries for company list in api/src/services/companies.service.ts (search, sort name desc, pagination, filters type/registry)
+- [x] T008 Implement Drizzle query for single company detail + submissions in api/src/services/companies.service.ts
 - [ ] T009 Add Zod schemas for company list query params api/src/services/companies.service.ts or shared validation path
 - [ ] T010 Add Zod schemas for company detail and submissions response shapes in api/src/services/companies.service.ts
 - [ ] T011 [P] Extract shared pagination utility if not present into api/src/utils/pagination.ts

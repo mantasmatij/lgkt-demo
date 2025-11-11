@@ -22,8 +22,8 @@ Parallel notes: US2 and US3 can proceed in parallel once core company list servi
 
 - [x] T007 Implement Drizzle queries for company list in api/src/services/companies.service.ts (search, sort name desc, pagination, filters type/registry)
 - [x] T008 Implement Drizzle query for single company detail + submissions in api/src/services/companies.service.ts
-- [ ] T009 Add Zod schemas for company list query params api/src/services/companies.service.ts or shared validation path
-- [ ] T010 Add Zod schemas for company detail and submissions response shapes in api/src/services/companies.service.ts
+- [x] T009 Add Zod schemas for company list query params api/src/services/companies.service.ts or shared validation path
+- [x] T010 Add Zod schemas for company detail and submissions response shapes in api/src/services/companies.service.ts
 - [ ] T011 [P] Extract shared pagination utility if not present into api/src/utils/pagination.ts
 - [ ] T012 [P] Extract shared query param parsing utility for search/filters into api/src/utils/query.ts
 - [ ] T013 Add tests for company service queries api/src/services/__tests__/companies.service.test.ts
@@ -38,7 +38,7 @@ Story Goal: Admin can view companies list with default sort (name desc) and sear
 Independent Test Criteria: Visiting /admin/companies shows descending name order; search returns expected subset; empty state displays when no matches.
 
 - [x] T014 [US1] Extend existing GET /admin/companies to support search (name/code), pagination, and default sort by name desc in api/src/routes/admin/companies.ts
-- [ ] T015 [P] [US1] Map service results to response schema per contract in api/src/routes/admin/companies.ts
+- [x] T015 [P] [US1] Map service results to response schema per contract in api/src/routes/admin/companies.ts
 - [ ] T016 [US1] Implement client fetcher for list web/src/services/companies/list.ts
 - [ ] T017 [P] [US1] Implement Companies list page web/src/app/admin/companies/page.tsx using existing components/forms/Table.tsx and components/forms/Filters.tsx
 - [ ] T018 [P] [US1] Integrate search with URL state web/src/services/forms/urlState.ts (extend or reuse)
@@ -47,15 +47,15 @@ Independent Test Criteria: Visiting /admin/companies shows descending name order
 - [ ] T021 [US1] Add pagination controls integration (reuse existing) web/src/components/forms/Pagination.tsx and web/src/app/admin/companies/page.tsx
 - [ ] T022 [US1] Add basic Jest test for endpoint list ordering api/src/routes/admin/__tests__/companies.list.test.ts
 - [ ] T023 [US1] Add Playwright/Cucumber test scenario for search and empty state web/tests/companies-list.spec.ts
-- [ ] T050 [US1] Replace existing aggregated list response with spec-conforming shape (name, code, type, address, eDelivery) or provide separate /admin/companies/summary; deprecate old shape api/src/routes/admin/companies.ts
+ - [x] T050 [US1] Replace existing aggregated list response with spec-conforming shape (name, code, type, address, eDelivery) or provide separate /admin/companies/summary; deprecate old shape api/src/routes/admin/companies.ts
 
 ## Phase 4: User Story 2 (Filter Companies) [P2]
 
 Story Goal: Admin can apply Company type and Registry filters and combine with search.
 Independent Test Criteria: Applying type or registry shows only matching rows; clearing filters resets list and sort.
 
-- [ ] T024 [US2] Extend GET /admin/companies endpoint to process type & registry query params api/src/routes/admin/companies.ts
-- [ ] T025 [P] [US2] Extend service query to apply filters api/src/services/companies.service.ts
+ - [x] T024 [US2] Extend GET /admin/companies endpoint to process type & registry query params api/src/routes/admin/companies.ts
+ - [x] T025 [P] [US2] Extend service query to apply filters api/src/services/companies.service.ts
 - [ ] T026 [P] [US2] Implement filter controls using existing components/forms/Filters.tsx web/src/app/admin/companies/page.tsx
 - [ ] T027 [US2] Integrate filters with URL state web/src/services/forms/urlState.ts (add type & registry)
 - [ ] T028 [P] [US2] Display active filter chips and clear-all using existing pattern web/src/app/admin/companies/page.tsx

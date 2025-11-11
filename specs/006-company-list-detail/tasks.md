@@ -27,6 +27,10 @@ Parallel notes: US2 and US3 can proceed in parallel once core company list servi
 - [ ] T011 [P] Extract shared pagination utility if not present into api/src/utils/pagination.ts
 - [ ] T012 [P] Extract shared query param parsing utility for search/filters into api/src/utils/query.ts
 - [ ] T013 Add tests for company service queries api/src/services/__tests__/companies.service.test.ts
+- [ ] T047 Create Drizzle migration to add/ensure Company fields: type, legalForm, address, registry, eDeliveryAddress; add indexes on name, code, type, registry db/migrations/*
+- [ ] T048 Update Company schema definitions to include new fields and indexes db/src/lib/*
+- [ ] T049 Wire new fields into service selects and mapping api/src/services/companies.service.ts
+- [ ] T052 Add Jest auth tests for admin endpoints (401/403 when unauthenticated) api/src/routes/admin/__tests__/companies.auth.test.ts
 
 ## Phase 3: User Story 1 (Browse & Search Companies) [P1]
 
@@ -43,6 +47,7 @@ Independent Test Criteria: Visiting /admin/companies shows descending name order
 - [ ] T021 [US1] Add pagination controls integration (reuse existing) web/src/components/forms/Pagination.tsx and web/src/app/admin/companies/page.tsx
 - [ ] T022 [US1] Add basic Jest test for endpoint list ordering api/src/routes/admin/__tests__/companies.list.test.ts
 - [ ] T023 [US1] Add Playwright/Cucumber test scenario for search and empty state web/tests/companies-list.spec.ts
+- [ ] T050 [US1] Replace existing aggregated list response with spec-conforming shape (name, code, type, address, eDelivery) or provide separate /admin/companies/summary; deprecate old shape api/src/routes/admin/companies.ts
 
 ## Phase 4: User Story 2 (Filter Companies) [P2]
 
@@ -56,6 +61,8 @@ Independent Test Criteria: Applying type or registry shows only matching rows; c
 - [ ] T028 [P] [US2] Display active filter chips and clear-all using existing pattern web/src/app/admin/companies/page.tsx
 - [ ] T029 [US2] Add Jest test for filtered results api/src/routes/admin/__tests__/companies.filters.test.ts
 - [ ] T030 [US2] Add Playwright scenario for filter application and clear web/tests/companies-filters.spec.ts
+- [ ] T053 [US2] Implement endpoint or service to supply allowed values for Company type and Registry (from reference data or distinct) api/src/routes/admin/companies.ts
+- [ ] T054 [P] [US2] Populate filter controls with allowed values web/src/app/admin/companies/page.tsx
 
 ## Phase 5: User Story 3 (Company Detail & Submissions) [P3]
 
@@ -91,11 +98,11 @@ Independent Test Criteria: Detail page shows each required field once; submissio
 Implement Phase 3 (US1) only for initial deploy: list view with search, sort, pagination, and empty state.
 
 ## Task Counts
-- Total Tasks: 44
-- US1 Tasks: 10 (T014–T023)
-- US2 Tasks: 7 (T024–T030)
+- Total Tasks: 50
+- US1 Tasks: 11 (T014–T023, T050)
+- US2 Tasks: 9 (T024–T030, T053–T054)
 - US3 Tasks: 9 (T031–T039)
-- Setup + Foundational + Polish: 18
+- Setup + Foundational + Polish: 21
 
 ## Format Validation
 All tasks follow: - [ ] T### optional [P] optional [US#] Description with file path.

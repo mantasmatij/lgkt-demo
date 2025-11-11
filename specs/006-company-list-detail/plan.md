@@ -69,11 +69,12 @@ api/
 
 web/
   src/
-    pages/
+    app/
       admin/
         companies/
-          index.tsx         # Companies list view
-          [companyId].tsx   # Company detail view
+          page.tsx               # Companies list view (App Router)
+        companies/[companyId]/
+          page.tsx               # Company detail view (App Router)
     components/
       tables/
         CompanyTable.tsx    # wraps shared table for company-specific columns
@@ -90,7 +91,7 @@ contracts/
       admin-companies.ts    # generated types from OpenAPI (if applicable)
 ```
 
-**Structure Decision**: Use existing `api` and `web` apps. Implement admin company routes under `api/src/routes/admin/`. Implement list/detail pages under `web/src/pages/admin/companies/`. Reuse existing table, pagination, and filter components/patterns from the form list view to maintain UX consistency.
+**Structure Decision**: Use existing `api` and `web` apps. Implement admin company routes under `api/src/routes/admin/`. Implement list/detail pages using Next.js App Router under `web/src/app/admin/companies/`. Reuse existing table, pagination, and filter components/patterns from the form list view to maintain UX consistency.
 
 ## Complexity Tracking
 

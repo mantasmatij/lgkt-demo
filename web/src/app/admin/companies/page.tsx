@@ -7,6 +7,7 @@ import { headers, cookies } from 'next/headers';
 import { dictionaries, type Locale } from '../../../i18n/dictionaries';
 import { fetchCompanies } from '../../../services/companies/list';
 import { AuthGate } from '../forms/AuthGate';
+import { CompaniesFilters } from '../../../components/companies/Filters';
 
 export default async function AdminCompaniesPage({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
   const spObj = await searchParams;
@@ -68,6 +69,9 @@ export default async function AdminCompaniesPage({ searchParams }: { searchParam
       )}
       {!unauthenticated && !forbidden && !fetchError && (
         <>
+          <Card className="p-4 mb-4">
+            <CompaniesFilters />
+          </Card>
           <Card className="p-2 mb-4">
             <FormsPagination page={data.page} pageSize={data.pageSize as 10 | 25 | 50 | 100} total={data.total} />
           </Card>
@@ -80,11 +84,11 @@ export default async function AdminCompaniesPage({ searchParams }: { searchParam
                   <caption className="sr-only">{tadmin('companies_table_aria')}</caption>
                   <thead>
                     <tr className="text-left bg-gray-50 border-b border-gray-200">
-                      <th className="py-2 pr-4 pl-6">Name</th>
-                      <th className="py-2 pr-4">Code</th>
-                      <th className="py-2 pr-4">Type</th>
-                      <th className="py-2 pr-4">Address</th>
-                      <th className="py-2 pr-4">eDelivery</th>
+                      <th className="py-2 pr-4 pl-6">{dict.admin.companies_columns_company_name}</th>
+                      <th className="py-2 pr-4">{dict.admin.companies_columns_company_code}</th>
+                      <th className="py-2 pr-4">{dict.admin.table_col_type}</th>
+                      <th className="py-2 pr-4">{dict.fields.address}</th>
+                      <th className="py-2 pr-4">{dict.fields.e_delivery_address}</th>
                     </tr>
                   </thead>
                   <tbody>

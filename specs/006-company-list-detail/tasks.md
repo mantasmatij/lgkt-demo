@@ -27,9 +27,9 @@ Parallel notes: US2 and US3 can proceed in parallel once core company list servi
 - [ ] T011 [P] Extract shared pagination utility if not present into api/src/utils/pagination.ts
 - [ ] T012 [P] Extract shared query param parsing utility for search/filters into api/src/utils/query.ts
 - [ ] T013 Add tests for company service queries api/src/services/__tests__/companies.service.test.ts
-- [ ] T047 Create Drizzle migration to add/ensure Company fields: type, legalForm, address, registry, eDeliveryAddress; add indexes on name, code, type, registry db/migrations/*
-- [ ] T048 Update Company schema definitions to include new fields and indexes db/src/lib/*
-- [ ] T049 Wire new fields into service selects and mapping api/src/services/companies.service.ts
+- [x] T047 Create Drizzle migration to add/ensure Company fields: type, legalForm, address, registry, eDeliveryAddress; add indexes on name, code, type, registry db/migrations/*
+- [x] T048 Update Company schema definitions to include new fields and indexes db/src/lib/*
+- [x] T049 Wire new fields into service selects and mapping api/src/services/companies.service.ts
 - [ ] T052 Add Jest auth tests for admin endpoints (401/403 when unauthenticated) api/src/routes/admin/__tests__/companies.auth.test.ts
 
 ## Phase 3: User Story 1 (Browse & Search Companies) [P1]

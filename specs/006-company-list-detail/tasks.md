@@ -37,7 +37,7 @@ Parallel notes: US2 and US3 can proceed in parallel once core company list servi
 Story Goal: Admin can view companies list with default sort (name desc) and search by name/code.
 Independent Test Criteria: Visiting /admin/companies shows descending name order; search returns expected subset; empty state displays when no matches.
 
-- [ ] T014 [US1] Extend existing GET /admin/companies to support search (name/code), pagination, and default sort by name desc in api/src/routes/admin/companies.ts
+- [x] T014 [US1] Extend existing GET /admin/companies to support search (name/code), pagination, and default sort by name desc in api/src/routes/admin/companies.ts
 - [ ] T015 [P] [US1] Map service results to response schema per contract in api/src/routes/admin/companies.ts
 - [ ] T016 [US1] Implement client fetcher for list web/src/services/companies/list.ts
 - [ ] T017 [P] [US1] Implement Companies list page web/src/app/admin/companies/page.tsx using existing components/forms/Table.tsx and components/forms/Filters.tsx

@@ -1,6 +1,7 @@
 import { Router } from 'express';
-import { sql, desc } from 'drizzle-orm';
 import { requireAuth } from '../../middleware/auth';
+import { normalizePage, normalizePageSize } from '../../utils/pagination';
+import { listCompanies } from '../../services/companies.service';
 
 export const adminCompaniesRouter = Router();
 
@@ -9,25 +10,14 @@ adminCompaniesRouter.use(requireAuth);
 
 adminCompaniesRouter.get('/', async (req, res, next) => {
   try {
-    const { getDb, companies, submissions } = await import('db');
-    const db = getDb();
+    const page = normalizePage(Number(req.query.page));
+    const pageSize = normalizePageSize(Number(req.query.pageSize));
+    const search = typeof req.query.search === 'string' ? req.query.search : undefined;
+    const type = typeof req.query.type === 'string' ? req.query.type : undefined;
+    const registry = typeof req.query.registry === 'string' ? req.query.registry : undefined;
 
-    // Aggregate submissions by company code
-    // For each code, get: count, latest submission name, latest submission date
-    const aggregated = await db
-      .select({
-        code: companies.code,
-        name: companies.name,
-        country: companies.country,
-        submissionCount: sql<number>`count(${submissions.id})::int`,
-        latestSubmission: sql<string>`max(${submissions.createdAt})`,
-      })
-      .from(companies)
-      .leftJoin(submissions, sql`${companies.code} = ${submissions.companyCode}`)
-      .groupBy(companies.code, companies.name, companies.country)
-      .orderBy(desc(sql`max(${submissions.createdAt})`));
-
-    return res.json({ items: aggregated });
+    const result = await listCompanies({ page, pageSize, search, sort: 'name:desc', type, registry });
+    return res.json(result);
   } catch (err) {
     return next(err);
   }

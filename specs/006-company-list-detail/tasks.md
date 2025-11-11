@@ -45,8 +45,8 @@ Independent Test Criteria: Visiting /admin/companies shows descending name order
  - [x] T017 [P] [US1] Implement Companies list page web/src/app/admin/companies/page.tsx using existing components/forms/Table.tsx and components/forms/Filters.tsx
  - [x] T018 [P] [US1] Integrate search with URL state web/src/services/forms/urlState.ts (extend or reuse)
  - [x] T019 [P] [US1] Define list columns (name, code, type, address, eDelivery) within page component web/src/app/admin/companies/page.tsx
-- [ ] T020 [US1] Add empty state UI for no results using existing Table empty pattern web/src/app/admin/companies/page.tsx
-- [ ] T021 [US1] Add pagination controls integration (reuse existing) web/src/components/forms/Pagination.tsx and web/src/app/admin/companies/page.tsx
+- [x] T020 [US1] Add empty state UI for no results using existing Table empty pattern web/src/app/admin/companies/page.tsx
+- [x] T021 [US1] Add pagination controls integration (reuse existing) web/src/components/forms/Pagination.tsx and web/src/app/admin/companies/page.tsx
 - [ ] T022 [US1] Add basic Jest test for endpoint list ordering api/src/routes/admin/__tests__/companies.list.test.ts
 - [ ] T023 [US1] Add Playwright/Cucumber test scenario for search and empty state web/tests/companies-list.spec.ts
  - [x] T050 [US1] Replace existing aggregated list response with spec-conforming shape (name, code, type, address, eDelivery) or provide separate /admin/companies/summary; deprecate old shape api/src/routes/admin/companies.ts

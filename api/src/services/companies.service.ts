@@ -22,6 +22,9 @@ export async function listCompanies(query: CompanyListQuery) {
     const q = `%${query.search.trim()}%`;
     whereClauses.push(sql`${companies.name} ILIKE ${q} OR ${companies.code} ILIKE ${q}`);
   }
+  if (query.type) {
+    whereClauses.push(sql`${companies.type} = ${query.type}`);
+  }
   if (query.registry) {
     whereClauses.push(sql`${companies.registry} = ${query.registry}`);
   }
@@ -32,8 +35,9 @@ export async function listCompanies(query: CompanyListQuery) {
     .select({
       id: companies.id,
       name: companies.name,
-      code: companies.code,
-      address: companies.address,
+  code: companies.code,
+  type: companies.type,
+  address: companies.address,
       eDeliveryAddress: companies.eDeliveryAddress,
     })
     .from(companies)
@@ -59,8 +63,9 @@ export async function getCompanyDetail(companyId: string) {
     .select({
       id: companies.id,
       name: companies.name,
-      code: companies.code,
-      legalForm: companies.legalForm,
+  code: companies.code,
+  type: companies.type,
+  legalForm: companies.legalForm,
       address: companies.address,
       registry: companies.registry,
       eDeliveryAddress: companies.eDeliveryAddress,

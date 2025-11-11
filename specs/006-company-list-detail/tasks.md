@@ -14,9 +14,9 @@ Parallel notes: US2 and US3 can proceed in parallel once core company list servi
 ## Phase 1: Setup
 
 - [x] T001 Ensure branch `006-company-list-detail` is checked out
-- [x] T002 Confirm OpenAPI file at specs/006-company-list-detail/contracts/openapi.yaml is valid (lint/parse)
-- [x] T003 Add placeholder company service file api/src/services/companies.service.ts
-- [x] T004 Add companies UI directory web/src/app/admin/companies/
+- [x] T002 Confirm OpenAPI file at specs/006-company-list-detail/contracts/openapi.yaml is valid (lint/parse) (verified presence and schema header)
+- [x] T003 Add placeholder company service file api/src/services/companies.service.ts (scaffolded with list/detail/submissions)
+- [x] T004 Add companies UI directory web/src/app/admin/companies/ (already present)
 
 ## Phase 2: Foundational
 

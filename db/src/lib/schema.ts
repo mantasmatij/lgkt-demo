@@ -5,6 +5,7 @@ export const companies = pgTable('companies', {
   code: text('code').notNull().unique(),
   name: text('name').notNull(),
   country: varchar('country', { length: 2 }).notNull(),
+  type: text('company_type'),
   legalForm: text('legal_form'),
   address: text('address'),
   registry: text('registry'),

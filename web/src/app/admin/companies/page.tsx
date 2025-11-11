@@ -78,7 +78,10 @@ export default async function AdminCompaniesPage({ searchParams }: { searchParam
           <Card className="p-0 mb-4 overflow-hidden">
             <div className="p-2 overflow-x-auto">
               {isEmpty ? (
-                <p className="text-gray-600">{tadmin('no_companies_yet')}</p>
+                <p className="text-gray-600">
+                  {/* If there's any active search/filter param, show a distinct empty message */}
+                  {usp.get('search') ? dict.admin.forms_no_results_filters : tadmin('companies_empty_hint')}
+                </p>
               ) : (
                 <table className="min-w-full border-collapse border-2 border-gray-300 rounded">
                   <caption className="sr-only">{tadmin('companies_table_aria')}</caption>

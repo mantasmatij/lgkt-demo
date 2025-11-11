@@ -38,7 +38,7 @@ An admin wants to narrow down companies using filters to focus on relevant subse
 2. Given one or more filters are active, When filters are cleared in one action, Then the list resets to default sort with no active filters.
 3. Given filters and a search are both used, When either is changed, Then results reflect the combination of all active criteria.
 
-Note: The exact set of filters requires confirmation. See FR-006.
+Filters available in v1: Company type, Registry. See FR-006.
 
 ---
 
@@ -78,8 +78,8 @@ An admin wants to open a company’s detail page to see all company attributes a
   - Acceptance: Activating two filters narrows results to their intersection; using "Clear all" removes all filters and resets sort.
 - FR-005: The Companies list must support pagination with a sensible default page size (assume 25) and allow navigation across pages.
   - Acceptance: With more than 25 results, only 25 are shown per page by default; next/previous controls navigate correctly while preserving search/filters.
-- FR-006: The Companies list must provide filters including [NEEDS CLARIFICATION: Confirm required filters for v1 (e.g., Company type, Registry, Has eDelivery address)].
-  - Acceptance: The agreed filter set is visible as controls; applying each affects results as expected.
+- FR-006: The Companies list must provide filters: Company type and Registry.
+  - Acceptance: Filter controls for Company type and Registry are visible; applying either or both narrows results accordingly and shows active filter chips; clearing filters resets sort and results.
 - FR-007: The Company detail view must display: Company name, Company code, Company type, Legal form, Company address, Registry, eDelivery address.
   - Acceptance: Opening any company shows these fields exactly once with readable labels.
 - FR-008: The Company detail view must include a submissions list for that company with columns: Date from, Date to, Women %, Men %, Requirements applied, Submitter email, Submission date.
@@ -103,6 +103,12 @@ An admin wants to open a company’s detail page to see all company attributes a
 - "Requirements applied" is a yes/no indicator summarizing whether additional requirements were applied in that submission.
 - Terminology normalized to "address" (spelling) and "eDelivery address" for consistency.
 - Admin-only access; audit logging and permissions are handled by existing platform standards.
+
+## Clarifications
+
+### Session 2025-11-11
+
+- Q: Which filters must the Company list include for v1? → A: Company type, Registry
 
 ## Success Criteria *(mandatory)*
 

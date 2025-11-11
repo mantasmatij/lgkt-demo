@@ -13,7 +13,7 @@
 
 ## Requirement Completeness
 
-- [ ] No [NEEDS CLARIFICATION] markers remain
+- [x] No [NEEDS CLARIFICATION] markers remain
 - [x] Requirements are testable and unambiguous
 - [x] Success criteria are measurable
 - [x] Success criteria are technology-agnostic (no implementation details)
@@ -31,8 +31,4 @@
 
 ## Notes
 
-- Failing item: "No [NEEDS CLARIFICATION] markers remain"
-  - Issue: FR-006 contains a clarification placeholder requiring confirmation of the exact filter set.
-  - Quote: "FR-006: The Companies list must provide filters including [NEEDS CLARIFICATION: Confirm required filters for v1 (e.g., Company type, Registry, Has eDelivery address)]."
-
-- Action: Await responses to clarification questions (Q1) before marking complete.
+- Clarifications integrated on 2025-11-11: FR-006 filters confirmed as Company type and Registry. All checklist items pass.

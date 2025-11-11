@@ -41,6 +41,8 @@ Independent Test Criteria: Visiting /admin/companies shows descending name order
 - [x] T015 [P] [US1] Map service results to response schema per contract in api/src/routes/admin/companies.ts
 - [ ] T016 [US1] Implement client fetcher for list web/src/services/companies/list.ts
 - [ ] T017 [P] [US1] Implement Companies list page web/src/app/admin/companies/page.tsx using existing components/forms/Table.tsx and components/forms/Filters.tsx
+ - [x] T016 [US1] Implement client fetcher for list web/src/services/companies/list.ts
+ - [x] T017 [P] [US1] Implement Companies list page web/src/app/admin/companies/page.tsx using existing components/forms/Table.tsx and components/forms/Filters.tsx
 - [ ] T018 [P] [US1] Integrate search with URL state web/src/services/forms/urlState.ts (extend or reuse)
 - [ ] T019 [P] [US1] Define list columns (name, code, type, address, eDelivery) within page component web/src/app/admin/companies/page.tsx
 - [ ] T020 [US1] Add empty state UI for no results using existing Table empty pattern web/src/app/admin/companies/page.tsx

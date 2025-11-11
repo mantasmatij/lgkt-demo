@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { requireAuth } from '../../middleware/auth';
-import { normalizePage, normalizePageSize } from '../../utils/pagination';
 import { listCompanies } from '../../services/companies.service';
+import { CompanyListQuerySchema, CompanyListResponseSchema } from '../../services/companies.schemas';
 
 export const adminCompaniesRouter = Router();
 
@@ -10,14 +10,16 @@ adminCompaniesRouter.use(requireAuth);
 
 adminCompaniesRouter.get('/', async (req, res, next) => {
   try {
-    const page = normalizePage(Number(req.query.page));
-    const pageSize = normalizePageSize(Number(req.query.pageSize));
-    const search = typeof req.query.search === 'string' ? req.query.search : undefined;
-    const type = typeof req.query.type === 'string' ? req.query.type : undefined;
-    const registry = typeof req.query.registry === 'string' ? req.query.registry : undefined;
+    const parsed = CompanyListQuerySchema.safeParse(req.query);
+    if (!parsed.success) {
+      return res.status(400).json({ message: 'Invalid query parameters', issues: parsed.error.issues });
+    }
 
-    const result = await listCompanies({ page, pageSize, search, sort: 'name:desc', type, registry });
-    return res.json(result);
+    const { page, pageSize, search, sort, type, registry } = parsed.data;
+    const result = await listCompanies({ page, pageSize, search, sort, type, registry });
+    // Validate response shape before returning (helps keep API contract stable)
+    const response = CompanyListResponseSchema.parse(result);
+    return res.json(response);
   } catch (err) {
     return next(err);
   }

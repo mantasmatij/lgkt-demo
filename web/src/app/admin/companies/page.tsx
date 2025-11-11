@@ -114,9 +114,14 @@ export default function AdminCompaniesPage() {
                         <TableCell>{company.country}</TableCell>
                         <TableCell>{company.submissionCount}</TableCell>
                         <TableCell>
-                          {company.latestSubmission 
-                            ? new Date(company.latestSubmission).toLocaleDateString()
-                            : ta('not_available')}
+                          {company.latestSubmission ? (() => {
+                            const d = new Date(company.latestSubmission);
+                            if (Number.isNaN(d.getTime())) return ta('not_available');
+                            const y = d.getFullYear();
+                            const m = String(d.getMonth() + 1).padStart(2, '0');
+                            const day = String(d.getDate()).padStart(2, '0');
+                            return `${y}-${m}-${day}`;
+                          })() : ta('not_available')}
                         </TableCell>
                       </TableRow>
                     ))}

@@ -1,5 +1,4 @@
 import { Router } from 'express';
-import { getDb, submissions, companies } from 'db';
 import { and, gte, lte, sql } from 'drizzle-orm';
 import { requireAuth } from '../../middleware/auth';
 import { csvExportLimiter } from '../../middleware/rateLimit';
@@ -22,7 +21,8 @@ adminReportsRouter.get('/export.csv', csvExportLimiter, async (req, res, next) =
       });
     }
 
-    const db = getDb();
+  const { getDb, submissions, companies } = await import('db');
+  const db = getDb();
 
     // Build where conditions
     const conditions = [

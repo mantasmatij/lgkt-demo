@@ -1,5 +1,4 @@
 import { Router } from 'express';
-import { getDb, companies, submissions } from 'db';
 import { sql, desc } from 'drizzle-orm';
 import { requireAuth } from '../../middleware/auth';
 
@@ -10,6 +9,7 @@ adminCompaniesRouter.use(requireAuth);
 
 adminCompaniesRouter.get('/', async (req, res, next) => {
   try {
+    const { getDb, companies, submissions } = await import('db');
     const db = getDb();
 
     // Aggregate submissions by company code

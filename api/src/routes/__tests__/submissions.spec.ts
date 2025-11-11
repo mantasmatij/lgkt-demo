@@ -20,6 +20,7 @@ describe('POST /api/submissions', () => {
       name: 'Acme Ltd',
       code: 'ACME123',
       country: 'LT',
+      companyType: 'LISTED',
       legalForm: 'UAB',
       address: 'Street 1',
       registry: 'Reg',

@@ -1,5 +1,4 @@
 import { Router } from 'express';
-import { getDb, adminUsers } from 'db';
 import { eq } from 'drizzle-orm';
 import { verifyPassword, createSession, cookieOptions, deleteSession, requireAuth } from '../middleware/auth';
 import { authLimiter } from '../middleware/rateLimit';
@@ -14,8 +13,9 @@ authRouter.post('/login', authLimiter, async (req, res, next) => {
       return res.status(400).json({ code: 'VALIDATION_ERROR', message: 'Email and password required' });
     }
 
-    const db = getDb();
-    const [user] = await db.select().from(adminUsers).where(eq(adminUsers.email, email)).limit(1);
+  const { getDb, adminUsers } = await import('db');
+  const db = getDb();
+  const [user] = await db.select().from(adminUsers).where(eq(adminUsers.email, email)).limit(1);
 
     if (!user) {
       return res.status(401).json({ code: 'INVALID_CREDENTIALS', message: 'Invalid email or password' });
@@ -34,7 +34,7 @@ authRouter.post('/login', authLimiter, async (req, res, next) => {
     });
 
     // Update last login
-    await db.update(adminUsers).set({ lastLoginAt: new Date() }).where(eq(adminUsers.id, user.id));
+  await db.update(adminUsers).set({ lastLoginAt: new Date() }).where(eq(adminUsers.id, user.id));
 
     // Set session cookie
     res.cookie('sessionId', sessionId, cookieOptions);

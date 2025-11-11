@@ -21,6 +21,7 @@ export const submissions = pgTable('submissions', {
   companyCode: text('company_code').notNull().references(() => companies.code),
   nameAtSubmission: text('name_at_submission').notNull(),
   country: varchar('country', { length: 2 }).notNull(),
+  companyType: text('company_type'),
   legalForm: text('legal_form'),
   address: text('address'),
   registry: text('registry'),

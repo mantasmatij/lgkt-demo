@@ -1,5 +1,4 @@
 import { Router } from 'express';
-import { getDb } from 'db';
 
 export const healthRouter = Router();
 
@@ -19,6 +18,7 @@ healthRouter.get('/health', (_req, res) => {
  */
 healthRouter.get('/ready', async (_req, res) => {
   try {
+    const { getDb } = await import('db');
     const db = getDb();
     // Simple query to verify DB connection
     await db.execute('SELECT 1 as health');

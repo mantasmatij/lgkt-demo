@@ -1,5 +1,4 @@
 import { Router } from 'express';
-import { getDb, submissions } from 'db';
 import { desc, count } from 'drizzle-orm';
 import { requireAuth } from '../../middleware/auth';
 
@@ -14,7 +13,8 @@ adminSubmissionsRouter.get('/', async (req, res, next) => {
     const limit = parseInt(req.query.limit as string) || 50;
     const offset = (page - 1) * limit;
 
-    const db = getDb();
+  const { getDb, submissions } = await import('db');
+  const db = getDb();
 
     // Get total count
     const [totalResult] = await db.select({ count: count() }).from(submissions);
@@ -30,7 +30,7 @@ adminSubmissionsRouter.get('/', async (req, res, next) => {
         contactEmail: submissions.contactEmail,
         createdAt: submissions.createdAt,
       })
-      .from(submissions)
+  .from(submissions)
       .orderBy(desc(submissions.createdAt))
       .limit(limit)
       .offset(offset);

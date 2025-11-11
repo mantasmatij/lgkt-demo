@@ -1,0 +1,124 @@
+openapi: 3.0.3
+info:
+  title: Admin Forms API
+  version: 1.0.0
+  description: Endpoints for listing and viewing forms in the Admin dashboard.
+servers:
+  - url: https://api.example.com
+paths:
+  /admin/forms:
+    get:
+      summary: List forms
+      description: Returns a paginated list of forms with filtering and sorting.
+      parameters:
+        - in: query
+          name: page
+          schema: { type: integer, minimum: 1, default: 1 }
+          description: Page number (1-based)
+        - in: query
+          name: pageSize
+          schema:
+            type: integer
+            enum: [10, 25, 50, 100]
+            default: 25
+          description: Items per page
+        - in: query
+          name: sortBy
+          schema:
+            type: string
+            enum: [submissionDate, companyName, companyCode, reportPeriodFrom, reportPeriodTo, womenPercent, menPercent]
+            default: submissionDate
+          description: Sort field
+        - in: query
+          name: sortDir
+          schema:
+            type: string
+            enum: [asc, desc]
+            default: desc
+          description: Sort direction
+        - in: query
+          name: company
+          schema: { type: string }
+          description: Matches company name OR code (case-insensitive substring)
+        - in: query
+          name: submissionDateFrom
+          schema: { type: string, format: date }
+          description: Inclusive start (local timezone semantics)
+        - in: query
+          name: submissionDateTo
+          schema: { type: string, format: date }
+          description: Inclusive end (local timezone semantics)
+        - in: query
+          name: reportPeriodFrom
+          schema: { type: string, format: date }
+          description: Overlap filter start (inclusive)
+        - in: query
+          name: reportPeriodTo
+          schema: { type: string, format: date }
+          description: Overlap filter end (inclusive)
+        - in: query
+          name: genderImbalance
+          schema:
+            type: string
+            enum: [outside_33_67]
+          description: Include forms where women% < 33 or > 67 (equivalently men)
+      responses:
+        '200':
+          description: A paginated list of forms
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  page:
+                    type: integer
+                  pageSize:
+                    type: integer
+                  total:
+                    type: integer
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/FormListItem'
+  /admin/forms/{formId}:
+    get:
+      summary: Get form details
+      description: Returns full form details in read-only form.
+      parameters:
+        - in: path
+          name: formId
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: Form details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FormDetails'
+        '404':
+          description: Not found
+components:
+  schemas:
+    FormListItem:
+      type: object
+      properties:
+        id: { type: string }
+        companyName: { type: string }
+        companyCode: { type: string }
+        companyType: { type: string }
+        reportPeriodFrom: { type: string, format: date }
+        reportPeriodTo: { type: string, format: date }
+        womenPercent: { type: number, minimum: 0, maximum: 100 }
+        menPercent: { type: number, minimum: 0, maximum: 100 }
+        requirementsApplied: { type: boolean }
+        submitterEmail: { type: string, format: email }
+        submissionDate: { type: string, format: date-time }
+    FormDetails:
+      allOf:
+        - $ref: '#/components/schemas/FormListItem'
+        - type: object
+          properties:
+            fields:
+              type: object
+              description: Full submitted form fields as key/value pairs

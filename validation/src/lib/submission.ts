@@ -48,6 +48,7 @@ export const submissionSchema = z.object({
   name: z.string().min(1),
   code: z.string().min(1),
   country: z.string().length(2),
+  companyType: z.enum(['LISTED', 'STATE_OWNED', 'LARGE']),
   legalForm: z.string().min(1),
   address: z.string().min(1),
   registry: z.string().min(1),

@@ -71,14 +71,14 @@ Independent Test Criteria: Applying type or registry shows only matching rows; c
 Story Goal: Admin can view all company fields and submissions ordered by submission date desc.
 Independent Test Criteria: Detail page shows each required field once; submissions table respects ordering; empty state shown when none.
 
-- [ ] T031 [US3] Implement GET /admin/companies/:id endpoint in api/src/routes/admin/companies.ts (detail)
-- [ ] T032 [US3] Implement GET /admin/companies/:id/submissions endpoint in api/src/routes/admin/companies.ts (submissions list)
-- [ ] T033 [P] [US3] Implement service methods for detail and submissions api/src/services/companies.service.ts
+- [x] T031 [US3] Implement GET /admin/companies/:id endpoint in api/src/routes/admin/companies.ts (detail)
+- [x] T032 [US3] Implement GET /admin/companies/:id/submissions endpoint in api/src/routes/admin/companies.ts (submissions list)
+- [x] T033 [P] [US3] Implement service methods for detail and submissions api/src/services/companies.service.ts
 - [ ] T034 [US3] Implement client fetchers web/src/services/companies/detail.ts and web/src/services/companies/submissions.ts
 - [ ] T035 [P] [US3] Implement Company detail page web/src/app/admin/companies/[companyId]/page.tsx
 - [ ] T036 [P] [US3] Implement submissions table using existing components/forms/Table.tsx web/src/app/admin/companies/[companyId]/page.tsx
 - [ ] T037 [US3] Add empty state for no submissions web/src/app/admin/companies/[companyId]/page.tsx
-- [ ] T038 [US3] Add Jest tests for detail and submissions endpoints api/src/routes/admin/__tests__/companies.detail.test.ts
+- [x] T038 [US3] Add Jest tests for detail and submissions endpoints api/src/routes/admin/__tests__/companies.detail.test.ts
 - [ ] T039 [US3] Add Playwright scenario for company detail + submissions ordering web/tests/company-detail.spec.ts
 
 ## Phase 6: Polish & Cross-Cutting

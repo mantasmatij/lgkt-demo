@@ -63,8 +63,8 @@ Independent Test Criteria: Applying type or registry shows only matching rows; c
  - [x] T028 [P] [US2] Display active filter chips and clear-all using existing pattern web/src/app/admin/companies/page.tsx
 - [x] T029 [US2] Add Jest test for filtered results api/src/routes/admin/__tests__/companies.filters.test.ts
 - [ ] T030 [US2] Add Playwright scenario for filter application and clear web/tests/companies-filters.spec.ts
-- [ ] T053 [US2] Implement endpoint or service to supply allowed values for Company type and Registry (from reference data or distinct) api/src/routes/admin/companies.ts
-- [ ] T054 [P] [US2] Populate filter controls with allowed values web/src/app/admin/companies/page.tsx
+- [x] T053 [US2] Implement endpoint or service to supply allowed values for Company type and Registry (from reference data or distinct) api/src/routes/admin/companies.ts
+- [x] T054 [P] [US2] Populate filter controls with allowed values web/src/app/admin/companies/page.tsx
 
 ## Phase 5: User Story 3 (Company Detail & Submissions) [P3]
 
@@ -89,7 +89,7 @@ Independent Test Criteria: Detail page shows each required field once; submissio
 - [ ] T043 Accessibility review: table headers and focus states web/src/components/tables/CompanyTable.tsx
 - [ ] T044 Refactor duplicated code into shared utilities api/src/utils/query.ts & web/src/services/companies/
 - [ ] T045 Update README or admin docs referencing new feature README.md
-- [ ] T046 Add monitoring hooks/logging for list/detail access api/src/routes/admin/companies.ts
+- [x] T046 Add monitoring hooks/logging for list/detail access api/src/routes/admin/companies.ts
 
 ## Parallel Execution Examples
 - US1 page implementation (T017) can proceed in parallel with service query extraction (T011, T012) once scaffold exists.

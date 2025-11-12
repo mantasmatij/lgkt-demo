@@ -4,7 +4,11 @@ import { useEffect, useMemo, useState } from 'react';
 import { useI18n } from '../../i18n/LocaleProvider';
 import { COMPANY_TYPE_VALUES, COMPANY_TYPE_LABEL_KEYS } from '../../lib/constants/companyType';
 
-export function CompaniesFilters() {
+type Props = {
+  types?: readonly string[];
+};
+
+export function CompaniesFilters({ types }: Props) {
   const { t } = useI18n();
   const tadmin = t('admin');
   const tfields = t('fields') as unknown as (key: string) => string;
@@ -57,6 +61,8 @@ export function CompaniesFilters() {
     router.push(`?${next.toString()}`);
   };
 
+  const typeOptions: readonly string[] = (types && types.length > 0) ? types : COMPANY_TYPE_VALUES;
+
   return (
     <div className="mb-2">
   <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
@@ -77,9 +83,12 @@ export function CompaniesFilters() {
             onChange={(e) => setType(e.target.value)}
           >
             <option value="">{tadmin('filters_any')}</option>
-            {COMPANY_TYPE_VALUES.map((ct) => (
-              <option key={ct} value={ct}>{tfields(COMPANY_TYPE_LABEL_KEYS[ct])}</option>
-            ))}
+            {typeOptions.map((ct) => {
+              const labelKey = COMPANY_TYPE_LABEL_KEYS[ct as keyof typeof COMPANY_TYPE_LABEL_KEYS];
+              return (
+                <option key={ct} value={ct}>{tfields(labelKey)}</option>
+              );
+            })}
           </select>
         </div>
         <div className="flex items-end">

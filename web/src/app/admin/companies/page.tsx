@@ -10,6 +10,7 @@ import { fetchCompanies } from '../../../services/companies/list';
 import { AuthGate } from '../forms/AuthGate';
 import { COMPANY_TYPE_LABEL_KEYS } from '../../../lib/constants/companyType';
 import { CompaniesFilters } from '../../../components/companies/Filters';
+import { fetchCompanyAllowedValues, type CompaniesAllowedValues } from '../../../services/companies/allowedValues';
 
 export default async function AdminCompaniesPage({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
   const spObj = await searchParams;
@@ -25,10 +26,13 @@ export default async function AdminCompaniesPage({ searchParams }: { searchParam
   let fetchError: { status?: number; body?: unknown } | null = null;
   let data: { items: Array<{ id: string; name: string; code: string; type?: string | null; address?: string | null; eDeliveryAddress?: string | null }>; page: number; pageSize: number; total: number } = { items: [], page: 1, pageSize: 25, total: 0 };
 
+  let allowedValues: CompaniesAllowedValues | null = null;
   try {
     const h = await headers();
     const cookieHeader = h.get('cookie') || '';
     data = await fetchCompanies(query, { headers: { cookie: cookieHeader } });
+    // Fetch allowed values
+    try { allowedValues = await fetchCompanyAllowedValues({ headers: { cookie: cookieHeader } }); } catch { /* non-fatal */ }
   } catch (e: unknown) {
     const err = e as Error & { status?: number; body?: unknown };
     if (err?.status === 401) {
@@ -72,7 +76,8 @@ export default async function AdminCompaniesPage({ searchParams }: { searchParam
       {!unauthenticated && !forbidden && !fetchError && (
         <>
           <Card className="p-4 mb-4">
-            <CompaniesFilters />
+            <CompaniesFilters types={allowedValues?.types}
+            />
           </Card>
           <Card className="p-2 mb-4">
             <FormsPagination page={data.page} pageSize={data.pageSize as 10 | 25 | 50 | 100} total={data.total} />

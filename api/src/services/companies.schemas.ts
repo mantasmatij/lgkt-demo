@@ -55,3 +55,8 @@ export const CompanySubmissionsResponseSchema = z.object({
   pageSize: z.number().int(),
   total: z.number().int().nonnegative(),
 });
+
+export const CompaniesAllowedValuesSchema = z.object({
+  types: z.array(z.string()),
+  registries: z.array(z.string()),
+});

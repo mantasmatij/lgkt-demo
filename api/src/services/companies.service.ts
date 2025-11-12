@@ -138,3 +138,26 @@ export async function listCompanySubmissions(companyId: string, page = 1, pageSi
 
   return { items, page, pageSize, total: count };
 }
+
+export async function listAllowedCompanyValues(): Promise<{ types: string[]; registries: string[] }> {
+  const { getDb, companies } = await import('db');
+  const db = getDb();
+  // Distinct types
+  const typeRows = await db
+    .select({ value: companies.type })
+    .from(companies)
+    .where(sql`${companies.type} IS NOT NULL`)
+    .groupBy(companies.type)
+    .orderBy(companies.type);
+  const registryRows = await db
+    .select({ value: companies.registry })
+    .from(companies)
+    .where(sql`${companies.registry} IS NOT NULL`)
+    .groupBy(companies.registry)
+    .orderBy(companies.registry);
+
+  return {
+    types: typeRows.map((r) => String(r.value)).filter(Boolean),
+    registries: registryRows.map((r) => String(r.value)).filter(Boolean),
+  };
+}

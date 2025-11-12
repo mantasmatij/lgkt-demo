@@ -15,8 +15,8 @@ adminCompaniesRouter.get('/', async (req, res, next) => {
       return res.status(400).json({ message: 'Invalid query parameters', issues: parsed.error.issues });
     }
 
-    const { page, pageSize, search, sort, type, registry } = parsed.data;
-    const result = await listCompanies({ page, pageSize, search, sort, type, registry });
+  const { page, pageSize, search, sort, type } = parsed.data;
+  const result = await listCompanies({ page, pageSize, search, sort, type });
     // Validate response shape before returning (helps keep API contract stable)
     const response = CompanyListResponseSchema.parse(result);
     return res.json(response);

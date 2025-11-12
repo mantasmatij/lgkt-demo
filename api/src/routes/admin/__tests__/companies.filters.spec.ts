@@ -13,7 +13,7 @@ async function canConnectDb(): Promise<boolean> {
   }
 }
 
-describe('GET /api/admin/companies filters (type, registry)', () => {
+describe('GET /api/admin/companies filters (type only)', () => {
   let dbOk = false;
   let pool: ReturnType<Awaited<typeof import('db')>['getPool']>;
   const agent = request.agent(app);
@@ -65,17 +65,5 @@ describe('GET /api/admin/companies filters (type, registry)', () => {
     expect(codes).toEqual(['A1', 'A2']);
   });
 
-  it('filters by registry only', async () => {
-    if (!dbOk) return void it.skip as unknown as void;
-    const res = await agent.get('/api/admin/companies?registry=REG_A').expect(200);
-    const codes = res.body.items.map((i: { code: string }) => i.code).sort();
-    expect(codes).toEqual(['A1', 'B1']);
-  });
-
-  it('filters by type AND registry combined', async () => {
-    if (!dbOk) return void it.skip as unknown as void;
-    const res = await agent.get('/api/admin/companies?type=TYPE_A&registry=REG_B').expect(200);
-    const codes = res.body.items.map((i: { code: string }) => i.code);
-    expect(codes).toEqual(['A2']);
-  });
+  // registry filter removed per product decision; keeping only type filter tests
 });

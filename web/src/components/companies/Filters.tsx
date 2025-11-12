@@ -48,6 +48,9 @@ export function CompaniesFilters() {
   const hasFilters = Boolean(sp.get('search') || sp.get('type'));
 
   const clearAll = () => {
+    // Reset local state first to avoid debounce pushing stale values back
+    setSearch('');
+    setType('');
     const next = new URLSearchParams(sp.toString());
   ['search','type','page'].forEach((k) => next.delete(k));
     next.set('page','1');

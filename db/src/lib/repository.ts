@@ -150,6 +150,7 @@ export async function upsertCompany(data: {
   code: string;
   name: string;
   country: string;
+  type?: string | null;
   legalForm?: string | null;
   address?: string | null;
   registry?: string | null;
@@ -170,6 +171,7 @@ export async function upsertCompany(data: {
       .set({
         name: data.name,
         country: data.country,
+        type: data.type ?? null,
         legalForm: data.legalForm ?? null,
         address: data.address ?? null,
         registry: data.registry ?? null,
@@ -190,6 +192,7 @@ export async function upsertCompany(data: {
         code: data.code,
         name: data.name,
         country: data.country,
+        type: data.type ?? null,
         legalForm: data.legalForm ?? null,
         address: data.address ?? null,
         registry: data.registry ?? null,

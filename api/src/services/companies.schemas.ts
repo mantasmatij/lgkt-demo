@@ -8,7 +8,7 @@ export const CompanyListQuerySchema = z.object({
   search: z.string().max(100).trim().optional(),
   sort: z.literal('name:desc').default('name:desc').optional(),
   type: z.string().trim().optional(),
-  registry: z.string().trim().optional(),
+  // registry removed per updated product decision
 });
 
 export const CompanyListItemSchema = z.object({

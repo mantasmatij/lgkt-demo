@@ -99,10 +99,11 @@ submissionsRouter.post('/', submissionLimiter, async (req, res, next) => {
 
     // Upsert company record (update with latest submission data)
     const { upsertCompany, createSubmissionTree } = await import('db');
-    await upsertCompany({
+      await upsertCompany({
       code: input.code,
       name: input.name,
       country: input.country,
+        type: input.companyType ?? null,
       legalForm: input.legalForm,
       address: input.address,
       registry: input.registry,

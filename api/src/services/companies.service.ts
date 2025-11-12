@@ -6,11 +6,10 @@ export type CompanyListQuery = {
   search?: string; // matches name or code (case-insensitive substring)
   sort?: 'name:desc';
   type?: string;
-  registry?: string;
 };
 
 export async function listCompanies(query: CompanyListQuery) {
-  const { getDb, companies } = await import('db');
+  const { getDb, companies, submissions } = await import('db');
   const db = getDb();
   const page = Math.max(1, query.page ?? 1);
   const pageSize = [10, 25, 50].includes(query.pageSize ?? 25) ? (query.pageSize ?? 25) : 25;
@@ -23,11 +22,10 @@ export async function listCompanies(query: CompanyListQuery) {
     whereClauses.push(sql`${companies.name} ILIKE ${q} OR ${companies.code} ILIKE ${q}`);
   }
   if (query.type) {
-    whereClauses.push(sql`${companies.type} = ${query.type}`);
+    const derivedType = sql`COALESCE(${companies.type}, (SELECT ${submissions.companyType} FROM ${submissions} WHERE ${submissions.companyCode} = ${companies.code} ORDER BY ${submissions.createdAt} DESC LIMIT 1))`;
+    whereClauses.push(sql`${derivedType} = ${query.type}`);
   }
-  if (query.registry) {
-    whereClauses.push(sql`${companies.registry} = ${query.registry}`);
-  }
+  // registry filter removed per product decision
 
   const whereExpr = whereClauses.length ? and(...whereClauses) : undefined;
 
@@ -36,7 +34,8 @@ export async function listCompanies(query: CompanyListQuery) {
       id: companies.id,
       name: companies.name,
   code: companies.code,
-  type: companies.type,
+  // Prefer persisted company type, but fall back to latest submission's companyType
+  type: sql<string>`COALESCE(${companies.type}, (SELECT ${submissions.companyType} FROM ${submissions} WHERE ${submissions.companyCode} = ${companies.code} ORDER BY ${submissions.createdAt} DESC LIMIT 1))`,
   address: companies.address,
       eDeliveryAddress: companies.eDeliveryAddress,
     })

@@ -159,13 +159,13 @@ export default async function AdminCompanyDetailPage({ params, searchParams }: P
                   <tbody>
                     {submissions.items.map((s) => (
                       <tr key={s.id} className="border-b last:border-b-0 border-gray-200">
-                        <td className="py-2 pr-4 pl-6">{s.dateFrom ?? ''}</td>
-                        <td className="py-2 pr-4">{s.dateTo ?? ''}</td>
+                        <td className="py-2 pr-4 pl-6">{s.dateFrom ? new Date(s.dateFrom).toISOString().slice(0,10) : ''}</td>
+                        <td className="py-2 pr-4">{s.dateTo ? new Date(s.dateTo).toISOString().slice(0,10) : ''}</td>
                         <td className="py-2 pr-4">{s.womenPercent}%</td>
                         <td className="py-2 pr-4">{s.menPercent}%</td>
                         <td className="py-2 pr-4">{s.requirementsApplied ? tcommon('yes') : tcommon('no')}</td>
                         <td className="py-2 pr-4">{s.submitterEmail ?? ''}</td>
-                        <td className="py-2 pr-4">{new Date(s.submittedAt).toISOString()}</td>
+                        <td className="py-2 pr-4">{(() => { try { const d = new Date(s.submittedAt); if (isNaN(+d)) return ''; return d.toISOString().replace('T',' ').slice(0,16); } catch { return ''; } })()}</td>
                       </tr>
                     ))}
                   </tbody>

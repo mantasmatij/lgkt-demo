@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { ZodError } from 'zod';
 import { requireAuth } from '../../middleware/auth';
 import { getCompanyDetail, listCompanies, listCompanySubmissions } from '../../services/companies.service';
 import { CompanyDetailSchema, CompanyListResponseSchema, CompanySubmissionsResponseSchema } from '../../services/companies.schemas';
@@ -42,8 +43,21 @@ adminCompaniesRouter.get('/:id/submissions', async (req, res, next) => {
     const page = Number((req.query.page as string) ?? 1);
     const pageSize = Number((req.query.pageSize as string) ?? 25);
     const result = await listCompanySubmissions(id, page, pageSize);
-    const response = CompanySubmissionsResponseSchema.parse(result);
-    return res.json(response);
+    try {
+      const response = CompanySubmissionsResponseSchema.parse(result);
+      return res.json(response);
+    } catch (e) {
+      if (e instanceof ZodError) {
+        // Log validation issues to aid debugging; do not leak to client
+        console.error('[companies/:id/submissions] Zod validation failed', {
+          id,
+          page,
+          pageSize,
+          issues: e.issues,
+        });
+      }
+      throw e;
+    }
   } catch (err) {
     return next(err);
   }

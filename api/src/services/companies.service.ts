@@ -74,16 +74,16 @@ export async function getCompanyDetail(companyId: string) {
 }
 
 export async function listCompanySubmissions(companyId: string, page = 1, pageSize = 25) {
-  const { getDb, companies, submissions, submissionMeta } = await import('db');
+  const { getDb, companies, submissions, submissionMeta, genderBalanceRows } = await import('db');
   const db = getDb();
   const offset = (Math.max(1, page) - 1) * pageSize;
-  const items = await db
+  const rawItems = await db
     .select({
       id: submissions.id,
       dateFrom: submissions.reportingFrom,
       dateTo: submissions.reportingTo,
-      womenPercent: sql<number>`CASE WHEN ${submissions.reportingFrom} IS NULL THEN 0 ELSE 0 END`,
-      menPercent: sql<number>`CASE WHEN ${submissions.reportingFrom} IS NULL THEN 0 ELSE 0 END`,
+      womenSum: sql<number>`COALESCE(SUM(${genderBalanceRows.women}), 0)`,
+      menSum: sql<number>`COALESCE(SUM(${genderBalanceRows.men}), 0)`,
       requirementsApplied: submissions.requirementsApplied,
       submitterEmail: submissionMeta.submitterEmail,
       submittedAt: submissions.createdAt,
@@ -91,10 +91,44 @@ export async function listCompanySubmissions(companyId: string, page = 1, pageSi
     .from(submissions)
     .innerJoin(companies, sql`${companies.code} = ${submissions.companyCode}`)
     .leftJoin(submissionMeta, sql`${submissionMeta.submissionId} = ${submissions.id}`)
+    .leftJoin(genderBalanceRows, sql`${genderBalanceRows.submissionId} = ${submissions.id}`)
     .where(sql`${companies.id} = ${companyId}`)
+    .groupBy(
+      submissions.id,
+      submissions.reportingFrom,
+      submissions.reportingTo,
+      submissions.requirementsApplied,
+      submissionMeta.submitterEmail,
+      submissions.createdAt,
+    )
     .orderBy(desc(submissions.createdAt))
     .limit(pageSize)
     .offset(offset);
+
+  // Normalize dates to ISO strings and sanitize submitterEmail for Zod schema expectations
+  const items = rawItems.map((r) => {
+    const toIso = (v: unknown) => {
+      if (!v) return null;
+      if (typeof v === 'string') return v; // assume already date string like 'YYYY-MM-DD'
+      if (v instanceof Date) return v.toISOString();
+      try { const d = new Date(String(v)); return isNaN(+d) ? null : d.toISOString(); } catch { return null; }
+    };
+    const email = (r.submitterEmail && /[^@\s]+@[^@\s]+\.[^@\s]+/.test(r.submitterEmail)) ? r.submitterEmail : null;
+    const women = Number(r.womenSum ?? 0);
+    const men = Number(r.menSum ?? 0);
+    const total = women + men;
+    const womenPercent = total > 0 ? Math.round((women * 100) / total) : 0;
+    const menPercent = total > 0 ? (100 - womenPercent) : 0;
+    return {
+      ...r,
+      womenPercent,
+      menPercent,
+      dateFrom: toIso(r.dateFrom),
+      dateTo: toIso(r.dateTo),
+      submitterEmail: email,
+      submittedAt: toIso(r.submittedAt) ?? new Date().toISOString(),
+    };
+  });
 
   const [{ count }] = await db
     .select({ count: sql<number>`count(${submissions.id})::int` })

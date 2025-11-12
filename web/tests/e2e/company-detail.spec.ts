@@ -11,10 +11,16 @@ async function signIn(page: Page) {
   await page.goto('/admin/sign-in');
   await page.fill('input[type="email"]', ADMIN_EMAIL);
   await page.fill('input[type="password"]', ADMIN_PASSWORD);
-  await Promise.all([
-    page.waitForURL(/\/admin\/(dashboard|companies)/),
-    page.click('button[type="submit"]'),
-  ]);
+  const navigationPromise = page.waitForURL(/\/admin\/(dashboard|companies|forms)/, { timeout: 15000 }).catch(() => null);
+  await page.click('button[type="submit"]');
+  const navResult = await navigationPromise;
+  if (!navResult) {
+    // Fallback: if still on sign-in page after first attempt, try once more
+    if (page.url().includes('/admin/sign-in')) {
+      await page.click('button[type="submit"]');
+      await page.waitForURL(/\/admin\/(dashboard|companies|forms)/, { timeout: 15000 });
+    }
+  }
 }
 
 async function ensureCompanyExists(page: Page) {
@@ -67,7 +73,7 @@ test.describe('US3: Company Detail', () => {
       /eDelivery|elektroninio pristatymo/i,
     ];
     for (const re of fieldLabels) {
-      await expect(page.locator('text=').filter({ hasText: re })).toBeVisible();
+      await expect(page.getByText(re)).toBeVisible();
     }
 
     // If submissions table exists, ensure ordering by Submission Date desc

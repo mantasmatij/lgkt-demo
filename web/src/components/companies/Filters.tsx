@@ -14,7 +14,6 @@ export function CompaniesFilters() {
 
   const [search, setSearch] = useState(sp.get('search') || '');
   const [type, setType] = useState(sp.get('type') || '');
-  const [registry, setRegistry] = useState(sp.get('registry') || '');
 
   const pushWith = (updates: Record<string, string | null>) => {
     const next = new URLSearchParams(sp.toString());
@@ -44,25 +43,20 @@ export function CompaniesFilters() {
       pushWith({ type: type || null });
     }
   }, [type, sp]);
-  useEffect(() => {
-    const currentRegistry = sp.get('registry') || '';
-    if (registry !== currentRegistry) {
-      pushWith({ registry: registry || null });
-    }
-  }, [registry, sp]);
+  // no registry filter per product decision
 
-  const hasFilters = Boolean(sp.get('search') || sp.get('type') || sp.get('registry'));
+  const hasFilters = Boolean(sp.get('search') || sp.get('type'));
 
   const clearAll = () => {
     const next = new URLSearchParams(sp.toString());
-    ['search','type','registry','page'].forEach((k) => next.delete(k));
+  ['search','type','page'].forEach((k) => next.delete(k));
     next.set('page','1');
     router.push(`?${next.toString()}`);
   };
 
   return (
     <div className="mb-2">
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
         <div>
           <label className="block text-base font-medium">{tadmin('filters_company')}</label>
           <input
@@ -84,15 +78,6 @@ export function CompaniesFilters() {
               <option key={ct} value={ct}>{tfields(COMPANY_TYPE_LABEL_KEYS[ct])}</option>
             ))}
           </select>
-        </div>
-        <div>
-          <label className="block text-base font-medium">{tfields('registry')}</label>
-          <input
-            className="border-2 rounded px-2 py-1 w-full"
-            placeholder={tfields('registry')}
-            value={registry}
-            onChange={(e) => setRegistry(e.target.value)}
-          />
         </div>
         <div className="flex items-end">
           {hasFilters && (
@@ -131,17 +116,7 @@ export function CompaniesFilters() {
               >×</button>
             </span>
           )}
-          {registry && (
-            <span className="inline-flex items-center gap-1 bg-purple-50 text-purple-800 px-2 py-1 rounded text-sm">
-              {tfields('registry')}: <strong>{registry}</strong>
-              <button
-                type="button"
-                aria-label="Remove registry filter"
-                className="ml-1 text-purple-600 hover:text-purple-900"
-                onClick={() => { setRegistry(''); pushWith({ registry: null }); }}
-              >×</button>
-            </span>
-          )}
+          {/* registry chip removed */}
         </div>
       )}
     </div>

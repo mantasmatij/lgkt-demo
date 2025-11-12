@@ -7,6 +7,7 @@ import { headers, cookies } from 'next/headers';
 import { dictionaries, type Locale } from '../../../i18n/dictionaries';
 import { fetchCompanies } from '../../../services/companies/list';
 import { AuthGate } from '../forms/AuthGate';
+import { COMPANY_TYPE_LABEL_KEYS } from '../../../lib/constants/companyType';
 import { CompaniesFilters } from '../../../components/companies/Filters';
 
 export default async function AdminCompaniesPage({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
@@ -95,15 +96,19 @@ export default async function AdminCompaniesPage({ searchParams }: { searchParam
                     </tr>
                   </thead>
                   <tbody>
-                    {data.items.map((c) => (
+                    {data.items.map((c) => {
+                      const typeKey = c.type as keyof typeof COMPANY_TYPE_LABEL_KEYS | undefined;
+                      const labelKey = typeKey && COMPANY_TYPE_LABEL_KEYS[typeKey];
+                      const typeLabel = labelKey ? (dict.fields as Record<string,string>)[labelKey] : (c.type ?? '');
+                      return (
                       <tr key={c.id} className="border-b last:border-b-0 border-gray-200">
                         <td className="py-2 pr-4 pl-6">{c.name}</td>
                         <td className="py-2 pr-4">{c.code}</td>
-                        <td className="py-2 pr-4">{c.type ?? ''}</td>
+                        <td className="py-2 pr-4">{typeLabel}</td>
                         <td className="py-2 pr-4">{c.address ?? ''}</td>
                         <td className="py-2 pr-4">{c.eDeliveryAddress ?? ''}</td>
                       </tr>
-                    ))}
+                    );})}
                   </tbody>
                 </table>
               )}

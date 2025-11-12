@@ -147,13 +147,13 @@ export default async function AdminCompanyDetailPage({ params, searchParams }: P
                   <caption className="sr-only">{tadmin('submissions_table_aria')}</caption>
                   <thead>
                     <tr className="text-left bg-gray-50 border-b border-gray-200">
-                      <th className="py-2 pr-4 pl-6">{tadmin('table_col_report_from')}</th>
-                      <th className="py-2 pr-4">{tadmin('table_col_report_to')}</th>
-                      <th className="py-2 pr-4">{tadmin('table_col_women_pct')}</th>
-                      <th className="py-2 pr-4">{tadmin('table_col_men_pct')}</th>
-                      <th className="py-2 pr-4">{tadmin('table_col_requirements_applied')}</th>
-                      <th className="py-2 pr-4">{tadmin('table_col_submitter_email')}</th>
-                      <th className="py-2 pr-4">{tadmin('table_col_submission_date')}</th>
+                      <th scope="col" className="py-2 pr-4 pl-6">{tadmin('table_col_report_from')}</th>
+                      <th scope="col" className="py-2 pr-4">{tadmin('table_col_report_to')}</th>
+                      <th scope="col" className="py-2 pr-4">{tadmin('table_col_women_pct')}</th>
+                      <th scope="col" className="py-2 pr-4">{tadmin('table_col_men_pct')}</th>
+                      <th scope="col" className="py-2 pr-4">{tadmin('table_col_requirements_applied')}</th>
+                      <th scope="col" className="py-2 pr-4">{tadmin('table_col_submitter_email')}</th>
+                      <th scope="col" className="py-2 pr-4">{tadmin('table_col_submission_date')}</th>
                     </tr>
                   </thead>
                   <tbody>

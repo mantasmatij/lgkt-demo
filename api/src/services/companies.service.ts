@@ -74,7 +74,7 @@ export async function getCompanyDetail(companyId: string) {
 }
 
 export async function listCompanySubmissions(companyId: string, page = 1, pageSize = 25) {
-  const { getDb, companies, submissions } = await import('db');
+  const { getDb, companies, submissions, submissionMeta } = await import('db');
   const db = getDb();
   const offset = (Math.max(1, page) - 1) * pageSize;
   const items = await db
@@ -85,11 +85,12 @@ export async function listCompanySubmissions(companyId: string, page = 1, pageSi
       womenPercent: sql<number>`CASE WHEN ${submissions.reportingFrom} IS NULL THEN 0 ELSE 0 END`,
       menPercent: sql<number>`CASE WHEN ${submissions.reportingFrom} IS NULL THEN 0 ELSE 0 END`,
       requirementsApplied: submissions.requirementsApplied,
-      submitterEmail: sql<string>`(SELECT ${companies.primaryContactEmail} FROM ${companies} WHERE ${companies.code} = ${submissions.companyCode})`,
+      submitterEmail: submissionMeta.submitterEmail,
       submittedAt: submissions.createdAt,
     })
     .from(submissions)
     .innerJoin(companies, sql`${companies.code} = ${submissions.companyCode}`)
+    .leftJoin(submissionMeta, sql`${submissionMeta.submissionId} = ${submissions.id}`)
     .where(sql`${companies.id} = ${companyId}`)
     .orderBy(desc(submissions.createdAt))
     .limit(pageSize)

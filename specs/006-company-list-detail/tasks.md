@@ -58,9 +58,9 @@ Independent Test Criteria: Applying type or registry shows only matching rows; c
 
  - [x] T024 [US2] Extend GET /admin/companies endpoint to process type & registry query params api/src/routes/admin/companies.ts
  - [x] T025 [P] [US2] Extend service query to apply filters api/src/services/companies.service.ts
-- [ ] T026 [P] [US2] Implement filter controls using existing components/forms/Filters.tsx web/src/app/admin/companies/page.tsx
-- [ ] T027 [US2] Integrate filters with URL state web/src/services/forms/urlState.ts (add type & registry)
-- [ ] T028 [P] [US2] Display active filter chips and clear-all using existing pattern web/src/app/admin/companies/page.tsx
+ - [x] T026 [P] [US2] Implement filter controls using existing components/forms/Filters.tsx web/src/app/admin/companies/page.tsx
+ - [x] T027 [US2] Integrate filters with URL state web/src/services/forms/urlState.ts (add type & registry)
+ - [x] T028 [P] [US2] Display active filter chips and clear-all using existing pattern web/src/app/admin/companies/page.tsx
 - [x] T029 [US2] Add Jest test for filtered results api/src/routes/admin/__tests__/companies.filters.test.ts
 - [ ] T030 [US2] Add Playwright scenario for filter application and clear web/tests/companies-filters.spec.ts
 - [ ] T053 [US2] Implement endpoint or service to supply allowed values for Company type and Registry (from reference data or distinct) api/src/routes/admin/companies.ts

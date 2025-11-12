@@ -30,7 +30,7 @@ Parallel notes: US2 and US3 can proceed in parallel once core company list servi
 - [x] T047 Create Drizzle migration to add/ensure Company fields: type, legalForm, address, registry, eDeliveryAddress; add indexes on name, code, type, registry db/migrations/*
 - [x] T048 Update Company schema definitions to include new fields and indexes db/src/lib/*
 - [x] T049 Wire new fields into service selects and mapping api/src/services/companies.service.ts
-- [ ] T052 Add Jest auth tests for admin endpoints (401/403 when unauthenticated) api/src/routes/admin/__tests__/companies.auth.test.ts
+- [x] T052 Add Jest auth tests for admin endpoints (401/403 when unauthenticated) api/src/routes/admin/__tests__/companies.auth.test.ts
 
 ## Phase 3: User Story 1 (Browse & Search Companies) [P1]
 
@@ -47,7 +47,7 @@ Independent Test Criteria: Visiting /admin/companies shows descending name order
  - [x] T019 [P] [US1] Define list columns (name, code, type, address, eDelivery) within page component web/src/app/admin/companies/page.tsx
 - [x] T020 [US1] Add empty state UI for no results using existing Table empty pattern web/src/app/admin/companies/page.tsx
 - [x] T021 [US1] Add pagination controls integration (reuse existing) web/src/components/forms/Pagination.tsx and web/src/app/admin/companies/page.tsx
-- [ ] T022 [US1] Add basic Jest test for endpoint list ordering api/src/routes/admin/__tests__/companies.list.test.ts
+- [x] T022 [US1] Add basic Jest test for endpoint list ordering api/src/routes/admin/__tests__/companies.list.test.ts
 - [ ] T023 [US1] Add Playwright/Cucumber test scenario for search and empty state web/tests/companies-list.spec.ts
  - [x] T050 [US1] Replace existing aggregated list response with spec-conforming shape (name, code, type, address, eDelivery) or provide separate /admin/companies/summary; deprecate old shape api/src/routes/admin/companies.ts
 
@@ -61,7 +61,7 @@ Independent Test Criteria: Applying type or registry shows only matching rows; c
 - [ ] T026 [P] [US2] Implement filter controls using existing components/forms/Filters.tsx web/src/app/admin/companies/page.tsx
 - [ ] T027 [US2] Integrate filters with URL state web/src/services/forms/urlState.ts (add type & registry)
 - [ ] T028 [P] [US2] Display active filter chips and clear-all using existing pattern web/src/app/admin/companies/page.tsx
-- [ ] T029 [US2] Add Jest test for filtered results api/src/routes/admin/__tests__/companies.filters.test.ts
+- [x] T029 [US2] Add Jest test for filtered results api/src/routes/admin/__tests__/companies.filters.test.ts
 - [ ] T030 [US2] Add Playwright scenario for filter application and clear web/tests/companies-filters.spec.ts
 - [ ] T053 [US2] Implement endpoint or service to supply allowed values for Company type and Registry (from reference data or distinct) api/src/routes/admin/companies.ts
 - [ ] T054 [P] [US2] Populate filter controls with allowed values web/src/app/admin/companies/page.tsx

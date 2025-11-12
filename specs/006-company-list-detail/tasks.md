@@ -24,9 +24,9 @@ Parallel notes: US2 and US3 can proceed in parallel once core company list servi
 - [x] T008 Implement Drizzle query for single company detail + submissions in api/src/services/companies.service.ts
 - [x] T009 Add Zod schemas for company list query params api/src/services/companies.service.ts or shared validation path
 - [x] T010 Add Zod schemas for company detail and submissions response shapes in api/src/services/companies.service.ts
-- [ ] T011 [P] Extract shared pagination utility if not present into api/src/utils/pagination.ts
-- [ ] T012 [P] Extract shared query param parsing utility for search/filters into api/src/utils/query.ts
-- [ ] T013 Add tests for company service queries api/src/services/__tests__/companies.service.test.ts
+- [x] T011 [P] Extract shared pagination utility if not present into api/src/utils/pagination.ts
+- [x] T012 [P] Extract shared query param parsing utility for search/filters into api/src/utils/query.ts
+- [x] T013 Add tests for company service queries api/src/services/__tests__/companies.service.test.ts
 - [x] T047 Create Drizzle migration to add/ensure Company fields: type, legalForm, address, registry, eDeliveryAddress; add indexes on name, code, type, registry db/migrations/*
 - [x] T048 Update Company schema definitions to include new fields and indexes db/src/lib/*
 - [x] T049 Wire new fields into service selects and mapping api/src/services/companies.service.ts

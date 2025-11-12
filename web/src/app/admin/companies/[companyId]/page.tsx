@@ -28,29 +28,31 @@ export default async function AdminCompanyDetailPage({ params, searchParams }: P
 
   let forbidden = false;
   let unauthenticated = false;
-  let fetchError: { status?: number; body?: unknown } | null = null;
+  let detailError: { status?: number; body?: unknown } | null = null;
+  let submissionsError: { status?: number; body?: unknown } | null = null;
 
   let detail: Awaited<ReturnType<typeof fetchCompanyDetail>> | null = null;
   let submissions: Awaited<ReturnType<typeof fetchCompanySubmissions>> = { items: [], page: 1, pageSize: 25, total: 0 };
 
+  const h = await headers();
+  const cookieHeader = h.get('cookie') || '';
+  const init = { headers: { cookie: cookieHeader } } as RequestInit;
+  // Fetch detail first to decide page rendering
   try {
-    const h = await headers();
-    const cookieHeader = h.get('cookie') || '';
-    const init = { headers: { cookie: cookieHeader } } as RequestInit;
-    // Fetch detail first (for 404 handling), then submissions
     detail = await fetchCompanyDetail(companyId, init);
-    submissions = await fetchCompanySubmissions(companyId, qs, init);
   } catch (e: unknown) {
     const err = e as Error & { status?: number; body?: unknown };
-    if (err?.status === 401) {
-      unauthenticated = true;
-    } else if (err?.status === 403) {
-      forbidden = true;
-    } else if (err?.status === 404) {
-      fetchError = { status: 404, body: { message: 'Not found' } };
-    } else {
-      const withBody = err as { body?: unknown };
-      fetchError = { status: err?.status, body: withBody?.body };
+    if (err?.status === 401) unauthenticated = true;
+    else if (err?.status === 403) forbidden = true;
+    else detailError = { status: err?.status, body: (err as { body?: unknown })?.body };
+  }
+  // Fetch submissions independently; don't block detail rendering
+  if (!unauthenticated && !forbidden) {
+    try {
+      submissions = await fetchCompanySubmissions(companyId, qs, init);
+    } catch (e: unknown) {
+      const err = e as Error & { status?: number; body?: unknown };
+      submissionsError = { status: err?.status, body: (err as { body?: unknown })?.body };
     }
   }
 
@@ -86,14 +88,14 @@ export default async function AdminCompanyDetailPage({ params, searchParams }: P
           You’re not signed in. Redirecting to sign-in…
         </div>
       )}
-      {fetchError && !forbidden && !unauthenticated && (
+      {detailError && !forbidden && !unauthenticated && (
         <div className="mb-4 p-3 border border-red-300 bg-red-50 text-red-800 rounded flex items-center">
-          <span>Failed to load company{fetchError.status ? ` (status ${fetchError.status})` : ''}. Try again or contact support.</span>
+          <span>Failed to load company{detailError.status ? ` (status ${detailError.status})` : ''}. Try again or contact support.</span>
           <RetryButton />
         </div>
       )}
 
-      {!unauthenticated && !forbidden && !fetchError && detail && (
+      {!unauthenticated && !forbidden && !detailError && detail && (
         <>
           <Card className="p-4 mb-4">
             <h2 className="text-xl font-semibold mb-3">{tadmin('companies_title')}</h2>
@@ -131,6 +133,12 @@ export default async function AdminCompanyDetailPage({ params, searchParams }: P
 
           <Card className="p-4 mb-4">
             <h2 className="text-xl font-semibold mb-3">{tadmin('submissions_table_aria')}</h2>
+            {submissionsError && (
+              <div className="mb-3 p-3 border border-red-300 bg-red-50 text-red-800 rounded flex items-center">
+                <span>Failed to load submissions{submissionsError.status ? ` (status ${submissionsError.status})` : ''}.</span>
+                <RetryButton />
+              </div>
+            )}
             <div className="p-2 overflow-x-auto">
               {submissions.items.length === 0 ? (
                 <p className="text-gray-600">{tadmin('no_submissions_yet')}</p>

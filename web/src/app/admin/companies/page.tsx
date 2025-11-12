@@ -1,6 +1,7 @@
 export const dynamic = 'force-dynamic';
 
 import { Card } from '@heroui/react';
+import Link from 'next/link';
 import { RetryButton } from '../../../components/forms/RetryButton';
 import { FormsPagination } from '../../../components/forms/Pagination';
 import { headers, cookies } from 'next/headers';
@@ -102,7 +103,11 @@ export default async function AdminCompaniesPage({ searchParams }: { searchParam
                       const typeLabel = labelKey ? (dict.fields as Record<string,string>)[labelKey] : (c.type ?? '');
                       return (
                       <tr key={c.id} className="border-b last:border-b-0 border-gray-200">
-                        <td className="py-2 pr-4 pl-6">{c.name}</td>
+                        <td className="py-2 pr-4 pl-6">
+                          <Link href={`/admin/companies/${c.id}`} className="underline hover:no-underline focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600">
+                            {c.name}
+                          </Link>
+                        </td>
                         <td className="py-2 pr-4">{c.code}</td>
                         <td className="py-2 pr-4">{typeLabel}</td>
                         <td className="py-2 pr-4">{c.address ?? ''}</td>

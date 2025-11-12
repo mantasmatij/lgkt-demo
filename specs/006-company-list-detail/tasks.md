@@ -39,8 +39,8 @@ Independent Test Criteria: Visiting /admin/companies shows descending name order
 
 - [x] T014 [US1] Extend existing GET /admin/companies to support search (name/code), pagination, and default sort by name desc in api/src/routes/admin/companies.ts
 - [x] T015 [P] [US1] Map service results to response schema per contract in api/src/routes/admin/companies.ts
-- [ ] T016 [US1] Implement client fetcher for list web/src/services/companies/list.ts
-- [ ] T017 [P] [US1] Implement Companies list page web/src/app/admin/companies/page.tsx using existing components/forms/Table.tsx and components/forms/Filters.tsx
+- [x] T016 [US1] Implement client fetcher for list web/src/services/companies/list.ts
+- [x] T017 [P] [US1] Implement Companies list page web/src/app/admin/companies/page.tsx using existing components/forms/Table.tsx and components/forms/Filters.tsx
  - [x] T016 [US1] Implement client fetcher for list web/src/services/companies/list.ts
  - [x] T017 [P] [US1] Implement Companies list page web/src/app/admin/companies/page.tsx using existing components/forms/Table.tsx and components/forms/Filters.tsx
  - [x] T018 [P] [US1] Integrate search with URL state web/src/services/forms/urlState.ts (extend or reuse)
@@ -83,8 +83,8 @@ Independent Test Criteria: Detail page shows each required field once; submissio
 
 ## Phase 6: Polish & Cross-Cutting
 
-- [ ] T040 Add loading states for list and detail views web/src/app/admin/companies/page.tsx & web/src/app/admin/companies/[companyId]/page.tsx
-- [ ] T041 Add error boundary or retry logic using existing RetryButton web/src/components/forms/RetryButton.tsx
+- [x] T040 Add loading states for list and detail views web/src/app/admin/companies/page.tsx & web/src/app/admin/companies/[companyId]/page.tsx
+- [x] T041 Add error boundary or retry logic using existing RetryButton web/src/components/forms/RetryButton.tsx
 - [ ] T042 Performance review: confirm queries use indexes and efficient pagination api/src/services/companies.service.ts
 - [ ] T043 Accessibility review: table headers and focus states web/src/components/tables/CompanyTable.tsx
 - [ ] T044 Refactor duplicated code into shared utilities api/src/utils/query.ts & web/src/services/companies/

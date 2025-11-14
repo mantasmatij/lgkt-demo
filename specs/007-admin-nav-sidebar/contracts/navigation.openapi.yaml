@@ -1,0 +1,80 @@
+openapi: 3.1.0
+info:
+  title: Admin Navigation & Preferences API
+  version: 0.1.0
+  description: Endpoints supporting admin sidebar navigation items and preference persistence (optional for future persistence).
+servers:
+  - url: https://api.example.com
+paths:
+  /admin/navigation:
+    get:
+      summary: List admin navigation items
+      tags: [admin-navigation]
+      responses:
+        '200':
+          description: Navigation items
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id: { type: string }
+                        label: { type: string }
+                        route: { type: string }
+                        icon: { type: string }
+                        order: { type: integer }
+                        roles:
+                          type: array
+                          items: { type: string }
+                        activeMatch: { type: string }
+                  generatedAt: { type: string, format: date-time }
+  /admin/preferences/sidebar-state:
+    post:
+      summary: Persist sidebar collapsed state for user session (optional)
+      tags: [admin-preferences]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [ collapsed ]
+              properties:
+                collapsed: { type: boolean }
+      responses:
+        '204':
+          description: State accepted
+        '400':
+          description: Invalid payload
+  /admin/preferences/language:
+    post:
+      summary: Update language preference
+      tags: [admin-preferences]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [ code ]
+              properties:
+                code:
+                  type: string
+                  description: Locale code (e.g., en, lt)
+      responses:
+        '204':
+          description: Language updated
+        '400':
+          description: Unsupported locale code
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+security:
+  - bearerAuth: []

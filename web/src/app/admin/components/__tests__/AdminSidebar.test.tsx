@@ -1,12 +1,17 @@
-// Placeholder unit test for AdminSidebar (T009)
+// Updated unit test after foundational implementation (replaces skeleton expectations)
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-// NOTE: If jest-dom matchers are not globally available, fallback to basic existence assertion.
 import AdminSidebar from '../AdminSidebar';
+import { navItems } from '../../../../lib/navigation/navItems';
 
-describe('AdminSidebar skeleton', () => {
-  it('renders placeholder text', () => {
+describe('AdminSidebar foundational', () => {
+  it('renders navigation landmark and items', () => {
     render(<AdminSidebar />);
-  expect(screen.getByText(/Admin Sidebar \(skeleton\)/)).not.toBeNull();
+    const nav = screen.getByRole('navigation', { name: /admin navigation/i });
+    expect(nav).toBeTruthy();
+    // Ensure each configured label appears
+    for (const item of navItems) {
+      expect(screen.getByText(item.label)).toBeTruthy();
+    }
   });
 });

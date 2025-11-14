@@ -34,6 +34,7 @@ export const AdminNavItem: React.FC<AdminNavItemProps> = ({ label, href, active 
       onClick={onClick}
       onKeyDown={onKeyDown}
       aria-current={active ? 'page' : undefined}
+      aria-label={collapsed ? label : undefined}
       className={[
         'block py-2 px-3 rounded text-sm transition-colors outline-none focus:ring-2 focus:ring-blue-500',
         active
@@ -45,7 +46,7 @@ export const AdminNavItem: React.FC<AdminNavItemProps> = ({ label, href, active 
     >
       <span className="inline-flex items-center gap-2">
         {icon && <span className="shrink-0" aria-hidden>{icon}</span>}
-        <span>{label}</span>
+        <span className={collapsed ? 'sr-only' : undefined}>{label}</span>
       </span>
     </a>
   );

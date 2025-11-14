@@ -49,4 +49,17 @@ test.describe('Admin Sidebar navigation', () => {
     // Companies label should now update to English
     await expect(page.locator('#nav-companies')).toHaveText(/Companies/i);
   });
+
+  test('collapse toggle changes aria-expanded and persists across navigation (T042)', async ({ page }) => {
+    const toggle = page.locator('#admin-collapse-toggle');
+    await expect(toggle).toBeVisible();
+    await expect(toggle).toHaveAttribute('aria-expanded', 'true');
+    // Collapse
+    await toggle.click();
+    await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+    // Navigate to another page and back to ensure persistence
+    const companiesLink = page.locator('#nav-companies');
+    await companiesLink.click();
+    await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+  });
 });

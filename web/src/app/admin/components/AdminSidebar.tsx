@@ -7,7 +7,8 @@ import AdminNavItem from './AdminNavItem';
 import { usePathname } from 'next/navigation';
 import { useI18n } from '../../../i18n/LocaleProvider';
 import { languageOptions } from '../../../lib/navigation/languageOptions';
-import { trackLanguageChange, markPerfStart, markPerfEnd } from '../../../lib/navigation/analytics';
+import { trackLanguageChange, markPerfStart, markPerfEnd, trackSidebarToggle } from '../../../lib/navigation/analytics';
+import { getInitialCollapsedState, persistCollapsedState } from '../../../lib/navigation/preference';
 
 // Phase 2: Foundational wiring (T013, T014)
 // - Renders static nav items
@@ -19,6 +20,28 @@ export const AdminSidebar: React.FC = () => {
   const items = getSortedNavItems();
   const activeId = getActiveItemId(pathname || '', items);
   const { locale, setLocale, t } = useI18n();
+  const [collapsed, setCollapsed] = useState<boolean>(false);
+  // Initialize collapsed from session/cookie and auto-collapse for narrow viewport (T037, T039)
+  useEffect(() => {
+    const initial = getInitialCollapsedState();
+    let next = initial;
+    if (typeof window !== 'undefined') {
+      if (window.innerWidth < 480) {
+        next = true;
+      }
+    }
+    setCollapsed(next);
+    trackSidebarToggle(next, 'hydrate');
+  }, []);
+
+  const onToggleCollapse = useCallback(() => {
+    setCollapsed(prev => {
+      const next = !prev;
+      persistCollapsedState(next);
+      trackSidebarToggle(next, 'user');
+      return next;
+    });
+  }, []);
 
   // Track language change timing (T031, T032)
   const changingRef = useRef<{ from: string; to: string; started: number } | null>(null);
@@ -73,11 +96,21 @@ export const AdminSidebar: React.FC = () => {
               href={item.route}
               active={item.id === activeId}
               icon={icon}
+              collapsed={collapsed}
             />
           );
         })}
       </nav>
-      <div className="pt-4 border-t mt-4">
+      <div className="pt-4 border-t mt-4 flex flex-col gap-2">
+        <button
+          type="button"
+          id="admin-collapse-toggle"
+          aria-expanded={!collapsed}
+          className="w-full border rounded px-2 py-1 text-sm text-left"
+          onClick={onToggleCollapse}
+        >
+          {collapsed ? '▶︎ Expand sidebar' : '◀︎ Collapse sidebar'}
+        </button>
         <label htmlFor="admin-lang-select" className="block text-xs font-medium text-gray-500 mb-1">
           {t('common')('language')}
         </label>

@@ -35,8 +35,8 @@ Establish minimal skeleton & environment for feature.
 ## Phase 2: Foundational (Cross-cutting prerequisites)
 Provide core logic & accessibility fundamentals supporting all stories.
 
-- [ ] T011 Implement static nav items array `web/src/lib/navigation/navItems.ts` (Companies, Forms & Reports, Submissions / Exports, Settings)
-- [ ] T012 [P] Implement active route matching logic `web/src/lib/navigation/activeMatch.ts`
+- [X] T011 Implement static nav items array `web/src/lib/navigation/navItems.ts` (Companies, Forms & Reports, Submissions / Exports, Settings)
+- [X] T012 [P] Implement active route matching logic `web/src/lib/navigation/activeMatch.ts`
 - [ ] T013 Wire nav items into sidebar component `web/src/app/admin/components/AdminSidebar.tsx`
 - [ ] T014 Add ARIA + semantic roles (`role="navigation"`, aria-label) `web/src/app/admin/components/AdminSidebar.tsx`
 - [ ] T015 Implement keyboard navigation (focus order, Enter/Space activation) `web/src/app/admin/components/AdminNavItem.tsx`

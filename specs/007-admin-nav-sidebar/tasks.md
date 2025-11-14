@@ -21,16 +21,16 @@ US1 → { US2, US3 }
 ## Phase 1: Setup
 Establish minimal skeleton & environment for feature.
 
-- [ ] T001 Create `web/src/app/admin/components/AdminSidebar.tsx` skeleton component (exports placeholder)
-- [ ] T002 Create `web/src/app/admin/components/AdminNavItem.tsx` basic item component
-- [ ] T003 Add admin layout injection point `web/src/app/admin/layout.tsx` (wrap existing content with sidebar slot)
-- [ ] T004 Add navigation config directory `web/src/lib/navigation/` (create empty index)
-- [ ] T005 [P] Prepare preference helper file `web/src/lib/navigation/preference.ts` with placeholder functions
-- [ ] T006 Add validation schema file stub `validation/src/sidebarState.schema.ts` (Zod stub)
-- [ ] T007 Add OpenAPI file reference note in README section (no code change) `README.md`
-- [ ] T008 Initialize Playwright e2e spec placeholder `web/tests/e2e/admin_sidebar.spec.ts`
-- [ ] T009 Initialize unit test placeholder `web/src/app/admin/components/__tests__/AdminSidebar.test.tsx`
-- [ ] T010 Ensure font/color stylesheet imported where needed `web/src/app/admin/layout.tsx`
+- [X] T001 Create `web/src/app/admin/components/AdminSidebar.tsx` skeleton component (exports placeholder)
+- [X] T002 Create `web/src/app/admin/components/AdminNavItem.tsx` basic item component
+- [X] T003 Add admin layout injection point `web/src/app/admin/layout.tsx` (wrap existing content with sidebar slot)
+- [X] T004 Add navigation config directory `web/src/lib/navigation/` (create empty index)
+- [X] T005 [P] Prepare preference helper file `web/src/lib/navigation/preference.ts` with placeholder functions
+- [X] T006 Add validation schema file stub `validation/src/sidebarState.schema.ts` (Zod stub)
+- [X] T007 Add OpenAPI file reference note in README section (no code change) `README.md`
+- [X] T008 Initialize Playwright e2e spec placeholder `web/tests/e2e/admin_sidebar.spec.ts`
+- [X] T009 Initialize unit test placeholder `web/src/app/admin/components/__tests__/AdminSidebar.test.tsx`
+- [X] T010 Ensure font/color stylesheet imported where needed `web/src/app/admin/layout.tsx`
 
 ## Phase 2: Foundational (Cross-cutting prerequisites)
 Provide core logic & accessibility fundamentals supporting all stories.

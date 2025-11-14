@@ -209,8 +209,11 @@ For detailed admin setup instructions, see [ADMIN_SETUP.md](./ADMIN_SETUP.md).
 
 API documentation is available in OpenAPI format:
 - Location: `specs/001-users-mantas-matijosaitis/contracts/openapi.yaml`
+ - Admin Navigation & Preferences (future optional persistence): `specs/007-admin-nav-sidebar/contracts/navigation.openapi.yaml`
 
 ### Admin Companies Endpoints (summary)
+### Upcoming Admin Sidebar Feature
+Adds a persistent right-side navigation panel for admin users with quick links (Companies, Forms & Reports, Submissions / Exports, Settings), language switcher, and collapsible layout state. See `specs/007-admin-nav-sidebar/spec.md` and `specs/007-admin-nav-sidebar/plan.md`.
 - `GET /api/admin/companies` – List companies (search, type filter, pagination)
 - `GET /api/admin/companies/allowed-values` – Distinct allowed values for filters (types, registries)
 - `GET /api/admin/companies/:id` – Company detail

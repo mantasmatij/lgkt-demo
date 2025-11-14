@@ -85,21 +85,21 @@ Independent Test: Selecting language updates visible labels in current page.
 - [x] T033 [US2] E2E test: language switch scenario `web/tests/e2e/admin_sidebar.spec.ts`
 - [x] T034 [US2] Unit test: language switch handler `web/src/app/admin/components/__tests__/AdminSidebar.test.tsx`
 - [X] T035 [US2] DEPRECATED (covered by T017 unified instrumentation) `web/src/lib/navigation/analytics.ts`
-- [ ] T036 [US2] Update quickstart language section `specs/007-admin-nav-sidebar/quickstart.md`
+- [X] T036 [US2] Update quickstart language section `specs/007-admin-nav-sidebar/quickstart.md`
 
 ## Phase 5: User Story 3 (Collapse / Expand Sidebar)
 Goal: Adjust layout width; remember session state.
 Independent Test: Toggle changes width; persists across page navigations.
 
-- [X] T037 [US3] Implement collapse state hook (sessionStorage + cookie) `web/src/lib/navigation/preference.ts`
-- [ ] T038 [US3] Add collapse/expand toggle UI `web/src/app/admin/components/AdminSidebar.tsx`
-- [ ] T039 [US3] Auto-collapse logic for narrow viewport (<480px) `web/src/app/admin/components/AdminSidebar.tsx`
-- [ ] T040 [US3] Persist cookie for SSR hydration `web/src/lib/navigation/preference.ts`
-- [ ] T041 [US3] Accessible aria-expanded + focus management `web/src/app/admin/components/AdminSidebar.tsx`
-- [ ] T042 [US3] E2E test: collapse/expand & persistence `web/tests/e2e/admin_sidebar.spec.ts`
-- [ ] T043 [US3] Unit test: preference hook behavior `web/src/lib/navigation/__tests__/preference.test.ts`
-- [ ] T044 [US3] DEPRECATED (covered by T017 unified instrumentation) `web/src/lib/navigation/analytics.ts`
-- [ ] T045 [US3] Update README with collapse feature notes `README.md`
+ - [X] T037 [US3] Implement collapse state hook (sessionStorage + cookie) `web/src/lib/navigation/preference.ts`
+ - [X] T038 [US3] Add collapse/expand toggle UI `web/src/app/admin/components/AdminSidebar.tsx`
+ - [X] T039 [US3] Auto-collapse logic for narrow viewport (<480px) `web/src/app/admin/components/AdminSidebar.tsx`
+ - [ ] T040 [US3] Persist cookie for SSR hydration `web/src/lib/navigation/preference.ts`
+ - [X] T041 [US3] Accessible aria-expanded + focus management `web/src/app/admin/components/AdminSidebar.tsx`
+ - [X] T042 [US3] E2E test: collapse/expand & persistence `web/tests/e2e/admin_sidebar.spec.ts`
+ - [X] T043 [US3] Unit test: preference hook behavior `web/src/lib/navigation/__tests__/preference.test.ts`
+ - [ ] T044 [US3] DEPRECATED (covered by T017 unified instrumentation) `web/src/lib/navigation/analytics.ts`
+ - [ ] T045 [US3] Update README with collapse feature notes `README.md`
 
 ## Phase 6: Optional Preference API (Future Persistence)
 (Not required for MVP metrics; adds server persistence extension.)

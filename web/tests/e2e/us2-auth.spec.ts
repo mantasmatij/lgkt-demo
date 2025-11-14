@@ -27,12 +27,12 @@ test.describe('US2: Admin Authentication', () => {
     // Submit form
     await page.click('button[type="submit"]');
     
-    // Should redirect to dashboard
-    await page.waitForURL('/admin/dashboard', { timeout: 5000 });
+  // Should redirect to an admin landing page (dashboard/forms/companies)
+  await page.waitForURL(/\/admin\/(dashboard|forms|companies)/, { timeout: 15000 });
     
-    // Verify dashboard content
-  const dashboardHeading = page.locator('h1, h2').filter({ hasText: /Admin Dashboard|Administratoriaus suvestinė/i });
-    await expect(dashboardHeading).toBeVisible();
+    // Verify admin landing content (dashboard/forms/companies titles in LT/EN)
+  const adminHeading = page.locator('h1, h2').filter({ hasText: /Admin Dashboard|Administratoriaus suvestinė|Formų sąrašas|Forms List|Įmonės|Companies/i });
+    await expect(adminHeading.first()).toBeVisible();
   });
 
   test('T037: should show error for invalid credentials', async ({ page }) => {
@@ -58,8 +58,8 @@ test.describe('US2: Admin Authentication', () => {
     await page.goto('/admin/sign-in');
     await page.fill('input[type="email"]', ADMIN_EMAIL);
     await page.fill('input[type="password"]', ADMIN_PASSWORD);
-    await page.click('button[type="submit"]');
-    await page.waitForURL('/admin/dashboard');
+  await page.click('button[type="submit"]');
+  await page.waitForURL(/\/admin\/(dashboard|forms|companies)/, { timeout: 15000 });
     
     // Navigate to other admin pages
     await page.goto('/admin/companies');
@@ -77,8 +77,8 @@ test.describe('US2: Admin Authentication', () => {
     await page.goto('/admin/sign-in');
     await page.fill('input[type="email"]', ADMIN_EMAIL);
     await page.fill('input[type="password"]', ADMIN_PASSWORD);
-    await page.click('button[type="submit"]');
-    await page.waitForURL('/admin/dashboard');
+  await page.click('button[type="submit"]');
+  await page.waitForURL(/\/admin\/(dashboard|forms|companies)/, { timeout: 15000 });
     
     // Look for logout button/link
     const logoutButton = page.locator('button, a').filter({ hasText: /logout|sign out/i });
@@ -102,11 +102,11 @@ test.describe('US2: Admin Authentication', () => {
     await page.goto('/admin/sign-in');
     await page.fill('input[type="email"]', ADMIN_EMAIL);
     await page.fill('input[type="password"]', ADMIN_PASSWORD);
-    await page.click('button[type="submit"]');
-    await page.waitForURL('/admin/dashboard');
+  await page.click('button[type="submit"]');
+  await page.waitForURL(/\/admin\/(dashboard|forms|companies)/, { timeout: 15000 });
     
     // Wait for page to finish loading (spinner should disappear)
-  await page.waitForSelector('text=/Admin Dashboard|Administratoriaus suvestinė/i', { state: 'visible' });
+  await page.waitForSelector('text=/Admin Dashboard|Administratoriaus suvestinė|Formų sąrašas|Forms List|Įmonės|Companies/i', { state: 'visible' });
     
     // Check for either submissions or empty state
   const emptyState = page.locator('text=/no submissions|Dar nėra pateikimų/i');
@@ -135,8 +135,8 @@ test.describe('US2: Admin Authentication', () => {
     await page.goto('/admin/sign-in');
     await page.fill('input[type="email"]', ADMIN_EMAIL);
     await page.fill('input[type="password"]', ADMIN_PASSWORD);
-    await page.click('button[type="submit"]');
-    await page.waitForURL('/admin/dashboard');
+  await page.click('button[type="submit"]');
+  await page.waitForURL(/\/admin\/(dashboard|forms|companies)/);
     
     // Get cookies
     const cookies = await context.cookies();

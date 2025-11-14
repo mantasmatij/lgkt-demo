@@ -1,137 +1,103 @@
-'use client';
+export const dynamic = 'force-dynamic';
 
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { Card, Spinner, Table, TableHeader, TableColumn, TableBody, TableRow, TableCell } from '@heroui/react';
-import { useI18n } from '../../providers/i18n-provider';
+import { Card } from '@heroui/react';
+import { RetryButton } from '../../../components/forms/RetryButton';
+import { FormsPagination } from '../../../components/forms/Pagination';
+import { headers, cookies } from 'next/headers';
+import { dictionaries, type Locale } from '../../../i18n/dictionaries';
+import { fetchCompanies } from '../../../services/companies/list';
+import { AuthGate } from '../forms/AuthGate';
+import { CompaniesTable } from './CompaniesTable';
+import { CompaniesFilters } from '../../../components/companies/Filters';
+import { fetchCompanyAllowedValues, type CompaniesAllowedValues } from '../../../services/companies/allowedValues';
 
-type Company = {
-  code: string;
-  name: string;
-  country: string;
-  submissionCount: number;
-  latestSubmission: string;
-};
+export default async function AdminCompaniesPage({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
+  const spObj = await searchParams;
+  const usp = new URLSearchParams();
+  for (const [k, v] of Object.entries(spObj)) {
+    if (Array.isArray(v)) v.forEach((val) => usp.append(k, val));
+    else if (typeof v === 'string') usp.set(k, v);
+  }
+  const query = usp.toString() ? `?${usp.toString()}` : '';
 
-type CompaniesResponse = {
-  items: Company[];
-};
+  let forbidden = false;
+  let unauthenticated = false;
+  let fetchError: { status?: number; body?: unknown } | null = null;
+  let data: { items: Array<{ id: string; name: string; code: string; type?: string | null; address?: string | null; eDeliveryAddress?: string | null }>; page: number; pageSize: number; total: number } = { items: [], page: 1, pageSize: 25, total: 0 };
 
-export default function AdminCompaniesPage() {
-  const router = useRouter();
-  const { t } = useI18n();
-  const ta = t('admin');
-  const [data, setData] = useState<CompaniesResponse | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
-
-  useEffect(() => {
-    async function fetchCompanies() {
-      setLoading(true);
-      setError('');
-
-      try {
-        const res = await fetch('/api/admin/companies', {
-          credentials: 'include',
-        });
-
-        if (res.status === 401) {
-          router.push('/admin/sign-in');
-          return;
-        }
-
-        if (!res.ok) {
-          setError(ta('failed_load_companies'));
-          setLoading(false);
-          return;
-        }
-
-        const result = await res.json();
-        setData(result);
-      } catch {
-        setError(ta('network_error'));
-      } finally {
-        setLoading(false);
-      }
+  let allowedValues: CompaniesAllowedValues | null = null;
+  try {
+    const h = await headers();
+    const cookieHeader = h.get('cookie') || '';
+    data = await fetchCompanies(query, { headers: { cookie: cookieHeader } });
+    // Fetch allowed values
+    try { allowedValues = await fetchCompanyAllowedValues({ headers: { cookie: cookieHeader } }); } catch { /* non-fatal */ }
+  } catch (e: unknown) {
+    const err = e as Error & { status?: number; body?: unknown };
+    if (err?.status === 401) {
+      unauthenticated = true;
+    } else if (err?.status === 403) {
+      forbidden = true;
+    } else {
+      const withBody = err as { body?: unknown };
+      fetchError = { status: err?.status, body: withBody?.body };
     }
-
-    fetchCompanies();
-  }, [router]);
-
-  if (loading) {
-    return (
-      <div className="container mx-auto px-4 py-12 text-center">
-        <Spinner size="lg" />
-      </div>
-    );
   }
 
-  if (error) {
-    return (
-      <div className="container mx-auto px-4 py-12">
-        <Card className="p-6 bg-red-50 border-red-200">
-          <p className="text-red-700">{error}</p>
-        </Card>
-      </div>
-    );
-  }
+  const ck = await cookies();
+  const localeCookie = ck.get('locale')?.value as Locale | undefined;
+  const locale: Locale = (localeCookie === 'en' || localeCookie === 'lt') ? localeCookie : 'lt';
+  const dict = dictionaries[locale];
+  const tadmin = (k: keyof typeof dict.admin) => dict.admin[k];
 
   const isEmpty = !data || data.items.length === 0;
 
   return (
-    <div className="container mx-auto px-4 py-6">
-      <div className="flex flex-col gap-4">
-  <h1 className="text-3xl font-bold">{ta('companies_title')}</h1>
-
-        {isEmpty ? (
-          <Card className="p-6 text-center">
-            <p className="text-gray-600 text-lg">{ta('no_companies_yet')}</p>
-            <p className="text-gray-500 mt-2">{ta('companies_empty_hint')}</p>
+    <main className="p-6">
+      <AuthGate />
+      <h1 className="text-2xl font-semibold mb-4">{tadmin('companies_title')}</h1>
+      {forbidden && (
+        <div className="mb-4 p-3 border border-yellow-300 bg-yellow-50 text-yellow-800 rounded">
+          You don't have access to this page. Please sign in with an admin account.
+        </div>
+      )}
+      {unauthenticated && (
+        <div className="mb-4 p-3 border border-blue-300 bg-blue-50 text-blue-800 rounded">
+          You’re not signed in. Redirecting to sign-in…
+        </div>
+      )}
+      {fetchError && !forbidden && !unauthenticated && (
+        <div className="mb-4 p-3 border border-red-300 bg-red-50 text-red-800 rounded flex items-center">
+          <span>Failed to load companies{fetchError.status ? ` (status ${fetchError.status})` : ''}. Try again or contact support.</span>
+          <RetryButton />
+        </div>
+      )}
+      {!unauthenticated && !forbidden && !fetchError && (
+        <>
+          <Card className="p-4 mb-4">
+            <CompaniesFilters types={allowedValues?.types}
+            />
           </Card>
-        ) : (
-          <>
-            <Card className="p-6">
-              <p className="text-gray-700">
-                <span className="font-semibold">{data.items.length}</span> {ta('companies_suffix')}
-              </p>
-            </Card>
-
-            <Card className="p-6">
-              <div className="overflow-x-auto">
-                <Table aria-label={ta('companies_table_aria')}>
-                  <TableHeader>
-                    <TableColumn>{ta('companies_columns_company_code')}</TableColumn>
-                    <TableColumn>{ta('companies_columns_company_name')}</TableColumn>
-                    <TableColumn>{ta('companies_columns_country')}</TableColumn>
-                    <TableColumn>{ta('companies_columns_submissions')}</TableColumn>
-                    <TableColumn>{ta('companies_columns_latest_submission')}</TableColumn>
-                  </TableHeader>
-                  <TableBody>
-                    {data.items.map((company) => (
-                      <TableRow key={company.code}>
-                        <TableCell>{company.code}</TableCell>
-                        <TableCell>{company.name}</TableCell>
-                        <TableCell>{company.country}</TableCell>
-                        <TableCell>{company.submissionCount}</TableCell>
-                        <TableCell>
-                          {company.latestSubmission ? (() => {
-                            const d = new Date(company.latestSubmission);
-                            if (Number.isNaN(d.getTime())) return ta('not_available');
-                            const y = d.getFullYear();
-                            const m = String(d.getMonth() + 1).padStart(2, '0');
-                            const day = String(d.getDate()).padStart(2, '0');
-                            return `${y}-${m}-${day}`;
-                          })() : ta('not_available')}
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </div>
-            </Card>
-          </>
-        )}
-      </div>
-    </div>
+          <Card className="p-2 mb-4">
+            <FormsPagination page={data.page} pageSize={data.pageSize as 10 | 25 | 50 | 100} total={data.total} />
+          </Card>
+          <Card className="p-0 mb-4">
+            <div className="p-2 overflow-x-auto">
+              {isEmpty ? (
+                <p className="text-gray-600">
+                  {/* If there's any active search/filter param, show a distinct empty message */}
+                  {usp.get('search') ? dict.admin.forms_no_results_filters : tadmin('companies_empty_hint')}
+                </p>
+              ) : (
+                <CompaniesTable items={data.items} dict={dict} />
+              )}
+            </div>
+          </Card>
+          <Card className="p-2">
+            <FormsPagination page={data.page} pageSize={data.pageSize as 10 | 25 | 50 | 100} total={data.total} />
+          </Card>
+        </>
+      )}
+    </main>
   );
 }

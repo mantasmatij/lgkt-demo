@@ -164,6 +164,19 @@ export default function PublicFormPage() {
         <h1 className="text-3xl font-bold mb-2">{tform('title')}</h1>
       
         {result && <Card className="p-3 text-sm" role="alert">{result}</Card>}
+        {Object.keys(errors).length > 0 && (
+          <Card className="p-4 mb-3 bg-red-50 border-red-200" role="alert">
+            <h2 id="error-summary-title" tabIndex={-1} className="font-semibold text-red-800 mb-2">
+              {/* Fallback static text; no dedicated translation key yet */}
+              Please fix the errors below
+            </h2>
+            <ul className="list-disc pl-5 text-sm text-red-700">
+              {Object.entries(errors).slice(0, 5).map(([k, msgs]) => (
+                <li key={k}>{msgs[0]}</li>
+              ))}
+            </ul>
+          </Card>
+        )}
       
         <form onSubmit={onSubmit} noValidate>
           <Card className="p-6">

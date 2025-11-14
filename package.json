@@ -18,7 +18,9 @@
     "contracts:gen": "openapi-typescript specs/001-users-mantas-matijosaitis/contracts/openapi.yaml -o contracts/src/generated.ts",
     "db:generate": "drizzle-kit generate --config db/drizzle.config.ts",
     "db:migrate": "drizzle-kit migrate --config db/drizzle.config.ts",
-    "db:reset:dev": "node db/scripts/reset-dev-db.js"
+    "db:reset:dev": "node db/scripts/reset-dev-db.js",
+    "db:seed:dev": "node db/scripts/seed-sample-submissions.js",
+    "db:seed:admin": "node db/scripts/seed-admin.js"
   },
   "repository": {
     "type": "git",

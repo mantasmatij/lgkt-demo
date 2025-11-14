@@ -18,7 +18,6 @@ Thumbs.db
 test-results/
 playwright-report/
 tmp/
-stuff/
 specs/**/contracts/
 # Exclude VCS
 .git

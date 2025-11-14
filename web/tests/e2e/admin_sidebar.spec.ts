@@ -2,11 +2,12 @@
 // Verifies sidebar renders, links navigate, and active item updates.
 import { test, expect } from '@playwright/test';
 
-const navExpectations: { id: string; route: string; label: RegExp }[] = [
-  { id: 'companies', route: '/admin/companies', label: /Companies/i },
-  { id: 'forms-reports', route: '/admin/forms', label: /Forms & Reports/i },
-  { id: 'submissions-exports', route: '/admin/submissions', label: /Submissions\s*\/\s*Exports/i },
-  { id: 'settings', route: '/admin/settings', label: /Settings/i }
+// Labels may appear in Lithuanian (default) or English after language switch.
+const navExpectations: { id: string; route: string; labels: RegExp[] }[] = [
+  { id: 'companies', route: '/admin/companies', labels: [/Įmonės/i, /Companies/i] },
+  { id: 'forms-reports', route: '/admin/forms', labels: [/Formos ir Ataskaitos/i, /Forms & Reports/i] },
+  { id: 'submissions-exports', route: '/admin/submissions', labels: [/Pateikimai\s*\/\s*Eksportai/i, /Submissions\s*\/\s*Exports/i] },
+  { id: 'settings', route: '/admin/settings', labels: [/Nustatymai/i, /Settings/i] }
 ];
 
 test.describe('Admin Sidebar navigation', () => {
@@ -22,7 +23,9 @@ test.describe('Admin Sidebar navigation', () => {
     for (const item of navExpectations) {
       const link = page.locator(`#nav-${item.id}`);
       await expect(link).toBeVisible();
-      await expect(link).toHaveText(item.label);
+      // Accept either locale label
+      const text = await link.textContent();
+      expect(item.labels.some(r => r.test(text || ''))).toBeTruthy();
     }
   });
 
@@ -30,11 +33,20 @@ test.describe('Admin Sidebar navigation', () => {
     for (const item of navExpectations) {
       const link = page.locator(`#nav-${item.id}`);
       await link.click();
-  // Simple URL assertion (exact start). Avoid complex escaping.
-  const url = page.url();
-  expect(url.startsWith(item.route)).toBeTruthy();
-      // Active state: aria-current=page
+      const url = page.url();
+      expect(url.startsWith(item.route)).toBeTruthy();
       await expect(link).toHaveAttribute('aria-current', 'page');
     }
+  });
+
+  test('language switch updates labels (T033)', async ({ page }) => {
+    // Initial Lithuanian label should be present
+    await expect(page.locator('#nav-companies')).toHaveText(/Įmonės/i);
+    // Change language via select
+    const select = page.locator('#admin-lang-select');
+    await expect(select).toBeVisible();
+    await select.selectOption('en');
+    // Companies label should now update to English
+    await expect(page.locator('#nav-companies')).toHaveText(/Companies/i);
   });
 });

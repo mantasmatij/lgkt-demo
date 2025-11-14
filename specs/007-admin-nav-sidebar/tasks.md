@@ -78,12 +78,12 @@ Independent Test: Sidebar renders; each link navigates correctly; active highlig
 Goal: Switch language without leaving current page.
 Independent Test: Selecting language updates visible labels in current page.
 
-- [ ] T029 [US2] Integrate language switch control inside sidebar `web/src/app/admin/components/AdminSidebar.tsx`
-- [ ] T030 [US2] Create language options config `web/src/lib/navigation/languageOptions.ts`
-- [ ] T031 [US2] Implement language change handler (i18n provider integration) `web/src/app/admin/components/AdminSidebar.tsx`
-- [ ] T032 [US2] Add graceful fallback (retain previous language on error) `web/src/app/admin/components/AdminSidebar.tsx`
-- [ ] T033 [US2] E2E test: language switch scenario `web/tests/e2e/admin_sidebar.spec.ts`
-- [ ] T034 [US2] Unit test: language switch handler `web/src/app/admin/components/__tests__/AdminSidebar.test.tsx`
+- [x] T029 [US2] Integrate language switch control inside sidebar `web/src/app/admin/components/AdminSidebar.tsx`
+- [x] T030 [US2] Create language options config `web/src/lib/navigation/languageOptions.ts`
+- [x] T031 [US2] Implement language change handler (i18n provider integration) `web/src/app/admin/components/AdminSidebar.tsx`
+- [x] T032 [US2] Add graceful fallback (retain previous language on error) `web/src/app/admin/components/AdminSidebar.tsx`
+- [x] T033 [US2] E2E test: language switch scenario `web/tests/e2e/admin_sidebar.spec.ts`
+- [x] T034 [US2] Unit test: language switch handler `web/src/app/admin/components/__tests__/AdminSidebar.test.tsx`
 - [ ] T035 [US2] DEPRECATED (covered by T017 unified instrumentation) `web/src/lib/navigation/analytics.ts`
 - [ ] T036 [US2] Update quickstart language section `specs/007-admin-nav-sidebar/quickstart.md`
 

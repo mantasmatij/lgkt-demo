@@ -28,8 +28,7 @@ Thumbs.db
 *.swp
 *.swo
 
-# Docker - ignore .dockerignore but keep Dockerfiles
-.dockerignore
+# Docker - keep Dockerfiles and track .dockerignore for build optimization
 
 # Jest
 .junit/

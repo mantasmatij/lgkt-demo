@@ -84,15 +84,21 @@ web/
       navigation/
         navItems.ts (shared definitions)
         preference.ts (collapse state helpers)
+        activeMatch.ts
+        analytics.ts
+        languageOptions.ts
 api/
   src/
     routes/admin/preferences.ts (optional endpoints for sidebar-state, language)
     services/preferences.service.ts
+validation/
+  src/sidebarState.schema.ts
 tests/
-  web/e2e/admin_sidebar.spec.ts (navigation + collapse + language)
-  web/unit/components/adminSidebar.test.ts
-shared/
-  validation/sidebarState.schema.ts
+  web/e2e/admin_sidebar.spec.ts (navigation + collapse + language + a11y + performance)
+  web/unit/components/AdminSidebar.test.ts
+  web/unit/navigation/preference.test.ts
+  web/unit/navigation/navItems.test.ts
+  web/unit/navigation/analytics.test.ts
 ```
 
 **Structure Decision**: Extend existing `web` app admin area with sidebar component and supportive lib folder for navigation config; optional lightweight API route added under `api/src/routes/admin` for preference persistence; add tests grouped with existing web e2e and unit patterns; no new top-level packages.

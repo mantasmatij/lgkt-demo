@@ -84,7 +84,7 @@ Optional later stories (deferred): Role-based link filtering; keyboard shortcuts
 
 ### Functional Requirements
 
-- **FR-001**: System MUST present a persistent right-side admin navigation panel on all admin pages for authenticated admin users.
+- **FR-001**: System MUST render a persistent right-side admin navigation panel on all admin pages ONLY for authenticated admin users (no render for non-admin/unauthorized). (Merged former FR-001 & FR-011)
 - **FR-002**: System MUST list at minimum these primary destinations: Companies, Forms & Reports, Submissions / Exports, Settings (placeholder if not yet implemented).
 - **FR-003**: System MUST allow navigation via both mouse click and keyboard (tab focus & enter/space activation) for each link.
 - **FR-004**: System MUST provide a language change control within the sidebar that updates visible interface text without page re-entry to manually typed URLs.
@@ -94,8 +94,8 @@ Optional later stories (deferred): Role-based link filtering; keyboard shortcuts
 - **FR-008**: System MUST visually differentiate the currently active destination.
 - **FR-009**: System MUST provide accessible names for all controls (screen reader friendly) and logical tab order starting with primary navigation links.
 - **FR-010**: System MUST degrade gracefully if language data fails to load (retain previous language, show unobtrusive notice) without blocking navigation.
-- **FR-011**: System MUST restrict sidebar rendering to authorized admin users only.
-- **FR-012**: System MUST allow future addition of links without redesign (extensible structure).
+- **FR-011**: (Removed – merged into FR-001)
+- **FR-012**: System MUST allow future addition of links by editing a single configuration file (`navItems.ts`) with no component refactor and all tests still passing.
 
 ### Constitutional Requirements *(auto-checked against constitution v1.0.0)*
 
@@ -106,6 +106,7 @@ All features MUST comply with internal product principles:
 - **Styling**: Consistent typography and color usage aligned with global design tokens.
 - **Testing**: Adequate automated tests for navigation, accessibility states, and language switching flows.
 - **Data Management**: Any preference persistence (collapse state, language) follows existing preference handling guidelines.
+- **Components**: Must use HeroUI component library per constitution (NextUI deprecated).
 
 ### Key Entities *(include if feature involves data)*
 
@@ -122,6 +123,12 @@ All features MUST comply with internal product principles:
 - Language changing mechanism already exists; this feature exposes it in sidebar location.
 - Session persistence for collapse state is sufficient; long-term profile persistence not required initially.
 - Icons are available for each navigation item or can be represented with text initials when collapsed.
+- Settings route will be `/admin/settings` (placeholder until implemented).
+- Icon fallback: first two uppercase letters of label if no icon name provided.
+- Cookie used for SSR hydration: name `adminSidebarCollapsed`; attributes SameSite=Lax; Secure=true in production; Path=/; HttpOnly=false (client read needed).
+- Performance measurement: click-to-paint measured via `performance.now()` marks; language update timing measured from user interaction to last visible text replacement.
+- Baseline for SC-002: 2-week pre-deployment analytics window.
+- Extensibility acceptance: adding a new nav item requires only appending to `navItems.ts` and adding translation keys; no changes to sidebar component code.
 
 ## Success Criteria *(mandatory)*
 
@@ -133,9 +140,19 @@ All features MUST comply with internal product principles:
 ### Measurable Outcomes
 
 - **SC-001**: 90% of admin users reach the Companies page from a neutral starting admin page in ≤ 1 click without typing a URL.
-- **SC-002**: Average time from page load to first navigation action decreases by ≥ 30% compared to pre-sidebar baseline (analytics comparison over 2-week window).
-- **SC-003**: 95% of language switch attempts successfully update visible labels within 2 seconds without full logout or manual refresh.
+- **SC-002**: Average time from page load to first navigation action decreases by ≥ 30% compared to pre-sidebar baseline (baseline = prior 2-week window).
+- **SC-003**: 95% of language switch attempts successfully update visible labels within 2 seconds (interaction start to final label render via performance marks) without full logout or manual refresh.
 - **SC-004**: At least 80% of sessions where collapse is toggled preserve chosen state across 3+ subsequent page navigations.
 - **SC-005**: 0 critical accessibility violations (WCAG AA) for keyboard navigation and focus management in sidebar during audit.
+
+## Clarifications
+
+### Session 2025-11-14
+- Q: How restrict rendering & duplication of FR-001/FR-011? → A: Merge into single FR-001 covering presence only for authenticated admins.
+- Q: What route for Settings placeholder? → A: `/admin/settings`.
+- Q: How to measure performance (SC-002/SC-003)? → A: Use `performance.now()` marks; baseline = previous 2-week analytics; language update measured from interaction to final text.
+- Q: What is icon fallback? → A: First two uppercase letters of label.
+- Q: Cookie policy for collapse SSR hydration? → A: `adminSidebarCollapsed` SameSite=Lax Secure=true(prod) Path=/.
+- Q: Extensibility validation method? → A: Adding nav item only in `navItems.ts` + translations; no component changes.
 
 

@@ -52,10 +52,10 @@ Independent Test: Sidebar renders; each link navigates correctly; active highlig
 - [X] T022 [US1] Add icon mapping (or text fallback) `web/src/lib/navigation/navItems.ts`
 - [X] T023 [US1] Implement navigation click handlers (client transitions) `web/src/app/admin/components/AdminNavItem.tsx`
 - [X] T024 [US1] Add route-based active state update using Next.js hooks `web/src/app/admin/components/AdminSidebar.tsx`
-- [ ] T025 [US1] E2E test: navigation flows `web/tests/e2e/admin_sidebar.spec.ts`
+- [X] T025 [US1] E2E test: navigation flows `web/tests/e2e/admin_sidebar.spec.ts`
 - [X] T026 [US1] Unit test: active state logic `web/src/app/admin/components/__tests__/AdminSidebar.test.tsx`
 - [ ] T027 [US1] DEPRECATED (covered by T017 unified instrumentation) `web/src/lib/navigation/analytics.ts`
-- [ ] T028 [US1] Documentation update: README admin section `README.md`
+- [X] T028 [US1] Documentation update: README admin section `README.md`
  - [X] T020 Update quickstart with nav items setup confirmation `specs/007-admin-nav-sidebar/quickstart.md`
 - [ ] T018 [P] Implement axe accessibility test helper `web/tests/e2e/helpers/axe.ts`
 - [ ] T019 Add unit tests for navItems config `web/src/lib/navigation/__tests__/navItems.test.ts`

@@ -1,14 +1,13 @@
 export const dynamic = 'force-dynamic';
 
 import { Card } from '@heroui/react';
-import Link from 'next/link';
 import { RetryButton } from '../../../components/forms/RetryButton';
 import { FormsPagination } from '../../../components/forms/Pagination';
 import { headers, cookies } from 'next/headers';
 import { dictionaries, type Locale } from '../../../i18n/dictionaries';
 import { fetchCompanies } from '../../../services/companies/list';
 import { AuthGate } from '../forms/AuthGate';
-import { COMPANY_TYPE_LABEL_KEYS } from '../../../lib/constants/companyType';
+import { CompaniesTable } from './CompaniesTable';
 import { CompaniesFilters } from '../../../components/companies/Filters';
 import { fetchCompanyAllowedValues, type CompaniesAllowedValues } from '../../../services/companies/allowedValues';
 
@@ -82,7 +81,7 @@ export default async function AdminCompaniesPage({ searchParams }: { searchParam
           <Card className="p-2 mb-4">
             <FormsPagination page={data.page} pageSize={data.pageSize as 10 | 25 | 50 | 100} total={data.total} />
           </Card>
-          <Card className="p-0 mb-4 overflow-hidden">
+          <Card className="p-0 mb-4">
             <div className="p-2 overflow-x-auto">
               {isEmpty ? (
                 <p className="text-gray-600">
@@ -90,37 +89,7 @@ export default async function AdminCompaniesPage({ searchParams }: { searchParam
                   {usp.get('search') ? dict.admin.forms_no_results_filters : tadmin('companies_empty_hint')}
                 </p>
               ) : (
-                <table className="min-w-full border-collapse border-2 border-gray-300 rounded">
-                  <caption className="sr-only">{tadmin('companies_table_aria')}</caption>
-                  <thead>
-                    <tr className="text-left bg-gray-50 border-b border-gray-200">
-                      <th scope="col" className="py-2 pr-4 pl-6">{dict.admin.companies_columns_company_name}</th>
-                      <th scope="col" className="py-2 pr-4">{dict.admin.companies_columns_company_code}</th>
-                      <th scope="col" className="py-2 pr-4">{dict.admin.table_col_type}</th>
-                      <th scope="col" className="py-2 pr-4">{dict.fields.address}</th>
-                      <th scope="col" className="py-2 pr-4">{dict.fields.e_delivery_address}</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {data.items.map((c) => {
-                      const typeKey = c.type as keyof typeof COMPANY_TYPE_LABEL_KEYS | undefined;
-                      const labelKey = typeKey && COMPANY_TYPE_LABEL_KEYS[typeKey];
-                      const typeLabel = labelKey ? (dict.fields as Record<string,string>)[labelKey] : (c.type ?? '');
-                      return (
-                      <tr key={c.id} className="border-b last:border-b-0 border-gray-200">
-                        <td className="py-2 pr-4 pl-6">
-                          <Link href={`/admin/companies/${c.id}`} className="underline hover:no-underline focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600">
-                            {c.name}
-                          </Link>
-                        </td>
-                        <td className="py-2 pr-4">{c.code}</td>
-                        <td className="py-2 pr-4">{typeLabel}</td>
-                        <td className="py-2 pr-4">{c.address ?? ''}</td>
-                        <td className="py-2 pr-4">{c.eDeliveryAddress ?? ''}</td>
-                      </tr>
-                    );})}
-                  </tbody>
-                </table>
+                <CompaniesTable items={data.items} dict={dict} />
               )}
             </div>
           </Card>

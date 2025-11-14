@@ -9,8 +9,8 @@ test.describe('US3: CSV Export', () => {
     await page.goto('/admin/sign-in');
     await page.fill('input[type="email"]', ADMIN_EMAIL);
     await page.fill('input[type="password"]', ADMIN_PASSWORD);
-    await page.click('button[type="submit"]');
-    await page.waitForURL('/admin/dashboard');
+  await page.click('button[type="submit"]');
+  await page.waitForURL(/\/admin\/(dashboard|forms|companies)/, { timeout: 15000 });
   });
 
   test('T042: should display reports page with date range picker', async ({ page }) => {

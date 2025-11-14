@@ -7,6 +7,8 @@ import { RetryButton } from '../../../../components/forms/RetryButton';
 import { FormsPagination } from '../../../../components/forms/Pagination';
 import { dictionaries, type Locale } from '../../../../i18n/dictionaries';
 import { COMPANY_TYPE_LABEL_KEYS } from '../../../../lib/constants/companyType';
+import { CompanySubmissionsTable } from '../CompanySubmissionsTable';
+// format helpers consumed only inside client submissions table component
 import { fetchCompanyDetail } from '../../../../services/companies/detail';
 import { fetchCompanySubmissions } from '../../../../services/companies/submissions';
 import { AuthGate } from '../../forms/AuthGate';
@@ -99,34 +101,34 @@ export default async function AdminCompanyDetailPage({ params, searchParams }: P
         <>
           <Card className="p-4 mb-4">
             <h2 className="text-xl font-semibold mb-3">{tadmin('companies_title')}</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              <div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-1">
                 <div className="text-sm text-gray-600">{dict.fields.company_name}</div>
-                <div className="font-medium">{detail.name}</div>
+                <div className="h-11 min-h-11 rounded-full border-2 border-black px-4 flex items-center whitespace-pre-wrap break-words bg-white font-medium" data-testid="company-name-value">{detail.name}</div>
               </div>
-              <div>
+              <div className="space-y-1">
                 <div className="text-sm text-gray-600">{dict.fields.company_code}</div>
-                <div className="font-medium">{detail.code}</div>
+                <div className="h-11 min-h-11 rounded-full border-2 border-black px-4 flex items-center whitespace-pre-wrap break-words bg-white font-medium" data-testid="company-code-value">{detail.code}</div>
               </div>
-              <div>
+              <div className="space-y-1">
                 <div className="text-sm text-gray-600">{dict.admin.table_col_type}</div>
-                <div className="font-medium">{typeLabel}</div>
+                <div className="h-11 min-h-11 rounded-full border-2 border-black px-4 flex items-center whitespace-pre-wrap break-words bg-white font-medium" data-testid="company-type-value">{typeLabel || '—'}</div>
               </div>
-              <div>
+              <div className="space-y-1">
                 <div className="text-sm text-gray-600">{dict.fields.legal_form}</div>
-                <div className="font-medium">{detail.legalForm ?? '—'}</div>
+                <div className="h-11 min-h-11 rounded-full border-2 border-black px-4 flex items-center whitespace-pre-wrap break-words bg-white font-medium" data-testid="company-legal-form-value">{detail.legalForm ?? '—'}</div>
               </div>
-              <div>
+              <div className="space-y-1">
                 <div className="text-sm text-gray-600">{dict.fields.address}</div>
-                <div className="font-medium">{detail.address ?? '—'}</div>
+                <div className="h-11 min-h-11 rounded-full border-2 border-black px-4 flex items-center whitespace-pre-wrap break-words bg-white font-medium" data-testid="company-address-value">{detail.address ?? '—'}</div>
               </div>
-              <div>
+              <div className="space-y-1">
                 <div className="text-sm text-gray-600">{dict.fields.registry}</div>
-                <div className="font-medium">{detail.registry ?? '—'}</div>
+                <div className="h-11 min-h-11 rounded-full border-2 border-black px-4 flex items-center whitespace-pre-wrap break-words bg-white font-medium" data-testid="company-registry-value">{detail.registry ?? '—'}</div>
               </div>
-              <div>
+              <div className="space-y-1">
                 <div className="text-sm text-gray-600">{dict.fields.e_delivery_address}</div>
-                <div className="font-medium">{detail.eDeliveryAddress ?? '—'}</div>
+                <div className="h-11 min-h-11 rounded-full border-2 border-black px-4 flex items-center whitespace-pre-wrap break-words bg-white font-medium" data-testid="company-edelivery-value">{detail.eDeliveryAddress ?? '—'}</div>
               </div>
             </div>
           </Card>
@@ -143,33 +145,7 @@ export default async function AdminCompanyDetailPage({ params, searchParams }: P
               {submissions.items.length === 0 ? (
                 <p className="text-gray-600">{tadmin('no_submissions_yet')}</p>
               ) : (
-                <table className="min-w-full border-collapse border-2 border-gray-300 rounded">
-                  <caption className="sr-only">{tadmin('submissions_table_aria')}</caption>
-                  <thead>
-                    <tr className="text-left bg-gray-50 border-b border-gray-200">
-                      <th scope="col" className="py-2 pr-4 pl-6">{tadmin('table_col_report_from')}</th>
-                      <th scope="col" className="py-2 pr-4">{tadmin('table_col_report_to')}</th>
-                      <th scope="col" className="py-2 pr-4">{tadmin('table_col_women_pct')}</th>
-                      <th scope="col" className="py-2 pr-4">{tadmin('table_col_men_pct')}</th>
-                      <th scope="col" className="py-2 pr-4">{tadmin('table_col_requirements_applied')}</th>
-                      <th scope="col" className="py-2 pr-4">{tadmin('table_col_submitter_email')}</th>
-                      <th scope="col" className="py-2 pr-4">{tadmin('table_col_submission_date')}</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {submissions.items.map((s) => (
-                      <tr key={s.id} className="border-b last:border-b-0 border-gray-200">
-                        <td className="py-2 pr-4 pl-6">{s.dateFrom ? new Date(s.dateFrom).toISOString().slice(0,10) : ''}</td>
-                        <td className="py-2 pr-4">{s.dateTo ? new Date(s.dateTo).toISOString().slice(0,10) : ''}</td>
-                        <td className="py-2 pr-4">{s.womenPercent}%</td>
-                        <td className="py-2 pr-4">{s.menPercent}%</td>
-                        <td className="py-2 pr-4">{s.requirementsApplied ? tcommon('yes') : tcommon('no')}</td>
-                        <td className="py-2 pr-4">{s.submitterEmail ?? ''}</td>
-                        <td className="py-2 pr-4">{(() => { try { const d = new Date(s.submittedAt); if (isNaN(+d)) return ''; return d.toISOString().replace('T',' ').slice(0,16); } catch { return ''; } })()}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+                <CompanySubmissionsTable companyId={companyId} items={submissions.items} dict={dict} />
               )}
             </div>
             <div className="mt-2">

@@ -171,7 +171,8 @@ export async function upsertCompany(data: {
       .set({
         name: data.name,
         country: data.country,
-        type: data.type ?? null,
+        // Preserve existing type if incoming type is null/undefined (don't wipe previously set value)
+        type: (data.type === null || typeof data.type === 'undefined') ? (existing[0] as typeof existing[number]).type : data.type,
         legalForm: data.legalForm ?? null,
         address: data.address ?? null,
         registry: data.registry ?? null,

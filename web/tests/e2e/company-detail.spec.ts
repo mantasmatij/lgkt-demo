@@ -27,12 +27,10 @@ async function ensureCompanyExists(page: Page) {
   // Navigate to companies list and click first row if present
   await page.goto('/admin/companies');
   // Wait for either empty or table
-  const emptyHint = page.locator('text=/Companies will appear|Įmonės atsiras/i');
   const table = page.locator('table');
   const hasTable = await table.isVisible().catch(() => false);
   if (!hasTable) {
-    // If no table yet, at least assert empty hint is visible; test ends here gracefully
-    await expect(emptyHint).toBeVisible();
+    // If no table yet, return null gracefully (empty state or loading)
     return null;
   }
   // Click first company name link

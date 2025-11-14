@@ -85,11 +85,13 @@ Independent Test Criteria: Detail page shows each required field once; submissio
 
 - [x] T040 Add loading states for list and detail views web/src/app/admin/companies/page.tsx & web/src/app/admin/companies/[companyId]/page.tsx
 - [x] T041 Add error boundary or retry logic using existing RetryButton web/src/components/forms/RetryButton.tsx
-- [ ] T042 Performance review: confirm queries use indexes and efficient pagination api/src/services/companies.service.ts
-- [ ] T043 Accessibility review: table headers and focus states web/src/components/tables/CompanyTable.tsx
-- [ ] T044 Refactor duplicated code into shared utilities api/src/utils/query.ts & web/src/services/companies/
-- [ ] T045 Update README or admin docs referencing new feature README.md
+- [x] T042 Performance review: confirm queries use indexes and efficient pagination api/src/services/companies.service.ts
+- [x] T043 Accessibility review: table headers and focus states web/src/components/tables/CompanyTable.tsx
+- [x] T044 Refactor duplicated code into shared utilities api/src/utils/query.ts & web/src/services/companies/
+- [x] T045 Update README or admin docs referencing new feature README.md
 - [x] T046 Add monitoring hooks/logging for list/detail access api/src/routes/admin/companies.ts
+- [x] T055 [Polish] Use thicker pill-shaped borders on company detail values (match submission details) web/src/app/admin/companies/[companyId]/page.tsx
+- [x] T056 [Polish] Reuse FormDetailsView for submission detail under companies; ensure Back returns to company detail web/src/app/admin/companies/[companyId]/submissions/[submissionId]/page.tsx
 
 ## Parallel Execution Examples
 - US1 page implementation (T017) can proceed in parallel with service query extraction (T011, T012) once scaffold exists.

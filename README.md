@@ -14,7 +14,8 @@ A web application for collecting company information through a public form, with
 ### Admin Portal
 - Secure authentication with session management
 - Submissions dashboard with pagination
-- Companies view with aggregated data
+- Companies list with search, type filter, pagination, and accessible tables
+- Company detail with submissions ordered by submission date (desc)
 - CSV export with date range filtering
 
 ## Tech Stack
@@ -54,8 +55,13 @@ npm run dev:up
 ### 3. Run Migrations
 
 ```bash
-# Apply database migrations
+# Option A: Apply all SQL migrations (psql)
 docker compose -f docker/docker-compose.yml exec -T postgres psql -U forma -d forma < db/migrations/0000_slim_jamie_braddock.sql
+docker compose -f docker/docker-compose.yml exec -T postgres psql -U forma -d forma < db/migrations/0001_add_company_type_to_submissions.sql
+docker compose -f docker/docker-compose.yml exec -T postgres psql -U forma -d forma < db/migrations/0002_perf_indexes.sql
+
+# Option B: Use Drizzle to apply pending migrations
+npm run db:migrate
 
 # Create admin user
 docker compose -f docker/docker-compose.yml exec -T postgres psql -U forma -d forma -c "INSERT INTO admin_users (email, password_hash, role) VALUES ('admin@example.com', '\$2b\$10\$uhq25W40udVMcDshMT3yk.pAeFpjv8c.ILBad8RXq91CZNzwbmR7e', 'admin');"
@@ -145,6 +151,16 @@ The project includes comprehensive E2E tests using Playwright:
 
 Tests run against multiple browsers (Chromium, Firefox, WebKit) and viewports.
 
+Dev servers are auto-started by the Playwright config (API via Nx + Web via Next dev). Docker is not required to run E2E, but a reachable PostgreSQL instance is. If you don't have a local DB, start only Postgres via Docker Compose and keep the rest local:
+
+```bash
+# Optional: start only Postgres
+docker compose -f docker/docker-compose.yml up -d postgres
+
+# Then run E2E (spins up API + Web locally)
+npm run test:e2e
+```
+
 ### Linting
 
 ```bash
@@ -172,6 +188,7 @@ The application runs three services:
 - `PORT`: API server port (default: 3001)
 - `DATABASE_URL`: PostgreSQL connection string
 - `SESSION_SECRET`: Secret for signing sessions
+- `DEBUG_COMPANIES`: If set (any value), logs basic timing for companies list/detail/submissions handlers (e.g., `DEBUG_COMPANIES=1`).
 
 **Web Service:**
 - `API_INTERNAL_ORIGIN`: Internal API URL for server-side requests
@@ -192,6 +209,12 @@ For detailed admin setup instructions, see [ADMIN_SETUP.md](./ADMIN_SETUP.md).
 
 API documentation is available in OpenAPI format:
 - Location: `specs/001-users-mantas-matijosaitis/contracts/openapi.yaml`
+
+### Admin Companies Endpoints (summary)
+- `GET /api/admin/companies` – List companies (search, type filter, pagination)
+- `GET /api/admin/companies/allowed-values` – Distinct allowed values for filters (types, registries)
+- `GET /api/admin/companies/:id` – Company detail
+- `GET /api/admin/companies/:id/submissions` – Company submissions (ordered by submission date desc, with pagination)
 
 ## Security
 

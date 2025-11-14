@@ -63,10 +63,10 @@ async function main() {
 
     // Insert a handful of submissions with varying dates and genders
     const samples = [
-      { code: 'TC123456', name: 'Test Company Ltd', days: 1, rpFrom: 60, rpTo: 30, women: 8, men: 12 },
-      { code: 'TC654321', name: 'Another Test UAB', days: 3, rpFrom: 90, rpTo: 10, women: 15, men: 15 },
-      { code: 'TC000111', name: 'Sample Group AS', days: 7, rpFrom: 180, rpTo: 0, women: 22, men: 8 },
-      { code: 'TC123456', name: 'Test Company Ltd', days: 14, rpFrom: 365, rpTo: 180, women: 5, men: 25 },
+      { code: 'TC123456', name: 'Test Company Ltd', days: 1, rpFrom: 60, rpTo: 30, women: 8, men: 12, companyType: 'LISTED' },
+      { code: 'TC654321', name: 'Another Test UAB', days: 3, rpFrom: 90, rpTo: 10, women: 15, men: 15, companyType: 'STATE_OWNED' },
+      { code: 'TC000111', name: 'Sample Group AS', days: 7, rpFrom: 180, rpTo: 0, women: 22, men: 8, companyType: 'LARGE' },
+      { code: 'TC123456', name: 'Test Company Ltd', days: 14, rpFrom: 365, rpTo: 180, women: 5, men: 25, companyType: 'LISTED' },
     ];
 
     for (const s of samples) {
@@ -76,18 +76,18 @@ async function main() {
 
       const insertSubmission = await client.query(
         `INSERT INTO submissions (
-            company_code, name_at_submission, country, legal_form, address, registry,
+            company_code, name_at_submission, country, company_type, legal_form, address, registry,
             e_delivery_address, reporting_from, reporting_to,
             contact_name, contact_email, contact_phone,
             notes, consent, consent_text, requirements_applied, requirements_link, created_at
          ) VALUES (
-            $1, $2, $3, $4, $5, $6,
-            $7, $8, $9,
-            $10, $11, $12,
-            $13, $14, $15, $16, $17, $18
+            $1, $2, $3, $4, $5, $6, $7,
+            $8, $9, $10,
+            $11, $12, $13,
+            $14, $15, $16, $17, $18, $19
          ) RETURNING id` ,
         [
-          s.code, s.name, 'LT', 'UAB', 'Address 1, Vilnius', 'REG-123',
+          s.code, s.name, 'LT', s.companyType, 'UAB', 'Address 1, Vilnius', 'REG-123',
           'e-delivery@company.lt', reportingFrom, reportingTo,
           'John Admin', 'john@company.lt', '+37060000000',
           null, true, 'Consent text', true, null, createdAt,
@@ -107,6 +107,28 @@ async function main() {
         `INSERT INTO submission_meta (submission_id, reasons_for_underrepresentation, submitter_name, submitter_title, submitter_phone, submitter_email)
          VALUES ($1, $2, $3, $4, $5, $6)` ,
         [submissionId, null, 'Jane Doe', 'Admin', '+37061111111', 'jane@example.com']
+      );
+    }
+
+    // Ensure companies table reflects key profile fields for each sample company
+    for (const s of samples) {
+      await client.query(
+        `UPDATE companies
+           SET company_type = $2,
+               legal_form = COALESCE($3, legal_form),
+               address = COALESCE($4, address),
+               registry = COALESCE($5, registry),
+               e_delivery_address = COALESCE($6, e_delivery_address),
+               updated_at = NOW()
+         WHERE code = $1`,
+        [
+          s.code,
+          s.companyType,
+          'UAB',
+          'Address 1, Vilnius',
+          'REG-123',
+          'e-delivery@company.lt',
+        ]
       );
     }
 

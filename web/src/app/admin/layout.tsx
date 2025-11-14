@@ -1,6 +1,6 @@
 import React from 'react';
-import '../globals.css'; // assuming global styles
-import '../../../fontAndColour.css'; // ensure font/color stylesheet (T010)
+import '../global.css'; // corrected filename
+import '../../styles/fontAndColour.css'; // use in-project styles copy
 import AdminSidebar from './components/AdminSidebar';
 
 // Admin layout injection point (T003, T010)

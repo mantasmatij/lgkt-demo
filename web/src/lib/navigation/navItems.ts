@@ -4,9 +4,9 @@
  */
 export interface NavigationItem {
   id: string;
-  label: string; // temporary plain text; will become i18n key later
+  labelKey: string; // i18n key (T021)
   route: string; // must start with /admin
-  icon?: string; // icon mapping key (added fully in T022)
+  icon?: string; // icon mapping key (T022)
   order: number;
   roles?: string[]; // defaults to ['admin'] if omitted
   activeMatch?: string; // optional pattern (prefix or regex literal string)
@@ -18,7 +18,7 @@ const baseRole = ['admin'];
 export const navItems: NavigationItem[] = [
   {
     id: 'companies',
-    label: 'Companies',
+    labelKey: 'nav.companies',
     route: '/admin/companies',
     icon: 'building',
     order: 1,
@@ -27,7 +27,7 @@ export const navItems: NavigationItem[] = [
   },
   {
     id: 'forms-reports',
-    label: 'Forms & Reports',
+    labelKey: 'nav.formsReports',
     route: '/admin/forms',
     icon: 'forms',
     order: 2,
@@ -36,7 +36,7 @@ export const navItems: NavigationItem[] = [
   },
   {
     id: 'submissions-exports',
-    label: 'Submissions / Exports',
+    labelKey: 'nav.submissionsExports',
     route: '/admin/submissions',
     icon: 'inbox',
     order: 3,
@@ -45,7 +45,7 @@ export const navItems: NavigationItem[] = [
   },
   {
     id: 'settings',
-    label: 'Settings',
+    labelKey: 'nav.settings',
     route: '/admin/settings',
     icon: 'settings',
     order: 99,

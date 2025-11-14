@@ -212,8 +212,22 @@ API documentation is available in OpenAPI format:
  - Admin Navigation & Preferences (future optional persistence): `specs/007-admin-nav-sidebar/contracts/navigation.openapi.yaml`
 
 ### Admin Companies Endpoints (summary)
-### Upcoming Admin Sidebar Feature
-Adds a persistent right-side navigation panel for admin users with quick links (Companies, Forms & Reports, Submissions / Exports, Settings), language switcher, and collapsible layout state. See `specs/007-admin-nav-sidebar/spec.md` and `specs/007-admin-nav-sidebar/plan.md`.
+### Admin Sidebar Feature (In Progress)
+Persistent right-side navigation panel for admin users with quick links (Companies, Forms & Reports, Submissions / Exports, Settings), language switcher (upcoming), and collapsible layout state (upcoming). Current progress (Phase 3 / US1 navigation):
+| Aspect | Status |
+|--------|--------|
+| Static nav items (i18n keys) | ✅ Implemented |
+| Icon mapping + fallback | ✅ Implemented |
+| Active route highlighting | ✅ Implemented |
+| Keyboard navigation & ARIA landmark | ✅ Implemented |
+| Analytics events (nav clicks, perf marks) | ✅ Implemented |
+| Language switcher | ⏳ Pending (US2) |
+| Collapse/expand state | ⏳ Pending (US3) |
+| Accessibility axe helper | ✅ Implemented |
+| E2E navigation flows | ⏳ Pending |
+| Preference API (optional) | 🔒 Deferred |
+
+See `specs/007-admin-nav-sidebar/spec.md`, `plan.md`, `tasks.md` for full roadmap.
 - `GET /api/admin/companies` – List companies (search, type filter, pagination)
 - `GET /api/admin/companies/allowed-values` – Distinct allowed values for filters (types, registries)
 - `GET /api/admin/companies/:id` – Company detail

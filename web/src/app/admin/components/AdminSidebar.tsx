@@ -1,6 +1,8 @@
 "use client";
 import React from 'react';
 import { getSortedNavItems, getActiveItemId } from '../../../lib/navigation';
+import { translateNav } from '../../../lib/navigation/i18n';
+import { getNavIcon } from '../../../lib/navigation/icons';
 import AdminNavItem from './AdminNavItem';
 import { usePathname } from 'next/navigation';
 
@@ -20,15 +22,20 @@ export const AdminSidebar: React.FC = () => {
       data-phase="foundation"
     >
       <nav role="navigation" aria-label="Admin Navigation" className="space-y-1">
-        {items.map(item => (
-          <AdminNavItem
-            key={item.id}
-            id={item.id}
-            label={item.label}
-            href={item.route}
-            active={item.id === activeId}
-          />
-        ))}
+        {items.map(item => {
+          const label = translateNav(item.labelKey);
+          const icon = getNavIcon(item, label);
+          return (
+            <AdminNavItem
+              key={item.id}
+              id={item.id}
+              label={label}
+              href={item.route}
+              active={item.id === activeId}
+              icon={icon}
+            />
+          );
+        })}
       </nav>
     </aside>
   );

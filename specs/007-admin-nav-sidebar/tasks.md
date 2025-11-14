@@ -41,7 +41,7 @@ Provide core logic & accessibility fundamentals supporting all stories.
 - [X] T014 Add ARIA + semantic roles (`role="navigation"`, aria-label) `web/src/app/admin/components/AdminSidebar.tsx`
 - [X] T015 Implement keyboard navigation (focus order, Enter/Space activation) `web/src/app/admin/components/AdminNavItem.tsx`
 - [X] T016 Add visual active state styling (Tailwind classes) `web/src/app/admin/components/AdminNavItem.tsx`
-- [ ] T017 Add unified analytics instrumentation (navigation clicks, language change timing, collapse toggles, performance mark helpers) `web/src/lib/navigation/analytics.ts`
+ - [X] T017 Add unified analytics instrumentation (navigation clicks, language change timing, collapse toggles, performance mark helpers) `web/src/lib/navigation/analytics.ts`
 - [ ] T018 [P] Implement axe accessibility test helper `web/tests/e2e/helpers/axe.ts`
 - [ ] T019 Add unit tests for navItems config `web/src/lib/navigation/__tests__/navItems.test.ts`
 - [ ] T020 Update quickstart with nav items setup confirmation `specs/007-admin-nav-sidebar/quickstart.md`

@@ -12,6 +12,8 @@ Auto-generated from all feature plans. Last updated: 2025-10-21
 - PostgreSQL (migrations via Drizzle) (005-improve-form-list)
 - TypeScript (ES2022), Node 20+ + Next.js (web), Express (API), HeroUI (components), Zod (validation), Drizzle ORM (data access) (006-company-list-detail)
 - PostgreSQL via existing db package and migrations (006-company-list-detail)
+- TypeScript (ES2022) / Node 20+ + Next.js (App Router), HeroUI (components), Tailwind CSS, Express (API), Drizzle ORM, Zod (validation), i18n context (existing) (007-admin-nav-sidebar)
+- PostgreSQL (existing), plus sessionStorage/cookie for sidebar state (no new tables) (007-admin-nav-sidebar)
 
 ## Project Structure
 ```
@@ -26,9 +28,9 @@ npm test && npm run lint
 TypeScript (Node 20+ / ES2022): Follow standard conventions
 
 ## Recent Changes
+- 007-admin-nav-sidebar: Added TypeScript (ES2022) / Node 20+ + Next.js (App Router), HeroUI (components), Tailwind CSS, Express (API), Drizzle ORM, Zod (validation), i18n context (existing)
 - 006-company-list-detail: Added TypeScript (ES2022), Node 20+ + Next.js (web), Express (API), HeroUI (components), Zod (validation), Drizzle ORM (data access)
 - 005-improve-form-list: Added TypeScript (ES2022), Node 20+ + Express (API), Next.js (web), Drizzle ORM, Zod, HeroUI (components)
-- 004-update-company-form: Added [if applicable, e.g., PostgreSQL, CoreData, files or N/A]
 
 <!-- MANUAL ADDITIONS START -->
 <!-- MANUAL ADDITIONS END -->

@@ -113,7 +113,7 @@ Independent Test: Toggle changes width; persists across page navigations.
 ## Phase 7: Polish & Cross-Cutting
 Quality, performance, accessibility, and documentation finalization.
 
-- [ ] T051 Add axe accessibility assertions to e2e `web/tests/e2e/admin_sidebar.spec.ts`
+ - [X] T051 Add axe accessibility assertions to e2e `web/tests/e2e/admin_sidebar.spec.ts`
 - [ ] T052 DEPRECATED (performance mark helpers consolidated in T017) `web/src/lib/navigation/analytics.ts`
 - [ ] T053 Bundle size review & icon optimization `web/src/app/admin/components/AdminSidebar.tsx`
 - [ ] T054 Add feature flag guard (optional) `web/src/app/admin/components/AdminSidebar.tsx`

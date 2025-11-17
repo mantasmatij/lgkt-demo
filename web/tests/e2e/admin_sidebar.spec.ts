@@ -1,6 +1,7 @@
 // Admin Sidebar navigation flows (T025)
 // Verifies sidebar renders, links navigate, and active item updates.
 import { test, expect } from '@playwright/test';
+import { scanA11y, expectNoViolations } from './helpers/axe';
 
 // Labels may appear in Lithuanian (default) or English after language switch.
 const navExpectations: { id: string; route: string; labels: RegExp[] }[] = [
@@ -60,5 +61,10 @@ test.describe('Admin Sidebar navigation', () => {
     const companiesLink = page.locator('#nav-companies');
     await companiesLink.click();
     await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+  });
+
+  test('sidebar has no critical a11y violations (T051)', async ({ page }) => {
+    const results = await scanA11y(page);
+    expectNoViolations(results);
   });
 });

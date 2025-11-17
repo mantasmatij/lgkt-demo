@@ -99,7 +99,7 @@ Independent Test: Toggle changes width; persists across page navigations.
  - [X] T042 [US3] E2E test: collapse/expand & persistence `web/tests/e2e/admin_sidebar.spec.ts`
  - [X] T043 [US3] Unit test: preference hook behavior `web/src/lib/navigation/__tests__/preference.test.ts`
  - [ ] T044 [US3] DEPRECATED (covered by T017 unified instrumentation) `web/src/lib/navigation/analytics.ts`
- - [ ] T045 [US3] Update README with collapse feature notes `README.md`
+ - [X] T045 [US3] Update README with collapse feature notes `README.md`
 
 ## Phase 6: Optional Preference API (Future Persistence)
 (Not required for MVP metrics; adds server persistence extension.)

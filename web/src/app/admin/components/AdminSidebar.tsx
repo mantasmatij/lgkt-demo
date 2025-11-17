@@ -180,7 +180,7 @@ export const AdminSidebar: React.FC = () => {
             type="button"
             id="admin-lang-toggle"
             aria-label={t('common')('change_language')}
-            className="w-full border rounded px-2 py-1 text-sm flex items-center justify-center"
+            className="w-full border rounded-full px-2 py-1 text-sm flex items-center justify-center"
             onClick={async () => {
               const next = locale === 'lt' ? 'en' : 'lt';
               const from = locale;

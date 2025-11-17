@@ -25,8 +25,8 @@ export function readCollapsedCookie(): boolean | null {
 export function writeCollapsedCookie(collapsed: boolean): void {
   if (typeof document === 'undefined') return;
   try {
-    // Simple session cookie; adjust max-age if persistence beyond session desired.
-    document.cookie = `${COOKIE_KEY}=${encodeURIComponent(String(collapsed))}; path=/; SameSite=Lax`;
+    // Persist for SSR hydration across requests (1 year)
+    document.cookie = `${COOKIE_KEY}=${encodeURIComponent(String(collapsed))}; path=/; SameSite=Lax; Max-Age=31536000`;
   } catch {/* ignore */}
 }
 

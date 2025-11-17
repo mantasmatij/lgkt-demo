@@ -94,7 +94,7 @@ Independent Test: Toggle changes width; persists across page navigations.
  - [X] T037 [US3] Implement collapse state hook (sessionStorage + cookie) `web/src/lib/navigation/preference.ts`
  - [X] T038 [US3] Add collapse/expand toggle UI `web/src/app/admin/components/AdminSidebar.tsx`
  - [X] T039 [US3] Auto-collapse logic for narrow viewport (<480px) `web/src/app/admin/components/AdminSidebar.tsx`
- - [ ] T040 [US3] Persist cookie for SSR hydration `web/src/lib/navigation/preference.ts`
+ - [X] T040 [US3] Persist cookie for SSR hydration `web/src/lib/navigation/preference.ts`
  - [X] T041 [US3] Accessible aria-expanded + focus management `web/src/app/admin/components/AdminSidebar.tsx`
  - [X] T042 [US3] E2E test: collapse/expand & persistence `web/tests/e2e/admin_sidebar.spec.ts`
  - [X] T043 [US3] Unit test: preference hook behavior `web/src/lib/navigation/__tests__/preference.test.ts`

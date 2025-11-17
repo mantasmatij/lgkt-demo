@@ -2,7 +2,6 @@ import './global.css';
 import localFont from 'next/font/local';
 import { UIProvider } from 'ui';
 import { LocaleProvider } from '../i18n/LocaleProvider';
-import LanguageSwitcher from '../components/LanguageSwitcher';
 import { lt } from '../i18n/dictionaries/lt';
 import { SkipLink } from './components/SkipLink';
 
@@ -49,9 +48,7 @@ export default function RootLayout({
           <LocaleProvider>
             {/* Skip to main content link for keyboard navigation */}
             <SkipLink />
-            <header className="w-full flex justify-end p-4">
-              <LanguageSwitcher />
-            </header>
+            {/* Header language switcher removed; sidebar now controls language */}
             <main id="main-content" tabIndex={-1}>
               {children}
             </main>

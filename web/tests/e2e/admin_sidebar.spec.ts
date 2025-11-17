@@ -4,10 +4,9 @@ import { test, expect } from '@playwright/test';
 
 // Labels may appear in Lithuanian (default) or English after language switch.
 const navExpectations: { id: string; route: string; labels: RegExp[] }[] = [
+  { id: 'submissions', route: '/admin/forms', labels: [/Užpildytos formos/i, /Submissions/i] },
   { id: 'companies', route: '/admin/companies', labels: [/Įmonės/i, /Companies/i] },
-  { id: 'forms-reports', route: '/admin/forms', labels: [/Formos ir Ataskaitos/i, /Forms & Reports/i] },
-  { id: 'submissions-exports', route: '/admin/submissions', labels: [/Pateikimai\s*\/\s*Eksportai/i, /Submissions\s*\/\s*Exports/i] },
-  { id: 'settings', route: '/admin/settings', labels: [/Nustatymai/i, /Settings/i] }
+  { id: 'reports', route: '/admin/reports', labels: [/Ataskaitos/i, /Reports/i] }
 ];
 
 test.describe('Admin Sidebar navigation', () => {

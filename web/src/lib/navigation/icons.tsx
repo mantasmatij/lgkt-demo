@@ -6,6 +6,7 @@ const iconMap: Record<string, React.ReactNode> = {
   building: '🏢',
   forms: '📝',
   inbox: '📥',
+  report: '📄',
   settings: '⚙️'
 };
 

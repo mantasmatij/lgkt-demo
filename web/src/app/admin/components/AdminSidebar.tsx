@@ -17,6 +17,9 @@ import { getInitialCollapsedState, persistCollapsedState } from '../../../lib/na
 // NOTE: Collapse, language switch, analytics added in later tasks.
 export const AdminSidebar: React.FC = () => {
   const pathname = usePathname();
+  if (pathname && pathname.startsWith('/admin/sign-in')) {
+    return null;
+  }
   const items = getSortedNavItems();
   const activeId = getActiveItemId(pathname || '', items);
   const { locale, setLocale, t } = useI18n();
@@ -79,54 +82,123 @@ export const AdminSidebar: React.FC = () => {
     [locale, setLocale]
   );
 
+  const asideClasses = [
+    'hidden md:flex flex-col bg-white border-l border-gray-200',
+    'h-screen sticky top-0 overflow-y-auto',
+    collapsed ? 'w-16 p-2' : 'w-64 p-4'
+  ].join(' ');
+
   return (
-    <aside
-      className="w-64 p-4 border-l border-gray-200 hidden md:flex flex-col justify-between bg-white"
-      data-phase="foundation+language"
-    >
-      <nav role="navigation" aria-label="Admin Navigation" className="space-y-1">
-        {items.map(item => {
-          const label = translateNav(item.labelKey, locale as 'en' | 'lt');
-          const icon = getNavIcon(item, label);
-          return (
-            <AdminNavItem
-              key={item.id}
-              id={item.id}
-              label={label}
-              href={item.route}
-              active={item.id === activeId}
-              icon={icon}
-              collapsed={collapsed}
-            />
-          );
-        })}
-      </nav>
-      <div className="pt-4 border-t mt-4 flex flex-col gap-2">
+    <aside className={asideClasses} data-phase="foundation+language">
+      <div className="flex flex-col gap-3 flex-1">
         <button
           type="button"
           id="admin-collapse-toggle"
           aria-expanded={!collapsed}
-          className="w-full border rounded px-2 py-1 text-sm text-left"
+          className={[
+            'border text-sm transition-colors',
+            collapsed
+              ? 'w-full flex items-center justify-center px-2 py-1 rounded-full'
+              : 'w-full px-2 py-1 text-left flex items-center gap-2 rounded'
+          ].join(' ')}
           onClick={onToggleCollapse}
+          aria-label={collapsed ? t('common')('expand_sidebar') : undefined}
         >
-          {collapsed ? '▶︎ Expand sidebar' : '◀︎ Collapse sidebar'}
+          {collapsed ? (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="size-3 shrink-0 text-gray-700"
+              aria-hidden="true"
+            >
+              <polyline points="15 18 9 12 15 6" />
+            </svg>
+          ) : (
+            <>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="size-3 shrink-0 text-gray-700"
+                aria-hidden="true"
+              >
+                <polyline points="9 18 15 12 9 6" />
+              </svg>
+              <span>{t('common')('collapse_sidebar')}</span>
+            </>
+          )}
         </button>
-        <label htmlFor="admin-lang-select" className="block text-xs font-medium text-gray-500 mb-1">
-          {t('common')('language')}
-        </label>
-        <select
-          id="admin-lang-select"
-          data-testid="admin-lang-select"
-          className="w-full border rounded px-2 py-1 text-sm"
-          value={locale}
-          onChange={onLanguageChange}
-        >
-          {languageOptions.map(opt => (
-            <option key={opt.code} value={opt.code}>
-              {opt.label}
-            </option>
-          ))}
-        </select>
+        <nav role="navigation" aria-label="Admin Navigation" className="space-y-1">
+          {items.map(item => {
+            const label = translateNav(item.labelKey, locale as 'en' | 'lt');
+            const icon = getNavIcon(item, label);
+            return (
+              <AdminNavItem
+                key={item.id}
+                id={item.id}
+                label={label}
+                href={item.route}
+                active={item.id === activeId}
+                icon={icon}
+                collapsed={collapsed}
+              />
+            );
+          })}
+        </nav>
+      </div>
+      <div className="mt-auto pt-4 border-t flex flex-col gap-2">
+        {!collapsed ? (
+          <>
+            <label htmlFor="admin-lang-select" className="block text-xs font-medium text-gray-500 mb-1">
+              {t('common')('language')}
+            </label>
+            <select
+              id="admin-lang-select"
+              data-testid="admin-lang-select"
+              className="w-full border rounded px-2 py-1 text-sm"
+              value={locale}
+              onChange={onLanguageChange}
+            >
+              {languageOptions.map(opt => (
+                <option key={opt.code} value={opt.code}>
+                  {opt.label}
+                </option>
+              ))}
+            </select>
+          </>
+        ) : (
+          <button
+            type="button"
+            id="admin-lang-toggle"
+            aria-label={t('common')('change_language')}
+            className="w-full border rounded px-2 py-1 text-sm flex items-center justify-center"
+            onClick={async () => {
+              const next = locale === 'lt' ? 'en' : 'lt';
+              const from = locale;
+              changingRef.current = { from, to: next, started: performance.now() };
+              markPerfStart('lang-change-visible');
+              try {
+                await setLocale(next as typeof locale);
+                setRenderNonce(n => n + 1);
+              } catch (err) {
+                console.warn('[AdminSidebar] language toggle failed', err);
+                trackLanguageChange(from, next, 0, false);
+                changingRef.current = null;
+              }
+            }}
+          >
+            🌐 {locale.toUpperCase()}
+          </button>
+        )}
       </div>
     </aside>
   );

@@ -3,9 +3,9 @@ import { NavigationItem } from '../navItems';
 
 describe('activeMatch logic (T019)', () => {
   const items: NavigationItem[] = [
-    { id: 'companies', label: 'Companies', route: '/admin/companies', order: 1, activeMatch: '/admin/companies' },
-    { id: 'forms', label: 'Forms', route: '/admin/forms', order: 2, activeMatch: '/admin/forms' },
-  { id: 'regex', label: 'Regex', route: '/admin/reports', order: 3, activeMatch: '/^/admin/reports(/.*)?$/' }
+    { id: 'companies', labelKey: 'nav.companies', route: '/admin/companies', order: 1, activeMatch: '/admin/companies' },
+    { id: 'forms', labelKey: 'nav.forms', route: '/admin/forms', order: 2, activeMatch: '/admin/forms' },
+    { id: 'regex', labelKey: 'nav.reports', route: '/admin/reports', order: 3, activeMatch: '/^/admin/reports(/.*)?$/' }
   ];
 
   it('prefix match works', () => {

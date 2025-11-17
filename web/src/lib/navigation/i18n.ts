@@ -6,15 +6,13 @@ export type NavLocale = 'en' | 'lt';
 const navDictionaries: Record<NavLocale, Record<string, string>> = {
   en: {
     'nav.companies': 'Companies',
-    'nav.formsReports': 'Forms & Reports',
-    'nav.submissionsExports': 'Submissions / Exports',
-    'nav.settings': 'Settings'
+    'nav.submissions': 'Submissions',
+    'nav.reports': 'Reports'
   },
   lt: {
     'nav.companies': 'Įmonės',
-    'nav.formsReports': 'Formos ir Ataskaitos',
-    'nav.submissionsExports': 'Pateikimai / Eksportai',
-    'nav.settings': 'Nustatymai'
+    'nav.submissions': 'Užpildytos formos',
+    'nav.reports': 'Ataskaitos'
   }
 };
 

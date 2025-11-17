@@ -1,6 +1,9 @@
 export const lt = {
   common: {
     language: 'Kalba',
+    collapse_sidebar: 'Sutraukti šoninę juostą',
+    expand_sidebar: 'Išplėsti šoninę juostą',
+    change_language: 'Keisti kalbą',
     lithuanian: 'Lietuvių',
     english: 'Anglų',
     submit: 'Pateikti',

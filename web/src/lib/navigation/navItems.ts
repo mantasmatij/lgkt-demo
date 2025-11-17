@@ -14,43 +14,34 @@ export interface NavigationItem {
 
 const baseRole = ['admin'];
 
-// initial list (order ascending). Settings is a placeholder for future expansion.
+// Updated list and order per requirements
 export const navItems: NavigationItem[] = [
+  {
+    id: 'submissions',
+    labelKey: 'nav.submissions',
+    route: '/admin/forms',
+    icon: 'inbox',
+    order: 1,
+    roles: baseRole,
+    activeMatch: '/admin/forms'
+  },
   {
     id: 'companies',
     labelKey: 'nav.companies',
     route: '/admin/companies',
     icon: 'building',
-    order: 1,
+    order: 2,
     roles: baseRole,
     activeMatch: '/admin/companies'
   },
   {
-    id: 'forms-reports',
-    labelKey: 'nav.formsReports',
-    route: '/admin/forms',
-    icon: 'forms',
-    order: 2,
-    roles: baseRole,
-    activeMatch: '/admin/forms'
-  },
-  {
-    id: 'submissions-exports',
-    labelKey: 'nav.submissionsExports',
-    route: '/admin/submissions',
-    icon: 'inbox',
+    id: 'reports',
+    labelKey: 'nav.reports',
+    route: '/admin/reports',
+    icon: 'report',
     order: 3,
     roles: baseRole,
-    activeMatch: '/admin/submissions'
-  },
-  {
-    id: 'settings',
-    labelKey: 'nav.settings',
-    route: '/admin/settings',
-    icon: 'settings',
-    order: 99,
-    roles: baseRole,
-    activeMatch: '/admin/settings'
+    activeMatch: '/admin/reports'
   }
 ];
 

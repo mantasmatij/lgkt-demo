@@ -209,8 +209,33 @@ For detailed admin setup instructions, see [ADMIN_SETUP.md](./ADMIN_SETUP.md).
 
 API documentation is available in OpenAPI format:
 - Location: `specs/001-users-mantas-matijosaitis/contracts/openapi.yaml`
+ - Admin Navigation & Preferences (future optional persistence): `specs/007-admin-nav-sidebar/contracts/navigation.openapi.yaml`
 
 ### Admin Companies Endpoints (summary)
+### Admin Sidebar Feature
+Persistent right-side navigation panel for admin users with quick links (Submissions, Companies, Reports), embedded language switcher, and collapsible layout state with persistence.
+
+Collapse/Expand notes:
+- Toggle at the top of the sidebar; pill-shaped and centered when collapsed.
+- State persists in `sessionStorage` and a cookie (`adminSidebarCollapsed=true|false`).
+- Cookie includes `Max-Age` for SSR hydration; the admin layout reads it so first paint reflects the saved width (no flash).
+- Auto-collapses on very narrow viewports (<480px).
+
+Current progress summary:
+| Aspect | Status |
+|--------|--------|
+| Static nav items (i18n keys) | ✅ Implemented |
+| Icon mapping + fallback | ✅ Implemented |
+| Active route highlighting | ✅ Implemented |
+| Keyboard navigation & ARIA landmark | ✅ Implemented |
+| Analytics events (nav clicks, perf marks) | ✅ Implemented |
+| Language switcher | ✅ Implemented |
+| Collapse/expand state | ✅ Implemented (session + cookie + SSR hydration) |
+| Accessibility axe helper | ✅ Implemented |
+| E2E navigation flows | ⏳ Pending |
+| Preference API (optional) | 🔒 Deferred |
+
+See `specs/007-admin-nav-sidebar/spec.md`, `plan.md`, `tasks.md` for full roadmap.
 - `GET /api/admin/companies` – List companies (search, type filter, pagination)
 - `GET /api/admin/companies/allowed-values` – Distinct allowed values for filters (types, registries)
 - `GET /api/admin/companies/:id` – Company detail

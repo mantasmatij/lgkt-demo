@@ -1,6 +1,9 @@
 export const en = {
   common: {
     language: 'Language',
+    collapse_sidebar: 'Collapse sidebar',
+    expand_sidebar: 'Expand sidebar',
+    change_language: 'Change language',
     lithuanian: 'Lithuanian',
     english: 'English',
     submit: 'Submit',

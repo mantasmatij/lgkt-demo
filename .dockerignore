@@ -1,0 +1,63 @@
+# Docker build context exclusions
+node_modules/
+dist/
+build/
+.nx/
+coverage/
+*.log
+*.tsbuildinfo
+.git/
+.gitignore
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.env
+.env.*
+!/.env.example
+test-results/
+playwright-report/
+tmp/
+specs/**/contracts/
+# Exclude VCS
+.git
+.gitignore
+
+# Node/Nx
+node_modules
+.nx
+
+# Build outputs
+build
+.dist
+dist
+coverage
+
+# Next.js
+.next
+out
+.vercel
+
+# Env
+.env
+.env.*
+
+# Logs
+*.log
+
+# Tests/Reports
+playwright-report
+.junit
+
+# Temp
+tmp
+
+# Editor/OS
+.vscode
+.idea
+.DS_Store
+Thumbs.db
+
+# Docker
+Dockerfile*
+.dockerignore

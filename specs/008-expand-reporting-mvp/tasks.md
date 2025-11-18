@@ -54,8 +54,8 @@
 - [X] T025 [US1] Implement preview fetch hook in `web/src/services/reports/useReportPreview.ts`
 - [X] T026 [US1] Implement export action hook in `web/src/services/reports/useReportExport.ts`
 - [X] T027 [P] [US1] Integrate table with preview data in `web/src/components/reports/ReportTable.tsx`
-- [ ] T028 [US1] Add metadata row inclusion logic in exporter (use exportMetadata) in `api/src/utils/csvExporter.ts`
-- [ ] T029 [US1] Wire up page route to components in `web/src/app/reports/page.tsx`
+ - [X] T028 [US1] Add metadata row inclusion logic in exporter (use exportMetadata) in `api/src/utils/csvExporter.ts`
+ - [X] T029 [US1] Wire up page route to components in `web/src/app/reports/page.tsx`
 - [ ] T030 [P] [US1] Add Jest tests for preview adapter logic in `api/src/services/__tests__/reportCompanies.adapter.spec.ts`
 - [ ] T031 [P] [US1] Add Jest tests for export CSV generation in `api/src/utils/__tests__/csvExporter.spec.ts` (expand on scaffold)
 - [ ] T032 [US1] Add Cucumber scenario: export current view in `web/src/tests/features/reports/export.feature`

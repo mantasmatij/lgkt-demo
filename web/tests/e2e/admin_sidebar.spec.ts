@@ -100,4 +100,10 @@ test.describe('Admin Sidebar navigation', () => {
     await page.goto('/admin/reports');
     await expect(toggle).toHaveAttribute('aria-expanded', 'false');
   });
+
+  test('sidebar is hidden on sign-in route (T058)', async ({ page }) => {
+    await page.goto('/admin/sign-in');
+    const nav = page.getByRole('navigation', { name: /admin navigation/i });
+    await expect(nav).toHaveCount(0);
+  });
 });

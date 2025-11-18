@@ -15,7 +15,7 @@ import { getInitialCollapsedState, persistCollapsedState } from '../../../lib/na
 // - Adds semantic navigation landmarks & aria-label
 // - Computes active item id using current pathname
 // NOTE: Collapse, language switch, analytics added in later tasks.
-export const AdminSidebar: React.FC = () => {
+export const AdminSidebar: React.FC<{ defaultCollapsed?: boolean }> = ({ defaultCollapsed = false }) => {
   const pathname = usePathname();
   if (pathname && pathname.startsWith('/admin/sign-in')) {
     return null;
@@ -23,7 +23,7 @@ export const AdminSidebar: React.FC = () => {
   const items = getSortedNavItems();
   const activeId = getActiveItemId(pathname || '', items);
   const { locale, setLocale, t } = useI18n();
-  const [collapsed, setCollapsed] = useState<boolean>(false);
+  const [collapsed, setCollapsed] = useState<boolean>(defaultCollapsed);
   // Initialize collapsed from session/cookie and auto-collapse for narrow viewport (T037, T039)
   useEffect(() => {
     const initial = getInitialCollapsedState();
@@ -33,8 +33,10 @@ export const AdminSidebar: React.FC = () => {
         next = true;
       }
     }
-    setCollapsed(next);
-    trackSidebarToggle(next, 'hydrate');
+    setCollapsed(prev => {
+      trackSidebarToggle(next, 'hydrate');
+      return prev === next ? prev : next;
+    });
   }, []);
 
   const onToggleCollapse = useCallback(() => {

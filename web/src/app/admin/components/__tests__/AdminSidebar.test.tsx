@@ -1,5 +1,9 @@
 // Updated unit test after foundational implementation (replaces skeleton expectations)
 import React from 'react';
+jest.mock('next/navigation', () => ({
+  // Mock only what we use
+  usePathname: () => '/admin/forms'
+}));
 import { render, screen, fireEvent } from '@testing-library/react';
 import AdminSidebar from '../AdminSidebar';
 import { navItems } from '../../../../lib/navigation/navItems';
@@ -38,17 +42,16 @@ describe('AdminSidebar foundational', () => {
   });
 
   it('marks active item with aria-current (placeholder test)', () => {
-    // Simulate being on /admin/forms
-    // JSDOM does not set usePathname; we can mock it via jest.mock but simpler: temporarily patch getActiveItemId path dependency by rendering then checking presence of aria-current on expected link.
+    // Simulate being on /admin/forms via mocked usePathname
     render(
       <LocaleProvider>
         <AdminSidebar />
       </LocaleProvider>
     );
-    // We expect no aria-current yet because pathname unknown; skip conditional assertion.
-    // This test becomes more meaningful when we introduce a mock for usePathname.
-    // Placeholder assertion ensures component renders without throwing.
-    expect(screen.getByRole('navigation')).toBeTruthy();
+    const link = screen.getByRole('link', { name: /užpildytos formos|submissions/i });
+    expect((link as HTMLElement).getAttribute('aria-current')).toBe('page');
+    // Active class should be applied
+    expect((link as HTMLElement).className).toMatch(/bg-blue-50/);
   });
 
   it('changes language when selecting English (T034)', async () => {

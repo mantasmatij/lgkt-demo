@@ -23,16 +23,16 @@
 **Purpose**: Shared utilities, validation, and permissions alignment required before implementing stories.
 **⚠️ CRITICAL**: Must complete before any user story tasks.
 
-- [ ] T006 Implement Zod filter schemas in `api/src/services/reportFilters.schemas.ts`
-- [ ] T007 [P] Implement shared permission helper leveraging existing access logic in `api/src/utils/permissions/reportPermissions.ts`
-- [ ] T008 [P] Add CSV utility (UTF-8 BOM, quoting) in `api/src/utils/csvExporter.ts`
-- [ ] T009 [P] Add export metadata builder (timestamp, filters, timezone) in `api/src/utils/exportMetadata.ts`
-- [ ] T010 Provide row limit constant (50k) and size threshold in `api/src/utils/exportLimits.ts`
-- [ ] T011 [P] Add frontend service stubs for reports in `web/src/services/reports/index.ts`
-- [ ] T012 [P] Add HeroUI-based base table component for report preview in `web/src/components/reports/ReportTable.tsx`
-- [ ] T013 Integrate font/colors usage in new components via `web/src/styles/` additions (if needed)
-- [ ] T014 Add initial Cucumber feature scaffold for reports in `web/src/tests/features/reports/export.feature` (placeholder)
-- [ ] T015 [P] Add Jest test scaffold for CSV utility in `api/src/utils/__tests__/csvExporter.spec.ts`
+ - [X] T006 Implement Zod filter schemas in `api/src/services/reportFilters.schemas.ts`
+ - [X] T007 [P] Implement shared permission helper leveraging existing access logic in `api/src/utils/permissions/reportPermissions.ts`
+ - [X] T008 [P] Add CSV utility (UTF-8 BOM, quoting) in `api/src/utils/csvExporter.ts`
+ - [X] T009 [P] Add export metadata builder (timestamp, filters, timezone) in `api/src/utils/exportMetadata.ts`
+ - [X] T010 Provide row limit constant (50k) and size threshold in `api/src/utils/exportLimits.ts`
+ - [X] T011 [P] Add frontend service stubs for reports in `web/src/services/reports/index.ts`
+ - [X] T012 [P] Add HeroUI-based base table component for report preview in `web/src/components/reports/ReportTable.tsx`
+ - [X] T013 Integrate font/colors usage in new components via `web/src/styles/` additions (if needed)
+ - [X] T014 Add initial Cucumber feature scaffold for reports in `web/src/tests/features/reports/export.feature` (placeholder)
+ - [X] T015 [P] Add Jest test scaffold for CSV utility in `api/src/utils/__tests__/csvExporter.spec.ts`
 
 **Checkpoint**: Foundation ready.
 
@@ -42,13 +42,13 @@
 **Independent Test**: Trigger preview + export for Companies list; verify headers, ordering, filters, and sorting match UI.
 
 ### Implementation
-- [ ] T016 [P] [US1] Add `/reports/types` route in `api/src/routes/reports.types.ts`
-- [ ] T017 [P] [US1] Add `/reports/filters` route in `api/src/routes/reports.filters.ts`
-- [ ] T018 [US1] Implement `/reports/preview` controller in `api/src/routes/reports.preview.ts` using registry & filter schemas
-- [ ] T019 [US1] Implement `/reports/export` controller in `api/src/routes/reports.export.ts` with row/size limit check
-- [ ] T020 [P] [US1] Extend report registry with definitions for companies-list & forms-list in `api/src/utils/reportRegistry.ts`
-- [ ] T021 [P] [US1] Add company report data adapter in `api/src/services/reportCompanies.adapter.ts`
-- [ ] T022 [P] [US1] Add form report data adapter in `api/src/services/reportForms.adapter.ts`
+- [X] T016 [P] [US1] Add `/reports/types` route in `api/src/routes/reports.types.ts`
+- [X] T017 [P] [US1] Add `/reports/filters` route in `api/src/routes/reports.filters.ts`
+- [X] T018 [US1] Implement `/reports/preview` controller in `api/src/routes/reports.preview.ts` using registry & filter schemas
+- [X] T019 [US1] Implement `/reports/export` controller in `api/src/routes/reports.export.ts` with row/size limit check
+- [X] T020 [P] [US1] Extend report registry with definitions for companies-list & forms-list in `api/src/utils/reportRegistry.ts`
+- [X] T021 [P] [US1] Add company report data adapter in `api/src/services/reportCompanies.adapter.ts`
+- [X] T022 [P] [US1] Add form report data adapter in `api/src/services/reportForms.adapter.ts`
 - [ ] T023 [US1] Implement frontend selection UI (report type dropdown) in `web/src/components/reports/ReportSelector.tsx`
 - [ ] T024 [P] [US1] Implement filters panel (generic) in `web/src/components/reports/FiltersPanel.tsx`
 - [ ] T025 [US1] Implement preview fetch hook in `web/src/services/reports/useReportPreview.ts`

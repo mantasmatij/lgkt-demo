@@ -26,14 +26,26 @@ const definitions: Record<ReportType, ReportDefinition> = {
   'companies-list': {
     id: 'companies-list',
     name: 'Companies List Report',
-    columns: [],
-    filters: []
+    columns: [
+      { key: 'id', label: 'ID' },
+      { key: 'name', label: 'Name' },
+      { key: 'code', label: 'Code' }
+    ],
+    filters: [
+      { key: 'dateRange', type: 'dateRange' }
+    ]
   },
   'forms-list': {
     id: 'forms-list',
     name: 'Forms List Report',
-    columns: [],
-    filters: []
+    columns: [
+      { key: 'id', label: 'ID' },
+      { key: 'name', label: 'Name' },
+      { key: 'schemaVersion', label: 'Schema Version' }
+    ],
+    filters: [
+      { key: 'dateRange', type: 'dateRange' }
+    ]
   }
 };
 

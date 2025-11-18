@@ -56,11 +56,11 @@
 - [X] T027 [P] [US1] Integrate table with preview data in `web/src/components/reports/ReportTable.tsx`
  - [X] T028 [US1] Add metadata row inclusion logic in exporter (use exportMetadata) in `api/src/utils/csvExporter.ts`
  - [X] T029 [US1] Wire up page route to components in `web/src/app/reports/page.tsx`
-- [ ] T030 [P] [US1] Add Jest tests for preview adapter logic in `api/src/services/__tests__/reportCompanies.adapter.spec.ts`
-- [ ] T031 [P] [US1] Add Jest tests for export CSV generation in `api/src/utils/__tests__/csvExporter.spec.ts` (expand on scaffold)
-- [ ] T032 [US1] Add Cucumber scenario: export current view in `web/src/tests/features/reports/export.feature`
-- [ ] T033 [US1] Add Cucumber steps for export scenario in `web/src/tests/steps/reports/export.steps.ts`
-- [ ] T034 [US1] Add row limit exceed test (mock large dataset) in `api/src/utils/__tests__/exportLimits.spec.ts`
+- [X] T030 [P] [US1] Add Jest tests for preview adapter logic in `api/src/services/__tests__/reportCompanies.adapter.spec.ts`
+- [X] T031 [P] [US1] Add Jest tests for export CSV generation in `api/src/utils/__tests__/csvExporter.spec.ts` (expand on scaffold)
+- [X] T032 [US1] Add Cucumber scenario: export current view in `web/src/tests/features/reports/export.feature`
+- [X] T033 [US1] Add Cucumber steps for export scenario in `web/src/tests/steps/reports/export.steps.ts`
+- [X] T034 [US1] Add row limit exceed test (mock large dataset) in `api/src/utils/__tests__/exportLimits.spec.ts`
 
 **Checkpoint**: User Story 1 independently testable (MVP deliverable).
 

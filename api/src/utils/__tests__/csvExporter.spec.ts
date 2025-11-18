@@ -19,4 +19,24 @@ describe('csvExporter', () => {
     expect(firstLine.startsWith('\uFEFF#')).toBe(true); // BOM + metadata line
     expect(firstLine).toContain('filters=x=1');
   });
+
+  it('omits metadata row when metadata empty', () => {
+    const csv = buildCsv({ columns: ['a'], rows: [] });
+    const firstLine = csv.split('\n')[0];
+    // First line should be BOM + header, not metadata comment
+    expect(firstLine.startsWith('\uFEFF#')).toBe(false);
+    expect(firstLine).toContain('a');
+  });
+
+  it('handles newlines in cell by quoting', () => {
+    const csv = buildCsv({ columns: ['text'], rows: [{ text: 'Line1\nLine2' }] });
+    const lines = csv.split('\n');
+    expect(lines[1]).toMatch(/"Line1\nLine2"/);
+  });
+
+  it('double quotes existing quotes in cell', () => {
+    const csv = buildCsv({ columns: ['q'], rows: [{ q: 'He said "Hi"' }] });
+    const line = csv.split('\n')[1];
+    expect(line).toBe('"He said ""Hi"""');
+  });
 });

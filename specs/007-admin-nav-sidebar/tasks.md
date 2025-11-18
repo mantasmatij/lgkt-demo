@@ -54,7 +54,7 @@ Independent Test: Sidebar renders; each link navigates correctly; active highlig
 - [X] T024 [US1] Add route-based active state update using Next.js hooks `web/src/app/admin/components/AdminSidebar.tsx`
 - [X] T025 [US1] E2E test: navigation flows `web/tests/e2e/admin_sidebar.spec.ts`
 - [X] T026 [US1] Unit test: active state logic `web/src/app/admin/components/__tests__/AdminSidebar.test.tsx`
-- [ ] T027 [US1] DEPRECATED (covered by T017 unified instrumentation) `web/src/lib/navigation/analytics.ts`
+- [X] T027 [US1] DEPRECATED (covered by T017 unified instrumentation) `web/src/lib/navigation/analytics.ts`
 - [X] T028 [US1] Documentation update: README admin section `README.md`
  - [X] T020 Update quickstart with nav items setup confirmation `specs/007-admin-nav-sidebar/quickstart.md`
 - [X] T018 [P] Implement axe accessibility test helper `web/tests/e2e/helpers/axe.ts`
@@ -98,7 +98,7 @@ Independent Test: Toggle changes width; persists across page navigations.
  - [X] T041 [US3] Accessible aria-expanded + focus management `web/src/app/admin/components/AdminSidebar.tsx`
  - [X] T042 [US3] E2E test: collapse/expand & persistence `web/tests/e2e/admin_sidebar.spec.ts`
  - [X] T043 [US3] Unit test: preference hook behavior `web/src/lib/navigation/__tests__/preference.test.ts`
- - [ ] T044 [US3] DEPRECATED (covered by T017 unified instrumentation) `web/src/lib/navigation/analytics.ts`
+ - [X] T044 [US3] DEPRECATED (covered by T017 unified instrumentation) `web/src/lib/navigation/analytics.ts`
  - [X] T045 [US3] Update README with collapse feature notes `README.md`
 
 ## Phase 6: Optional Preference API (Future Persistence)
@@ -139,13 +139,13 @@ Deliver MVP after completing Phase 3 (US1). Provides immediate navigation value 
 - Polish: 7
 ## Phase 8: Remediation & Additional Coverage (Address analysis findings)
 
-- [ ] T058 Add e2e test: sidebar absent for non-admin user `web/tests/e2e/admin_sidebar.spec.ts`
+- [X] T058 Add e2e test: sidebar absent for non-admin user `web/tests/e2e/admin_sidebar.spec.ts`
 - [ ] T059 Setup Cucumber BDD layer (feature + step config) `web/tests/bdd/sidebar/navigation.feature`
 - [ ] T060 [P] Add BDD feature file for navigation scenarios `web/tests/bdd/sidebar/navigation.feature`
  - [X] T061 Add e2e test: auto-collapse on narrow viewport (<480px) `web/tests/e2e/admin_sidebar.spec.ts`
 - [ ] T062 Unit test: language load failure fallback retains previous language `web/src/app/admin/components/__tests__/AdminSidebar.test.tsx`
  - [X] T063 E2E test: collapse persistence across ≥3 distinct pages `web/tests/e2e/admin_sidebar.spec.ts`
-- [ ] T064 Unit test: active item has correct CSS class set `web/src/app/admin/components/__tests__/AdminSidebar.test.tsx`
+- [X] T064 Unit test: active item has correct CSS class set `web/src/app/admin/components/__tests__/AdminSidebar.test.tsx`
 - [ ] T065 Unit test: adding mock nav item (config-only) renders without component changes `web/src/lib/navigation/__tests__/navItems.test.ts`
  - [X] T066 E2E test: SSR hydration collapse state from cookie first paint `web/tests/e2e/admin_sidebar.spec.ts`
 - [ ] T067 Unit test: analytics event payload schema (navigation / language / collapse / performance) `web/src/lib/navigation/__tests__/analytics.test.ts`

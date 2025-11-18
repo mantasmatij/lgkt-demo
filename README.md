@@ -18,6 +18,19 @@ A web application for collecting company information through a public form, with
 - Company detail with submissions ordered by submission date (desc)
 - CSV export with date range filtering
 
+### Reporting MVP (Feature 008)
+- Unified reports entry point (Companies list & Forms list scope)
+- Preview table honoring filters & sorting
+- CSV export (UTF-8+BOM) with metadata row (timestamp, filters)
+- 50k row / ~25MB synchronous export limit and guidance
+- Future extensibility for XLSX/PDF/DOCX without UI flow change
+
+Documentation:
+- Spec: `specs/008-expand-reporting-mvp/spec.md`
+- Plan: `specs/008-expand-reporting-mvp/plan.md`
+- Tasks: `specs/008-expand-reporting-mvp/tasks.md`
+- Contracts: `specs/008-expand-reporting-mvp/contracts/openapi.yaml`
+
 ## Tech Stack
 
 - **Frontend**: Next.js 15, React 19, NextUI 2.x, Tailwind CSS

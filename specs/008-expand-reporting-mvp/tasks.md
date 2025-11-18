@@ -12,11 +12,11 @@
 ## Phase 1: Setup (Shared Infrastructure)
 **Purpose**: Confirm baseline environment and add reporting feature scaffolding without changing existing stable modules.
 
-- [ ] T001 Verify existing monorepo structure (Nx) aligns with plan (no code change)
-- [ ] T002 Add feature docs index entry in `README.md` (link to specs/008-expand-reporting-mvp/) if missing
-- [ ] T003 [P] Confirm PostgreSQL connection and seed suitability for report data in `db/` (no schema changes)
-- [ ] T004 [P] Establish placeholder report registry module in `api/src/utils/reportRegistry.ts`
-- [ ] T005 [P] Create web placeholder page for reports entry in `web/src/app/reports/page.tsx`
+- [X] T001 Verify existing monorepo structure (Nx) aligns with plan (no code change)
+- [X] T002 Add feature docs index entry in `README.md` (link to specs/008-expand-reporting-mvp/) if missing
+- [X] T003 [P] Confirm PostgreSQL connection and seed suitability for report data in `db/` (no schema changes)
+- [X] T004 [P] Establish placeholder report registry module in `api/src/utils/reportRegistry.ts`
+- [X] T005 [P] Create web placeholder page for reports entry in `web/src/app/reports/page.tsx`
 
 ---
 ## Phase 2: Foundational (Blocking Prerequisites)

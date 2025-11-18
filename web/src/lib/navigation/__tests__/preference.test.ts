@@ -21,4 +21,12 @@ describe('collapse preference helpers (T043)', () => {
     expect(readCollapsedFromSession()).toBe(true);
     expect(readCollapsedCookie()).toBe(true);
   });
+
+  it('sessionStorage takes precedence over cookie for initial state (T072)', () => {
+    // Write cookie=false first
+    document.cookie = 'adminSidebarCollapsed=false; path=/; Max-Age=31536000';
+    // Then write session=true so it should win
+    window.sessionStorage.setItem('adminSidebarCollapsed', 'true');
+    expect(getInitialCollapsedState()).toBe(true);
+  });
 });

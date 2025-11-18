@@ -67,4 +67,37 @@ test.describe('Admin Sidebar navigation', () => {
     const results = await scanA11y(page);
     expectNoViolations(results);
   });
+
+  test('auto-collapses on narrow viewport <480px (T061)', async ({ browser }) => {
+    const context = await browser.newContext({ viewport: { width: 420, height: 800 } });
+    const page = await context.newPage();
+    await page.goto('/admin');
+    const toggle = page.locator('#admin-collapse-toggle');
+    await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+    await context.close();
+  });
+
+  test('SSR hydration reflects cookie at first load (T066)', async ({ browser }) => {
+    const context = await browser.newContext();
+    await context.addCookies([{ name: 'adminSidebarCollapsed', value: 'true', url: 'http://localhost:3000', path: '/' }]);
+    const page = await context.newPage();
+    await page.goto('/admin');
+    const toggle = page.locator('#admin-collapse-toggle');
+    await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+    await context.close();
+  });
+
+  test('collapse persists across three pages (T063)', async ({ page }) => {
+    const toggle = page.locator('#admin-collapse-toggle');
+    await toggle.click();
+    await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+    // Navigate through three distinct pages
+    // Go to forms (id can be submissions/forms depending on setup); navigate via URL for determinism
+    await page.goto('/admin/forms');
+    await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+    await page.goto('/admin/companies');
+    await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+    await page.goto('/admin/reports');
+    await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+  });
 });

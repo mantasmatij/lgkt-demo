@@ -142,18 +142,18 @@ Deliver MVP after completing Phase 3 (US1). Provides immediate navigation value 
 - [ ] T058 Add e2e test: sidebar absent for non-admin user `web/tests/e2e/admin_sidebar.spec.ts`
 - [ ] T059 Setup Cucumber BDD layer (feature + step config) `web/tests/bdd/sidebar/navigation.feature`
 - [ ] T060 [P] Add BDD feature file for navigation scenarios `web/tests/bdd/sidebar/navigation.feature`
-- [ ] T061 Add e2e test: auto-collapse on narrow viewport (<480px) `web/tests/e2e/admin_sidebar.spec.ts`
+ - [X] T061 Add e2e test: auto-collapse on narrow viewport (<480px) `web/tests/e2e/admin_sidebar.spec.ts`
 - [ ] T062 Unit test: language load failure fallback retains previous language `web/src/app/admin/components/__tests__/AdminSidebar.test.tsx`
-- [ ] T063 E2E test: collapse persistence across ≥3 distinct pages `web/tests/e2e/admin_sidebar.spec.ts`
+ - [X] T063 E2E test: collapse persistence across ≥3 distinct pages `web/tests/e2e/admin_sidebar.spec.ts`
 - [ ] T064 Unit test: active item has correct CSS class set `web/src/app/admin/components/__tests__/AdminSidebar.test.tsx`
 - [ ] T065 Unit test: adding mock nav item (config-only) renders without component changes `web/src/lib/navigation/__tests__/navItems.test.ts`
-- [ ] T066 E2E test: SSR hydration collapse state from cookie first paint `web/tests/e2e/admin_sidebar.spec.ts`
+ - [X] T066 E2E test: SSR hydration collapse state from cookie first paint `web/tests/e2e/admin_sidebar.spec.ts`
 - [ ] T067 Unit test: analytics event payload schema (navigation / language / collapse / performance) `web/src/lib/navigation/__tests__/analytics.test.ts`
 - [ ] T068 E2E test: keyboard focus order & escape from sidebar `web/tests/e2e/admin_sidebar.spec.ts`
 - [ ] T069 Performance baseline capture script `web/scripts/perf-baseline.ts`
 - [ ] T070 Performance test: click-to-paint <150ms assertion `web/tests/e2e/admin_sidebar.spec.ts`
 - [ ] T071 Unit test: role-based nav item filtering hides unauthorized items `web/src/lib/navigation/__tests__/navItems.test.ts`
-- [ ] T072 Unit test: sessionStorage precedence over cookie for collapse state `web/src/lib/navigation/__tests__/preference.test.ts`
+ - [X] T072 Unit test: sessionStorage precedence over cookie for collapse state `web/src/lib/navigation/__tests__/preference.test.ts`
 - [ ] T073 Unit test: icon fallback (two uppercase letters) `web/src/lib/navigation/__tests__/navItems.test.ts`
 - [ ] T074 E2E/visual test: high contrast mode rendering `web/tests/e2e/admin_sidebar.spec.ts`
 - [ ] T075 Stress test: long nav list scroll containment (>20 items) `web/tests/e2e/admin_sidebar.spec.ts`

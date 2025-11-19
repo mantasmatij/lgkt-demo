@@ -5,6 +5,7 @@ interface DateRange { from?: string; to?: string }
 interface PreviewParams {
   type?: string;
   dateRange?: DateRange;
+  companyCode?: string;
 }
 
 interface PreviewData {
@@ -23,9 +24,12 @@ export function useReportPreview(params: PreviewParams) {
     setLoading(true);
     setError(null);
     try {
-      const body: { type: string; filters?: { dateRange: DateRange } } = { type: params.type };
+      const body: { type: string; filters?: { dateRange?: DateRange; company?: { companyCode?: string } } } = { type: params.type };
       if (params.dateRange?.from || params.dateRange?.to) {
-        body.filters = { dateRange: { from: params.dateRange.from, to: params.dateRange.to } };
+        body.filters = { ...(body.filters || {}), dateRange: { from: params.dateRange.from, to: params.dateRange.to } };
+      }
+      if (params.companyCode) {
+        body.filters = { ...(body.filters || {}), company: { companyCode: params.companyCode } };
       }
       const res = await fetch('/api/reports/preview', {
         method: 'POST',
@@ -49,7 +53,7 @@ export function useReportPreview(params: PreviewParams) {
     } finally {
       setLoading(false);
     }
-  }, [params.type, params.dateRange?.from, params.dateRange?.to]);
+  }, [params.type, params.dateRange?.from, params.dateRange?.to, params.companyCode]);
 
   useEffect(() => { fetchPreview(); }, [fetchPreview]);
 

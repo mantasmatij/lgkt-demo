@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { ReportSelector } from '../../components/reports/ReportSelector';
 import { FiltersPanel } from '../../components/reports/FiltersPanel';
+import { CompanySelect } from '../../components/reports/CompanySelect';
 import { useReportPreview } from '../../services/reports/useReportPreview';
 import { useReportExport } from '../../services/reports/useReportExport';
 import { ReportTable } from '../../components/reports/ReportTable';
@@ -12,8 +13,9 @@ export default function ReportsPage() {
   const [types, setTypes] = useState<ReportTypeOption[]>([]);
   const [selectedType, setSelectedType] = useState<string | undefined>();
   const [dateRange, setDateRange] = useState<{ from?: string; to?: string }>({});
-  const preview = useReportPreview({ type: selectedType, dateRange });
-  const exporter = useReportExport({ type: selectedType, dateRange });
+  const [companyCode, setCompanyCode] = useState<string | undefined>(undefined);
+  const preview = useReportPreview({ type: selectedType, dateRange, companyCode });
+  const exporter = useReportExport({ type: selectedType, dateRange, companyCode });
 
   // Load report types
   useEffect(() => {
@@ -31,6 +33,9 @@ export default function ReportsPage() {
       <div className="flex flex-col gap-4 md:flex-row md:items-end">
         <ReportSelector types={types} value={selectedType} onChange={setSelectedType} />
         <FiltersPanel dateRange={dateRange} onChange={setDateRange} disabled={!selectedType} />
+        {selectedType === 'companies-list' && (
+          <CompanySelect value={companyCode} onChange={setCompanyCode} disabled={!selectedType} />
+        )}
         <div className="flex flex-col gap-2">
           <button
             type="button"

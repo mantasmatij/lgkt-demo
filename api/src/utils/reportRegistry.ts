@@ -32,7 +32,9 @@ const definitions: Record<ReportType, ReportDefinition> = {
       { key: 'code', label: 'Code' }
     ],
     filters: [
-      { key: 'dateRange', type: 'dateRange' }
+      { key: 'dateRange', type: 'dateRange' },
+      // Company dropdown, options are loaded dynamically via /api/reports/company-options
+      { key: 'companyCode', type: 'select' }
     ]
   },
   'forms-list': {

@@ -22,7 +22,7 @@ export const dateRangeFilterSchema = z.object({
 }, { message: 'from must be before to' });
 
 export const companyFilterSchema = z.object({
-  companyId: z.string().uuid().optional()
+  companyCode: z.string().min(1).optional()
 });
 
 export const formFilterSchema = z.object({

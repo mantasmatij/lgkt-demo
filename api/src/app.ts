@@ -16,6 +16,7 @@ import { reportsTypesRouter } from './routes/reports.types';
 import { reportsFiltersRouter } from './routes/reports.filters';
 import { reportsPreviewRouter } from './routes/reports.preview';
 import { reportsExportRouter } from './routes/reports.export';
+import { reportsCompanyOptionsRouter } from './routes/reports.companyOptions';
 import { i18nRouter } from './routes/i18n';
 import { attachLocale } from './middleware/locale';
 import { issueCsrfToken } from './middleware/csrf';
@@ -64,6 +65,7 @@ export function createApp() {
   app.use('/api/reports', reportsFiltersRouter);
   app.use('/api/reports', reportsPreviewRouter);
   app.use('/api/reports', reportsExportRouter);
+  app.use('/api/reports', reportsCompanyOptionsRouter);
 
   // Central error handler
   type HttpError = Error & { statusCode?: number; code?: string };

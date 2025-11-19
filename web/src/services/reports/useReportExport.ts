@@ -5,6 +5,7 @@ interface DateRange { from?: string; to?: string }
 interface ExportParams {
   type?: string;
   dateRange?: DateRange;
+  companyCode?: string;
 }
 
 export function useReportExport(params: ExportParams) {
@@ -17,9 +18,12 @@ export function useReportExport(params: ExportParams) {
     setDownloading(true);
     setError(null);
     try {
-      const body: { type: string; filters?: { dateRange: DateRange } } = { type: params.type };
+      const body: { type: string; filters?: { dateRange?: DateRange; company?: { companyCode?: string } } } = { type: params.type };
       if (params.dateRange?.from || params.dateRange?.to) {
-        body.filters = { dateRange: { from: params.dateRange.from, to: params.dateRange.to } };
+        body.filters = { ...(body.filters || {}), dateRange: { from: params.dateRange.from, to: params.dateRange.to } };
+      }
+      if (params.companyCode) {
+        body.filters = { ...(body.filters || {}), company: { companyCode: params.companyCode } };
       }
       const res = await fetch('/api/reports/export', {
         method: 'POST',

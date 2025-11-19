@@ -3,12 +3,23 @@ import { z } from 'zod';
 // Zod filter schemas for Expand Reporting MVP
 // Generic reusable definitions; can be extended when new report types added.
 
+// Accept date-only strings (YYYY-MM-DD) as used by the web UI
 export const dateRangeFilterSchema = z.object({
-  from: z.string().datetime().optional(),
-  to: z.string().datetime().optional()
-}).refine(v => !v.from || !v.to || v.from <= v.to, {
-  message: 'from must be before to'
-});
+  from: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/,{ message: 'from must be YYYY-MM-DD' })
+    .optional(),
+  to: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/,{ message: 'to must be YYYY-MM-DD' })
+    .optional()
+}).refine(v => {
+  if (!v.from || !v.to) return true;
+  // Compare as dates to avoid lexical pitfalls
+  const f = new Date(v.from);
+  const t = new Date(v.to);
+  return f.getTime() <= t.getTime();
+}, { message: 'from must be before to' });
 
 export const companyFilterSchema = z.object({
   companyId: z.string().uuid().optional()

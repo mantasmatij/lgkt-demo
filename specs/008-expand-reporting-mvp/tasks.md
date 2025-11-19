@@ -70,7 +70,7 @@
 **Independent Test**: Compare exports for users with different roles; restricted fields/rows absent appropriately.
 
 ### Implementation
-- [ ] T035 [P] [US2] Extend permission helper for field-level filtering in `api/src/utils/permissions/reportPermissions.ts`
+ - [X] T035 [P] [US2] Extend permission helper for field-level filtering in `api/src/utils/permissions/reportPermissions.ts`
 - [ ] T036 [US2] Integrate permission filtering into preview adapter pipeline in `api/src/services/reportCompanies.adapter.ts`
 - [ ] T037 [US2] Integrate permission filtering into forms adapter in `api/src/services/reportForms.adapter.ts`
 - [ ] T038 [P] [US2] Add Jest tests for field filtering logic in `api/src/utils/permissions/__tests__/reportPermissions.spec.ts`

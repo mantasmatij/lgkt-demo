@@ -29,7 +29,15 @@ export function useReportExport(params: ExportParams) {
         const j = await res.json();
         throw new Error(j.message || 'Export exceeds limits');
       }
-      if (!res.ok) throw new Error(`Export failed (${res.status})`);
+      if (!res.ok) {
+        try {
+          const j = await res.json();
+          const msg = j?.message ? (typeof j.message === 'string' ? j.message : JSON.stringify(j.message)) : undefined;
+          throw new Error(msg || `Export failed (${res.status})`);
+        } catch {
+          throw new Error(`Export failed (${res.status})`);
+        }
+      }
       const blob = await res.blob();
       const disposition = res.headers.get('Content-Disposition');
       let filename = 'report.csv';

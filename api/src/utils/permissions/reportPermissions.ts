@@ -29,3 +29,23 @@ export function filterUnauthorizedFields<T extends Record<string, unknown>>(row:
   }
   return filtered as T;
 }
+
+// Field-level permissions: determine which column keys are allowed for a given user and report type.
+// MVP default: all provided columns are allowed. Extend with real policy mapping by role/report.
+export function allowedColumnKeys(
+  reportType: 'companies-list' | 'forms-list',
+  user: UserContext,
+  allColumnKeys: string[]
+): string[] {
+  // Placeholder for policy-based filtering, e.g., by role or reportType
+  // Example: if (!user.roles.includes('admin')) return allColumnKeys.filter(k => k !== 'sensitiveField');
+  return allColumnKeys;
+}
+
+// Convenience helper to filter a list of rows to only allowed keys
+export function applyFieldPermissionsToRows<T extends Record<string, unknown>>(
+  rows: T[],
+  allowedKeys: string[]
+): T[] {
+  return rows.map((r) => filterUnauthorizedFields(r, allowedKeys));
+}

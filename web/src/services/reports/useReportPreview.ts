@@ -32,7 +32,15 @@ export function useReportPreview(params: PreviewParams) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body)
       });
-      if (!res.ok) throw new Error(`Preview failed (${res.status})`);
+      if (!res.ok) {
+        try {
+          const j = await res.json();
+          const msg = j?.message ? (typeof j.message === 'string' ? j.message : JSON.stringify(j.message)) : undefined;
+          throw new Error(msg || `Preview failed (${res.status})`);
+        } catch {
+          throw new Error(`Preview failed (${res.status})`);
+        }
+      }
       const json = await res.json();
       setData(json);
     } catch (err) {

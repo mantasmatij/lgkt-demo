@@ -17,10 +17,11 @@ export function ReportTable({ columns, rows, isLoading, emptyMessage = 'No data'
   }
   return (
     <div className="overflow-auto border rounded-md">
-      <div className="px-1 py-2 text-xs text-gray-500" role="note">
+      <div id="report-permission-note" className="px-1 py-2 text-xs text-gray-500" role="note">
         {permissionInfo ?? 'Note: Export and preview reflect your permissions.'}
       </div>
-      <table className="min-w-full text-sm">
+      <table className="min-w-full text-sm" aria-describedby="report-permission-note">
+        <caption className="sr-only">Report preview table</caption>
         <thead>
           <tr>
             {columns.map(c => (

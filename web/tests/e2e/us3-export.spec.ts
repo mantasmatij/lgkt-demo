@@ -1,6 +1,8 @@
 import { test, expect } from '@playwright/test';
 
-test.describe('US3: CSV Export', () => {
+// Temporarily skipped: reporting flows now covered by Cucumber features under src/tests/features/reports/*
+// This suite remains for historical reference during transition. Remove after Cucumber parity is confirmed.
+test.describe.skip('US3: CSV Export', () => {
   const ADMIN_EMAIL = 'admin@example.com';
   const ADMIN_PASSWORD = 'admin123';
 

@@ -1,7 +1,9 @@
 /*
- * Manual performance measurement script (US3 T050).
+ * Manual performance measurement script (US3 T050/T058).
  * Usage:
- *   ts-node api/src/scripts/measureExportPerformance.ts companies-list 25000
+ *   ts-node api/src/scripts/measureExportPerformance.ts --type companies-list --rows 25000
+ *   ts-node api/src/scripts/measureExportPerformance.ts -t forms-list -r 15000
+ *   ts-node api/src/scripts/measureExportPerformance.ts --help
  * Measures time to build a synthetic CSV in-memory using existing utilities.
  */
 import { buildCsv } from '../../utils/csvExporter';
@@ -17,9 +19,33 @@ function makeRows(rowCount: number, columns: string[]): Array<Record<string, unk
   return rows;
 }
 
+function parseArgs(argv: string[]) {
+  const out: { type?: string; rows?: number; help?: boolean } = {};
+  for (let i = 2; i < argv.length; i++) {
+    const a = argv[i];
+    if (a === '--help' || a === '-h') out.help = true;
+    else if (a === '--type' || a === '-t') out.type = argv[++i];
+    else if (a === '--rows' || a === '-r') out.rows = Number(argv[++i]);
+    else if (!out.type) out.type = a;
+    else if (!out.rows) out.rows = Number(a);
+  }
+  return out;
+}
+
+function printHelp() {
+  console.log('Usage:');
+  console.log('  ts-node api/src/scripts/measureExportPerformance.ts --type companies-list --rows 25000');
+  console.log('Options:');
+  console.log('  -t, --type <id>   Report type (companies-list | forms-list)');
+  console.log('  -r, --rows <n>    Number of synthetic rows (default 10000)');
+  console.log('  -h, --help        Show this help');
+}
+
 async function main() {
-  const type = process.argv[2] || 'companies-list';
-  const rowCount = parseInt(process.argv[3] || '10000', 10);
+  const args = parseArgs(process.argv);
+  if (args.help) { printHelp(); return; }
+  const type = args.type || 'companies-list';
+  const rowCount = Number.isFinite(args.rows) && (args.rows as number) > 0 ? (args.rows as number) : 10000;
   const columns = type === 'forms-list'
     ? ['id','name','status','created']
     : ['id','code','name','country','type'];

@@ -5,9 +5,10 @@ export interface ReportTableProps {
   rows: string[][];
   isLoading?: boolean;
   emptyMessage?: string;
+  permissionInfo?: string;
 }
 
-export function ReportTable({ columns, rows, isLoading, emptyMessage = 'No data' }: ReportTableProps) {
+export function ReportTable({ columns, rows, isLoading, emptyMessage = 'No data', permissionInfo }: ReportTableProps) {
   if (isLoading) {
     return <div role="status" aria-busy="true" className="text-sm">Loading preview…</div>;
   }
@@ -16,6 +17,9 @@ export function ReportTable({ columns, rows, isLoading, emptyMessage = 'No data'
   }
   return (
     <div className="overflow-auto border rounded-md">
+      <div className="px-1 py-2 text-xs text-gray-500" role="note">
+        {permissionInfo ?? 'Note: Export and preview reflect your permissions.'}
+      </div>
       <table className="min-w-full text-sm">
         <thead>
           <tr>

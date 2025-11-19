@@ -10,6 +10,7 @@ interface ExportParams {
 export function useReportExport(params: ExportParams) {
   const [downloading, setDownloading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [limitInfo, setLimitInfo] = useState<{ estimatedSize?: string; code?: string } | null>(null);
 
   async function download() {
     if (!params.type) return;
@@ -27,6 +28,7 @@ export function useReportExport(params: ExportParams) {
       });
       if (res.status === 413) {
         const j = await res.json();
+        setLimitInfo({ estimatedSize: j.estimatedSize, code: j.code });
         throw new Error(j.message || 'Export exceeds limits');
       }
       if (!res.ok) {
@@ -61,5 +63,5 @@ export function useReportExport(params: ExportParams) {
     }
   }
 
-  return { download, downloading, error };
+  return { download, downloading, error, limitInfo };
 }

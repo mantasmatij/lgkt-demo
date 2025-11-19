@@ -6,6 +6,7 @@ import { fetchFormsReport } from '../services/reportForms.adapter';
 import { buildCsv } from '../utils/csvExporter';
 import { buildExportMetadata } from '../utils/exportMetadata';
 import { checkLimits } from '../utils/exportLimits';
+import { estimateCsvSize, formatByteSize } from '../utils/exportSizeEstimator';
 import { getReportDefinition } from '../utils/reportRegistry';
 import { allowedColumnKeys } from '../utils/permissions/reportPermissions';
 
@@ -31,6 +32,14 @@ reportsExportRouter.post('/export', async (req, res) => {
     return res.status(413).json({ code: 'EXPORT_LIMIT_EXCEEDED', message: limitCheck.reason });
   }
 
+  const sizeEstimate = estimateCsvSize({ rows: result.total, columns: result.columns, includeMetadata: true });
+  if (sizeEstimate.exceedsRowLimit) {
+    return res.status(413).json({
+      code: 'ROW_LIMIT_EXCEEDED',
+      message: `Row cap exceeded: ${sizeEstimate.projectedRows} > 50k. Adjust filters or contact support.`,
+      estimatedSize: formatByteSize(sizeEstimate.estimatedBytes),
+    });
+  }
   const metadata = buildExportMetadata({ filters });
   const csv = buildCsv({ columns: result.columns, rows: result.rows, metadata });
   const timestamp = new Date().toISOString().replace(/[:]/g, '').replace(/\.\d{3}Z$/, 'Z');

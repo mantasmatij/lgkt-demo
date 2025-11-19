@@ -95,6 +95,14 @@
 - [ ] T048 [US3] Cucumber scenario: exceed limit guidance in `web/src/tests/features/reports/limit.feature`
 - [ ] T049 [US3] Steps for limit scenario in `web/src/tests/steps/reports/limit.steps.ts`
 - [ ] T050 [US3] Performance measurement script (manual) in `api/src/scripts/measureExportPerformance.ts`
+ - [X] T043 [P] [US3] Add size estimation utility in `api/src/utils/exportSizeEstimator.ts`
+ - [X] T044 [US3] Integrate size estimation pre-check in `/reports/export` controller in `api/src/routes/reports.export.ts`
+ - [X] T045 [P] [US3] Add frontend guidance banner component in `web/src/components/reports/ExportGuidance.tsx`
+ - [X] T046 [US3] Implement guidance trigger on limit exceed in `web/src/services/reports/useReportExport.ts`
+ - [X] T047 [P] [US3] Jest tests for size estimation logic in `api/src/utils/__tests__/exportSizeEstimator.spec.ts`
+ - [X] T048 [US3] Cucumber scenario: exceed limit guidance in `web/src/tests/features/reports/limit.feature`
+ - [X] T049 [US3] Steps for limit scenario in `web/src/tests/steps/reports/limit.steps.ts`
+ - [X] T050 [US3] Performance measurement script (manual) in `api/src/scripts/measureExportPerformance.ts`
 
 **Checkpoint**: User Story 3 independently testable.
 

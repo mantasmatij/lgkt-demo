@@ -30,6 +30,10 @@ export function useReportExport(params: ExportParams) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body)
       });
+      if (res.status === 401) {
+        window.location.replace('/admin/sign-in');
+        return;
+      }
       if (res.status === 413) {
         const j = await res.json();
         setLimitInfo({ estimatedSize: j.estimatedSize, code: j.code });

@@ -36,6 +36,10 @@ export function useReportPreview(params: PreviewParams) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body)
       });
+      if (res.status === 401) {
+        window.location.replace('/admin/sign-in');
+        return;
+      }
       if (!res.ok) {
         try {
           const j = await res.json();

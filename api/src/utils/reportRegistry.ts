@@ -29,10 +29,11 @@ const definitions: Record<ReportType, ReportDefinition> = {
     columns: [
       { key: 'id', label: 'ID' },
       { key: 'name', label: 'Name' },
-      { key: 'code', label: 'Code' }
+      { key: 'code', label: 'Code' },
+      { key: 'type', label: 'Type' },
+      { key: 'address', label: 'Address' }
     ],
     filters: [
-      { key: 'dateRange', type: 'dateRange' },
       // Company dropdown, options are loaded dynamically via /api/reports/company-options
       { key: 'companyCode', type: 'select' }
     ]

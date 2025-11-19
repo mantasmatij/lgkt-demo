@@ -32,7 +32,9 @@ export default function ReportsPage() {
       <h1 id="reports-title" className="text-xl font-semibold">Reports</h1>
       <div className="flex flex-col gap-4 md:flex-row md:items-end">
         <ReportSelector types={types} value={selectedType} onChange={setSelectedType} />
-        <FiltersPanel dateRange={dateRange} onChange={setDateRange} disabled={!selectedType} />
+        {selectedType !== 'companies-list' && (
+          <FiltersPanel dateRange={dateRange} onChange={setDateRange} disabled={!selectedType} />
+        )}
         {selectedType === 'companies-list' && (
           <CompanySelect value={companyCode} onChange={setCompanyCode} disabled={!selectedType} />
         )}

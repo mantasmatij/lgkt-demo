@@ -7,6 +7,7 @@ import { buildCsv } from '../utils/csvExporter';
 import { buildExportMetadata } from '../utils/exportMetadata';
 import { checkLimits } from '../utils/exportLimits';
 import { getReportDefinition } from '../utils/reportRegistry';
+import { allowedColumnKeys } from '../utils/permissions/reportPermissions';
 
 export const reportsExportRouter = Router();
 reportsExportRouter.use(requireAuth);
@@ -17,9 +18,13 @@ reportsExportRouter.post('/export', async (req, res) => {
     return res.status(400).json({ code: 'VALIDATION_ERROR', message: parse.error.flatten() });
   }
   const { type, filters, sort } = parse.data;
+  const def = getReportDefinition(type);
+  const allKeys = def?.columns.map(c => c.key) || [];
+  const user = req.session?.user ? { id: req.session.user.id, roles: [req.session.user.role] } : { id: 'anon', roles: [] };
+  const allowed = allowedColumnKeys(type, user, allKeys);
   let result;
-  if (type === 'companies-list') result = await fetchCompaniesReport({ filters, sort });
-  else result = await fetchFormsReport({ filters, sort });
+  if (type === 'companies-list') result = await fetchCompaniesReport({ filters, sort, allowedKeys: allowed });
+  else result = await fetchFormsReport({ filters, sort, allowedKeys: allowed });
 
   const limitCheck = checkLimits(result.total);
   if (!limitCheck.withinLimits) {

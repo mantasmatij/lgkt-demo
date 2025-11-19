@@ -29,3 +29,16 @@ This guide explains how to preview and export reports (CSV) during development.
 
 ## Notes
 - MVP only exposes CSV export; future formats will reuse the same export entry point.
+
+## Export Performance and Limits
+
+- Hard row cap: 50,000 rows per export. Exceeding this returns HTTP 413 with a guidance message and an estimated size.
+- Estimation: the server performs a lightweight estimate before building the CSV to avoid unnecessary work when limits are likely exceeded.
+- Frontend: display a guidance banner when the export hook surfaces `limitInfo` after a 413 response.
+- Manual measurement: run the performance helper with synthetic data to gauge CSV build times:
+
+```sh
+ts-node api/src/scripts/measureExportPerformance.ts companies-list 25000
+```
+
+- Tips: Narrow date ranges and apply specific filters to reduce row count and file size.

@@ -110,10 +110,10 @@
 ## Phase 6: Polish & Cross-Cutting Concerns
 **Purpose**: Final refinements and observability basics.
 
-- [ ] T051 [P] Add structured logging (non-PII) for export attempts in `api/src/utils/logger.ts`
-- [ ] T052 Add metrics stub (counts, durations) integration point in `api/src/routes/reports.export.ts`
-- [ ] T053 [P] Refactor duplicated adapter code into shared helper in `api/src/services/reportShared.adapter.ts`
-- [ ] T054 [P] Add documentation section in `quickstart.md` for performance limits
+- [X] T051 [P] Add structured logging (non-PII) for export attempts in `api/src/utils/logger.ts`
+- [X] T052 Add metrics stub (counts, durations) integration point in `api/src/routes/reports.export.ts`
+- [X] T053 [P] Refactor duplicated adapter code into shared helper in `api/src/services/reportShared.adapter.ts`
+- [X] T054 [P] Add documentation section in `quickstart.md` for performance limits
 - [ ] T055 Final accessibility pass on components in `web/src/components/reports/`
 - [ ] T056 Verify fontAndColour.css usage consistency site-wide (spot audit)
 - [ ] T057 [P] Add README snippet for reporting feature in `web/README.md`

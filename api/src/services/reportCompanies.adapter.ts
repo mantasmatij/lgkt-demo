@@ -1,5 +1,4 @@
-import { getReportDefinition } from '../utils/reportRegistry';
-import { filterUnauthorizedFields } from '../utils/permissions/reportPermissions';
+import { selectColumns, applyAllowedKeysToRows } from './reportShared.adapter';
 
 export interface AdapterResult {
   columns: string[];
@@ -14,11 +13,9 @@ interface CompaniesAdapterParams {
 }
 
 export async function fetchCompaniesReport(params: CompaniesAdapterParams): Promise<AdapterResult> {
-  const def = getReportDefinition('companies-list');
-  const allColumns = def?.columns.map(c => c.key) || [];
-  const columns = params.allowedKeys ? allColumns.filter(k => params.allowedKeys!.includes(k)) : allColumns;
+  const columns = selectColumns('companies-list', params.allowedKeys);
   // Placeholder: real implementation will query DB; empty rows for now
   const rows: Array<Record<string, unknown>> = [];
-  const filteredRows = params.allowedKeys ? rows.map(r => filterUnauthorizedFields(r, columns)) : rows;
+  const filteredRows = applyAllowedKeysToRows(rows, columns, params.allowedKeys);
   return { columns, rows: filteredRows, total: filteredRows.length };
 }

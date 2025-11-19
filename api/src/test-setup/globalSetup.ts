@@ -30,7 +30,7 @@ export default async function globalSetup() {
 
     await client.query('COMMIT');
   } catch (e) {
-    try { await client.query('ROLLBACK'); } catch {}
+    try { await client.query('ROLLBACK'); } catch (rollbackErr) { void rollbackErr; }
     // Re-throw to fail fast if schema cannot be prepared
     throw e;
   } finally {

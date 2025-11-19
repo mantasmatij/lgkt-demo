@@ -7,6 +7,8 @@ import { buildCsv } from '../utils/csvExporter';
 import { buildExportMetadata } from '../utils/exportMetadata';
 import { checkLimits } from '../utils/exportLimits';
 import { estimateCsvSize, formatByteSize } from '../utils/exportSizeEstimator';
+import { logger } from '../utils/logger';
+import { observeDuration, incCounter } from '../utils/metrics';
 import { getReportDefinition } from '../utils/reportRegistry';
 import { allowedColumnKeys } from '../utils/permissions/reportPermissions';
 
@@ -14,6 +16,7 @@ export const reportsExportRouter = Router();
 reportsExportRouter.use(requireAuth);
 
 reportsExportRouter.post('/export', async (req, res) => {
+  const t0 = Date.now();
   const parse = previewRequestSchema.safeParse(req.body);
   if (!parse.success) {
     return res.status(400).json({ code: 'VALIDATION_ERROR', message: parse.error.flatten() });
@@ -29,11 +32,13 @@ reportsExportRouter.post('/export', async (req, res) => {
 
   const limitCheck = checkLimits(result.total);
   if (!limitCheck.withinLimits) {
+    incCounter('export_rejected', { reason: 'limit_check', type });
     return res.status(413).json({ code: 'EXPORT_LIMIT_EXCEEDED', message: limitCheck.reason });
   }
 
   const sizeEstimate = estimateCsvSize({ rows: result.total, columns: result.columns, includeMetadata: true });
   if (sizeEstimate.exceedsRowLimit) {
+    incCounter('export_rejected', { reason: 'row_cap', type });
     return res.status(413).json({
       code: 'ROW_LIMIT_EXCEEDED',
       message: `Row cap exceeded: ${sizeEstimate.projectedRows} > 50k. Adjust filters or contact support.`,
@@ -47,4 +52,13 @@ reportsExportRouter.post('/export', async (req, res) => {
   res.setHeader('Content-Type', 'text/csv; charset=utf-8');
   res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
   res.send(csv);
+  const durationMs = Date.now() - t0;
+  observeDuration('export_duration_ms', durationMs, { type });
+  logger.info('report_export_completed', {
+    type,
+    rows: result.total,
+    columns: result.columns.length,
+    estimatedSize: formatByteSize(sizeEstimate.estimatedBytes),
+    durationMs,
+  });
 });

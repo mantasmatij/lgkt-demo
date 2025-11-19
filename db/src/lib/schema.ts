@@ -51,7 +51,7 @@ export const adminUsers = pgTable('admin_users', {
 
 export const submissionOrgans = pgTable('submission_organs', {
   id: uuid('id').defaultRandom().primaryKey(),
-  submissionId: uuid('submission_id').notNull().references(() => submissions.id),
+  submissionId: uuid('submission_id').notNull().references(() => submissions.id, { onDelete: 'cascade' }),
   organType: text('organ_type').notNull(),
   lastElectionDate: date('last_election_date'),
   plannedElectionDate: date('planned_election_date'),
@@ -59,7 +59,7 @@ export const submissionOrgans = pgTable('submission_organs', {
 
 export const genderBalanceRows = pgTable('gender_balance_rows', {
   id: uuid('id').defaultRandom().primaryKey(),
-  submissionId: uuid('submission_id').notNull().references(() => submissions.id),
+  submissionId: uuid('submission_id').notNull().references(() => submissions.id, { onDelete: 'cascade' }),
   role: text('role').notNull(),
   women: integer('women').notNull(),
   men: integer('men').notNull(),
@@ -68,7 +68,7 @@ export const genderBalanceRows = pgTable('gender_balance_rows', {
 
 export const submissionMeasures = pgTable('submission_measures', {
   id: uuid('id').defaultRandom().primaryKey(),
-  submissionId: uuid('submission_id').notNull().references(() => submissions.id),
+  submissionId: uuid('submission_id').notNull().references(() => submissions.id, { onDelete: 'cascade' }),
   name: text('name').notNull(),
   plannedResult: text('planned_result'),
   indicator: text('indicator'),
@@ -79,7 +79,7 @@ export const submissionMeasures = pgTable('submission_measures', {
 
 export const attachments = pgTable('attachments', {
   id: uuid('id').defaultRandom().primaryKey(),
-  submissionId: uuid('submission_id').notNull().references(() => submissions.id),
+  submissionId: uuid('submission_id').notNull().references(() => submissions.id, { onDelete: 'cascade' }),
   type: text('type').notNull(),
   url: text('url'),
   fileName: text('file_name'),
@@ -90,7 +90,7 @@ export const attachments = pgTable('attachments', {
 
 export const submissionMeta = pgTable('submission_meta', {
   id: uuid('id').defaultRandom().primaryKey(),
-  submissionId: uuid('submission_id').notNull().references(() => submissions.id),
+  submissionId: uuid('submission_id').notNull().references(() => submissions.id, { onDelete: 'cascade' }),
   reasonsForUnderrepresentation: text('reasons_for_underrepresentation'),
   submitterName: text('submitter_name'),
   submitterTitle: text('submitter_title'),

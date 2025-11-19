@@ -40,8 +40,29 @@ describe('companies.service listCompanies', () => {
              ('C_B', 'Alpha LLC', 'LT', 'TYPE_B', 'Addr B', 'b@example.com'),
              ('C_C', 'Beta Inc', 'LT', NULL, 'Addr C', 'c@example.com')`);
     // Provide submission for C_C with a type so COALESCE fallback works.
-    await pool.query(`INSERT INTO submissions (company_code, name_at_submission, country, company_type, requirements_applied, contact_email, consent, consent_text)
-      VALUES ('C_C','Beta Inc','LT','TYPE_C', true,'c@example.com', true, 'txt')`);
+    await pool.query(`INSERT INTO submissions (
+        company_code,
+        name_at_submission,
+        country,
+        company_type,
+        requirements_applied,
+        contact_name,
+        contact_email,
+        contact_phone,
+        consent,
+        consent_text
+      ) VALUES (
+        'C_C',
+        'Beta Inc',
+        'LT',
+        'TYPE_C',
+        true,
+        'Beta Contact',
+        'c@example.com',
+        '+37060000000',
+        true,
+        'txt'
+      )`);
   });
 
   it('returns paginated results sorted by name desc', async () => {

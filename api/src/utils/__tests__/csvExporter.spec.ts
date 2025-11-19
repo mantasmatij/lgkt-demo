@@ -30,8 +30,8 @@ describe('csvExporter', () => {
 
   it('handles newlines in cell by quoting', () => {
     const csv = buildCsv({ columns: ['text'], rows: [{ text: 'Line1\nLine2' }] });
-    const lines = csv.split('\n');
-    expect(lines[1]).toMatch(/"Line1\nLine2"/);
+    // Row with embedded newline should be quoted; assert substring in full CSV
+    expect(csv).toContain('"Line1\nLine2"');
   });
 
   it('double quotes existing quotes in cell', () => {

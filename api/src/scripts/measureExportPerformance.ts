@@ -6,8 +6,8 @@
  *   ts-node api/src/scripts/measureExportPerformance.ts --help
  * Measures time to build a synthetic CSV in-memory using existing utilities.
  */
-import { buildCsv } from '../../utils/csvExporter';
-import { estimateCsvSize, formatByteSize } from '../../utils/exportSizeEstimator';
+import { buildCsv } from '../utils/csvExporter';
+import { estimateCsvSize, formatByteSize } from '../utils/exportSizeEstimator';
 
 function makeRows(rowCount: number, columns: string[]): Array<Record<string, unknown>> {
   const rows: Array<Record<string, unknown>> = [];

@@ -70,7 +70,7 @@ export function DateInputWithPicker({ id, value, placeholder = 'YYYY-MM-DD', onC
       <input
         id={id}
         className={(
-          "h-11 w-56 rounded-full border-2 border-black bg-white px-4 pr-12 font-mono shadow-sm " +
+          "border-2 rounded px-2 py-1 pr-10 font-mono w-56 w-full sm:w-56 " +
           "outline-none focus:outline-none focus-visible:outline-none " +
           className
         )}
@@ -84,7 +84,7 @@ export function DateInputWithPicker({ id, value, placeholder = 'YYYY-MM-DD', onC
       <button
         type="button"
         onClick={openPicker}
-        className="absolute right-1 inset-y-1 my-0.5 inline-flex w-7 h-7 items-center justify-center rounded-full border border-gray-300 bg-white text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-black/20"
+        className="absolute right-1 inset-y-1 my-0.5 inline-flex items-center justify-center gap-1 px-2 rounded border-2 border-gray-300 text-gray-800 bg-white hover:bg-gray-100"
         aria-label={ariaLabel || label || 'Choose date'}
         title={label || 'Choose date'}
       >

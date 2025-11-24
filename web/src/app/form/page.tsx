@@ -279,6 +279,7 @@ export default function PublicFormPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <div className="flex flex-col">
                   <label htmlFor="reportingFrom" className="text-black font-normal mb-2">{tf('reporting_from')} *</label>
+                  <div>
                   <DateInputWithPicker
                     id="reportingFrom"
                     value={form.reportingFrom}
@@ -286,6 +287,7 @@ export default function PublicFormPage() {
                     ariaLabel={tf('reporting_from') as unknown as string}
                     min={MIN_DATE_STR}
                   />
+                  </div>
                   {errors.reportingFrom?.[0] && (
                     <div className="text-sm text-red-600 mt-2" role="alert">{errors.reportingFrom[0]}</div>
                   )}

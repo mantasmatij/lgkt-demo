@@ -428,11 +428,13 @@ export default function PublicFormPage() {
                 </a>
               </div>
             }
+            // TODO(US1/T004): Ensure internal 'name' & 'planned_result' fields render as 10-line textareas.
           />
 
           {/* Section 12: Reasons (placed above Submitter section) */}
           <Card className={twMerge("p-6")}>
             <div className="flex flex-col gap-3">
+              {/* TODO(US1/T004): 10-line textarea styling for reasons field; enforce consistent border and fixed height. */}
               <TextareaField
                 id="reasonsForUnderrepresentation"
                 name="reasonsForUnderrepresentation"
@@ -442,10 +444,14 @@ export default function PublicFormPage() {
                 errorMessage={errors.reasonsForUnderrepresentation?.[0]}
                 value={form.reasonsForUnderrepresentation ?? ''}
                 onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => update('reasonsForUnderrepresentation', e.target.value || '')}
+                // Force exactly ~10 lines height; allow vertical resize if needed but start at 10 lines.
                 minRows={10}
                 maxRows={10}
                 isRequired
-                classNames={{ inputWrapper: "rounded-2xl border-2 border-black px-4 py-3", input: 'resize-none overflow-y-auto' }}
+                classNames={{
+                  inputWrapper: "rounded-xl border border-gray-300 px-4 py-3 bg-white",
+                  input: 'resize-y overflow-y-auto leading-5',
+                }}
               />
             </div>
           </Card>

@@ -69,7 +69,11 @@ export function DateInputWithPicker({ id, value, placeholder = 'YYYY-MM-DD', onC
     <div className="relative inline-block">
       <input
         id={id}
-        className={"border-2 rounded px-2 py-1 pr-10 font-mono w-56 " + className}
+        className={(
+          "h-11 w-56 rounded-full border-2 border-black bg-white px-4 pr-11 font-mono shadow-sm " +
+          "outline-none focus:outline-none focus-visible:outline-none " +
+          className
+        )}
         placeholder={placeholder}
         inputMode="numeric"
         pattern="\\d{4}-\\d{2}-\\d{2}"
@@ -80,12 +84,13 @@ export function DateInputWithPicker({ id, value, placeholder = 'YYYY-MM-DD', onC
       <button
         type="button"
         onClick={openPicker}
-        className="absolute right-1 inset-y-1 my-0.5 inline-flex items-center justify-center gap-1 px-2 rounded border-2 border-gray-300 text-gray-800 bg-white hover:bg-gray-100"
+        className="absolute right-2 top-1/2 -translate-y-1/2 inline-flex size-7 items-center justify-center rounded-full text-gray-700 hover:text-black focus:outline-none focus:ring-2 focus:ring-black/30"
         aria-label={ariaLabel || label || 'Choose date'}
         title={label || 'Choose date'}
       >
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
       </button>
+      {/* Hidden native date input to leverage system picker */}
       <input
         ref={hiddenDateRef}
         type="date"

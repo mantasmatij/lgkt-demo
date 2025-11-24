@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useMemo, useState } from 'react';
+import PillSelect from '../../components/ui/PillSelect';
 import { useI18n } from '../../i18n/LocaleProvider';
 import { useRouter, useSearchParams } from 'next/navigation';
 
@@ -80,16 +81,17 @@ export function FormsPagination({ page, pageSize, total, onPageChange, onPageSiz
         {useSelect ? (
           <label className="ml-2 inline-flex items-center gap-2 text-sm text-gray-700">
             <span className="sr-only">Page</span>
-            <select
-              className="border-2 rounded px-2 py-1"
-              aria-label="Select page"
-              value={page}
-              onChange={(e) => handlePageChange(Number(e.target.value))}
-            >
-              {pageOptions.map((p) => (
-                <option key={p} value={p}>{p}</option>
-              ))}
-            </select>
+            {/* Replace native select with pill dropdown for consistency */}
+            <div className="min-w-32">
+              <PillSelect
+                id="pagination-page"
+                value={String(page)}
+                onChange={(val) => handlePageChange(Number(val) || 1)}
+                options={pageOptions.map(p => ({ value: String(p), label: String(p) }))}
+                placeholder={undefined}
+                maxVisible={5}
+              />
+            </div>
             <span className="text-gray-600">/ {totalPages}</span>
           </label>
         ) : (
@@ -130,16 +132,16 @@ export function FormsPagination({ page, pageSize, total, onPageChange, onPageSiz
       </div>
       <div>
         <label className="mr-2" htmlFor="rows-per-page">{tadmin('pagination_rows_per_page')}</label>
-        <select
-          id="rows-per-page"
-          className="border-2 rounded px-2 py-1"
-          value={pageSize}
-          onChange={(e) => handlePageSizeChange(Number(e.target.value) as 10 | 25 | 50 | 100)}
-        >
-          {[10, 25, 50, 100].map((opt) => (
-            <option key={opt} value={opt}>{opt}</option>
-          ))}
-        </select>
+        <div className="min-w-28">
+          <PillSelect
+            id="rows-per-page"
+            value={String(pageSize)}
+            onChange={(val) => handlePageSizeChange(Number(val) as 10 | 25 | 50 | 100)}
+            options={[10,25,50,100].map(opt => ({ value: String(opt), label: String(opt) }))}
+            placeholder={undefined}
+            maxVisible={5}
+          />
+        </div>
       </div>
     </div>
   );

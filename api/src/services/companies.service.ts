@@ -9,7 +9,7 @@ export type CompanyListQuery = {
 };
 
 export async function listCompanies(query: CompanyListQuery) {
-  const { getDb, companies } = await import('db');
+  const { getDb, companies, submissions } = await import('db');
   const db = getDb();
   const page = Math.max(1, query.page ?? 1);
   const pageSize = [10, 25, 50].includes(query.pageSize ?? 25) ? (query.pageSize ?? 25) : 25;
@@ -32,9 +32,12 @@ export async function listCompanies(query: CompanyListQuery) {
     .select({
       id: companies.id,
       name: companies.name,
-  code: companies.code,
-  type: companies.type,
-  address: companies.address,
+      code: companies.code,
+      // Derive type from latest submission when company.type is null
+      type: sql<string>`COALESCE(${companies.type}, (SELECT ${submissions.companyType} FROM ${submissions}
+        WHERE ${submissions.companyCode} = ${companies.code}
+        ORDER BY ${submissions.createdAt} DESC LIMIT 1))`,
+      address: companies.address,
       eDeliveryAddress: companies.eDeliveryAddress,
     })
     .from(companies)

@@ -61,3 +61,5 @@ Thumbs.db
 # Docker
 Dockerfile*
 .dockerignore
+docker/postgres-data/
+docker/docker/

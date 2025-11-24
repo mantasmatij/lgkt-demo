@@ -15,7 +15,7 @@ import { getInitialCollapsedState, persistCollapsedState } from '../../../lib/na
 // - Adds semantic navigation landmarks & aria-label
 // - Computes active item id using current pathname
 // NOTE: Collapse, language switch, analytics added in later tasks.
-export const AdminSidebar: React.FC<{ defaultCollapsed?: boolean }> = ({ defaultCollapsed = false }) => {
+export const AdminSidebar: React.FC<{ defaultCollapsed?: boolean; mobileOpen?: boolean }> = ({ defaultCollapsed = false, mobileOpen = false }) => {
   const pathname = usePathname();
   if (pathname && pathname.startsWith('/admin/sign-in')) {
     return null;
@@ -23,20 +23,17 @@ export const AdminSidebar: React.FC<{ defaultCollapsed?: boolean }> = ({ default
   const items = getSortedNavItems();
   const activeId = getActiveItemId(pathname || '', items);
   const { locale, setLocale, t } = useI18n();
-  const [collapsed, setCollapsed] = useState<boolean>(defaultCollapsed);
-  // Initialize collapsed from session/cookie and auto-collapse for narrow viewport (T037, T039)
+  // Determine initial collapsed state before first paint to avoid flicker on navigation
+  const [collapsed, setCollapsed] = useState<boolean>(() => {
+    if (typeof window === 'undefined') return defaultCollapsed;
+    let initial = getInitialCollapsedState();
+    if (window.innerWidth < 480) initial = true; // force collapsed on very small screens
+    return initial;
+  });
+  // Track hydration to avoid SSR/client mismatch visual flash
+  const [hydrated, setHydrated] = useState(false);
   useEffect(() => {
-    const initial = getInitialCollapsedState();
-    let next = initial;
-    if (typeof window !== 'undefined') {
-      if (window.innerWidth < 480) {
-        next = true;
-      }
-    }
-    setCollapsed(prev => {
-      trackSidebarToggle(next, 'hydrate');
-      return prev === next ? prev : next;
-    });
+    setHydrated(true);
   }, []);
 
   const onToggleCollapse = useCallback(() => {
@@ -47,6 +44,14 @@ export const AdminSidebar: React.FC<{ defaultCollapsed?: boolean }> = ({ default
       return next;
     });
   }, []);
+
+  // Reflect collapsed state onto layout root for dynamic padding
+  useEffect(() => {
+    const root = document.querySelector("[data-layout='admin']");
+    if (!root) return;
+    root.classList.toggle('sidebar-collapsed', collapsed);
+    root.classList.toggle('sidebar-expanded', !collapsed);
+  }, [collapsed]);
 
   // Track language change timing (T031, T032)
   const changingRef = useRef<{ from: string; to: string; started: number } | null>(null);
@@ -84,44 +89,38 @@ export const AdminSidebar: React.FC<{ defaultCollapsed?: boolean }> = ({ default
     [locale, setLocale]
   );
 
+  // Force expanded when mobile overlay is open
+  const effectiveCollapsed = mobileOpen ? false : collapsed;
+  // Reserve vertical space for the floating close button when mobileOpen
+  const topPad = mobileOpen ? 'pt-20' : '';
   const asideClasses = [
-    'hidden md:flex flex-col bg-white border-l border-gray-200',
-    'h-screen sticky top-0 overflow-y-auto',
-    collapsed ? 'w-16 p-2' : 'w-64 p-4'
+    'fixed top-0 left-0 z-50',
+    (mobileOpen ? 'flex' : 'hidden') + ' md:flex',
+    'flex-col bg-white border-r border-gray-200 shadow-lg',
+    'h-screen overflow-y-auto transition-all duration-200',
+    effectiveCollapsed ? `w-16 p-2 ${topPad}` : `w-64 p-4 ${topPad}`,
+    // Hide until hydrated to prevent expand-then-collapse flash when persisted state differs from SSR default
+    hydrated ? 'opacity-100' : 'opacity-0'
   ].join(' ');
 
   return (
     <aside className={asideClasses} data-phase="foundation+language">
       <div className="flex flex-col gap-3 flex-1">
-        <button
-          type="button"
-          id="admin-collapse-toggle"
-          aria-expanded={!collapsed}
-          className={[
-            'border text-sm transition-colors',
-            collapsed
-              ? 'w-full flex items-center justify-center px-2 py-1 rounded-full'
-              : 'w-full px-2 py-1 text-left flex items-center gap-2 rounded'
-          ].join(' ')}
-          onClick={onToggleCollapse}
-          aria-label={collapsed ? t('common')('expand_sidebar') : undefined}
-        >
-          {collapsed ? (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="size-3 shrink-0 text-gray-700"
-              aria-hidden="true"
-            >
-              <polyline points="15 18 9 12 15 6" />
-            </svg>
-          ) : (
-            <>
+        {!mobileOpen && (
+          <button
+            type="button"
+            id="admin-collapse-toggle"
+            aria-expanded={!effectiveCollapsed}
+            className={[
+              'border text-sm transition-colors',
+              effectiveCollapsed
+                ? 'w-full flex items-center justify-center px-2 py-1 rounded-full'
+                : 'w-full px-2 py-1 text-left flex items-center gap-2 rounded'
+            ].join(' ')}
+            onClick={onToggleCollapse}
+            aria-label={effectiveCollapsed ? t('common')('expand_sidebar') : undefined}
+          >
+            {effectiveCollapsed ? (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -135,10 +134,26 @@ export const AdminSidebar: React.FC<{ defaultCollapsed?: boolean }> = ({ default
               >
                 <polyline points="9 18 15 12 9 6" />
               </svg>
-              <span>{t('common')('collapse_sidebar')}</span>
-            </>
-          )}
-        </button>
+            ) : (
+              <>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="size-3 shrink-0 text-gray-700"
+                  aria-hidden="true"
+                >
+                  <polyline points="15 18 9 12 15 6" />
+                </svg>
+                <span>{t('common')('collapse_sidebar')}</span>
+              </>
+            )}
+          </button>
+        )}
         <nav role="navigation" aria-label="Admin Navigation" className="space-y-1">
           {items.map(item => {
             const label = translateNav(item.labelKey, locale as 'en' | 'lt');
@@ -151,14 +166,14 @@ export const AdminSidebar: React.FC<{ defaultCollapsed?: boolean }> = ({ default
                 href={item.route}
                 active={item.id === activeId}
                 icon={icon}
-                collapsed={collapsed}
+                collapsed={effectiveCollapsed}
               />
             );
           })}
         </nav>
       </div>
       <div className="mt-auto pt-4 border-t flex flex-col gap-2">
-        {!collapsed ? (
+        {!effectiveCollapsed ? (
           <>
             <label htmlFor="admin-lang-select" className="block text-xs font-medium text-gray-500 mb-1">
               {t('common')('language')}

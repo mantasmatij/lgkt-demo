@@ -11,8 +11,12 @@ import { adminSubmissionsRouter } from './routes/admin/submissions';
 import { adminFormsRouter } from './routes/admin/forms';
 import { adminFormDetailsRouter } from './routes/admin/formDetails';
 import { adminCompaniesRouter } from './routes/admin/companies';
-import { adminReportsRouter } from './routes/admin/reports';
 import { healthRouter } from './routes/health';
+import { reportsTypesRouter } from './routes/reports.types';
+import { reportsFiltersRouter } from './routes/reports.filters';
+import { reportsPreviewRouter } from './routes/reports.preview';
+import { reportsExportRouter } from './routes/reports.export';
+import { reportsCompanyOptionsRouter } from './routes/reports.companyOptions';
 import { i18nRouter } from './routes/i18n';
 import { attachLocale } from './middleware/locale';
 import { issueCsrfToken } from './middleware/csrf';
@@ -56,7 +60,12 @@ export function createApp() {
   app.use('/api/admin/forms', adminFormsRouter);
   app.use('/api/admin/forms', adminFormDetailsRouter);
   app.use('/api/admin/companies', adminCompaniesRouter);
-  app.use('/api/admin/reports', adminReportsRouter);
+  // New reporting MVP endpoints (non-admin prefix per spec)
+  app.use('/api/reports', reportsTypesRouter);
+  app.use('/api/reports', reportsFiltersRouter);
+  app.use('/api/reports', reportsPreviewRouter);
+  app.use('/api/reports', reportsExportRouter);
+  app.use('/api/reports', reportsCompanyOptionsRouter);
 
   // Central error handler
   type HttpError = Error & { statusCode?: number; code?: string };

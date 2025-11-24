@@ -29,6 +29,8 @@ Thumbs.db
 *.swo
 
 # Docker - keep Dockerfiles and track .dockerignore for build optimization
+docker/postgres-data/
+docker/docker/
 
 # Jest
 .junit/
@@ -49,5 +51,10 @@ Thumbs.db
 .next
 out
 
+
+
+
 # Stuff
 stuff/
+test-results/
+tmp/

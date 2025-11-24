@@ -1,19 +1,34 @@
-import React from 'react';
-import { cookies } from 'next/headers';
-import '../global.css'; // corrected filename
-import '../../styles/fontAndColour.css'; // use in-project styles copy
+"use client";
+import React, { useEffect, useState } from 'react';
+import '../global.css';
+import '../../styles/fontAndColour.css';
 import AdminSidebar from './components/AdminSidebar';
 
-// Admin layout injection point (T003, T010)
-export default async function AdminLayout({ children }: { children: React.ReactNode }) {
-  const cookieStore = await cookies();
-  const collapsedCookie = cookieStore.get('adminSidebarCollapsed')?.value === 'true';
+export default function AdminLayout({ children }: { children: React.ReactNode }) {
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  useEffect(() => {
+    if (typeof document === 'undefined') return;
+    document.body.classList.toggle('overflow-hidden', mobileOpen);
+  }, [mobileOpen]);
+
   return (
-    <div className="flex flex-row min-h-screen" data-layout="admin">
-      <main className="flex-1" data-content>
-        {children}
-      </main>
-      <AdminSidebar defaultCollapsed={collapsedCookie} />
+    <div className="min-h-screen" data-layout="admin">
+      {/* Mobile toggle */}
+      <button
+        type="button"
+        onClick={() => setMobileOpen(o => !o)}
+        className="md:hidden fixed top-3 left-3 z-[200] pointer-events-auto rounded-full border-2 border-black bg-white px-3 py-2 text-sm font-semibold shadow"
+        aria-label={mobileOpen ? 'Close sidebar' : 'Open sidebar'}
+      >
+        {mobileOpen ? '✕' : '☰'}
+      </button>
+      <div className="flex" data-sidebar-state={mobileOpen ? 'open' : 'closed'}>
+        <AdminSidebar mobileOpen={mobileOpen} />
+        <main className="flex-1 admin-content-inner">
+          {children}
+        </main>
+      </div>
     </div>
   );
 }

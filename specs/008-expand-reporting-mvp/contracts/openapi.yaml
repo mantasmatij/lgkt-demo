@@ -1,0 +1,123 @@
+openapi: 3.0.3
+info:
+  title: Expand Reporting MVP API
+  version: 0.1.0
+  description: Contracts for report preview and CSV export (MVP)
+servers:
+  - url: https://api.example.com
+paths:
+  /reports/types:
+    get:
+      summary: List available report types (MVP scope)
+      operationId: listReportTypes
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  types:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          enum: [companies-list, forms-list]
+                        name:
+                          type: string
+  /reports/filters:
+    get:
+      summary: Get filters for a report type
+      operationId: getReportFilters
+      parameters:
+        - in: query
+          name: type
+          required: true
+          schema:
+            type: string
+            enum: [companies-list, forms-list]
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  filters:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        key: { type: string }
+                        type: { type: string, enum: [text, select, dateRange, boolean] }
+                        options:
+                          type: array
+                          items: { type: object }
+  /reports/preview:
+    post:
+      summary: Generate preview rows for a report
+      operationId: previewReport
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  type: string
+                  enum: [companies-list, forms-list]
+                filters:
+                  type: object
+                sort:
+                  type: object
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  columns:
+                    type: array
+                    items: { type: string }
+                  rows:
+                    type: array
+                    items:
+                      type: array
+                      items: { type: string }
+                  total:
+                    type: integer
+  /reports/export:
+    post:
+      summary: Export a report as CSV
+      operationId: exportReport
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  type: string
+                  enum: [companies-list, forms-list]
+                filters:
+                  type: object
+                sort:
+                  type: object
+      responses:
+        '200':
+          description: CSV file
+          content:
+            text/csv:
+              schema:
+                type: string
+                format: binary
+        '413':
+          description: Export exceeds limits; client should narrow scope

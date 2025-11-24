@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "nx run-many -t test --exclude lgkt-forma",
+    "test": "npm run db:migrate && nx run-many -t test --exclude lgkt-forma",
     "test:cucumber": "cucumber-js -c web/tests/e2e/web.cucumber.mjs",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
@@ -12,7 +12,8 @@
     "lint": "nx run-many -t lint --exclude lgkt-forma",
     "dev": "docker compose -f docker/docker-compose.yml up --build",
     "dev:up": "docker compose -f docker/docker-compose.yml up -d --build",
-    "dev:down": "docker compose -f docker/docker-compose.yml down -v",
+    "dev:down": "docker compose -f docker/docker-compose.yml down",
+    "dev:destroy": "docker compose -f docker/docker-compose.yml down -v",
     "dev:api-local": "nx serve api -c development",
     "dev:web-local": "next dev web",
     "contracts:gen": "openapi-typescript specs/001-users-mantas-matijosaitis/contracts/openapi.yaml -o contracts/src/generated.ts",

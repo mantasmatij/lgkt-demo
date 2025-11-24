@@ -1,4 +1,3 @@
-version: "3.9"
 services:
   postgres:
     image: postgres:15-alpine
@@ -8,8 +7,9 @@ services:
       POSTGRES_DB: forma
     ports:
       - "5432:5432"
+    # Bind mount to keep dev data in repo-local folder (ignored by git) for persistence across rebuilds
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - ./docker/postgres-data:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U forma"]
       interval: 5s
@@ -49,5 +49,3 @@ services:
       - "3000:3000"
     depends_on:
       - api
-volumes:
-  pgdata:

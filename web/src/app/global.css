@@ -61,6 +61,18 @@ html {
   tab-size: 4;
   scroll-behavior: smooth;
 }
+/* Dynamic padding for admin layout reacting to sidebar state */
+@media (min-width: 768px) {
+  [data-layout='admin'].sidebar-expanded .admin-content-inner { padding-left: 16rem; }
+  [data-layout='admin'].sidebar-collapsed .admin-content-inner { padding-left: 4rem; }
+}
+@media (max-width: 767px) {
+  [data-layout='admin'] .admin-content-inner { padding-left: 0; }
+}
+/* Ensure mobile hamburger toggle does not overlap first heading/content */
+@media (max-width: 767px) {
+  [data-layout='admin'] .admin-content-inner { padding-top: 4.5rem; }
+}
 body {
   font-family: inherit;
   font-size: 1.125rem; /* 18px base size per request */

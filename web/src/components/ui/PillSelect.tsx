@@ -6,7 +6,7 @@ import { cn } from 'ui';
 
 const inputClassNames = {
   inputWrapper:
-    "h-11 min-h-11 rounded-full border-2 border-black data-[hover=true]:border-black/80 px-2 flex items-center shadow-sm outline-none focus:outline-none focus-visible:outline-none focus-within:outline-none ring-0 focus:ring-0 focus-visible:ring-0 ring-offset-0 focus:ring-offset-0 focus-visible:ring-offset-0 data-[focus=true]:!ring-0 data-[focus-visible=true]:!ring-0 data-[focus=true]:!border-black data-[focus-visible=true]:!border-black",
+    "h-11 min-h-11 rounded-full border border-black data-[hover=true]:border-black/80 px-2 flex items-center shadow-sm outline-none focus:outline-none focus-visible:outline-none focus-within:outline-none ring-0 focus:ring-0 focus-visible:ring-0 ring-offset-0 focus:ring-offset-0 focus-visible:ring-offset-0 data-[focus=true]:!ring-0 data-[focus-visible=true]:!ring-0 data-[focus=true]:!border-black data-[focus-visible=true]:!border-black",
   input: "text-base leading-6 py-0 px-2 placeholder:text-gray-400 appearance-none outline-none focus:!outline-none focus-visible:!outline-none ring-0 focus:!ring-0 focus-visible:!ring-0 ring-offset-0 focus:ring-offset-0 focus-visible:ring-offset-0",
 };
 

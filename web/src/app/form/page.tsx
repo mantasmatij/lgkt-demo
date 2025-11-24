@@ -446,10 +446,11 @@ export default function PublicFormPage() {
                 onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => update('reasonsForUnderrepresentation', e.target.value || '')}
                 minRows={10}
                 maxRows={10}
+                disableAutosize
                 isRequired
                 classNames={{
-                  inputWrapper: "rounded-2xl border-2 border-black px-4 py-3 min-h-[17rem] bg-white",
-                  input: 'resize-none overflow-y-auto leading-6',
+                  inputWrapper: "rounded-2xl border-2 border-black px-4 py-3 h-[17rem] bg-white",
+                  input: 'h-full min-h-0 resize-none overflow-y-auto leading-6',
                 }}
               />
             </div>

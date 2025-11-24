@@ -92,7 +92,8 @@ export function MeasuresSection({ value, onChange, labels, topSlot, errors = {} 
                 // Force visual space for ~10 lines; leading-6 = 1.5rem → 15rem + vertical padding ≈ 17rem
                 minRows={10}
                 maxRows={10}
-                classNames={{ inputWrapper: "rounded-2xl border-2 border-black px-4 py-3 min-h-[17rem]", input: "resize-none overflow-y-auto" }}
+                disableAutosize
+                classNames={{ inputWrapper: "rounded-2xl border-2 border-black px-4 py-3 h-[17rem]", input: "h-full min-h-0 resize-none overflow-y-auto" }}
               />
 
               {/* Planned result block */}
@@ -107,7 +108,8 @@ export function MeasuresSection({ value, onChange, labels, topSlot, errors = {} 
                 onChange={(e: unknown) => update(idx, { plannedResult: (e as React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>).target.value || undefined })}
                 minRows={10}
                 maxRows={10}
-                classNames={{ inputWrapper: "rounded-2xl border-2 border-black px-4 py-3 min-h-[17rem]", input: "resize-none overflow-y-auto" }}
+                disableAutosize
+                classNames={{ inputWrapper: "rounded-2xl border-2 border-black px-4 py-3 h-[17rem]", input: "h-full min-h-0 resize-none overflow-y-auto" }}
               />
 
               {/* Indicator rows */}

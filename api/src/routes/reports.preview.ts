@@ -21,7 +21,7 @@ reportsPreviewRouter.post('/preview', async (req, res) => {
   const allowed = allowedColumnKeys(type, user, allKeys);
   let result;
   if (type === 'companies-list') result = await fetchCompaniesReport({ filters, sort, allowedKeys: allowed });
-  else result = await fetchFormsReport({ filters, sort, allowedKeys: allowed });
+  else result = await fetchFormsReport({ filters, sort, allowedKeys: allowed, limit: 500 });
   const labelByKey = new Map<string, string>((def?.columns || []).map(c => [c.key, c.label]));
   const columns = result.columns.map(k => labelByKey.get(k) || k);
   const rows = result.rows.map(r => result.columns.map(c => String(r[c] ?? '')));

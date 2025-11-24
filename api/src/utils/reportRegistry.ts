@@ -25,13 +25,23 @@ export interface ReportDefinition {
 const definitions: Record<ReportType, ReportDefinition> = {
   'companies-list': {
     id: 'companies-list',
-    name: 'Companies List Report',
+    // Use id as name; frontend applies localization
+    name: 'companies-list',
+    // Unified columns: mirror forms-list preview columns for consistent UI
     columns: [
-      { key: 'id', label: 'ID' },
-      { key: 'name', label: 'Name' },
-      { key: 'code', label: 'Code' },
-      { key: 'type', label: 'Type' },
-      { key: 'address', label: 'Address' }
+      { key: 'companyName', label: 'Company Name' },
+      { key: 'companyCode', label: 'Company Code' },
+      { key: 'companyType', label: 'Company Type' },
+      { key: 'legalForm', label: 'Legal Form' },
+      { key: 'address', label: 'Address' },
+      { key: 'registry', label: 'Registry' },
+      { key: 'eDeliveryAddress', label: 'eDelivery Address' },
+      { key: 'reportPeriodFrom', label: 'Report From' },
+      { key: 'reportPeriodTo', label: 'Report To' },
+      { key: 'submissionDate', label: 'Submitted At' },
+      { key: 'womenPercent', label: 'Women %' },
+      { key: 'menPercent', label: 'Men %' },
+      { key: 'requirementsApplied', label: 'Req. Applied' }
     ],
     filters: [
       // Company dropdown, options are loaded dynamically via /api/reports/company-options
@@ -40,11 +50,21 @@ const definitions: Record<ReportType, ReportDefinition> = {
   },
   'forms-list': {
     id: 'forms-list',
-    name: 'Forms List Report',
+    name: 'forms-list',
     columns: [
-      { key: 'id', label: 'ID' },
-      { key: 'name', label: 'Name' },
-      { key: 'schemaVersion', label: 'Schema Version' }
+      { key: 'companyName', label: 'Company Name' },
+      { key: 'companyCode', label: 'Company Code' },
+      { key: 'companyType', label: 'Company Type' },
+      { key: 'legalForm', label: 'Legal Form' },
+      { key: 'address', label: 'Address' },
+      { key: 'registry', label: 'Registry' },
+      { key: 'eDeliveryAddress', label: 'eDelivery Address' },
+      { key: 'reportPeriodFrom', label: 'Report From' },
+      { key: 'reportPeriodTo', label: 'Report To' },
+      { key: 'submissionDate', label: 'Submitted At' },
+      { key: 'womenPercent', label: 'Women %' },
+      { key: 'menPercent', label: 'Men %' },
+      { key: 'requirementsApplied', label: 'Req. Applied' }
     ],
     filters: [
       { key: 'dateRange', type: 'dateRange' }

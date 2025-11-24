@@ -1,5 +1,7 @@
 "use client";
 import React, { useEffect, useState } from 'react';
+import PillSelect from '../ui/PillSelect';
+import { useI18n } from '../../i18n/LocaleProvider';
 
 interface Option { value: string; label: string }
 interface Props {
@@ -9,10 +11,11 @@ interface Props {
 }
 
 export function CompanySelect({ value, onChange, disabled }: Props) {
-  const [query, setQuery] = useState("");
+  const { t } = useI18n();
+  const tadmin = t('admin');
   const [options, setOptions] = useState<Option[]>([]);
   const [loading, setLoading] = useState(false);
-  const debouncedQuery = useDebounced(query, 200);
+  // Query filter removed per requirement; load all options unfiltered for now
 
   useEffect(() => {
     let cancelled = false;
@@ -20,7 +23,6 @@ export function CompanySelect({ value, onChange, disabled }: Props) {
       setLoading(true);
       try {
         const url = new URL('/api/reports/company-options', window.location.origin);
-        if (debouncedQuery) url.searchParams.set('query', debouncedQuery);
         const res = await fetch(url.toString());
         if (!res.ok) return;
         const json = await res.json();
@@ -31,43 +33,24 @@ export function CompanySelect({ value, onChange, disabled }: Props) {
     }
     load();
     return () => { cancelled = true; };
-  }, [debouncedQuery]);
+  }, []);
 
   return (
-    <div className="flex flex-col gap-1 min-w-64" aria-label="Company filter">
-      <label className="text-xs" htmlFor="company-query">Company code</label>
-      <input
-        id="company-query"
-        type="text"
-        className="border rounded px-2 py-1 text-sm"
-        placeholder="Filter by code..."
-        value={query}
-        disabled={disabled}
-        onChange={e => setQuery(e.target.value)}
-      />
-      <select
-        className="border rounded px-2 py-1 text-sm"
+    <div className="flex flex-col min-w-80" aria-label={tadmin('reports_company_selector_aria')}>
+      <PillSelect
+        id="company-select"
+        label={tadmin('reports_company_label')}
         value={value || ''}
         disabled={disabled || loading}
-        onChange={e => onChange(e.target.value || undefined)}
-        aria-label="Select company"
-      >
-        <option value="">All companies</option>
-        {options.map(o => (
-          <option key={o.value} value={o.value}>{o.label}</option>
-        ))}
-      </select>
+        onChange={(val) => onChange(val || undefined)}
+        options={options.map(o => ({ value: o.value, label: o.label }))}
+        placeholder={tadmin('reports_company_placeholder_all')}
+        autoWidth={false}
+      />
     </div>
   );
 }
 
-function useDebounced<T>(value: T, delay: number) {
-  const [v, setV] = useState(value);
-  useEffect(() => {
-    const t = setTimeout(() => setV(value), delay);
-    return () => clearTimeout(t);
-  }, [value, delay]);
-  return v;
-}
+// Debounce hook removed (no query filtering now)
 
 export default CompanySelect;

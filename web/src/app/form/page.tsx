@@ -167,8 +167,7 @@ export default function PublicFormPage() {
         {Object.keys(errors).length > 0 && (
           <Card className="p-4 mb-3 bg-red-50 border-red-200" role="alert">
             <h2 id="error-summary-title" tabIndex={-1} className="font-semibold text-red-800 mb-2">
-              {/* Fallback static text; no dedicated translation key yet */}
-              Please fix the errors below
+              {tform('error_summary_heading') as unknown as string}
             </h2>
             <ul className="list-disc pl-5 text-sm text-red-700">
               {Object.entries(errors).slice(0, 5).map(([k, msgs]) => (
@@ -218,6 +217,10 @@ export default function PublicFormPage() {
                     if (k) update('companyType', k);
                   }}
                   isRequired
+                  classNames={{
+                    // Enforce a wider minimum width; allow shrink on very small screens
+                    trigger: 'min-w-64 sm:min-w-[18rem]',
+                  }}
                 >
                   {COMPANY_TYPE_VALUES.map((val: (typeof COMPANY_TYPE_VALUES)[number]) => (
                     <SelectItem key={val}>

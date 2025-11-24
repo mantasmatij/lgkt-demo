@@ -28,7 +28,7 @@ reportsExportRouter.post('/export', async (req, res) => {
   const allowed = allowedColumnKeys(type, user, allKeys);
   let result;
   if (type === 'companies-list') result = await fetchCompaniesReport({ filters, sort, allowedKeys: allowed });
-  else result = await fetchFormsReport({ filters, sort, allowedKeys: allowed });
+  else result = await fetchFormsReport({ filters, sort, allowedKeys: allowed, fullExport: true });
 
   const limitCheck = checkLimits(result.total);
   if (!limitCheck.withinLimits) {

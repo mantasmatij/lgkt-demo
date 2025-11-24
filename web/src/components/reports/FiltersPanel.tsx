@@ -1,5 +1,7 @@
 "use client";
 import React from 'react';
+import { useI18n } from '../../i18n/LocaleProvider';
+import { DateInputWithPicker } from '../forms/DateInputWithPicker';
 
 interface DateRange { from?: string; to?: string }
 interface Props {
@@ -9,31 +11,29 @@ interface Props {
 }
 
 export function FiltersPanel({ dateRange, onChange, disabled }: Props) {
+  const { t } = useI18n();
+  const tadmin = t('admin');
   return (
-    <fieldset className="space-y-2 border rounded p-3" disabled={disabled} aria-label="Filters">
-      <legend className="text-sm font-medium">Filters</legend>
-      <div className="flex gap-4 flex-wrap">
-        <div className="flex flex-col">
-          <label className="text-xs mb-1" htmlFor="from-date">From</label>
-          <input
-            id="from-date"
-            type="date"
-            className="border rounded px-2 py-1 text-sm"
-            value={dateRange.from || ''}
-            onChange={e => onChange({ ...dateRange, from: e.target.value })}
-          />
-        </div>
-        <div className="flex flex-col">
-          <label className="text-xs mb-1" htmlFor="to-date">To</label>
-            <input
-              id="to-date"
-              type="date"
-              className="border rounded px-2 py-1 text-sm"
-              value={dateRange.to || ''}
-              onChange={e => onChange({ ...dateRange, to: e.target.value })}
-            />
-        </div>
+    <div className={"flex gap-4 flex-wrap items-end " + (disabled ? 'opacity-50 pointer-events-none' : '')} aria-label={tadmin('reports_date_range_aria')} aria-disabled={disabled}>
+      <div className="flex flex-col">
+        <label className="text-xs mb-1" htmlFor="from-date">{tadmin('reports_from')}</label>
+        <DateInputWithPicker
+          id="from-date"
+          value={dateRange.from || ''}
+          onChange={(v) => onChange({ ...dateRange, from: v || '' })}
+          className="w-56"
+        />
       </div>
-    </fieldset>
+      <div className="flex items-center text-gray-700" aria-hidden="true">-</div>
+      <div className="flex flex-col">
+        <label className="text-xs mb-1" htmlFor="to-date">{tadmin('reports_to')}</label>
+        <DateInputWithPicker
+          id="to-date"
+          value={dateRange.to || ''}
+          onChange={(v) => onChange({ ...dateRange, to: v || '' })}
+          className="w-56"
+        />
+      </div>
+    </div>
   );
 }

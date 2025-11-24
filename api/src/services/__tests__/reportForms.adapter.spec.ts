@@ -10,6 +10,22 @@ jest.mock('../../utils/reportRegistry', () => ({
   }),
 }));
 
+// Mock db to avoid real queries
+jest.mock('db', () => ({
+  getDb: () => ({
+    select: () => ({
+      from: () => ({
+        where: () => ({
+          orderBy: () => Promise.resolve([]),
+          limit: () => Promise.resolve([]),
+        }),
+      }),
+    }),
+  }),
+  submissions: {},
+  genderBalanceRows: {},
+}));
+
 describe('reportForms.adapter', () => {
   it('returns all columns when allowedKeys omitted', async () => {
     const res = await fetchFormsReport({});

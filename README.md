@@ -114,7 +114,8 @@ lgkt-forma/
 ```bash
 # Development
 npm run dev:up              # Start Docker services
-npm run dev:down            # Stop and remove containers
+npm run dev:down            # Stop containers (preserves database volume)
+npm run dev:destroy         # Stop containers AND remove volumes (DB wiped)
 
 For the i18n + faster dev feature, see the Quickstart guide:
 
@@ -297,6 +298,10 @@ npm run dev:up
 ```
 
 ### Database connection errors
+# Lost data after restart?
+
+If your database appears empty after a restart, ensure you did not run `npm run dev:destroy` (which removes the volume). Use `npm run dev:down` to keep data. To fully reset intentionally, run the destroy command or the explicit reset script `npm run db:reset:dev`.
+
 
 ```bash
 # Verify postgres is healthy

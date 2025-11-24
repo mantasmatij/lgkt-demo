@@ -47,7 +47,7 @@ Independent Test: Submit empty form → summary (≤5 + overflow line) focuses; 
 - [ ] T017 [US1] Extend accessibility test for focus on summary after invalid submit `web/tests/accessibility/formA11y.spec.ts`
 
 ### Implementation
-- [ ] T018 [US1] Refactor large multiline fields to textarea components (10 line height) in `web/src/app/form/page.tsx`
+ - [X] T018 [US1] Refactor large multiline fields to textarea components (10 line height) in `web/src/app/form/page.tsx` and `ui/src/lib/components/MeasuresSection.tsx`
 - [ ] T019 [P] [US1] Create shared `ResizableTextarea` component with Tailwind classes `min-h-[10lh]` in `web/src/components/form/ResizableTextarea.tsx`
 - [ ] T020 [P] [US1] Add required indicator rendering utility `web/src/components/form/RequiredLabel.tsx`
 - [ ] T021 [US1] Apply `RequiredLabel` to all required fields in `web/src/app/form/page.tsx`

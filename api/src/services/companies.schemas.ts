@@ -45,7 +45,7 @@ export const CompanySubmissionSchema = z.object({
   womenPercent: z.number(),
   menPercent: z.number(),
   requirementsApplied: z.boolean(),
-  submitterEmail: z.string().email().nullable().optional(),
+  submitterEmail: z.string().nullable().optional(),
   submittedAt: z.string(),
 });
 

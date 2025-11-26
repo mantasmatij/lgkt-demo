@@ -280,13 +280,13 @@ export default function PublicFormPage() {
                 <div className="flex flex-col">
                   <label htmlFor="reportingFrom" className="text-black font-normal mb-2">{tf('reporting_from')} *</label>
                   <div>
-                  <DateInputWithPicker
-                    id="reportingFrom"
-                    value={form.reportingFrom}
-                    onChange={(v) => update('reportingFrom', v)}
-                    ariaLabel={tf('reporting_from') as unknown as string}
-                    min={MIN_DATE_STR}
-                  />
+                    <DateInputWithPicker
+                      id="reportingFrom"
+                      value={form.reportingFrom}
+                      onChange={(v) => update('reportingFrom', v)}
+                      ariaLabel={tf('reporting_from') as unknown as string}
+                      min={MIN_DATE_STR}
+                    />
                   </div>
                   {errors.reportingFrom?.[0] && (
                     <div className="text-sm text-red-600 mt-2" role="alert">{errors.reportingFrom[0]}</div>
@@ -294,13 +294,15 @@ export default function PublicFormPage() {
                 </div>
                 <div className="flex flex-col">
                   <label htmlFor="reportingTo" className="text-black font-normal mb-2">{tf('reporting_to')} *</label>
-                  <DateInputWithPicker
-                    id="reportingTo"
-                    value={form.reportingTo}
-                    onChange={(v) => update('reportingTo', v)}
-                    ariaLabel={tf('reporting_to') as unknown as string}
-                    min={MIN_DATE_STR}
-                  />
+                  <div>
+                    <DateInputWithPicker
+                      id="reportingTo"
+                      value={form.reportingTo}
+                      onChange={(v) => update('reportingTo', v)}
+                      ariaLabel={tf('reporting_to') as unknown as string}
+                      min={MIN_DATE_STR}
+                    />
+                  </div>
                   {errors.reportingTo?.[0] && (
                     <div className="text-sm text-red-600 mt-2" role="alert">{errors.reportingTo[0]}</div>
                   )}

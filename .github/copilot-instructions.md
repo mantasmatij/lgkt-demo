@@ -30,9 +30,9 @@ npm test && npm run lint
 TypeScript (Node 20+ / ES2022): Follow standard conventions
 
 ## Recent Changes
+- 009-form-fields-fixes: Added [if applicable, e.g., PostgreSQL, CoreData, files or N/A]
 - 008-expand-reporting-mvp: Added TypeScript (ES2022), Node 20+ + Next.js (web), Express (API), Drizzle ORM, Zod, HeroUI, Tailwind CSS
 - 007-admin-nav-sidebar: Added TypeScript (ES2022) / Node 20+ + Next.js (App Router), HeroUI (components), Tailwind CSS, Express (API), Drizzle ORM, Zod (validation), i18n context (existing)
-- 006-company-list-detail: Added TypeScript (ES2022), Node 20+ + Next.js (web), Express (API), HeroUI (components), Zod (validation), Drizzle ORM (data access)
 
 <!-- MANUAL ADDITIONS START -->
 <!-- MANUAL ADDITIONS END -->

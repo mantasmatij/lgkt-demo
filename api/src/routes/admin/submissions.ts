@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { desc, count } from 'drizzle-orm';
+import { desc, count, eq } from 'drizzle-orm';
 import { requireAuth } from '../../middleware/auth';
 
 export const adminSubmissionsRouter = Router();
@@ -33,7 +33,7 @@ adminSubmissionsRouter.get('/', async (req, res, next) => {
         createdAt: submissions.createdAt,
       })
       .from(submissions)
-      .leftJoin(submissionMeta, submissionMeta.submissionId.eq(submissions.id))
+      .leftJoin(submissionMeta, eq(submissionMeta.submissionId, submissions.id))
       .orderBy(desc(submissions.createdAt))
       .limit(limit)
       .offset(offset);

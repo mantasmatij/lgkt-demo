@@ -101,24 +101,28 @@ export function OrgansSection({ value, onChange, labels, errors = {} }: { value:
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <div className="flex flex-col">
                   <label htmlFor={`organs.${idx}.lastElectionDate`} className="text-black font-normal mb-2">{L.last_election_date} *</label>
-                  <DateInputWithPicker
-                    id={`organs.${idx}.lastElectionDate`}
-                    value={row.lastElectionDate || ''}
-                    onChange={(v) => update(idx, { lastElectionDate: v })}
-                    ariaLabel={L.last_election_date}
-                  />
+                  <div>
+                    <DateInputWithPicker
+                      id={`organs.${idx}.lastElectionDate`}
+                      value={row.lastElectionDate || ''}
+                      onChange={(v) => update(idx, { lastElectionDate: v })}
+                      ariaLabel={L.last_election_date}
+                    />
+                  </div>
                   {firstError(`organs.${idx}.lastElectionDate`) && (
                     <div className="text-sm text-red-600 mt-2" role="alert">{firstError(`organs.${idx}.lastElectionDate`)}</div>
                   )}
                 </div>
                 <div className="flex flex-col">
                   <label htmlFor={`organs.${idx}.plannedElectionDate`} className="text-black font-normal mb-2">{L.planned_election_date} *</label>
-                  <DateInputWithPicker
-                    id={`organs.${idx}.plannedElectionDate`}
-                    value={row.plannedElectionDate || ''}
-                    onChange={(v) => update(idx, { plannedElectionDate: v })}
-                    ariaLabel={L.planned_election_date}
-                  />
+                  <div>
+                    <DateInputWithPicker
+                      id={`organs.${idx}.plannedElectionDate`}
+                      value={row.plannedElectionDate || ''}
+                      onChange={(v) => update(idx, { plannedElectionDate: v })}
+                      ariaLabel={L.planned_election_date}
+                    />
+                  </div>
                   {firstError(`organs.${idx}.plannedElectionDate`) && (
                     <div className="text-sm text-red-600 mt-2" role="alert">{firstError(`organs.${idx}.plannedElectionDate`)}</div>
                   )}

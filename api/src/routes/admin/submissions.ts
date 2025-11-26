@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { desc, count } from 'drizzle-orm';
+import { desc, count, eq } from 'drizzle-orm';
 import { requireAuth } from '../../middleware/auth';
 
 export const adminSubmissionsRouter = Router();
@@ -20,7 +20,8 @@ adminSubmissionsRouter.get('/', async (req, res, next) => {
     const [totalResult] = await db.select({ count: count() }).from(submissions);
     const total = totalResult.count;
 
-    // Get paginated submissions
+    // Get paginated submissions with submitterEmail from submission_meta
+    const { submissionMeta } = await import('db');
     const items = await db
       .select({
         id: submissions.id,
@@ -28,9 +29,11 @@ adminSubmissionsRouter.get('/', async (req, res, next) => {
         nameAtSubmission: submissions.nameAtSubmission,
         country: submissions.country,
         contactEmail: submissions.contactEmail,
+        submitterEmail: submissionMeta.submitterEmail,
         createdAt: submissions.createdAt,
       })
-  .from(submissions)
+      .from(submissions)
+      .leftJoin(submissionMeta, eq(submissionMeta.submissionId, submissions.id))
       .orderBy(desc(submissions.createdAt))
       .limit(limit)
       .offset(offset);

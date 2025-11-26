@@ -4,6 +4,7 @@ import { requireAuth } from '../../middleware/auth';
 import { getCompanyDetail, listCompanies, listCompanySubmissions, listAllowedCompanyValues } from '../../services/companies.service';
 import { CompanyDetailSchema, CompanyListResponseSchema, CompanySubmissionsResponseSchema, CompaniesAllowedValuesSchema } from '../../services/companies.schemas';
 import { parseCompanyListQuery } from '../../utils/query';
+import { isValidUUID } from '../../utils/validate';
 
 export const adminCompaniesRouter = Router();
 
@@ -33,6 +34,9 @@ adminCompaniesRouter.get('/', async (req, res, next) => {
 adminCompaniesRouter.get('/:id', async (req, res, next) => {
   try {
     const id = String(req.params.id);
+    if (!isValidUUID(id)) {
+      return res.status(400).json({ code: 'INVALID_ID', message: 'Company ID must be a valid UUID.' });
+    }
     const t0 = performance.now?.() ?? Date.now();
     const detail = await getCompanyDetail(id);
     const t1 = performance.now?.() ?? Date.now();

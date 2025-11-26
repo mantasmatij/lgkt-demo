@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { useRouter } from 'next/navigation';
 import { Card, SelectItem } from '@heroui/react';
-import { OrgansSection, GenderBalanceSection, MeasuresSection, AttachmentsSection, InputField, TextareaField, CheckboxField, RadioField, SelectField, pillButtonClass } from 'ui';
+import { OrgansSection, GenderBalanceSection, MeasuresSection, AttachmentsSection, InputField, TextareaField, CheckboxField, RadioField, SelectField, pillButtonClass, DateInputWithPicker } from 'ui';
 import { useI18n } from '../providers/i18n-provider';
 import { makeCompanyFormSchema, type CompanyFormInput } from '../../lib/validation/companyForm';
 import { COMPANY_TYPE_VALUES, COMPANY_TYPE_LABEL_KEYS, COMPANY_TYPE_FIELD_LABEL_KEY } from '../../lib/constants/companyType';
@@ -277,32 +277,36 @@ export default function PublicFormPage() {
               {/* Reporting period */}
               <div className="font-bold">{`6. ${tform('reporting_period_heading') as unknown as string}`}</div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                <InputField
-                  id="reportingFrom"
-                  name="reportingFrom"
-                  type="date"
-                  label={tf('reporting_from')}
-                  labelClassName="font-normal"
-                  isInvalid={!!errors.reportingFrom}
-                  errorMessage={errors.reportingFrom?.[0]}
-                  value={form.reportingFrom}
-                  onChange={(e) => update('reportingFrom', e.target.value)}
-                  min={MIN_DATE_STR}
-                  isRequired
-                />
-                <InputField
-                  id="reportingTo"
-                  name="reportingTo"
-                  type="date"
-                  label={tf('reporting_to')}
-                  labelClassName="font-normal"
-                  isInvalid={!!errors.reportingTo}
-                  errorMessage={errors.reportingTo?.[0]}
-                  value={form.reportingTo}
-                  onChange={(e) => update('reportingTo', e.target.value)}
-                  min={MIN_DATE_STR}
-                  isRequired
-                />
+                <div className="flex flex-col">
+                  <label htmlFor="reportingFrom" className="text-black font-normal mb-2">{tf('reporting_from')} *</label>
+                  <div>
+                    <DateInputWithPicker
+                      id="reportingFrom"
+                      value={form.reportingFrom}
+                      onChange={(v) => update('reportingFrom', v)}
+                      ariaLabel={tf('reporting_from') as unknown as string}
+                      min={MIN_DATE_STR}
+                    />
+                  </div>
+                  {errors.reportingFrom?.[0] && (
+                    <div className="text-sm text-red-600 mt-2" role="alert">{errors.reportingFrom[0]}</div>
+                  )}
+                </div>
+                <div className="flex flex-col">
+                  <label htmlFor="reportingTo" className="text-black font-normal mb-2">{tf('reporting_to')} *</label>
+                  <div>
+                    <DateInputWithPicker
+                      id="reportingTo"
+                      value={form.reportingTo}
+                      onChange={(v) => update('reportingTo', v)}
+                      ariaLabel={tf('reporting_to') as unknown as string}
+                      min={MIN_DATE_STR}
+                    />
+                  </div>
+                  {errors.reportingTo?.[0] && (
+                    <div className="text-sm text-red-600 mt-2" role="alert">{errors.reportingTo[0]}</div>
+                  )}
+                </div>
               </div>
               
             </div>
@@ -428,11 +432,13 @@ export default function PublicFormPage() {
                 </a>
               </div>
             }
+            // TODO(US1/T004): Ensure internal 'name' & 'planned_result' fields render as 10-line textareas.
           />
 
           {/* Section 12: Reasons (placed above Submitter section) */}
           <Card className={twMerge("p-6")}>
             <div className="flex flex-col gap-3">
+              {/* TODO(US1/T004): 10-line textarea styling for reasons field; enforce consistent border and fixed height. */}
               <TextareaField
                 id="reasonsForUnderrepresentation"
                 name="reasonsForUnderrepresentation"
@@ -444,8 +450,12 @@ export default function PublicFormPage() {
                 onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => update('reasonsForUnderrepresentation', e.target.value || '')}
                 minRows={10}
                 maxRows={10}
+                disableAutosize
                 isRequired
-                classNames={{ inputWrapper: "rounded-2xl border-2 border-black px-4 py-3", input: 'resize-none overflow-y-auto' }}
+                classNames={{
+                  inputWrapper: "rounded-2xl border-2 border-black px-4 py-3 h-[17rem] bg-white",
+                  input: 'h-full min-h-0 resize-none overflow-y-auto leading-6',
+                }}
               />
             </div>
           </Card>

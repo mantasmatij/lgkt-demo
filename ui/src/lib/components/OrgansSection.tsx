@@ -3,6 +3,7 @@ import * as React from 'react';
 import { SelectItem, Card } from '@heroui/react';
 import { cn } from '../utils/cn';
 import { InputField } from './fields/InputField';
+import { DateInputWithPicker } from './fields/DateInputWithPicker';
 import { SelectField } from './fields/SelectField';
 import { iconButtonClass } from './fields/buttonStyles';
 
@@ -98,30 +99,34 @@ export function OrgansSection({ value, onChange, labels, errors = {} }: { value:
               </SelectField>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                <InputField
-                  id={`organs.${idx}.lastElectionDate`}
-                  name={`organs.${idx}.lastElectionDate`}
-                  type="date"
-                  label={L.last_election_date}
-                  labelClassName="font-normal"
-                  isRequired
-                  isInvalid={!!firstError(`organs.${idx}.lastElectionDate`)}
-                  errorMessage={firstError(`organs.${idx}.lastElectionDate`)}
-                  value={row.lastElectionDate}
-                  onChange={(e) => update(idx, { lastElectionDate: e.target.value })}
-                />
-                <InputField
-                  id={`organs.${idx}.plannedElectionDate`}
-                  name={`organs.${idx}.plannedElectionDate`}
-                  type="date"
-                  label={L.planned_election_date}
-                  labelClassName="font-normal"
-                  isRequired
-                  isInvalid={!!firstError(`organs.${idx}.plannedElectionDate`)}
-                  errorMessage={firstError(`organs.${idx}.plannedElectionDate`)}
-                  value={row.plannedElectionDate}
-                  onChange={(e) => update(idx, { plannedElectionDate: e.target.value })}
-                />
+                <div className="flex flex-col">
+                  <label htmlFor={`organs.${idx}.lastElectionDate`} className="text-black font-normal mb-2">{L.last_election_date} *</label>
+                  <div>
+                    <DateInputWithPicker
+                      id={`organs.${idx}.lastElectionDate`}
+                      value={row.lastElectionDate || ''}
+                      onChange={(v) => update(idx, { lastElectionDate: v })}
+                      ariaLabel={L.last_election_date}
+                    />
+                  </div>
+                  {firstError(`organs.${idx}.lastElectionDate`) && (
+                    <div className="text-sm text-red-600 mt-2" role="alert">{firstError(`organs.${idx}.lastElectionDate`)}</div>
+                  )}
+                </div>
+                <div className="flex flex-col">
+                  <label htmlFor={`organs.${idx}.plannedElectionDate`} className="text-black font-normal mb-2">{L.planned_election_date} *</label>
+                  <div>
+                    <DateInputWithPicker
+                      id={`organs.${idx}.plannedElectionDate`}
+                      value={row.plannedElectionDate || ''}
+                      onChange={(v) => update(idx, { plannedElectionDate: v })}
+                      ariaLabel={L.planned_election_date}
+                    />
+                  </div>
+                  {firstError(`organs.${idx}.plannedElectionDate`) && (
+                    <div className="text-sm text-red-600 mt-2" role="alert">{firstError(`organs.${idx}.plannedElectionDate`)}</div>
+                  )}
+                </div>
               </div>
 
               <div className="flex justify-between items-center">

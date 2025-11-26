@@ -46,34 +46,57 @@ async function main() {
   try {
     await client.query('BEGIN');
 
-    // Ensure companies exist (upsert on code)
-    const companies = [
-      { code: 'TC123456', name: 'Test Company Ltd', country: 'LT' },
-      { code: 'TC654321', name: 'Another Test UAB', country: 'LT' },
-      { code: 'TC000111', name: 'Sample Group AS', country: 'EE' },
+    // Lithuanian names, addresses, and diverse data
+    const ltNames = [
+      'UAB Saulės Energetika', 'AB Vilniaus Vandenys', 'UAB Žalias Miestas', 'UAB Baltijos Kelias',
+      'UAB Technologijų Era', 'AB Lietuvos Geležinkeliai', 'UAB Šviesos Tiltas', 'UAB Eko Statyba',
+      'UAB Verslo Konsultantai', 'UAB Rytų Investicijos', 'UAB Gintaro Grupė', 'UAB Medžio Pramonė',
+      'UAB Agro Partneriai', 'UAB IT Sprendimai', 'UAB Transporto Linija', 'UAB Maisto Prekės',
+      'UAB Statybos Projektai', 'UAB Finansų Ekspertai', 'UAB Sveikatos Centras', 'UAB Mokymo Institutas',
+      'UAB Kultūros Namai'
     ];
-    for (const c of companies) {
+    const companyTypes = ['LISTED', 'STATE_OWNED', 'LARGE',];
+    const cities = ['Vilnius', 'Kaunas', 'Klaipėda', 'Šiauliai', 'Panevėžys', 'Alytus', 'Marijampolė', 'Telšiai', 'Utena', 'Tauragė'];
+    const legalForms = ['UAB', 'AB', 'VšĮ', 'MB', 'TŪB'];
+    const registryCodes = ['REG-100', 'REG-200', 'REG-300', 'REG-400', 'REG-500'];
+    const submitterNames = ['Jonas Petraitis', 'Agnė Jankauskaitė', 'Darius Kazlauskas', 'Rūta Žilinskienė', 'Mantas Matijošaitis', 'Eglė Petrauskienė', 'Tomas Stankevičius', 'Ieva Vaitkutė', 'Paulius Žemaitis', 'Simona Grigaitė'];
+    const titles = ['Direktorius', 'Finansininkė', 'Projektų Vadovas', 'Administratorė', 'Teisininkas', 'Vadybininkė', 'Inžinierius', 'Specialistė', 'Koordinatorius', 'Analitikė'];
+    const companyCodes = ['LT10001', 'LT10002', 'LT10003', 'LT10004', 'LT10005', 'LT10006', 'LT10007', 'LT10008', 'LT10009', 'LT10010'];
+    const streetNumbers = Array.from({ length: 100 }, (_, i) => i + 1);
+
+    // Generate 100 companies and submissions
+    for (let i = 0; i < 100; i++) {
+      const code = companyCodes[i % companyCodes.length];
+      const name = ltNames[i % ltNames.length];
+      const country = 'LT';
+      const companyType = companyTypes[i % companyTypes.length];
+      const legalForm = legalForms[i % legalForms.length];
+      const city = cities[i % cities.length];
+      const address = `Gatvė ${streetNumbers[i % streetNumbers.length]}, ${city}`;
+      const registry = registryCodes[i % registryCodes.length];
+      const eDelivery = `info${i}@${name.replace(/\s+/g, '').toLowerCase()}.lt`;
+      const reportingFrom = toIsoDate(daysAgo(365 - i * 3));
+      const reportingTo = toIsoDate(daysAgo(180 - i * 2));
+      const contactName = submitterNames[i % submitterNames.length];
+      const contactEmail = `kontaktas${i}@${name.replace(/\s+/g, '').toLowerCase()}.lt`;
+      const contactPhone = `+3706${(100000 + i).toString().slice(0,6)}`;
+      const requirementsApplied = i % 2 === 0;
+      const requirementsLink = requirementsApplied ? `https://forma.lt/reikalavimai/${code}` : null;
+      const consentText = 'Sutinku su sąlygomis';
+      const createdAt = daysAgo(i);
+      const women = (i * 3) % 30;
+      const men = (i * 2) % 30;
+      const reasons = i % 5 === 0 ? 'Trūksta motyvacijos' : i % 5 === 1 ? 'Ribotos galimybės' : i % 5 === 2 ? 'Nėra kandidatų' : i % 5 === 3 ? 'Kultūriniai skirtumai' : 'Kita priežastis';
+
+      // Upsert company
       await client.query(
-        `INSERT INTO companies (code, name, country, created_at, updated_at)
-         VALUES ($1, $2, $3, NOW(), NOW())
-         ON CONFLICT (code) DO UPDATE SET name = EXCLUDED.name, country = EXCLUDED.country, updated_at = NOW()`,
-        [c.code, c.name, c.country]
+        `INSERT INTO companies (code, name, country, company_type, legal_form, address, registry, e_delivery_address, created_at, updated_at)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, NOW(), NOW())
+         ON CONFLICT (code) DO UPDATE SET name = EXCLUDED.name, country = EXCLUDED.country, company_type = EXCLUDED.company_type, legal_form = EXCLUDED.legal_form, address = EXCLUDED.address, registry = EXCLUDED.registry, e_delivery_address = EXCLUDED.e_delivery_address, updated_at = NOW()`,
+        [code, name, country, companyType, legalForm, address, registry, eDelivery]
       );
-    }
 
-    // Insert a handful of submissions with varying dates and genders
-    const samples = [
-      { code: 'TC123456', name: 'Test Company Ltd', days: 1, rpFrom: 60, rpTo: 30, women: 8, men: 12, companyType: 'LISTED' },
-      { code: 'TC654321', name: 'Another Test UAB', days: 3, rpFrom: 90, rpTo: 10, women: 15, men: 15, companyType: 'STATE_OWNED' },
-      { code: 'TC000111', name: 'Sample Group AS', days: 7, rpFrom: 180, rpTo: 0, women: 22, men: 8, companyType: 'LARGE' },
-      { code: 'TC123456', name: 'Test Company Ltd', days: 14, rpFrom: 365, rpTo: 180, women: 5, men: 25, companyType: 'LISTED' },
-    ];
-
-    for (const s of samples) {
-      const createdAt = daysAgo(s.days);
-      const reportingFrom = toIsoDate(daysAgo(s.rpFrom));
-      const reportingTo = toIsoDate(daysAgo(s.rpTo));
-
+      // Insert submission
       const insertSubmission = await client.query(
         `INSERT INTO submissions (
             company_code, name_at_submission, country, company_type, legal_form, address, registry,
@@ -87,48 +110,30 @@ async function main() {
             $14, $15, $16, $17, $18, $19
          ) RETURNING id` ,
         [
-          s.code, s.name, 'LT', s.companyType, 'UAB', 'Address 1, Vilnius', 'REG-123',
-          'e-delivery@company.lt', reportingFrom, reportingTo,
-          'John Admin', 'john@company.lt', '+37060000000',
-          null, true, 'Consent text', true, null, createdAt,
+          code, name, country, companyType, legalForm, address, registry,
+          eDelivery, reportingFrom, reportingTo,
+          contactName, contactEmail, contactPhone,
+          null, true, consentText, requirementsApplied, requirementsLink, createdAt,
         ]
       );
       const submissionId = insertSubmission.rows[0].id;
 
-      // Gender balance rows (aggregate across roles)
+      // Gender balance rows (BOARD, CEO, SUPERVISORY_BOARD)
       await client.query(
         `INSERT INTO gender_balance_rows (submission_id, role, women, men, total)
-         VALUES ($1, $2, $3, $4, $5)` ,
-        [submissionId, 'BOARD', s.women, s.men, s.women + s.men]
+         VALUES ($1, $2, $3, $4, $5), ($1, $6, $7, $8, $9), ($1, $10, $11, $12, $13)` ,
+        [
+          submissionId, 'BOARD', women, men, women + men,
+          'CEO', women % 10, men % 10, (women % 10) + (men % 10),
+          'SUPERVISORY_BOARD', (women + 2) % 15, (men + 3) % 15, ((women + 2) % 15) + ((men + 3) % 15)
+        ]
       );
 
-      // Minimal meta row
+      // Meta row
       await client.query(
         `INSERT INTO submission_meta (submission_id, reasons_for_underrepresentation, submitter_name, submitter_title, submitter_phone, submitter_email)
          VALUES ($1, $2, $3, $4, $5, $6)` ,
-        [submissionId, null, 'Jane Doe', 'Admin', '+37061111111', 'jane@example.com']
-      );
-    }
-
-    // Ensure companies table reflects key profile fields for each sample company
-    for (const s of samples) {
-      await client.query(
-        `UPDATE companies
-           SET company_type = $2,
-               legal_form = COALESCE($3, legal_form),
-               address = COALESCE($4, address),
-               registry = COALESCE($5, registry),
-               e_delivery_address = COALESCE($6, e_delivery_address),
-               updated_at = NOW()
-         WHERE code = $1`,
-        [
-          s.code,
-          s.companyType,
-          'UAB',
-          'Address 1, Vilnius',
-          'REG-123',
-          'e-delivery@company.lt',
-        ]
+        [submissionId, reasons, contactName, titles[i % titles.length], contactPhone, contactEmail]
       );
     }
 

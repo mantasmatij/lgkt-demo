@@ -8,6 +8,7 @@ export * from './lib/ErrorSummary';
 export { cn } from './lib/utils/cn';
 export { InputField } from './lib/components/fields/InputField';
 export { TextareaField } from './lib/components/fields/TextareaField';
+export { DateInputWithPicker } from './lib/components/fields/DateInputWithPicker';
 export { SelectField } from './lib/components/fields/SelectField';
 export { CheckboxField } from './lib/components/fields/CheckboxField';
 export { RadioField } from './lib/components/fields/RadioField';

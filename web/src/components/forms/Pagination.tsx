@@ -82,7 +82,7 @@ export function FormsPagination({ page, pageSize, total, onPageChange, onPageSiz
           <label className="ml-2 inline-flex items-center gap-2 text-sm text-gray-700">
             <span className="sr-only">Page</span>
             {/* Replace native select with pill dropdown for consistency */}
-            <div className="min-w-32">
+            <div className="min-w-0">
               <PillSelect
                 id="pagination-page"
                 value={String(page)}
@@ -90,6 +90,9 @@ export function FormsPagination({ page, pageSize, total, onPageChange, onPageSiz
                 options={pageOptions.map(p => ({ value: String(p), label: String(p) }))}
                 placeholder={undefined}
                 maxVisible={5}
+                autoWidth={true}
+                className="min-w-0"
+                minWidth='auto'
               />
             </div>
             <span className="text-gray-600">/ {totalPages}</span>
@@ -140,6 +143,8 @@ export function FormsPagination({ page, pageSize, total, onPageChange, onPageSiz
             options={[10,25,50,100].map(opt => ({ value: String(opt), label: String(opt) }))}
             placeholder={undefined}
             maxVisible={5}
+            minWidth='auto'
+            className='max-w-auto'
           />
         </div>
       </div>

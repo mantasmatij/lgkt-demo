@@ -29,19 +29,19 @@ const definitions: Record<ReportType, ReportDefinition> = {
     name: 'companies-list',
     // Unified columns: mirror forms-list preview columns for consistent UI
     columns: [
-      { key: 'companyName', label: 'Company Name' },
-      { key: 'companyCode', label: 'Company Code' },
-      { key: 'companyType', label: 'Company Type' },
-      { key: 'legalForm', label: 'Legal Form' },
-      { key: 'address', label: 'Address' },
-      { key: 'registry', label: 'Registry' },
-      { key: 'eDeliveryAddress', label: 'eDelivery Address' },
-      { key: 'reportPeriodFrom', label: 'Report From' },
-      { key: 'reportPeriodTo', label: 'Report To' },
-      { key: 'submissionDate', label: 'Submitted At' },
-      { key: 'womenPercent', label: 'Women %' },
-      { key: 'menPercent', label: 'Men %' },
-      { key: 'requirementsApplied', label: 'Req. Applied' }
+      { key: 'companyName', label: 'table_col_company_name' },
+      { key: 'companyCode', label: 'table_col_code' },
+      { key: 'companyType', label: 'table_col_type' },
+      { key: 'legalForm', label: 'legal_form' },
+      { key: 'address', label: 'address' },
+      { key: 'registry', label: 'registry' },
+      { key: 'eDeliveryAddress', label: 'e_delivery_address' },
+      { key: 'reportPeriodFrom', label: 'table_col_report_from' },
+      { key: 'reportPeriodTo', label: 'table_col_report_to' },
+      { key: 'submissionDate', label: 'table_col_submission_date' },
+      { key: 'womenPercent', label: 'table_col_women_pct' },
+      { key: 'menPercent', label: 'table_col_men_pct' },
+      { key: 'requirementsApplied', label: 'table_col_requirements_applied' }
     ],
     filters: [
       // Company dropdown, options are loaded dynamically via /api/reports/company-options
@@ -52,19 +52,19 @@ const definitions: Record<ReportType, ReportDefinition> = {
     id: 'forms-list',
     name: 'forms-list',
     columns: [
-      { key: 'companyName', label: 'Company Name' },
-      { key: 'companyCode', label: 'Company Code' },
-      { key: 'companyType', label: 'Company Type' },
-      { key: 'legalForm', label: 'Legal Form' },
-      { key: 'address', label: 'Address' },
-      { key: 'registry', label: 'Registry' },
-      { key: 'eDeliveryAddress', label: 'eDelivery Address' },
-      { key: 'reportPeriodFrom', label: 'Report From' },
-      { key: 'reportPeriodTo', label: 'Report To' },
-      { key: 'submissionDate', label: 'Submitted At' },
-      { key: 'womenPercent', label: 'Women %' },
-      { key: 'menPercent', label: 'Men %' },
-      { key: 'requirementsApplied', label: 'Req. Applied' }
+      { key: 'companyName', label: 'table_col_company_name' },
+      { key: 'companyCode', label: 'table_col_code' },
+      { key: 'companyType', label: 'table_col_type' },
+      { key: 'legalForm', label: 'legal_form' },
+      { key: 'address', label: 'address' },
+      { key: 'registry', label: 'registry' },
+      { key: 'eDeliveryAddress', label: 'e_delivery_address' },
+      { key: 'reportPeriodFrom', label: 'table_col_report_from' },
+      { key: 'reportPeriodTo', label: 'table_col_report_to' },
+      { key: 'submissionDate', label: 'table_col_submission_date' },
+      { key: 'womenPercent', label: 'table_col_women_pct' },
+      { key: 'menPercent', label: 'table_col_men_pct' },
+      { key: 'requirementsApplied', label: 'table_col_requirements_applied' }
     ],
     filters: [
       { key: 'dateRange', type: 'dateRange' }

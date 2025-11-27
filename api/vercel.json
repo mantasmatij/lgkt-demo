@@ -1,8 +1,7 @@
 {
   "functions": {
     "api/index.ts": {
-      "runtime": "nodejs18.x",
-      "handler": "src/vercel-handler.ts"
+      "runtime": "nodejs18.x"
     }
   }
 }

@@ -1,0 +1,19 @@
+{
+  "name": "web",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "nx serve web",
+    "build": "nx build web",
+    "start": "nx serve web --prod"
+  },
+  "dependencies": {
+    "next": "^13.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "devDependencies": {
+    "@nx/next": "*",
+    "typescript": "^5.0.0"
+  }
+}

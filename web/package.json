@@ -13,6 +13,7 @@
     "react-dom": "^18.0.0"
   },
   "devDependencies": {
+    "nx": "^17.0.0",
     "@nx/next": "*",
     "typescript": "^5.0.0"
   }

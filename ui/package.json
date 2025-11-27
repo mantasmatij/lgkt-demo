@@ -6,7 +6,6 @@
   "main": "./src/index.js",
   "types": "./src/index.d.ts",
   "dependencies": {
-    "@heroui/react": "^2.5.0",
     "tslib": "^2.3.0",
     "clsx": "^2.1.0",
     "tailwind-merge": "^2.2.0"

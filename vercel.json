@@ -1,8 +1,13 @@
 {
   "version": 2,
   "routes": [
-    { "src": "/api/(.*)", "dest": "/dist/api/src/vercel-handler.js" },
+    { "src": "/api/(.*)", "dest": "/api/vercel-handler.js" },
     { "src": "/(.*)", "dest": "/$1" }
   ],
-  "outputDirectory": "."
+  "functions": {
+    "api/vercel-handler.js": {
+      "runtime": "nodejs20.x",
+      "maxDuration": 10
+    }
+  }
 }

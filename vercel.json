@@ -1,9 +1,4 @@
 {
-  "functions": {
-    "dist/api/src/vercel-handler.js": {
-        "runtime": "@vercel/node@2.11.0"
-    }
-  },
   "routes": [
     {
       "src": "/api/(.*)",

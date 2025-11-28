@@ -3,5 +3,6 @@
   "routes": [
     { "src": "/api/(.*)", "dest": "/dist/api/src/vercel-handler.js" },
     { "src": "/(.*)", "dest": "/$1" }
-  ]
+  ],
+  "outputDirectory": "public"
 }

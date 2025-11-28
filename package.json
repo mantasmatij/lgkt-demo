@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "npm run db:migrate && nx run-many -t test --exclude lgkt-forma",
-    "build": "nx build web && nx build validation && nx build api && npx nx run api:prune",
+    "build": "nx build validation && nx build api && npx nx run api:prune && npm run postbuild:copy-tsconfig",
     "test:cucumber": "cucumber-js -c web/tests/e2e/web.cucumber.mjs",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
@@ -22,7 +22,8 @@
     "db:migrate": "drizzle-kit migrate --config db/drizzle.config.ts",
     "db:reset:dev": "node db/scripts/reset-dev-db.js",
     "db:seed:dev": "node db/scripts/seed-sample-submissions.js",
-    "db:seed:admin": "node db/scripts/seed-admin.js"
+    "db:seed:admin": "node db/scripts/seed-admin.js",
+    "postbuild:copy-tsconfig": "mkdir -p dist/api/workspace_modules && cp tsconfig.base.json dist/api/workspace_modules/tsconfig.base.json || true"
   },
   "repository": {
     "type": "git",

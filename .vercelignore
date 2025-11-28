@@ -1,0 +1,12 @@
+# Ignore generated or helper folders that can confuse Vercel's function detection
+api-standalone/
+dist/
+.nx/
+.nx/
+.nx/cache/
+node_modules/
+**/workspace_modules/
+**/*.log
+coverage/
+.tmp/
+.vscode/

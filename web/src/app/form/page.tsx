@@ -131,7 +131,8 @@ export default function PublicFormPage() {
         captchaToken: form.captchaToken,
       };
 
-      const res = await fetch('/api/submissions', {
+      const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL ?? '';
+      const res = await fetch(`${API_BASE}/api/submissions`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),

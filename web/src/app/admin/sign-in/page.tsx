@@ -4,6 +4,8 @@ import { Card } from '@heroui/react';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { pillButtonClass, InputField } from 'ui';
+
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL ?? '';
 import { useI18n } from '../../providers/i18n-provider';
 
 export default function AdminSignInPage() {
@@ -21,7 +23,7 @@ export default function AdminSignInPage() {
     setLoading(true);
 
     try {
-      const res = await fetch('/api/auth/login', {
+      const res = await fetch(`${API_BASE}/api/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),

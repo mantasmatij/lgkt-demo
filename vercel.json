@@ -1,9 +1,6 @@
 {
   "functions": {
-    "dist/api/src/vercel-handler.js": {
-      "runtime": "nodejs20.x",
-      "memory": 1024
-    }
+    "dist/api/src/vercel-handler.js": {}
   },
   "routes": [
     {

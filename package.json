@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "npm run db:migrate && nx run-many -t test --exclude lgkt-forma",
-    "build": "nx build web",
+    "build": "nx build web && nx build api",
     "test:cucumber": "cucumber-js -c web/tests/e2e/web.cucumber.mjs",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",

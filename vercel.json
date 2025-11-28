@@ -3,11 +3,5 @@
   "routes": [
     { "src": "/api/(.*)", "dest": "/dist/api/src/vercel-handler.js" },
     { "src": "/(.*)", "dest": "/$1" }
-  ],
-  "functions": {
-    "dist/api/src/vercel-handler.js": {
-      "runtime": "@vercel/node@2.11.0",
-      "maxDuration": 10
-    }
-  }
+  ]
 }

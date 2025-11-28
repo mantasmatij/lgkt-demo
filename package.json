@@ -23,7 +23,8 @@
     "db:reset:dev": "node db/scripts/reset-dev-db.js",
     "db:seed:dev": "node db/scripts/seed-sample-submissions.js",
     "db:seed:admin": "node db/scripts/seed-admin.js",
-    "postbuild:copy-tsconfig": "mkdir -p dist/api/workspace_modules && cp tsconfig.base.json dist/api/workspace_modules/tsconfig.base.json || true"
+    "postbuild:copy-tsconfig": "mkdir -p dist/api/workspace_modules && cp tsconfig.base.json dist/api/workspace_modules/tsconfig.base.json || true",
+    "build:api-standalone": "npm run build && rm -rf api-standalone && mkdir -p api-standalone && cp -R dist/api api-standalone/dist && cp -R dist/api/workspace_modules api-standalone/workspace_modules && cp api/package.json api-standalone/package.source.json || true && echo 'api-standalone prepared. Run (cd api-standalone && npm install) to install runtime deps.'"
   },
   "repository": {
     "type": "git",

@@ -17,6 +17,28 @@
         "buildTarget": "build"
       }
     },
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "outputPath": "dist/api",
+        "main": "api/src/vercel-handler.ts",
+        "tsConfig": "api/tsconfig.app.json",
+        "assets": []
+      },
+      "configurations": {},
+      "parallelism": true,
+      "cache": true,
+      "dependsOn": [
+        "^build"
+      ],
+      "inputs": [
+        "default",
+        "^default"
+      ]
+    },
     "copy-workspace-modules": {
       "dependsOn": ["build"],
       "cache": true,

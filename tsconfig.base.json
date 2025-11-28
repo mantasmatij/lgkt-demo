@@ -13,7 +13,7 @@
     "lib": ["es2020", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
-    // "baseUrl": ".",
+    "baseUrl": ".",
     "paths": {
       "contracts": ["./contracts/src/index.ts"],
       "db": ["./db/src/index.ts"],

@@ -1,5 +1,5 @@
 # Ignore generated or helper folders that can confuse Vercel's function detection
-api-standalone/
+# Do NOT ignore `api-standalone/` so the API-only Vercel project can deploy from it
 dist/
 .nx/
 .nx/

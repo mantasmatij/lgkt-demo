@@ -23,7 +23,7 @@ export default function ReportsPage() {
   useEffect(() => {
     (async () => {
       const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL ?? '';
-      const res = await fetch(`${API_BASE}/api/reports/types`);
+      const res = await fetch(`${API_BASE}/api/reports/types`, { credentials: 'include' });
       if (!res.ok) return; // keep silent for now
       const json = await res.json();
       setTypes(json.types || []);

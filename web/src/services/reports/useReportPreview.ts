@@ -35,6 +35,7 @@ export function useReportPreview(params: PreviewParams) {
       const res = await fetch(`${API_BASE}/api/reports/preview`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify(body)
       });
       if (res.status === 401) {

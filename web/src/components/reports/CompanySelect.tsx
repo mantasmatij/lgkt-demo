@@ -24,7 +24,7 @@ export function CompanySelect({ value, onChange, disabled }: Props) {
       try {
         const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL ?? '';
         const url = `${API_BASE}/api/reports/company-options`;
-        const res = await fetch(url);
+        const res = await fetch(url, { credentials: 'include' });
         if (!res.ok) return;
         const json = await res.json();
         if (!cancelled) setOptions(json.options || []);

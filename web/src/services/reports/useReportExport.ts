@@ -29,6 +29,7 @@ export function useReportExport(params: ExportParams) {
       const res = await fetch(`${API_BASE}/api/reports/export`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify(body)
       });
       if (res.status === 401) {

@@ -37,7 +37,8 @@ export default function AdminDashboardPage() {
       setError('');
 
       try {
-        const res = await fetch(`/api/admin/submissions?page=${page}&limit=50`, {
+        const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL ?? '';
+        const res = await fetch(`${API_BASE}/api/admin/submissions?page=${page}&limit=50`, {
           credentials: 'include',
         });
 

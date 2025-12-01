@@ -1,11 +1,11 @@
 {
   "functions": {
     "api/vercel-handler.js": {
-      "runtime": "@vercel/node@3"
+      "runtime": "@vercel/node@3",
+      "includeFiles": "dist/api/src/**"
     }
   },
   "routes": [
     { "src": "/api/(.*)", "dest": "/api/vercel-handler.js" }
-  ],
-  "outputDirectory": "."
+  ]
 }

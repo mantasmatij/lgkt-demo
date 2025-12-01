@@ -45,6 +45,14 @@ export function createApp() {
   };
   // Handle CORS for all routes including preflight
   app.use(cors(corsOptions));
+  // Short-circuit OPTIONS before any heavy middleware (session/db, body parsing)
+  app.use((req, res, next) => {
+    if (req.method === 'OPTIONS') {
+      res.status(204).end();
+      return;
+    }
+    next();
+  });
   app.options('*', cors(corsOptions));
 
   app.use(morgan(process.env.NODE_ENV === 'production' ? 'combined' : 'dev'));

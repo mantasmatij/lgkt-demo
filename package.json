@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "npm run db:migrate && nx run-many -t test --exclude lgkt-forma",
-    "build": "nx build validation && nx build api && npm run postbuild:copy-tsconfig",
+    "build": "nx build validation && nx build api && nx run api:copy-workspace-modules && npm run postbuild:copy-tsconfig",
     "test:cucumber": "cucumber-js -c web/tests/e2e/web.cucumber.mjs",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
@@ -24,7 +24,7 @@
     "db:seed:dev": "node db/scripts/seed-sample-submissions.js",
     "db:seed:admin": "node db/scripts/seed-admin.js",
     "postbuild:copy-tsconfig": "mkdir -p dist/api/workspace_modules && cp tsconfig.base.json dist/api/workspace_modules/tsconfig.base.json || true",
-    "build:api-standalone": "npm run build && rm -rf api-standalone && mkdir -p api-standalone/api && cp -R dist/api api-standalone/dist && cp -R dist/api/workspace_modules api-standalone/workspace_modules && cp api/package.json api-standalone/package.json && cp api/vercel-handler.js api-standalone/api/vercel-handler.js && echo 'api-standalone prepared.'"
+    "build:api-standalone": "npm run build && node scripts/prepare-api-standalone.js"
   },
   "repository": {
     "type": "git",

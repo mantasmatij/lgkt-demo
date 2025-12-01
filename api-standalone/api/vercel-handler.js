@@ -1,16 +1,18 @@
-// Committed shim so Vercel detects a single Serverless Function pre-build.
-// It lazy-loads the compiled handler from the build output at runtime.
+// Shim for Vercel: single entry so Vercel sees one function file.
+// We resolve the compiled handler lazily at request time to avoid bundlers tracing a missing path.
 const path = require('path');
 const fs = require('fs');
 
 function resolveCompiledHandler() {
   const candidates = [
-    // When executed with CWD at project root (api-standalone)
+    // When executed with CWD at repo root
     path.join(process.cwd(), 'dist', 'api', 'src', 'vercel-handler.js'),
-    // When resolved relative to this file
+    // When resolved relative to this file in the api/ folder
     path.join(__dirname, '..', 'dist', 'api', 'src', 'vercel-handler.js'),
   ];
-  for (const p of candidates) if (fs.existsSync(p)) return p;
+  for (const p of candidates) {
+    if (fs.existsSync(p)) return p;
+  }
   return null;
 }
 

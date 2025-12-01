@@ -297,6 +297,49 @@ npm run dev:down
 npm run dev:up
 ```
 
+## Vercel Deployment
+
+### API-only Project (Hobby-friendly)
+
+- Root Directory: `api-standalone`
+- Framework Preset: `Other`
+- Node Version: `20`
+- Output Directory: leave empty (functions-only)
+- Protection: Off (for public API access)
+
+Set the following commands in the Vercel project:
+
+```bash
+# Install Command
+cd .. && npm ci
+
+# Build Command
+cd .. && npm run build:api-standalone
+```
+
+This builds the monorepo API (`dist/api`) and prepares `api-standalone/` with:
+- `api/vercel-handler.js` (committed shim)
+- `dist/api/src/**` (compiled handler and sources)
+- `workspace_modules/**` (monorepo shared modules copied by Nx)
+
+After deployment, verify:
+
+```bash
+curl -i -X OPTIONS https://<api-domain>/api/auth/login    # Expect 204
+curl -i https://<api-domain>/api/health                   # Expect 200
+```
+
+### Web Project
+
+Set `NEXT_PUBLIC_API_BASE_URL` to the API domain in the Web project environment:
+
+```bash
+# .env.local (development) or Vercel env (production)
+NEXT_PUBLIC_API_BASE_URL="https://<api-domain>"
+```
+
+The frontend already uses this variable and sends cookies via `credentials: 'include'`.
+
 ### Database connection errors
 # Lost data after restart?
 

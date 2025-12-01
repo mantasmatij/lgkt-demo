@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "functions": {
+    "api/vercel-handler.js": {
+      "runtime": "@vercel/node@3.1.0",
+      "includeFiles": [
+        "dist/api/src/**",
+        "workspace_modules/**"
+      ]
+    }
+  },
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "api/vercel-handler.js"
+    }
+  ]
+}

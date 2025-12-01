@@ -31,7 +31,7 @@ export function useReportPreview(params: PreviewParams) {
       if (params.companyCode) {
         body.filters = { ...(body.filters || {}), company: { companyCode: params.companyCode } };
       }
-      const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL ?? '';
+      const API_BASE = '' as const;
       const res = await fetch(`${API_BASE}/api/reports/preview`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

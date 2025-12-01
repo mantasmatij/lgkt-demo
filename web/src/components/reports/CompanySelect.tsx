@@ -22,7 +22,7 @@ export function CompanySelect({ value, onChange, disabled }: Props) {
     async function load() {
       setLoading(true);
       try {
-        const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL ?? '';
+        const API_BASE = '' as const;
         const url = `${API_BASE}/api/reports/company-options`;
         const res = await fetch(url, { credentials: 'include' });
         if (!res.ok) return;

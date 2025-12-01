@@ -8,7 +8,7 @@ export function AuthGate() {
   useEffect(() => {
     async function check() {
       try {
-        const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL ?? '';
+        const API_BASE = '' as const;
         const res = await fetch(`${API_BASE}/api/admin/forms?page=1&pageSize=1`, { credentials: 'include' });
         if (res.status === 401) {
           router.push('/admin/sign-in');

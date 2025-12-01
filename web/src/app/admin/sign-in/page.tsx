@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { pillButtonClass, InputField } from 'ui';
 
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL ?? '';
+const API_BASE = '' as const;
 import { useI18n } from '../../providers/i18n-provider';
 
 export default function AdminSignInPage() {

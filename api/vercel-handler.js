@@ -1,17 +1,30 @@
-// Shim for Vercel: committed single entry-point so Vercel sees one function file
-// At runtime this will require the compiled handler produced by the build:
-// `dist/api/src/vercel-handler.js`.
-// If the compiled file isn't present yet (during build), we respond with an explanatory error.
-let handler;
-try {
-  handler = require('./dist/api/src/vercel-handler.js');
-  // If the compiled module uses default export, prefer that.
-  const exported = handler && handler.default ? handler.default : handler;
-  module.exports = exported;
-} catch (err) {
-  module.exports = (req, res) => {
+// Shim for Vercel: single entry so Vercel sees one function file.
+// We resolve the compiled handler lazily at request time to avoid bundlers tracing a missing path.
+const path = require('path');
+const fs = require('fs');
+
+function resolveCompiledHandler() {
+  const candidates = [
+    // When executed with CWD at repo root
+    path.join(process.cwd(), 'dist', 'api', 'src', 'vercel-handler.js'),
+    // When resolved relative to this file in the api/ folder
+    path.join(__dirname, '..', 'dist', 'api', 'src', 'vercel-handler.js'),
+  ];
+  for (const p of candidates) {
+    if (fs.existsSync(p)) return p;
+  }
+  return null;
+}
+
+module.exports = async (req, res) => {
+  const target = resolveCompiledHandler();
+  if (!target) {
     res.statusCode = 500;
     res.setHeader('content-type', 'text/plain; charset=utf-8');
-    res.end('API not built yet. The server-side build must produce `dist/api/src/vercel-handler.js`.');
-  };
-}
+    res.end('API not built yet. Expected `dist/api/src/vercel-handler.js`.');
+    return;
+  }
+  const mod = require(target);
+  const handler = mod && mod.default ? mod.default : mod;
+  return handler(req, res);
+};

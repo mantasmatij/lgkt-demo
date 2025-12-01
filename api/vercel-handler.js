@@ -19,6 +19,18 @@ function resolveCompiledHandler() {
 module.exports = async (req, res) => {
   const target = resolveCompiledHandler();
   if (!target) {
+    if (req.method === 'OPTIONS') {
+      res.statusCode = 204;
+      res.setHeader('Access-Control-Allow-Origin', req.headers.origin || '*');
+      res.setHeader('Vary', 'Origin');
+      res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE,OPTIONS');
+      res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-CSRF-Token');
+      res.setHeader('Access-Control-Allow-Credentials', 'true');
+      res.setHeader('Access-Control-Max-Age', '600');
+      res.end();
+      return;
+    }
+    console.error('[vercel-handler] Compiled handler missing: dist/api/src/vercel-handler.js');
     res.statusCode = 500;
     res.setHeader('content-type', 'text/plain; charset=utf-8');
     res.end('API not built yet. Expected `dist/api/src/vercel-handler.js`.');

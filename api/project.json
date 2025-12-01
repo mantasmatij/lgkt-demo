@@ -5,18 +5,6 @@
   "projectType": "application",
   "tags": [],
   "targets": {
-    "prune-lockfile": {
-      "dependsOn": ["build"],
-      "cache": true,
-      "executor": "@nx/js:prune-lockfile",
-      "outputs": [
-        "{workspaceRoot}/dist/api/package.json",
-        "{workspaceRoot}/dist/api/package-lock.json"
-      ],
-      "options": {
-        "buildTarget": "build"
-      }
-    },
     "build": {
       "executor": "@nx/js:tsc",
       "outputs": [
@@ -47,10 +35,6 @@
       "options": {
         "buildTarget": "build"
       }
-    },
-    "prune": {
-      "dependsOn": ["prune-lockfile", "copy-workspace-modules"],
-      "executor": "nx:noop"
     },
     "serve": {
       "continuous": true,

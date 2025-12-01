@@ -38,6 +38,9 @@
     "url": "https://github.com/alfa-ts/lgkt-forma/issues"
   },
   "homepage": "https://github.com/alfa-ts/lgkt-forma#readme",
+  "engines": {
+    "node": "20.x"
+  },
   "overrides": {
     "drizzle-orm": "0.44.6"
   },

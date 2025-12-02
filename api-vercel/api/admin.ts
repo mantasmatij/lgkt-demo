@@ -24,6 +24,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const url = new URL(req.url || '/', `https://${req.headers.host}`);
   const path = url.pathname; // /api/admin/...
   const pool = getPool();
+  const sp = url.searchParams;
+
+  function getPagination() {
+    const page = Number(sp.get('page') || '1') || 1;
+    const psRaw = sp.get('pageSize') || sp.get('limit') || '50';
+    const pageSize = Math.min(Math.max(Number(psRaw) || 50, 1), 200);
+    const offset = (page - 1) * pageSize;
+    return { page, pageSize, offset };
+  }
 
   try {
     // Forms list -> map to submissions list
@@ -31,9 +40,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const parts = path.split('/').filter(Boolean);
       if (parts.length === 3) {
         // /api/admin/forms?...
-        const page = Number(url.searchParams.get('page') || '1');
-        const limit = Math.min(Number(url.searchParams.get('limit') || '50'), 200);
-        const offset = (page - 1) * limit;
+        const { page, pageSize, offset } = getPagination();
         const client = await pool.connect();
         try {
           const list = await client.query(
@@ -41,10 +48,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
              FROM submissions
              ORDER BY created_at DESC
              LIMIT $1 OFFSET $2`,
-            [limit, offset]
+            [pageSize, offset]
           );
           const total = (await client.query('SELECT COUNT(*)::int AS c FROM submissions')).rows[0].c as number;
-          return ok(res, { items: list.rows, page, pageSize: limit, total });
+          return ok(res, { items: list.rows, page, pageSize, total });
         } finally { client.release(); }
       } else if (parts.length === 4) {
         const id = parts[3];
@@ -83,18 +90,36 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       try {
         if (parts.length === 3) {
           // list
-          const page = Number(new URL(req.url!, 'https://x').searchParams.get('page') || '1');
-          const limit = Math.min(Number(new URL(req.url!, 'https://x').searchParams.get('limit') || '50'), 200);
-          const offset = (page - 1) * limit;
+          const { page, pageSize, offset } = getPagination();
+          const search = sp.get('search')?.trim();
+          const type = sp.get('type')?.trim();
+          let where = 'WHERE 1=1';
+          const params: any[] = [];
+          let idx = 1;
+          if (search) {
+            params.push(`%${search}%`);
+            where += ` AND (name ILIKE $${idx} OR code ILIKE $${idx})`;
+            idx++;
+          }
+          if (type) {
+            params.push(type);
+            where += ` AND company_type = $${idx}`;
+            idx++;
+          }
           const list = await client.query(
             `SELECT id, name, code, company_type AS type, address, e_delivery_address AS "eDeliveryAddress"
              FROM companies
+             ${where}
              ORDER BY name ASC
-             LIMIT $1 OFFSET $2`,
-            [limit, offset]
+             LIMIT $${idx} OFFSET $${idx + 1}`,
+            [...params, pageSize, offset]
           );
-          const total = (await client.query('SELECT COUNT(*)::int AS c FROM companies')).rows[0].c as number;
-          return ok(res, { items: list.rows, page, pageSize: limit, total });
+          const countRs = await client.query(
+            `SELECT COUNT(*)::int AS c FROM companies ${where}`,
+            params
+          );
+          const total = countRs.rows[0].c as number;
+          return ok(res, { items: list.rows, page, pageSize, total });
         } else if (parts.length === 4 && parts[3] === 'allowed-values') {
           return ok(res, { types: ['LISTED','STATE_OWNED','MUNICIPALLY_OWNED','LARGE_PRIVATE'], registries: ['JAR','OTHER'] });
         } else if (parts.length === 4) {
@@ -107,9 +132,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           return ok(res, one.rows[0]);
         } else if (parts.length === 5 && parts[4] === 'submissions') {
           const id = parts[3];
-          const page = Number(new URL(req.url!, 'https://x').searchParams.get('page') || '1');
-          const limit = Math.min(Number(new URL(req.url!, 'https://x').searchParams.get('limit') || '50'), 200);
-          const offset = (page - 1) * limit;
+          const { page, pageSize, offset } = getPagination();
           const codeRow = await client.query('SELECT code FROM companies WHERE id=$1', [id]);
           if (codeRow.rowCount === 0) return res.status(404).end('Not found');
           const companyCode = codeRow.rows[0].code as string;
@@ -124,19 +147,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
              WHERE s.company_code = $1
              ORDER BY created_at DESC
              LIMIT $2 OFFSET $3`,
-            [companyCode, limit, offset]
+            [companyCode, pageSize, offset]
           );
           const total = (await client.query('SELECT COUNT(*)::int AS c FROM submissions WHERE company_code=$1', [companyCode])).rows[0].c as number;
-          return ok(res, { items: list.rows, page, pageSize: limit, total });
+          return ok(res, { items: list.rows, page, pageSize, total });
         }
       } finally { client.release(); }
     }
 
     // Admin submissions list (alias)
     if (req.method === 'GET' && path.startsWith('/api/admin/submissions')) {
-      const page = Number(new URL(req.url!, 'https://x').searchParams.get('page') || '1');
-      const limit = Math.min(Number(new URL(req.url!, 'https://x').searchParams.get('limit') || '50'), 200);
-      const offset = (page - 1) * limit;
+      const { page, pageSize, offset } = getPagination();
       const client = await pool.connect();
       try {
         const list = await client.query(
@@ -144,10 +165,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
            FROM submissions
            ORDER BY created_at DESC
            LIMIT $1 OFFSET $2`,
-          [limit, offset]
+          [pageSize, offset]
         );
         const total = (await client.query('SELECT COUNT(*)::int AS c FROM submissions')).rows[0].c as number;
-        return ok(res, { items: list.rows, page, pageSize: limit, total });
+        return ok(res, { items: list.rows, page, pageSize, total });
       } finally { client.release(); }
     }
 

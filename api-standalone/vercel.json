@@ -3,7 +3,7 @@
   "functions": {
     "api/vercel-handler.js": {
       "runtime": "@vercel/node@3.1.0",
-      "includeFiles": "{dist/api/src/**,workspace_modules/**}"
+      "includeFiles": "{dist/**,workspace_modules/**}"
     }
   },
   "routes": [

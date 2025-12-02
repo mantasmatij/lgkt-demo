@@ -25,6 +25,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const path = url.pathname; // /api/admin/...
   const pool = getPool();
   const sp = url.searchParams;
+  const routePath = sp.get('path') || path;
 
   function getPagination() {
     const page = Number(sp.get('page') || '1') || 1;
@@ -36,8 +37,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   try {
     // Forms list -> map to submissions list
-    if (req.method === 'GET' && path.startsWith('/api/admin/forms')) {
-      const parts = path.split('/').filter(Boolean);
+    if (req.method === 'GET' && routePath.startsWith('/api/admin/forms')) {
+      const parts = routePath.split('/').filter(Boolean);
       if (parts.length === 3) {
         // /api/admin/forms?...
         const { page, pageSize, offset } = getPagination();
@@ -167,8 +168,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     // Companies endpoints
-    if (req.method === 'GET' && path.startsWith('/api/admin/companies')) {
-      const parts = path.split('/').filter(Boolean);
+    if (req.method === 'GET' && routePath.startsWith('/api/admin/companies')) {
+      const parts = routePath.split('/').filter(Boolean);
       const client = await pool.connect();
       try {
         if (parts.length === 3) {
@@ -239,7 +240,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     // Admin submissions list (alias)
-    if (req.method === 'GET' && path.startsWith('/api/admin/submissions')) {
+    if (req.method === 'GET' && routePath.startsWith('/api/admin/submissions')) {
       const { page, pageSize, offset } = getPagination();
       const client = await pool.connect();
       try {

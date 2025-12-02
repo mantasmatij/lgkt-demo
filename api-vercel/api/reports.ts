@@ -1,4 +1,5 @@
-import type { VercelRequest, VercelResponse } from '@vercel/node';
+type VercelRequest = any;
+type VercelResponse = any;
 import { enableCors, badRequest, ok, readJson } from '../lib/http';
 import { getPool } from '../lib/db';
 import { getSessionToken, verify } from '../lib/session';

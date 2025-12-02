@@ -1,4 +1,5 @@
-import type { VercelResponse, VercelRequest } from '@vercel/node';
+type VercelResponse = any;
+type VercelRequest = any;
 import cookie from 'cookie';
 import crypto from 'crypto';
 

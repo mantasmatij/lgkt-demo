@@ -1,4 +1,5 @@
-import type { VercelRequest, VercelResponse } from '@vercel/node';
+type VercelRequest = any;
+type VercelResponse = any;
 import { enableCors, badRequest, unauthorized, ok, readJson } from '../../lib/http';
 import { Pool } from 'pg';
 import bcrypt from 'bcryptjs';

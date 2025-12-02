@@ -1,21 +1,23 @@
-import type { VercelRequest, VercelResponse } from '@vercel/node';
+// Minimal request/response types to avoid external type deps
+type Req = any;
+type Res = any;
 
-export const ok = (res: VercelResponse, data: unknown = { ok: true }) => {
+export const ok = (res: Res, data: unknown = { ok: true }) => {
   res.status(200).setHeader('content-type', 'application/json; charset=utf-8');
   res.end(JSON.stringify(data));
 };
 
-export const badRequest = (res: VercelResponse, message = 'Bad Request') => {
+export const badRequest = (res: Res, message = 'Bad Request') => {
   res.status(400).setHeader('content-type', 'application/json; charset=utf-8');
   res.end(JSON.stringify({ error: message }));
 };
 
-export const unauthorized = (res: VercelResponse, message = 'Unauthorized') => {
+export const unauthorized = (res: Res, message = 'Unauthorized') => {
   res.status(401).setHeader('content-type', 'application/json; charset=utf-8');
   res.end(JSON.stringify({ error: message }));
 };
 
-export function enableCors(req: VercelRequest, res: VercelResponse) {
+export function enableCors(req: Req, res: Res) {
   const origin = req.headers.origin || '*';
   res.setHeader('Access-Control-Allow-Origin', origin as string);
   res.setHeader('Vary', 'Origin');
@@ -30,7 +32,7 @@ export function enableCors(req: VercelRequest, res: VercelResponse) {
   return false;
 }
 
-export async function readJson<T = any>(req: VercelRequest): Promise<T | null> {
+export async function readJson<T = any>(req: Req): Promise<T | null> {
   return new Promise((resolve) => {
     let body = '';
     req.on('data', (chunk) => (body += chunk));

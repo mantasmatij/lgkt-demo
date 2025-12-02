@@ -73,7 +73,7 @@ export const lt = {
     legal_form: 'Teisinė forma',
     address: 'Adresas',
     registry: 'Registras',
-    e_delivery_address: 'Įmonės el. paštas',
+    e_delivery_address: 'Juridinio asmens elektroninio pristatymo dėžutės adresas',
     requirements_link_optional: 'Reikalavimų nuoroda (pasirinktinai)',
     reporting_from: 'Nuo',
     reporting_to: 'Iki',

@@ -44,9 +44,23 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         const client = await pool.connect();
         try {
           const list = await client.query(
-            `SELECT id, company_code AS code, name_at_submission AS name, created_at
-             FROM submissions
-             ORDER BY created_at DESC
+            `SELECT
+               s.id,
+               c.name AS "companyName",
+               s.company_code AS "companyCode",
+               COALESCE(c.company_type, s.company_type) AS "companyType",
+               s.reporting_from AS "reportPeriodFrom",
+               s.reporting_to AS "reportPeriodTo",
+               ROUND(COALESCE(NULLIF((SELECT SUM(women) FROM gender_balance_rows WHERE submission_id = s.id),0)::numeric * 100
+                 / NULLIF((SELECT SUM(total) FROM gender_balance_rows WHERE submission_id = s.id),0)::numeric, 0)) AS "womenPercent",
+               ROUND(COALESCE(100 - (COALESCE(NULLIF((SELECT SUM(women) FROM gender_balance_rows WHERE submission_id = s.id),0)::numeric * 100
+                 / NULLIF((SELECT SUM(total) FROM gender_balance_rows WHERE submission_id = s.id),0)::numeric, 0)), 0)) AS "menPercent",
+               s.requirements_applied AS "requirementsApplied",
+               s.contact_email AS "submitterEmail",
+               s.created_at AS "submissionDate"
+             FROM submissions s
+             LEFT JOIN companies c ON c.code = s.company_code
+             ORDER BY s.created_at DESC
              LIMIT $1 OFFSET $2`,
             [pageSize, offset]
           );

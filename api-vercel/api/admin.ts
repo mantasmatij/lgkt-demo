@@ -45,6 +45,40 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         const { page, pageSize, offset } = getPagination();
         const client = await pool.connect();
         try {
+          const q = (sp.get('q') || '').trim();
+          const type = (sp.get('type') || '').trim();
+          const reqStr = (sp.get('requirements') || '').trim();
+          const from = (sp.get('from') || '').trim();
+          const to = (sp.get('to') || '').trim();
+          let where = 'WHERE 1=1';
+          const params: any[] = [];
+          let idx = 1;
+          if (q) {
+            params.push(`%${q}%`);
+            where += ` AND (c.name ILIKE $${idx} OR s.company_code ILIKE $${idx})`;
+            idx++;
+          }
+          if (type) {
+            params.push(type);
+            where += ` AND COALESCE(c.company_type, s.company_type) = $${idx}`;
+            idx++;
+          }
+          if (reqStr === 'true' || reqStr === 'false') {
+            params.push(reqStr === 'true');
+            where += ` AND s.requirements_applied = $${idx}`;
+            idx++;
+          }
+          if (from) {
+            params.push(from);
+            where += ` AND s.reporting_from >= $${idx}::date`;
+            idx++;
+          }
+          if (to) {
+            params.push(to);
+            where += ` AND s.reporting_to <= $${idx}::date`;
+            idx++;
+          }
+
           const list = await client.query(
             `SELECT
                s.id,
@@ -62,11 +96,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
                s.created_at AS "submissionDate"
              FROM submissions s
              LEFT JOIN companies c ON c.code = s.company_code
+             ${where}
              ORDER BY s.created_at DESC
-             LIMIT $1 OFFSET $2`,
-            [pageSize, offset]
+             LIMIT $${idx} OFFSET $${idx + 1}`,
+            [...params, pageSize, offset]
           );
-          const total = (await client.query('SELECT COUNT(*)::int AS c FROM submissions')).rows[0].c as number;
+          const countRs = await client.query(`SELECT COUNT(*)::int AS c FROM submissions s LEFT JOIN companies c ON c.code = s.company_code ${where}`, params);
+          const total = countRs.rows[0].c as number;
           return ok(res, { items: list.rows, page, pageSize, total });
         } finally { client.release(); }
       } else if (parts.length === 4) {

@@ -45,38 +45,74 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         const { page, pageSize, offset } = getPagination();
         const client = await pool.connect();
         try {
-          const q = (sp.get('q') || '').trim();
-          const type = (sp.get('type') || '').trim();
-          const reqStr = (sp.get('requirements') || '').trim();
-          const from = (sp.get('from') || '').trim();
-          const to = (sp.get('to') || '').trim();
+          // UI filter params
+          const company = (sp.get('company') || '').trim();
+          const companyType = (sp.get('companyType') || '').trim();
+          const submissionDateFrom = (sp.get('submissionDateFrom') || '').trim();
+          const submissionDateTo = (sp.get('submissionDateTo') || '').trim();
+          const reportPeriodFrom = (sp.get('reportPeriodFrom') || '').trim();
+          const reportPeriodTo = (sp.get('reportPeriodTo') || '').trim();
+          const genderAlignment = (sp.get('genderAlignment') || '').trim();
+          const genderImbalance = (sp.get('genderImbalance') || '').trim();
+          const requirementsApplied = (sp.get('requirementsApplied') || '').trim();
+          const sortByRaw = (sp.get('sortBy') || 'submissionDate').trim();
+          const sortDirRaw = (sp.get('sortDir') || 'desc').trim().toLowerCase();
+          const sortDir: 'asc' | 'desc' = sortDirRaw === 'asc' ? 'asc' : 'desc';
+          const sortable: Record<string, string> = {
+            submissionDate: 's.created_at',
+            companyName: 'c.name',
+            companyCode: 's.company_code',
+            reportPeriodFrom: 's.reporting_from',
+            reportPeriodTo: 's.reporting_to',
+            womenPercent: 'womenPercent',
+            menPercent: 'menPercent'
+          };
+          const sortBy = sortable[sortByRaw] || 's.created_at';
+
           let where = 'WHERE 1=1';
           const params: any[] = [];
           let idx = 1;
-          if (q) {
-            params.push(`%${q}%`);
+          if (company) {
+            params.push(`%${company}%`);
             where += ` AND (c.name ILIKE $${idx} OR s.company_code ILIKE $${idx})`;
             idx++;
           }
-          if (type) {
-            params.push(type);
+          if (companyType) {
+            params.push(companyType);
             where += ` AND COALESCE(c.company_type, s.company_type) = $${idx}`;
             idx++;
           }
-          if (reqStr === 'true' || reqStr === 'false') {
-            params.push(reqStr === 'true');
+          if (requirementsApplied === 'yes' || requirementsApplied === 'no') {
+            params.push(requirementsApplied === 'yes');
             where += ` AND s.requirements_applied = $${idx}`;
             idx++;
           }
-          if (from) {
-            params.push(from);
+          if (submissionDateFrom) {
+            params.push(submissionDateFrom);
+            where += ` AND s.created_at >= $${idx}::date`;
+            idx++;
+          }
+            if (submissionDateTo) {
+            params.push(submissionDateTo);
+            where += ` AND s.created_at <= ($${idx}::date + INTERVAL '1 day')`;
+            idx++;
+          }
+          if (reportPeriodFrom) {
+            params.push(reportPeriodFrom);
             where += ` AND s.reporting_from >= $${idx}::date`;
             idx++;
           }
-          if (to) {
-            params.push(to);
+          if (reportPeriodTo) {
+            params.push(reportPeriodTo);
             where += ` AND s.reporting_to <= $${idx}::date`;
             idx++;
+          }
+          // Gender filters (use ratio expression without rounding)
+          const ratioExpr = `COALESCE((SELECT SUM(women) FROM gender_balance_rows WHERE submission_id = s.id)::numeric * 100 / NULLIF((SELECT SUM(total) FROM gender_balance_rows WHERE submission_id = s.id),0)::numeric, 0)`;
+          if (genderAlignment === 'meets_33') {
+            where += ` AND (${ratioExpr} BETWEEN 33 AND 67)`;
+          } else if (genderAlignment === 'not_meet_33' || genderImbalance === 'outside_33_67') {
+            where += ` AND (${ratioExpr} < 33 OR ${ratioExpr} > 67)`;
           }
 
           const list = await client.query(
@@ -97,7 +133,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
              FROM submissions s
              LEFT JOIN companies c ON c.code = s.company_code
              ${where}
-             ORDER BY s.created_at DESC
+             ORDER BY ${sortBy} ${sortDir}
              LIMIT $${idx} OFFSET $${idx + 1}`,
             [...params, pageSize, offset]
           );

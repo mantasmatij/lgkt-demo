@@ -7,8 +7,7 @@
   },
   "routes": [
     { "src": "/api$,?", "dest": "/api/health" },
-    { "src": "/api/admin/forms/(.*)", "dest": "/api/admin?path=/api/admin/forms/$1" },
-    { "src": "/api/admin(?:/.*)?", "dest": "/api/admin" },
-    { "src": "/api/reports(?:/.*)?", "dest": "/api/reports" }
+    { "src": "/api/admin/(.*)", "dest": "/api/admin?path=/api/admin/$1" },
+    { "src": "/api/reports/(.*)", "dest": "/api/reports?path=/api/reports/$1" }
   ]
 }

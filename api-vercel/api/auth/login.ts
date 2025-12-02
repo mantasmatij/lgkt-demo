@@ -2,7 +2,7 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { enableCors, badRequest, unauthorized, ok, readJson } from '../../lib/http';
 import { Pool } from 'pg';
 import bcrypt from 'bcryptjs';
-import cookie from 'cookie';
+import { sign, setSessionCookie } from '../../lib/session';
 
 const pool = new Pool({ connectionString: process.env.DATABASE_URL });
 
@@ -31,15 +31,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const okPw = await bcrypt.compare(password, user.password_hash);
     if (!okPw) return unauthorized(res, 'Invalid credentials');
 
-    const token = signSession({ uid: user.id, email: user.email, at: Date.now() }, process.env.SESSION_SECRET!);
-    const cookieStr = cookie.serialize('session', token, {
-      httpOnly: true,
-      secure: true,
-      sameSite: 'none',
-      path: '/',
-      maxAge: 60 * 60 * 24 * 7,
-    });
-    res.setHeader('Set-Cookie', cookieStr);
+    const token = sign({ uid: user.id, email: user.email, at: Date.now() }, process.env.SESSION_SECRET!);
+    setSessionCookie(res, token);
     ok(res, { ok: true });
   } finally {
     client.release();

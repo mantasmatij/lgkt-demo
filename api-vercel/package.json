@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "bcryptjs": "^3.0.2",
+    "csv-stringify": "^6.6.0",
     "cookie": "^0.6.0",
     "pg": "^8.14.4",
     "zod": "^3.24.1"

@@ -62,6 +62,14 @@ function main() {
   // Duplicate dist inside function folder so static path is local to handler
   copyDir(sourceDist, path.join(apiStandalone, 'api', 'dist', 'api'));
 
+  // Copy the compiled vercel handler to a stable colocated path
+  const compiledHandlerSrc = path.join(sourceDist, 'src', 'vercel-handler.js');
+  if (exists(compiledHandlerSrc)) {
+    fs.copyFileSync(compiledHandlerSrc, path.join(apiStandalone, 'api', 'compiled-handler.js'));
+  } else {
+    console.warn('[prepare-api-standalone] Missing compiled handler at', compiledHandlerSrc);
+  }
+
   // Copy workspace_modules if present under sourceDist
   const wsSrc = path.join(sourceDist, 'workspace_modules');
   if (exists(wsSrc)) {

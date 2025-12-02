@@ -59,16 +59,22 @@ function main() {
 
   // Copy compiled api dist
   copyDir(sourceDist, path.join(apiStandalone, 'dist', 'api'));
+  // Duplicate dist inside function folder so static path is local to handler
+  copyDir(sourceDist, path.join(apiStandalone, 'api', 'dist', 'api'));
 
   // Copy workspace_modules if present under sourceDist
   const wsSrc = path.join(sourceDist, 'workspace_modules');
   if (exists(wsSrc)) {
-    copyDir(wsSrc, path.join(apiStandalone, 'workspace_modules'));
+    // Place workspace modules under dist so includeFiles "dist/**" captures them
+    copyDir(wsSrc, path.join(apiStandalone, 'dist', 'workspace_modules'));
+    copyDir(wsSrc, path.join(apiStandalone, 'api', 'dist', 'workspace_modules'));
   } else {
-    mkdirp(path.join(apiStandalone, 'workspace_modules'));
     const tsconfigBase = path.join(root, 'tsconfig.base.json');
     if (exists(tsconfigBase)) {
-      fs.copyFileSync(tsconfigBase, path.join(apiStandalone, 'workspace_modules', 'tsconfig.base.json'));
+      mkdirp(path.join(apiStandalone, 'dist', 'workspace_modules'));
+      fs.copyFileSync(tsconfigBase, path.join(apiStandalone, 'dist', 'workspace_modules', 'tsconfig.base.json'));
+      mkdirp(path.join(apiStandalone, 'api', 'dist', 'workspace_modules'));
+      fs.copyFileSync(tsconfigBase, path.join(apiStandalone, 'api', 'dist', 'workspace_modules', 'tsconfig.base.json'));
     }
   }
 

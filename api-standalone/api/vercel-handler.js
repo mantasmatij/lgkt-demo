@@ -30,19 +30,10 @@ module.exports = async (req, res) => {
       res.end();
       return;
     }
-    const tried = [
-      require('path').join(process.cwd(), 'dist', 'api', 'src', 'vercel-handler.js'),
-      require('path').join(__dirname, '..', 'dist', 'api', 'src', 'vercel-handler.js'),
-    ];
-    console.error('[vercel-handler] Compiled handler missing. CWD=', process.cwd(), 'DIR=', __dirname, 'Tried=', tried);
+    console.error('[vercel-handler] Compiled handler missing: dist/api/src/vercel-handler.js');
     res.statusCode = 500;
     res.setHeader('content-type', 'text/plain; charset=utf-8');
-    res.end(
-      'API not built yet. Expected `dist/api/src/vercel-handler.js`.\n' +
-        'cwd=' + process.cwd() + '\n' +
-        '__dirname=' + __dirname + '\n' +
-        'tried=' + JSON.stringify(tried)
-    );
+    res.end('API not built yet. Expected `dist/api/src/vercel-handler.js`.');
     return;
   }
   const mod = require(target);

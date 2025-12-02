@@ -172,7 +172,7 @@ export const lt = {
     reports_loading: 'Įkeliama…',
     reports_loading_preview: 'Įkeliama peržiūra…',
     reports_no_rows_match_filters: 'Eilučių pagal dabartinius filtrus nėra.',
-    reports_row_limit_hint: 'Eilučių limitas: 50 tūkst.; didesni eksportai reikalingi siauresni filtrai.',
+    reports_row_limit_hint: 'Eilučių limitas: 50 tūkst.',
     reports_permission_note: 'Pastaba: Eksportas ir peržiūra atspindi jūsų teises.',
     reports_no_data: 'Nėra duomenų',
     reports_type_label: 'Ataskaitos tipas',

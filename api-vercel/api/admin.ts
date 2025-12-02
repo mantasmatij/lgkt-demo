@@ -71,14 +71,83 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         const id = parts[3];
         const client = await pool.connect();
         try {
-          const sub = await client.query('SELECT * FROM submissions WHERE id = $1', [id]);
+          const sub = await client.query(
+            `SELECT s.*, c.name AS company_current_name, COALESCE(c.company_type, s.company_type) AS company_type_effective
+             FROM submissions s
+             LEFT JOIN companies c ON c.code = s.company_code
+             WHERE s.id = $1`,
+            [id]
+          );
           if (sub.rowCount === 0) return res.status(404).end('Not found');
-          const attachments = await client.query('SELECT id, type, url, file_name, file_size, content_type FROM attachments WHERE submission_id = $1', [id]);
-          const gb = await client.query('SELECT role, women, men, total FROM gender_balance_rows WHERE submission_id = $1', [id]);
-          const organs = await client.query('SELECT organ_type, last_election_date, planned_election_date FROM submission_organs WHERE submission_id = $1', [id]);
-          const measures = await client.query('SELECT name, planned_result, indicator, indicator_value, indicator_unit, year FROM submission_measures WHERE submission_id = $1', [id]);
-          const meta = await client.query('SELECT submitter_name, submitter_title, submitter_phone, submitter_email, reasons_for_underrepresentation FROM submission_meta WHERE submission_id = $1', [id]);
-          return ok(res, { submission: sub.rows[0], attachments: attachments.rows, genderBalance: gb.rows, organs: organs.rows, measures: measures.rows, meta: meta.rows[0] });
+
+          const s = sub.rows[0];
+          const [attachments, gb, organs, measures, meta] = await Promise.all([
+            client.query('SELECT id, type, url, file_name, file_size, content_type FROM attachments WHERE submission_id = $1', [id]),
+            client.query('SELECT role, women, men, total FROM gender_balance_rows WHERE submission_id = $1', [id]),
+            client.query('SELECT organ_type, last_election_date, planned_election_date FROM submission_organs WHERE submission_id = $1', [id]),
+            client.query('SELECT name, planned_result, indicator, indicator_value, indicator_unit, year FROM submission_measures WHERE submission_id = $1', [id]),
+            client.query('SELECT submitter_name, submitter_title, submitter_phone, submitter_email, reasons_for_underrepresentation FROM submission_meta WHERE submission_id = $1', [id]),
+          ]);
+
+          const women = (await client.query('SELECT COALESCE(SUM(women),0)::int AS w FROM gender_balance_rows WHERE submission_id = $1', [id])).rows[0].w as number;
+          const total = (await client.query('SELECT COALESCE(SUM(total),0)::int AS t FROM gender_balance_rows WHERE submission_id = $1', [id])).rows[0].t as number;
+          const wp = total > 0 ? Math.round((women * 100) / total) : 0;
+          const mp = total > 0 ? 100 - wp : 0;
+
+          const out = {
+            id: s.id,
+            companyType: s.company_type_effective as string | null,
+            reportPeriodFrom: s.reporting_from,
+            reportPeriodTo: s.reporting_to,
+            womenPercent: wp,
+            menPercent: mp,
+            submitterEmail: s.contact_email as string,
+            fields: {
+              company: {
+                code: s.company_code,
+                name: s.name_at_submission,
+                country: s.country,
+                legalForm: s.legal_form,
+                address: s.address,
+                registry: s.registry,
+                eDeliveryAddress: s.e_delivery_address,
+              },
+              reportingPeriod: { from: s.reporting_from, to: s.reporting_to },
+              consent: { consent: !!s.consent, consentText: s.consent_text },
+              requirements: { applied: !!s.requirements_applied, link: s.requirements_link },
+              notes: s.notes,
+              totals: { women, men: total - women },
+              genderBalance: gb.rows.map((r) => ({ role: r.role, women: Number(r.women)||0, men: Number(r.men)||0, total: Number(r.total)||0 })),
+              organs: organs.rows.map((r) => ({
+                organType: r.organ_type,
+                lastElectionDate: r.last_election_date,
+                plannedElectionDate: r.planned_election_date,
+              })),
+              measures: measures.rows.map((m) => ({
+                name: m.name,
+                plannedResult: m.planned_result,
+                indicator: m.indicator,
+                indicatorValue: m.indicator_value,
+                indicatorUnit: m.indicator_unit,
+                year: m.year,
+              })),
+              attachments: attachments.rows.map((a) => ({
+                id: a.id,
+                type: a.type,
+                url: a.url,
+                fileName: a.file_name,
+                fileSize: a.file_size,
+              })),
+              meta: meta.rows[0] ? {
+                reasonsForUnderrepresentation: meta.rows[0].reasons_for_underrepresentation,
+                submitterName: meta.rows[0].submitter_name,
+                submitterTitle: meta.rows[0].submitter_title,
+                submitterPhone: meta.rows[0].submitter_phone,
+                submitterEmail: meta.rows[0].submitter_email,
+              } : null,
+            },
+          };
+          return ok(res, out);
         } finally { client.release(); }
       } else if (parts.length === 6 && parts[4] === 'attachments') {
         const subId = parts[3];

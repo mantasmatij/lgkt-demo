@@ -54,7 +54,12 @@ function main() {
 
   console.log('[prepare-api-standalone] Using source:', sourceDist);
 
-  rmrf(apiStandalone);
+  // Do not remove the root of the deployment directory (important on Vercel).
+  mkdirp(apiStandalone);
+  // Clean subfolders we manage.
+  rmrf(path.join(apiStandalone, 'dist'));
+  rmrf(path.join(apiStandalone, 'api'));
+  rmrf(path.join(apiStandalone, 'workspace_modules'));
   mkdirp(path.join(apiStandalone, 'api'));
 
   // Copy compiled api dist
